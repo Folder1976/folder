@@ -1,0 +1,19 @@
+<html>
+ <head>
+  <?php
+  echo "hhh";
+  include "../config/config.php";
+  ?>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>System menu (ver.2.0 07.03.2013)</title>
+ </head>
+
+ <frameset rows="90,*" cols="*" border="0">
+    <frameset cols="*,150" border="0">
+      <frame src="top_menu.php" name="top_menu" id="top_menu_id" scrolling="no" noresize>
+      <frame src="get_orders_from_inet.php" name="top_info" id="top_info" scrolling="no" noresize>
+    </frameset>
+   <frame src="operation_list.php" name="operation_list" id="operation_list_id" scrolling="yes">
+ </frameset>
+
+</html>

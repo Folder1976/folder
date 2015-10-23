@@ -1,0 +1,9 @@
+User-agent: Googlebot
+Sitemap:/sitemap.xml
+
+User-agent: Yandex
+User-agent: Slurp
+User-agent: StackRambler
+User-agent: Scooter
+User-agent: Yahoo-MMCrawler
+User-agent: Googlebot-Image

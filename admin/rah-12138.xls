@@ -1,0 +1,822 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>FolderUser</Author>
+  <LastAuthor>FolderUser</LastAuthor>
+  <Created>2014-04-11T07:17:05Z</Created>
+  <LastSaved>2014-04-11T07:27:31Z</LastSaved>
+  <Version>11.9999</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9015</WindowHeight>
+  <WindowWidth>16275</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>45</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial Cyr" x:CharSet="204"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+   </Style>
+   <Style ss:ID="s23">
+    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+   </Style>
+  
+   <Style ss:ID="s24">
+    <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+    </Style>
+    
+   <Style ss:ID="s25">
+    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="rah-12138">
+  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="90" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="1" ss:Width="20"/>
+   <Column ss:Index="2" ss:Width="55"/>
+   <Column ss:Index="3" ss:Width="230"/>
+   <Column ss:Index="4" ss:Width="45"/>
+   <Column ss:Index="5" ss:Width="30"/>
+   <Column ss:Index="6" ss:Width="20"/>
+   <Column ss:Index="7" ss:Width="50"/>
+   <Column ss:Index="8" ss:Width="5"/>
+   <Row ss:Index="1">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">Рахунок : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">0 (Від 2015-02-06)</Data></Cell>
+	  </Row><Row ss:Index="2">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">Видав : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">ФОП Правосудов В.В.</Data></Cell>
+	  </Row><Row ss:Index="3">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">Отримав : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">Lesia admin</Data></Cell>
+	  </Row><Row ss:Index="4">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">р/р : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">26005335462001</Data></Cell>
+	  </Row><Row ss:Index="5">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">ЄДРПОУ : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">2431809993</Data></Cell>
+	  </Row><Row ss:Index="6">
+		<Cell ss:StyleID="s23" ss:Index="1"><Data ss:Type="String">Банк : </Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">ЗГРУ Приватбанк м.Львів (МФО 325321)</Data></Cell>
+	  </Row><Row ss:Index="8">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">Код</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">Назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">Ціна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String">К-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">Сума</Data></Cell>
+		
+	  </Row><Row ss:Index="9">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_12421/G/64</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW берет зелений б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">37.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">37.00</Data></Cell>
+	
+	  </Row><Row ss:Index="10">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_13158/G</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW брючний ремінь шкіряний чорний б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">76.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">76.00</Data></Cell>
+	
+	  </Row><Row ss:Index="11">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">3</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11601/G/02</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW кітель флектарн б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">70.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">70.00</Data></Cell>
+	
+	  </Row><Row ss:Index="12">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">4</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11452/4</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW спортивні труси сині ADIDAS </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">32.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">32.00</Data></Cell>
+	
+	  </Row><Row ss:Index="13">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">5</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11435/G/88</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW шорти сині б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">42.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">42.00</Data></Cell>
+	
+	  </Row><Row ss:Index="14">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">6</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11436/G/92</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW шорти хакі б/в</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">28.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">28.00</Data></Cell>
+	
+	  </Row><Row ss:Index="15">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">7</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11606/G/80-97</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW штани молескінові чорні б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">136.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">136.00</Data></Cell>
+	
+	  </Row><Row ss:Index="16">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">8</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11977/G/I</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">BW штани-утеплювач б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">138.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">138.00</Data></Cell>
+	
+	  </Row><Row ss:Index="17">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">9</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_13072/32</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">NVA шкарпетки сірі нові 46 </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">43.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">43.00</Data></Cell>
+	
+	  </Row><Row ss:Index="18">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">10</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">A17489/S</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Pемінь BSKT WV ULTRA</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">97.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">97.00</Data></Cell>
+	
+	  </Row><Row ss:Index="19">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">11</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7202</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU кепка олива (NYCO R/S)  </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">103.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">103.00</Data></Cell>
+	
+	  </Row><Row ss:Index="20">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">12</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_123086/L</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU кепка синя (R/S) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">116.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">116.00</Data></Cell>
+	
+	  </Row><Row ss:Index="21">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">13</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X7299</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU кепка українська цифра( PolyCotton Ripstop) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">99.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">99.00</Data></Cell>
+	
+	  </Row><Row ss:Index="22">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">14</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_A19385/SL</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU кітель синій (R/S)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">62.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">62.00</Data></Cell>
+	
+	  </Row><Row ss:Index="23">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">15</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H440T/XLR</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU кітель тайгер (R/S) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">308.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">308.00</Data></Cell>
+	
+	  </Row><Row ss:Index="24">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">16</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H4603/XLR</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU штани вудленд (PolyCotton) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">600.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">600.00</Data></Cell>
+	
+	  </Row><Row ss:Index="25">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">17</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H4611/LR</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US BDU штани койот (PolyCotton) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">600.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">600.00</Data></Cell>
+	
+	  </Row><Row ss:Index="26">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">18</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H5409/XL</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US RANGER штани  метро (R/S)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">440.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">440.00</Data></Cell>
+	
+	  </Row><Row ss:Index="27">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">19</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_A123088/6 3/4</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">USMC кепка марпат (NYCO)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">48.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">48.00</Data></Cell>
+	
+	  </Row><Row ss:Index="28">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">20</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7422/55</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">USMC кепка тайгер (R/S)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">88.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">88.00</Data></Cell>
+	
+	  </Row><Row ss:Index="29">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">21</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_A2319/70-102</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">USMC штани сині </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">42.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">42.00</Data></Cell>
+	
+	  </Row><Row ss:Index="30">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">22</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X4041</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Балаклава дубок з 1-м отв. нінзя (100%бавовна) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">80.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">80.00</Data></Cell>
+	
+	  </Row><Row ss:Index="31">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">23</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X4021</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Балаклава олива з 1-м отв. нінзя (100%бавовна) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">80.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">80.00</Data></Cell>
+	
+	  </Row><Row ss:Index="32">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">24</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">40484-1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Балаклава чорна в"язана</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">94.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">94.00</Data></Cell>
+	
+	  </Row><Row ss:Index="33">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">25</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X4011</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Балаклава чорна з 1-м отв. нінзя (100%бавовна) </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">80.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">80.00</Data></Cell>
+	
+	  </Row><Row ss:Index="34">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">26</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H511</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Бандана-хустка тайгер</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">75.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">75.00</Data></Cell>
+	
+	  </Row><Row ss:Index="35">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">27</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X509</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Бандана-хустка урбан </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">79.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">79.00</Data></Cell>
+	
+	  </Row><Row ss:Index="36">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">28</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">A13851/G</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Баул прорезинений оливковий</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">54.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">54.00</Data></Cell>
+	
+	  </Row><Row ss:Index="37">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">29</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_12369</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Блайзер урбан </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">112.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">112.00</Data></Cell>
+	
+	  </Row><Row ss:Index="38">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">30</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_12184/G/56</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Голандська шапка-вушанка DPM б/в</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">66.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">66.00</Data></Cell>
+	
+	  </Row><Row ss:Index="39">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">31</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H0602</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Гумовий кухоль олива </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">51.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">51.00</Data></Cell>
+	
+	  </Row><Row ss:Index="40">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">32</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_1400020</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Каремат туристичний 10мм сірий</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">150.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">150.00</Data></Cell>
+	
+	  </Row><Row ss:Index="41">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">33</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_1400021</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Каремат-сідушка туристичний 8мм олива</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">57.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">57.00</Data></Cell>
+	
+	  </Row><Row ss:Index="42">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">34</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_N41211</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кепка афганка</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">20.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">20.00</Data></Cell>
+	
+	  </Row><Row ss:Index="43">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">35</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_12306/7 1/8</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кепка оливкова</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">100.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">100.00</Data></Cell>
+	
+	  </Row><Row ss:Index="44">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">36</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_16164</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">150.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">150.00</Data></Cell>
+	
+	  </Row><Row ss:Index="45">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">37</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_N21234</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура ПМ відкрита скоба</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">115.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">115.00</Data></Cell>
+	
+	  </Row><Row ss:Index="46">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">38</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_10432</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура поясна КОМБРИГ (скоба) коротка</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">137.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">137.00</Data></Cell>
+	
+	  </Row><Row ss:Index="47">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">39</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_1582</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура поясна ПМ (скоба)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">130.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">130.00</Data></Cell>
+	
+	  </Row><Row ss:Index="48">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">40</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_10370</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура поясна ФОРТ (жабка)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">110.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">110.00</Data></Cell>
+	
+	  </Row><Row ss:Index="49">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">41</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">G4502/98-170</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Комплект теплої натільної білизни (100% поліестр) олива</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">250.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">250.00</Data></Cell>
+	
+	  </Row><Row ss:Index="50">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">42</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_N101471-2/170-96</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кітель DPM б/в</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">304.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">304.00</Data></Cell>
+	
+	  </Row><Row ss:Index="51">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">43</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_26-0617</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Лампа гасова</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">128.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">128.00</Data></Cell>
+	
+	  </Row><Row ss:Index="52">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">44</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H14948/GE</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Мікроосвітлювач 15см 12год. жовтий </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">32.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">32.00</Data></Cell>
+	
+	  </Row><Row ss:Index="53">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">45</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H14948/GR</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Мікроосвітлювач 15см 12год. зелений </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">32.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">32.00</Data></Cell>
+	
+	  </Row><Row ss:Index="54">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">46</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_144497</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Одіяло флісове вудленд 130х150см</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">161.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">161.00</Data></Cell>
+	
+	  </Row><Row ss:Index="55">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">47</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_14906</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Пальник для сухого спирту </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">142.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">142.00</Data></Cell>
+	
+	  </Row><Row ss:Index="56">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">48</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">пасок02</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Пасок ременний олива 120 см</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">40.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">40.00</Data></Cell>
+	
+	  </Row><Row ss:Index="57">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">49</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">пасок13</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Пасок ременний хаки 120 см</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">40.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">40.00</Data></Cell>
+	
+	  </Row><Row ss:Index="58">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">50</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H155021</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Пилка туристична з кільцями  </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">84.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">84.00</Data></Cell>
+	
+	  </Row><Row ss:Index="59">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">51</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">833668</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Пончо камо</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">189.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">189.00</Data></Cell>
+	
+	  </Row><Row ss:Index="60">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">52</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">B998</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Простирадло військове 100х215см</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">61.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">61.00</Data></Cell>
+	
+	  </Row><Row ss:Index="61">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">53</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_14617</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Підставка- пальник</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">88.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">88.00</Data></Cell>
+	
+	  </Row><Row ss:Index="62">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">54</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11957/Р/1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рос.костюм маскувальний білий  </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">164.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">164.00</Data></Cell>
+	
+	  </Row><Row ss:Index="63">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">55</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_703025-BR</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рукавиці флісові коричневі</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">61.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">61.00</Data></Cell>
+	
+	  </Row><Row ss:Index="64">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">56</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_703025-BL</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рукавиці флісові сині</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">61.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">61.00</Data></Cell>
+	
+	  </Row><Row ss:Index="65">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">57</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_703025-G</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рукавиці флісові сірі</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">61.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">61.00</Data></Cell>
+	
+	  </Row><Row ss:Index="66">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">58</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_703025-B</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рукавиці флісові чорні</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">61.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">61.00</Data></Cell>
+	
+	  </Row><Row ss:Index="67">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">59</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_TRP012.08</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Рюкзак ULTRA</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">160.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">160.00</Data></Cell>
+	
+	  </Row><Row ss:Index="68">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">60</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_122271</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Сандана СОNFEDERATE </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">43.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">43.00</Data></Cell>
+	
+	  </Row><Row ss:Index="69">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">61</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H511S</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Сандана-хустка тайгер</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">75.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">75.00</Data></Cell>
+	
+	  </Row><Row ss:Index="70">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">62</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">SV951</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Свічка від комарів</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">16.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">16.00</Data></Cell>
+	
+	  </Row><Row ss:Index="71">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">63</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">R0415</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Тарілка алюмінієва глибока СРСР</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">56.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">56.00</Data></Cell>
+	
+	  </Row><Row ss:Index="72">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">64</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_N254-2543</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Термоковдра</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">94.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">94.00</Data></Cell>
+	
+	  </Row><Row ss:Index="73">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">65</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_108190/52(3)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Тільник морський з голуб.полосами довгий рукав </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">50.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">50.00</Data></Cell>
+	
+	  </Row><Row ss:Index="74">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">66</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_110203/XXL</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Футболка FBI сіра</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">130.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">130.00</Data></Cell>
+	
+	  </Row><Row ss:Index="75">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">67</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">TU002/S</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Футболка безшовна чорна 150гр </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">60.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">60.00</Data></Cell>
+	
+	  </Row><Row ss:Index="76">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">68</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">X2099/58</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Футболка укр-цифра</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">133.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">133.00</Data></Cell>
+	
+	  </Row><Row ss:Index="77">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">69</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_916596-1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Шапка олива з флісовою підкладкою</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">125.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">125.00</Data></Cell>
+	
+	  </Row><Row ss:Index="78">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">70</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7902</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Шапка флісова олива </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">100.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">100.00</Data></Cell>
+	
+	  </Row><Row ss:Index="79">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">71</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_B1973/59</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Швед.кепка олива</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">30.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">30.00</Data></Cell>
+	
+	  </Row><Row ss:Index="80">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">72</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_11439/G/90</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Швейц.шорти сірі б/в </Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">42.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">42.00</Data></Cell>
+	
+	  </Row><Row ss:Index="81">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">73</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_13080/1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Шкарпетки сірі II СВ (40-41)</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">80.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">80.00</Data></Cell>
+	
+	  </Row><Row ss:Index="82">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">74</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">W505/66</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Штани робочі темно-сині</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">55.00</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">55.00</Data></Cell>
+	
+	  </Row><Row ss:Index="84">
+		<Cell ss:StyleID="s25" ss:Index="1"><Data ss:Type="String">Сума : </Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="2"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="3"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="4"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="6"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="7"><Data ss:Type="String">8153.00</Data></Cell>
+	  </Row><Row ss:Index="85">
+		<Cell ss:StyleID="s25" ss:Index="1"><Data ss:Type="String">ПДВ : </Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="2"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="3"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="4"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="6"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="7"><Data ss:Type="String">0</Data></Cell>
+	  </Row><Row ss:Index="86">
+		<Cell ss:StyleID="s25" ss:Index="1"><Data ss:Type="String">Сума + ПДВ : </Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="2"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="3"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="4"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="6"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="7"><Data ss:Type="String">8153.00</Data></Cell>
+	  </Row><Row ss:Index="87">
+		<Cell ss:StyleID="s25" ss:Index="1"><Data ss:Type="String">Прописом : </Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="2"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="3"><Data ss:Type="String">вiсiм тисяч сто п'ятдесят три грн</Data></Cell>
+		<Cell ss:StyleID="s25" ss:Index="4"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="5">></Cell>
+		<Cell ss:StyleID="s25" ss:Index="6"></Cell>
+		<Cell ss:StyleID="s25" ss:Index="7"></Cell>
+	  </Row>
+
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+
+</Workbook>

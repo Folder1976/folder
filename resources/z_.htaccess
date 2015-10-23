@@ -1,0 +1,10 @@
+ErrorDocument 404 /index.php
+<Files ~ "\.php$">
+deny from all
+</Fildes>
+<Files ~ "\.gif$">
+allow from all
+</Fildes>
+<Files ~ "\.jpg$">
+allow from all
+</Fildes>

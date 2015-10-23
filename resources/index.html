@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru-RU">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Горизонтальная навигационная панель | Материалы сайта RUSELLER.COM</title>
+  <link rel="stylesheet" type="text/css" media="all" href="styles.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="w">
+    <nav>
+      <ul id="ddmenu">
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">О нас</a>
+          <ul>
+            <li><a href="#">Миссия</a></li>
+            <li><a href="#">Команда</a></li>
+            <li><a href="#">История</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Продукты</a>
+          <ul>
+            <li><a href="#">Логитипы</a></li>
+            <li><a href="#">Шаблоны</a></li>
+            <li><a href="#">Иконки</a></li>
+            <li><a href="#">Плагины jQuery</a></li>
+            <li><a href="#">маркетинг Internet</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Интернационализация</a>
+          <ul>
+            <li><a href="#">Китай</a></li>
+            <li><a href="#">Япония</a></li>
+            <li><a href="#">Канада</a></li>
+            <li><a href="#">Автсралия</a></li>
+            <li><a href="#">Южная Америка</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Контакт</a></li>
+      </ul>
+    </nav>
+  </div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('a').on('click', function(e){
+    e.preventDefault();
+  });
+    
+  $('#ddmenu li').hover(function () {
+     clearTimeout($.data(this,'timer'));
+     $('ul',this).stop(true,true).slideDown(200);
+  }, function () {
+    $.data(this,'timer', setTimeout($.proxy(function() {
+      $('ul',this).stop(true,true).slideUp(200);
+    }, this), 100));
+  });
+
+});
+</script>
+</body>
+</html>

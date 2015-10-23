@@ -1,0 +1,428 @@
+
+body{
+ background:none;
+ font:10px Verdana, Geneva, sans-serif;
+ margin:0px;
+ padding:0px;
+ }
+table{
+  background:#eeeeee;
+  font:12px Verdana, Geneva, sans-serif;
+  border: 0px solid #c0bf8f;
+}
+.large_font{
+   background:#92cd8a;
+   font:22px Verdana, Geneva, sans-serif;
+   width:300px;
+   font-weight: bold;
+}
+table.barcode td{
+    border:none;
+  }
+.barcode{
+ overflow:hidden; 
+ vertical-align:top;
+ border:none;
+ width:150px;
+}
+.nak_header_nakl{
+   background:#cd8a8a;
+   height:20px;
+}
+.nak_header_find{
+   background:#92cd8a;
+   height:20px;
+}
+.nak_field_1{
+   background:white;
+}
+.nak_field_2{
+   background:#eeeeee;
+}
+:hover.nak_field_1{
+   background:#c0bf8f;
+}
+:hover.nak_field_2{
+   background:#c0bf8f;
+}
+
+table.menu_top{
+  /*background:none;*/
+  font:10px Verdana, Geneva, sans-serif;
+  border:0px solid #c0bf8f;
+}
+table.menu_top td{
+  border:0px solid #c0bf8f;
+  /*background:none;*/
+}
+table.key{
+  background:#797d1e;
+  font:12px Verdana, Geneva, sans-serif;
+  color:white;
+  border:2px solid #c0bf8f;
+  text-align:center;
+}
+td.key{
+ /* background:white;*/
+  border:2px solid #c0bf8f;
+}
+td:hover.key{
+  background:white;
+ /* border:2px solid #c0bf8f;*/
+ }
+a.key{
+  background:none;
+  font:12px Verdana, Geneva, sans-serif;
+  color:white;
+  border:none;
+}
+a:hover.key{
+  background:none;
+  font:12px Verdana, Geneva, sans-serif;
+  color:#797d1e;
+  border:none;
+}
+a.medium_regular{
+  background:none;
+  font:14px Verdana, Geneva, sans-serif;
+  color:black;
+  border:none;
+  /*font-weight: bold;*/
+}
+a.medium_bold{
+  background:none;
+  font:14px Verdana, Geneva, sans-serif;
+  color:black;
+  border:none;
+  font-weight: bold;
+}
+a.small{
+  background:none;
+  font:8px Verdana, Geneva, sans-serif;
+  color:black;
+  border:none;
+}
+a.small_name{
+  background:none;
+  font:12px Verdana, Geneva, sans-serif;
+  color:black;
+  border:none;
+}
+
+a:hover.large {
+  color:white;
+}
+a:hover.medium {
+  color:white;
+}
+a:hover.small {
+  color:white;
+}
+
+
+form {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+/*======================LOGIN==================================*/
+input.user_login {
+ background: transparent; 
+ font-weight: normal;
+ font:10px Verdana, Geneva, sans-serif;
+}
+
+/*======================MAIN==================================*/
+table.main{
+    background: none;
+}
+table.main td{
+    border-collapse:collapse;
+    border: none;
+    font:20px Verdana, Geneva, sans-serif;
+    padding: 5px 5px 5px 5px;
+    margin: 0px;
+    background: none;
+    /*background:linear-gradient(to top, #fbfbfb,#e9e9e9);*/
+
+ }
+
+td.mainheader {
+    background:linear-gradient(to top, #fbfbfb,#e9e9e9);
+}
+
+ /*======================MAIN=MENU=================================*/
+table.tovar_list td{
+    /*border-collapse:collapse;*/
+    border:none; 
+    font:18px Verdana, Geneva, sans-serif;
+    
+
+    /*width: 70%;*/
+    /*border-left: 1px solid #000000;*/
+    /*border-right: 1px solid #000000;*/
+    padding: 5px 5px 5px 5px;
+    margin: 0px;
+ }
+
+
+/*td{
+  border: 1px dotted #3a3b23;
+}*/
+
+a{
+  color:#000080;
+  outline: none;
+  text-decoration: none;
+}
+a:hover,
+a.active {
+	color:#191970;
+	text-decoration:underline;
+}  
+
+
+select.find_string {
+ padding: 0px 10px 10px 10px; 
+ font:18px Verdana, Geneva, sans-serif;
+ 
+ font-style: italic;
+ border: none;
+}
+input.find_string {
+ background: transparent; 
+ padding: 10px 10px 10px 10px;
+ color:#191970;
+ border:1px solid #000000;
+ font:18px Verdana, Geneva, sans-serif;
+ width: 100%;
+ border-radius: 0px;
+ font-weight: normal;
+}
+input.find_key {
+ background: gray; 
+ padding: 10px 10px 10px 10px;
+ color:#191970;
+ border:1px solid #000000;
+ font:18px Verdana, Geneva, sans-serif;
+ width: 100%;
+ border-radius: 0px;
+ font-weight: normal;
+}
+input.money_key {
+ background: red; 
+ padding: 10px 10px 10px 10px;
+ color:#191970;
+ border:1px solid #000000;
+ font:18px Verdana, Geneva, sans-serif;
+ width: 100%;
+ border-radius: 0px;
+ font-weight: normal;
+}
+/*==============================POP UP MENU=================================*/
+/*
+#menu {
+	padding: 2;
+	margin: 2;
+      }
+
+#menu li {
+	list-style: none;
+	float: left;
+	height: 30px;
+	padding: 0;
+	margin: 0;
+	width: 150px;
+	text-align: center;
+	background: #171717;
+	position: relative;
+	padding-top: 10px;
+	font:12px Verdana, Geneva, sans-serif;
+	}
+#menu li ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	/*width: 100%;*/
+/*	display: none;
+	/*position: absolute;*/
+/*	left: 0;
+	top: 35px;
+	}
+#menu li ul li {
+	float: none;
+	height: 15px;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background: #7f7F7F;
+	font:10px Verdana, Geneva, sans-serif;
+	}
+#menu li a {
+	display: block;
+	height: 20px;
+	color: #fff;
+	text-decoration: none;
+	}
+#menu li:hover ul, #menu li.jshover ul {
+	display: block;
+	}
+#menu li:hover, #menu li.jshover {
+	background: #7f7F7F;
+	}
+#menu ul li {
+	left: 100%;
+	width:110%;
+	top: 0;
+}
+div.unvis {
+    display: none;
+    background: #7f7F7F;
+    padding: 0px 10px 10px 10px; 
+    	font:10px Verdana, Geneva, sans-serif;
+	text-decoration: none;
+	
+    }
+*/
+/*===========================================================================*/
+table.find_print th{
+      border:1px solid;
+      margin:0px;
+      padding:5px; 
+      font:11px Verdana, Geneva, sans-serif;
+}
+table.find_print td{
+      border:1px solid;
+      margin:0px;
+      padding:5px; 
+      font:11px Verdana, Geneva, sans-serif;
+}
+
+div.operation_info{
+	/* padding: 50px 10px 10px 10px;
+	 left: 40%;
+	 top: 30%;
+	 width:250px;
+	 height:80px;
+	 display:none;
+	 position:absolute;
+	 background: #ff981f;*/
+	 font:32px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 1px solid #c0bf8f;
+	 /*border-radius:20px;*/
+	}
+div.info{
+	 padding: 50px 10px 10px 10px;
+	 left: 40%;
+	 top: 30%;
+	 width:250px;
+	 height:80px;
+	 display:none;
+	 position:absolute;
+	 background: #ff981f;
+	 font:16px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 1px solid #c0bf8f;
+	 border-radius:20px;
+	}
+div.find-result{
+	 padding: 10px 10px 10px 10px;
+	 left: 5%;
+	 top: 10%;
+	 width:90%;
+	 height:80%;
+	 display:none;
+	 position:absolute;
+	 background: #ff981f;
+	 font:22px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 1px solid #c0bf8f;
+	 border-radius:10px;
+	  overflow-y:auto;
+
+	}
+div.item_div{
+	 padding: 5px 5px 5px 5px;
+	 left: 35%;
+	 top: 30%;
+	 width:30%;
+	 height:50%;
+	 display:none;
+	 position:absolute;
+	 background: none;
+	 font:32px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 0px solid #FAF0E6;
+	 border-radius:10px;
+	}
+div.money_div{
+	 padding: 5px 5px 5px 5px;
+	 left: 30%;
+	 top: 22%;
+	 width:40%;
+	 /*height:50%;*/
+	 display:none;
+	 position:absolute;
+	 background: #EECFA1;
+	 font:32px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 5px solid #8B7765;
+	 border-radius:10px;
+	}
+input.item_text{
+	 padding: 2px 2px 2px 2px;
+	 width:100%;
+	 /*height:80px;*/
+	 background: #FAF0E6;
+	 font:24px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 5px solid #000080;
+	 border-radius:10px;
+	  overflow-y:auto;
+	}
+input.item_rabat{
+	 padding: 2px 2px 2px 2px;
+	 width:50px;
+	 /*height:80px;*/
+	 background: #FAF0E6;
+	 font:18px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 5px solid #000080;
+	 border-radius:10px;
+	  overflow-y:auto;
+	}
+input.item_text_money{
+	 padding: 4px 4px 4px 4px;
+	 width:100%;
+	 /*height:80px;*/
+	 background: #F08080;
+	 font:32px Verdana, Geneva, sans-serif;
+	 text-align:center;	 
+	 text-align:middle;
+	 text-decoration: none;
+	 border: 7px solid #000080;
+	 border-radius:10px;
+	  overflow-y:auto;
+	}
+table.find-result td{
+      border:1px solid;
+      margin:0px;
+      padding:5px; 
+      font:18px Verdana, Geneva, sans-serif;
+}
