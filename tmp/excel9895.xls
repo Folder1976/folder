@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>FolderUser</Author>
+  <LastAuthor>FolderUser</LastAuthor>
+  <Created>2014-04-11T07:17:05Z</Created>
+  <LastSaved>2014-04-11T07:27:31Z</LastSaved>
+  <Version>11.9999</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9015</WindowHeight>
+  <WindowWidth>16275</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>45</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial Cyr" x:CharSet="204"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+       <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+  </Style>
+  <Style ss:ID="s24">
+    <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="nakl # 9895">
+  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="12" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="1" ss:Width="30"/>
+   <Column ss:Index="2" ss:Width="70"/>
+   <Column ss:Index="3" ss:Width="330"/>
+   <Column ss:Index="4" ss:Width="60"/>
+   <Column ss:Index="5" ss:Width="30"/>
+   <Column ss:Index="6" ss:Width="20"/>
+   <Column ss:Index="7" ss:Width="60"/>
+   <Row ss:Index="2">
+		<Cell ss:Index="3"><Data ss:Type="String">2015-06-26 17:30:21</Data></Cell>
+	  </Row><Row ss:Index="4">
+		<Cell ss:Index="2" ss:StyleID="s21"><Data ss:Type="String">Накл. # 9895</Data></Cell>
+		<Cell ss:Index="3" ss:StyleID="s21"><Data ss:Type="String">Аліна-Фолдер(Корзины на сайте)</Data></Cell>
+		<Cell ss:Index="4" ss:StyleID="s21"><Data ss:Type="String">Сумма:</Data></Cell>
+		<Cell ss:Index="5" ss:StyleID="s21"/>
+		<Cell ss:Index="6" ss:StyleID="s21"/>
+		<Cell ss:Index="7" ss:StyleID="s21"><Data ss:Type="Number">30</Data></Cell>
+	    </Row><Row ss:Index="5">
+		<Cell ss:Index="2"><Data ss:Type="String">Комментарий</Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">-</Data></Cell>
+	  </Row><Row ss:Index="7" ss:StyleID="s24">
+		<Cell ss:Index="1"><Data ss:Type="String">#</Data></Cell>
+		<Cell ss:Index="2"><Data ss:Type="String">Код</Data></Cell>
+		<Cell ss:Index="3"><Data ss:Type="String">Название</Data></Cell>
+		<Cell ss:Index="4"><Data ss:Type="String">Цена</Data></Cell>
+		<Cell ss:Index="5"><Data ss:Type="String">К-во</Data></Cell>
+		<Cell ss:Index="6"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:Index="7"><Data ss:Type="String">Сумма</Data></Cell>
+	  </Row><Row ss:Index="8">
+		<Cell ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:Index="2"><Data ss:Type="String">_500-500-1 ВП</Data></Cell> 	<Cell ss:Index="3"><Data ss:Type="String">Гаммарус  фасований ( Лесик-Володя ) по входу для Олега </Data></Cell>
+		<Cell ss:Index="4"><Data ss:Type="Number">15</Data></Cell>
+		<Cell ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:Index="7"><Data ss:Type="Number">15</Data></Cell>
+		
+	  </Row><Row ss:Index="9">
+		<Cell ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+		<Cell ss:Index="2"><Data ss:Type="String">_500-500-1 ВП</Data></Cell> 	<Cell ss:Index="3"><Data ss:Type="String">Гаммарус  фасований ( Лесик-Володя ) по входу для Олега </Data></Cell>
+		<Cell ss:Index="4"><Data ss:Type="Number">15</Data></Cell>
+		<Cell ss:Index="5"><Data ss:Type="Number">1</Data></Cell>
+		<Cell ss:Index="6"><Data ss:Type="Number">0</Data></Cell>
+		<Cell ss:Index="7"><Data ss:Type="Number">15</Data></Cell>
+		
+	  </Row>
+
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+
+</Workbook>

@@ -20,22 +20,35 @@ if (!session_verify($_SERVER["PHP_SELF"],"none")){
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
-$setup = mysql_query("SET NAMES utf8");
+$r = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `setup_menu_name`, 
 	  `setup_menu_".$_SESSION[BASE.'lang']."`
 	  FROM `tbl_setup_menu`
 ";
 //echo $tQuery;
-$setup = mysql_query($tQuery);
-$m_setup = array();
+$r = mysql_query($tQuery);
+global $setup;
 $count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
+while ($count<mysql_num_rows($r)){
+ $setup[mysql_result($r,$count,0)]=mysql_result($r,$count,1);
  $count++;
 }
 //==================================SETUP=MENU==========================================
+?>
+<script type="text/javascript" src="'.HOST_URL.'/../js/jquery-2.1.4.min.js"></script>    
+<script>
+  $(document).ready(function(){
+      $('.item_to_all_but').click(function(){
+	if ($('.item_to_all').val() != '' && $('.item_to_all').val() > 0) {
+	  $('.nak_field_item').val($('.item_to_all').val());
+	}
+	//console.log('ggggggggg');    
+      });   
+    });
 
+</script>
+<?php
 $count = 0;
 
 $iKlient_id = -1;
@@ -65,14 +78,14 @@ if(isset($_GET["_find2"]) and !empty($_GET["_find2"]))$find_str2=$_GET["_find2"]
 
 
 if($find_str=="find-str"){
-    $find_str=$m_setup['menu find-str'];
+    $find_str=$setup['menu find-str'];
     $for_link .= "_find1=find-str";
 }else{
     $for_link .= "_find1=".$find_str;
 }
 
 if($find_str2=="find-str"){
-  $find_str2=$m_setup['menu find-nakl'];
+  $find_str2=$setup['menu find-nakl'];
     $for_link .= "&_find2=find-str";
   }else{
     $for_link .= "&_find2=".$find_str2;
@@ -89,12 +102,12 @@ $for_link .= "&_parent=".$find_parent;
 
 
 $tmp_from = "";
-if(isset($_REQUEST["_from"]) and !empty($_REQUEST["_from"])) $tmp_from=$_REQUEST["_from"];
+if(isset($_REQUEST["_from"]) and is_numeric($_REQUEST["_from"])) $tmp_from=$_REQUEST["_from"];
 $for_link .= "&_from=".$tmp_from;
 
 $tmp_to = "";
-if(isset($_REQUEST["_to"]) and !empty($_REQUEST["_to"])) $tmp_to=$_REQUEST["_to"];
-$for_link .= "&_from=".$tmp_to;
+if(isset($_REQUEST["_to"]) AND is_numeric($_REQUEST["_to"])) $tmp_to=$_REQUEST["_to"];
+$for_link .= "&_to=".$tmp_to;
 
 $ware_empty = "";
 if(isset($_REQUEST["ware_empty"])) $ware_empty=$_REQUEST["ware_empty"];
@@ -160,16 +173,16 @@ if(isset($_REQUEST['ware_empty'])) $return_page .= "&ware_empty=ware_empty";
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
-$setup = mysql_query("SET NAMES utf8");
+$r = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `currency_id`,`currency_ex`
 	  FROM `tbl_currency`
 	  ";
-$setup = mysql_query($tQuery);
+$r = mysql_query($tQuery);
 $m_curr = array();
 $count=0;
-while ($count<mysql_num_rows($setup)){
- $m_curr[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
+while ($count<mysql_num_rows($r)){
+ $m_curr[mysql_result($r,$count,0)]=mysql_result($r,$count,1);
  $count++;
 }
 //============================================================================
@@ -302,7 +315,7 @@ if(mysql_result($warehouse,$warehouse_count,"warehouse_summ") == true){
 //=========================== find string=========================================================
 $find_flag=0;
 $table="";
-if ($find_str=="" or $find_str==$m_setup['menu find-str'])
+if ($find_str=="" or $find_str==$setup['menu find-str'])
 {
 //echo "[No find string]";
 //exit();
@@ -312,7 +325,7 @@ if ($find_str=="" or $find_str==$m_setup['menu find-str'])
   $find_str_sql .= " or upper(tovar_name_3) like '%" . mb_strtoupper($find_str,'UTF-8') . "%')";
    $find_flag=1;
  }
-if ($find_str2=="" or $find_str2==$m_setup['menu find-nakl'])
+if ($find_str2=="" or $find_str2==$setup['menu find-nakl'])
 {
 //echo "[No find string]";
 //exit();
@@ -406,12 +419,12 @@ echo "
     function setclear(a){
    // alert('gg');
       if(a==1){
-	  if(document.getElementById('_find1').value=='",$m_setup['menu find-str'],"'){
-		document.getElementById('_find2').value='",$m_setup['menu find-nakl'],"';
+	  if(document.getElementById('_find1').value=='",$setup['menu find-str'],"'){
+		document.getElementById('_find2').value='",$setup['menu find-nakl'],"';
 		document.getElementById('_find1').value='';
 	    }
       }else{
-	    document.getElementById('_find1').value='",$m_setup['menu find-str'],"';
+	    document.getElementById('_find1').value='",$setup['menu find-str'],"';
 	    document.getElementById('_find2').value='';
       }
 
@@ -520,9 +533,9 @@ echo "\nfunction setprice(value,a){";
     ";
 /*
 print_barcode('')
- <br><a href=\"barcode.php?operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$m_setup['menu print barcode'],"</a>
- <br><a href=\"barcode.php?key=price&operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$m_setup['menu print price'],"</a>
- <br><a href=\"barcode.php?key=price_ware&operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$m_setup['menu print price war'],"</a>
+ <br><a href=\"barcode.php?operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$setup['menu print barcode'],"</a>
+ <br><a href=\"barcode.php?key=price&operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$setup['menu print price'],"</a>
+ <br><a href=\"barcode.php?key=price_ware&operation_id=-1&tovar_id=$fields_id\" target=\"_blank\">",$setup['menu print price war'],"</a>
 */
 
 echo "function print_barcode(key){
@@ -568,10 +581,9 @@ function print_nakl_excel(){
       req.send({parent:parent,ware:ware,vidal:vidal,poluchil:poluchil});  
 }
 ";    
-    
-    
-    
+   
     echo "\n</script></header>";
+
 //================== END JAVA ================================
 
 
@@ -584,14 +596,14 @@ echo "<form method='get' action='edit_tovar_find.php'>
       <table class='menu_top'><tr>";
 
 echo "<td><input type='hidden' name='operation_id' value='"  , $iKlient_id  , "'/>";
-echo "<input type='button' name='test' value='",$m_setup['menu find'],"' onclick='submit();' tabindex='1'></td>
+echo "<input type='button' name='test' value='",$setup['menu find'],"' onclick='submit();' tabindex='1'></td>
 <td><input type='text' style='font-size:large;width:350px' id='_find1' name='_find1' value='" , $find_str , "' onChange='submit();' onClick='setclear(1);'/>";
 echo "
       </td><td>";
-echo $m_setup['menu find order'],":</td><td><input type='text' style='font-size:large;width:70px' id='_find2' name='_find2' value='" , $find_str2 , "' onChange='submit();' onClick='setclear(2);'/>";
+echo $setup['menu find order'],":</td><td><input type='text' style='font-size:large;width:70px' id='_find2' name='_find2' value='" , $find_str2 , "' onChange='submit();' onClick='setclear(2);'/>";
 echo "</td><td>";
 //=================FROM=ALL===================================================================================================
-  echo "",$m_setup['menu from'],":</td><td><select class=\"nak_field_warehouse_from\" style='width:150px' name='_from' onChange='submit()'>";
+  echo "",$setup['menu from'],":</td><td><select class=\"nak_field_warehouse_from\" style='width:150px' name='_from' onChange='submit()'>";
     $count1=0;
     while ($count1 < mysql_num_rows($warehouse))
     {
@@ -606,21 +618,21 @@ echo "</td><td rowspan=\"2\" valing=\"top\">
     <input type=\"checkbox\" name=\"set_rezervi\" id=\"set_rezervi\" ";
     if(isset($_REQUEST['set_rezervi'])) echo " checked ";
     
-echo "value=\"set_rezervi\">",$m_setup['menu set_rezervi'],"<br>
+echo "value=\"set_rezervi\">",$setup['menu set_rezervi'],"<br>
     
     <input type=\"checkbox\" name=\"usd2uah\" id=\"usd2uah\" ";
     if(isset($_REQUEST['usd2uah'])) echo " checked ";
 
-echo "value=\"usd2uah\">",$m_setup['menu usd2uah'],"<br>
+echo "value=\"usd2uah\">",$setup['menu usd2uah'],"<br>
     
     
-      &nbsp&nbsp<b><a href=\"edit_tovar_find_print.php?". $_SERVER['QUERY_STRING']."&_print=print\" >".$m_setup['menu print']."</a></b>
+      &nbsp&nbsp<b><a href=\"edit_tovar_find_print.php?". $_SERVER['QUERY_STRING']."&_print=print\" >".$setup['menu print']."</a></b>
 <br>
-      &nbsp&nbsp<b><a href=\"edit_tovar_find_print.php?". $_SERVER['QUERY_STRING']."&_print=printmag\" >".$m_setup['menu print']." mag nakl</a></b>
+      &nbsp&nbsp<b><a href=\"edit_tovar_find_print.php?". $_SERVER['QUERY_STRING']."&_print=printmag\" >".$setup['menu print']." mag nakl</a></b>
 <br>
-      &nbsp&nbsp<b><a href=\"javascript:print_nakl();\" >".$m_setup['menu print']." excel</a></b>
+      &nbsp&nbsp<b><a href=\"javascript:print_nakl();\" >".$setup['menu print']." excel</a></b>
 <br>
-      &nbsp&nbsp<b><a href=\"edit_tovar_find.php?". $_SERVER['QUERY_STRING']."&_ostatki=set\" >".$m_setup['menu reload']."</a></b>
+      &nbsp&nbsp<b><a href=\"edit_tovar_find.php?". $_SERVER['QUERY_STRING']."&_ostatki=set\" >".$setup['menu reload']."</a></b>
 
       </td>";
 //<input type='submit' name='_print' value='print'><input type='submit' name='_print' value='print' tabindex='100'>
@@ -634,14 +646,14 @@ echo "value=\"usd2uah\">",$m_setup['menu usd2uah'],"<br>
 	  $count1++;
 	  }
 	  echo "</select>
- <br><a href=\"javascript:print_barcode('')\" >",$m_setup['menu print barcode'],"</a>
- <br><a href=\"javascript:print_barcode('price')\" >",$m_setup['menu print price'],"</a>
- <br><a href=\"javascript:print_barcode('price_ware')\" >",$m_setup['menu print price war'],"</a>
+ <br><a href=\"javascript:print_barcode('')\" >",$setup['menu print barcode'],"</a>
+ <br><a href=\"javascript:print_barcode('price')\" >",$setup['menu print price'],"</a>
+ <br><a href=\"javascript:print_barcode('price_ware')\" >",$setup['menu print price war'],"</a>
 </tr><tr><td valing=\"middle\">";//========================
 //==========================SHOP==========================================================
-echo "<a href='edit_shop.php?shop_id=$shop_selected' target='_blank'>",$m_setup['menu shop'],"[+]:</a>
+echo "<a href='edit_shop.php?shop_id=$shop_selected' target='_blank'>",$setup['menu shop'],"[+]:</a>
 <br><br>
-      <a href='edit_nakl-group.php?tovar_parent_id=$find_parent' target='_blank'>",$m_setup['menu parent'],"[+]</a>
+      <a href='edit_nakl-group.php?tovar_parent_id=$find_parent' target='_blank'>",$setup['menu parent'],"[+]</a>
      
       
       </td><td><select name='_shop' style='width:350px' onChange='submit();'>";
@@ -669,7 +681,7 @@ echo "<select name='_parent' id='_parent' style='width:350px' onChange='submit()
 echo "</select>";
 //=============================SUPPLIER==========================================================
 echo "</td><td>";//========================
-echo "<a href='edit_klient.php?klienti_id=$find_supplier' target='_blank'>",$m_setup['menu suppliter'],"[+]:</a></td><td><select name='_supplier' style='width:150px' onChange='submit();'>";
+echo "<a href='edit_klient.php?klienti_id=$find_supplier' target='_blank'>",$setup['menu suppliter'],"[+]:</a></td><td><select name='_supplier' style='width:150px' onChange='submit();'>";
       echo "\n<option ";
 	if ($find_supplier == 0) echo "selected ";
 	  echo "value=0>ALL</option>";
@@ -686,7 +698,7 @@ echo "</select>";
 echo "</td><td>";//========================
 
 //==================TO=ALL==================================================================================================
-   echo "",$m_setup['menu to'],":</td><td><select class=\"nak_field_warehouse_to\" name='_to' style='width:150px' onChange='submit()'>";# OnChange='submit();'>";
+   echo "",$setup['menu to'],":</td><td><select class=\"nak_field_warehouse_to\" name='_to' style='width:150px' onChange='submit()'>";# OnChange='submit();'>";
     $count1=0;
     while ($count1 < mysql_num_rows($warehouse))
     {
@@ -715,7 +727,7 @@ $tmp++;
 }
 echo "&nbsp&nbsp<input type=\"checkbox\" name=\"ware_empty\" id=\"ware_empty\" ";
     if(isset($_REQUEST['ware_empty'])) echo " checked ";
-echo "value=\"ware_empty\">",$m_setup['menu ware empty'];
+echo "value=\"ware_empty\">",$setup['menu ware empty'];
 
 
 echo "\n</form>";
@@ -737,16 +749,19 @@ echo "\n<input type='hidden' name='_page_to_return' value='" , $return_page , "'
 echo "\n<table width=100% cellspacing='0' cellpadding='0' style='border-left:1px solid;border-right:1px solid;border-top:1px solid' class='menu_top'>"; //class='table'
 echo "<tr class=\"nak_header_find\">
       <th width=20px  height=\"50px\"><a href=\"edit_tovar_find.php?operation_id=$iKlient_id&$for_link&sort=tovar_id\">id >></a></th>
-      <th width=100px><a href=\"edit_tovar_find.php?operation_id=$iKlient_id&$for_link&sort=tovar_artkl\">".$m_setup['menu artkl']."</a>
+      <th width=100px><a href=\"edit_tovar_find.php?operation_id=$iKlient_id&$for_link&sort=tovar_artkl\">".$setup['menu artkl']."</a>
 		      </th>
-      <th><a href=\"edit_tovar_find.php?operation_id=$iKlient_id&$for_link&sort=tovar_name_1\">".$m_setup['menu name1']."</a><br>
+      <th><a href=\"edit_tovar_find.php?operation_id=$iKlient_id&$for_link&sort=tovar_name_1\">".$setup['menu name1']."</a><br>
 		      </th>
-      <th width=10px>Zk</th>
-      <th width=60px>Price</th>
-      <th width=20px>Item</th>
-      <th width=30px>Disc.</th>
-      <th width=70px>Summ</th>
-      <th width=32px>add</th>
+      <th width=10px>Закуп</th>
+      <th width=60px>Цена</th>
+      <th width=20px>
+	<input type=\"text\" placeholder=\"К-во\" style=\"width:50px;\" class=\"item_to_all\"><br>
+	<input type=\"button\" class=\"item_to_all_but\" style=\"width:50px;height:25px;\" value=\"всем\">
+      </th>
+      <th width=30px>Скидка</th>
+      <th width=70px>Сумма</th>
+      <th width=32px>+</th>
       
       <th width=100px>From/To</th>";
       
@@ -783,7 +798,7 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
   echo "<td width=50px><a class=\"small\" href='edit_tovar_history.php?tovar_id=",mysql_result($ver,$count,'tovar_id')," ' target='_blank'>",
     ($count+1) ;
     if(mysql_result($ver,$count,"tovar_inet_id")>0) echo "&nbsp;web<br>";
-  echo $m_setup['menu history'],"&nbsp;</a>";
+  echo $setup['menu history'],"&nbsp;</a>";
   
   
   echo "<input type='hidden' name='",$long_name,"tovar*",$id_tmp,"' value='" , $id_tmp , "'/>";
@@ -901,7 +916,7 @@ echo "<div id='nakl_info' class='nakl_info'>
 <table class='menu_top'> <tr><td align='right' colspan='2'>
 <a href=\"javascript:print_nakl_close();\" ><b>close [X]</b></a><br>
 </td></tr>
-  <tr><td>".$m_setup['menu parent'],"
+  <tr><td>".$setup['menu parent'],"
   </td><td><select id='_parent_view' style='width:200px'>";
     $count=0;
     while ($count < mysql_num_rows($parent))
@@ -916,7 +931,7 @@ echo "</select>
 
   </td></tr>
   <tr><td>
-	".$m_setup['print sklad']."
+	".$setup['print sklad']."
  </td><td>
 	<select name='_ware' id='_ware' style='width:200px' >";
     $count=0;
@@ -928,7 +943,7 @@ echo "</select>
 echo "</select>
 </td></tr>
   <tr><td>
-	".$m_setup['print vidal']."
+	".$setup['print vidal']."
  </td><td>
 	<select name='_vidal' id='_vidal' style='width:200px' >";
     $count=0;
@@ -940,7 +955,7 @@ echo "</select>
 echo "</select>
 </td></tr>
   <tr><td>
-".$m_setup['print otrimal']."
+".$setup['print otrimal']."
 </td><td>
 <select name='_poluchil' id='_poluchil' style='width:200px' >";
     $count=0;

@@ -124,8 +124,8 @@ echo "\n</form>";
 //========================================================================================================
 
 echo "\n<form method='post' action='edit_table.php'>";
-echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_save' value='",$m_setup['menu save'],"'/>";
+echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_dell' value='",$m_setup['menu dell'],"'/>";
 echo "\n<input type='submit' name='_select' value='",$m_setup['menu select and re'],"'/>";
 

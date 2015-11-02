@@ -6,7 +6,7 @@ session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"+")){
   exit();
 }
-
+echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 
 //==================================SETUP===========================================
 if ($_SESSION[BASE.'lang'] <1){
@@ -193,7 +193,8 @@ echo "</select>";
 
 echo "\n</form>";
 //=====================================================================================================
-
+  include ("../class/class_category.php");
+  $Category = new Category($folder);
 
 
 echo "\n<form method='post' action='edit_table_table.php'>";
@@ -211,8 +212,9 @@ $html = "<tr>
       <th>id</th>
       <th>menu</th>
       <th>id</th>
-      <th>Roditel</th>      
+      <th>parent_id</th>      
       <th>Sort</th>
+      <th>Товаров</th>
       <th>RUS</th>
       <th>Аттрибуты</th>
       <th>Alias</th>
@@ -228,6 +230,7 @@ echo "<div id='row*0'>",$html,"</div>";
       //****************************************************** ROWS
 
 $count=0;
+$TotalProducts = 0;
 while($count<mysql_num_rows($ver)){ 
 $html="";
 $html .= "<tr>"; 
@@ -259,6 +262,12 @@ $html .= "<td align='right'><font size='1'>"
     <input type='text' style='width:45px' id='parent_inet_sort*".mysql_result($ver,$count,"parent_inet_id")."' 
       value='" . mysql_result($ver,$count,"parent_inet_sort") . "' onChange='update(this.value,this.id)'/>
     </td>";
+ //----
+  $html .= '<td>';
+      $tmp = $Category->getProductCountInCategory(mysql_result($ver,$count,"parent_inet_id"));
+      $TotalProducts += $tmp;
+      $html .= '<b>'.$tmp.'</b>';
+  $html .= '</td>';
   //----
   $html .= "<td>
     <input type='text' style='width:200px' id='parent_inet_1*".mysql_result($ver,$count,"parent_inet_id")."' 
@@ -351,6 +360,7 @@ echo "<div id='row*".mysql_result($ver,$count,"parent_inet_id")."'>",$html,"</di
 $count++;
 }
 echo "<div id='row*table_end'></table></div>
+<h3>Всего товаров на сайте: $TotalProducts</h3>
 <div id='test'>-></div>
       \n</form>
       \n</body>";

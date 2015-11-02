@@ -80,6 +80,8 @@ foreach ($_POST as $varname => $varvalue){
 echo $s_name;
   $s_sql_string = "UPDATE `tbl_klienti` SET `klienti_setup`='$s_name' WHERE `klienti_id`='".$_REQUEST['_id_value']."'";
   echo "<br>",$s_sql_string;
+ 
+ //echo '<pre>'; print_r(var_dump($_POST)); die();
   
   $ver = mysql_query("SET NAMES utf8");
   $ver = mysql_query($s_sql_string);// . $s_sql_string_where);

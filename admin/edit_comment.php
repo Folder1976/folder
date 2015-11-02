@@ -6,6 +6,7 @@ session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"+")){
   exit();
 }
+echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 
 $reset_user_count=0;
 //==================================SETUP===========================================

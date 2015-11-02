@@ -6,6 +6,7 @@ session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"+")){
   exit();
 }
+echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 
 //==================================SETUP===========================================
 if (!isset($_SESSION[BASE.'lang'])){
@@ -171,8 +172,8 @@ echo "\n</form>";
 //========================================================================================================
 
 echo "\n<form method='post' action='edit_table.php'>";
-echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_save' value='",$m_setup['menu save'],"'/>";
+echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_dell' value='",$m_setup['menu dell'],"'/>";
 //echo "\n<input type='submit' name='_select' value='",$m_setup['menu select and re'],"'/>";
 echo "<a href='edit_nakl_add_new.php?klienti_id2=",$iKlient_id,"' target='_blank'>[",$m_setup['menu new nakl'],"]</a>";

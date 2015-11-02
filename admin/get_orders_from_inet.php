@@ -57,10 +57,10 @@ $date_tmp = date("Y-m-d G:i:s",time()-$time);//-strtotime(60);
 header ('Content-Type: text/html; charset=utf8');
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
  //echo "<a href='get_orders_from_inet.php'>Reload</a>";
- user_menu_lang(); 
- if ($count>0){
     echo "<a href='log_list.php' target='_blank'>";
     echo "<b>pages view : ",mysql_result($log,0,"count")," / ".($time)."s.</a>";
+ user_menu_lang(); 
+ if ($count>0){
 
     echo "<br><a href='operation_list.php?iStatus=$a' target='_blank'>";
     echo "<b>",mysql_result($stat,0,"operation_status_name"),":", $count_a,"</a>";

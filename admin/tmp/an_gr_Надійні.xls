@@ -1,0 +1,901 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>FolderUser</Author>
+  <LastAuthor>FolderUser</LastAuthor>
+  <Created>2014-04-11T07:17:05Z</Created>
+  <LastSaved>2014-04-11T07:27:31Z</LastSaved>
+  <Version>11.9999</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9015</WindowHeight>
+  <WindowWidth>16275</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>45</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial Cyr" x:CharSet="204"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+   </Style>
+  <Style ss:ID="s22">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+    <Interior ss:Color="#ffff00" ss:Pattern="Solid"/>
+   </Style>
+   <Style ss:ID="s23">
+    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+   </Style>
+   <Style ss:ID="s24">
+    <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="&list name">
+  <Table ss:ExpandedColumnCount="20" ss:ExpandedRowCount="56" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="1" ss:Width="25"/>
+   <Column ss:Index="2" ss:Width="55"/>
+   <Column ss:Index="3" ss:Width="220"/>
+   <Column ss:Index="4" ss:Width="40"/>
+   <Column ss:Index="5" ss:Width="20"/>
+   <Column ss:Index="6" ss:Width="20"/>
+   <Column ss:Index="7" ss:Width="30"/>
+   <Column ss:Index="8" ss:Width="18"/>
+   <Column ss:Index="9" ss:Width="30"/>
+   <Column ss:Index="10" ss:Width="30"/>
+   <Column ss:Index="11" ss:Width="18"/>
+   <Column ss:Index="12" ss:Width="25"/>
+   <Column ss:Index="13" ss:Width="40"/>
+   <Column ss:Index="14" ss:Width="20"/>
+   <Column ss:Index="15" ss:Width="200"/>
+   <Row ss:Index="1">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">Вхiднi данi</Data></Cell>
+		<Cell ss:Index="8" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">Зкореговано</Data></Cell></Row><Row ss:Index="2">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Закуп:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">14900</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell></Row><Row ss:Index="3">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Продано:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">27684</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell></Row><Row ss:Index="4">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Дохiд-Коефiцiент:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">12783(1.86)</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String"></Data></Cell></Row><Row ss:Index="5">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Процент з-ти:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">5</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">%</Data></Cell></Row><Row ss:Index="6">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Нараховано з-ти:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">1384.18</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell>
+		<Cell ss:Index="8" ss:Formula="=SUM(R[4]C[4]:R[56]C[4])"  ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number"></Data></Cell></Row><Row ss:Index="7">
+		<Cell ss:StyleID="s23" ss:Index="2"><Data ss:Type="String">курси: Все 0 , грн 1 , usd 20 , euro 25 , zl 5 , Инт 20 , </Data></Cell></Row>
+<Row ss:Index="9">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11582 (2015-01-09) Лис Василь Іванович - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="10">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="11">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H6201/S</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LEVEL 7 - Climashield® Apex 100g чёрная ||KU-L70-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">72.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">3177.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2700.45</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">1256.45</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="12">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H6201/M</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LEVEL 7 - Climashield® Apex 100g чёрная ||KU-L70-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">72.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">3177.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2700.45</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">1256.45</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="13">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">3</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H6201/XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LEVEL 7 - Climashield® Apex 100g чёрная ||KU-L70-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">72.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">3177.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2700.45</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">1256.45</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="14">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">4</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H6201/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LEVEL 7 - Climashield® Apex 100g чёрная ||KU-L70-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">72.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">3177.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2700.45</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">1256.45</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="15">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H4013/MR</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">URBAN TACTICAL штаны хаки ||SP-UTL-CO-13</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">37.13</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1634.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1388.90</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">646.30</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="16">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">6</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H3302/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Комплект термобілизни (95% полиэстер 5% спандекс) олива ||KP-UN2-PO-02/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">19.99</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">880.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">748.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">348.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="17">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">7</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H3301/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Комплект термобілизни (95% полиэстер 5% спандекс) чёрный ||KP-UN2-PO-01/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">19.99</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">880.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">748.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">348.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="18">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">8</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2014/XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LIBERTY флисовая мультикам 390г/м (superfine) ||BL-LIB-HF-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">31.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1364.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1159.40</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">539.40</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="19">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">9</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2014/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LIBERTY флисовая мультикам 390г/м (superfine) ||BL-LIB-HF-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">31.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1364.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1159.40</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">539.40</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="20">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">10</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2004/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LIBERTY флисовая польский вудлєнд 390г/м (superfine) ||BL-LIB-HF-04</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">28.04</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1234.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1048.90</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">488.10</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="21">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">11</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H52332/180-104</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">PCS куртка SMOCK MP CAMO ||KU-PCS-PT-33</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">48.03</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">2113.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1796.05</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">835.45</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="22">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">12</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H88001/L</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Ремень US UTILITY чёрный нейлон ||PS-UTL-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">5.59</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">257.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.30</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">218.45</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">106.65</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.30</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="23">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">13</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2033/M</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LIBERTY флисовая MP Camo 390г/м (superfine) ||BL-LIB-HF-33</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">31.03</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1365.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1160.25</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">539.65</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="24">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2033/S</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LIBERTY флисовая MP Camo 390г/м (superfine) ||BL-LIB-HF-33</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">31.03</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1365.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1160.25</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">539.65</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-14]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="26">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11602 (2015-01-11) Абросимов Александр Николаевич - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="27">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="28">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H0415</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Набор посуды 3 предметн. из нержавеющей стали||ME-MEN-SS-15</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">6.38</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">281.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">252.90</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">125.30</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="29">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_138252</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Сумка-сетка для посуды олива</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">0.50</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">euro</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">57.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">4.56</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">51.30</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">38.80</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">4.56</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-2]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="31">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11681 (2015-01-15) Львів Куркін - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="32">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="33">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H6201/M</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка LEVEL 7 - Climashield® Apex 100g чёрная ||KU-L70-NL-01</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">72.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">3177.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2541.60</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">1097.60</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-1]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="35">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11732 (2015-01-19) Львів Куркін - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="36">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="37">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H59391/MR</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">CPU китель A-TACS FG (PolyCotton) ||BL-CPU-PR-39</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">32.12</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1413.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1130.40</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">488.00</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-1]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="39">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11791 (2015-01-21) Лис Василь Іванович - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="40">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="41">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H2214/M</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка GUNFIGHTER мультикам ||KU-GUN-FM-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">55.81</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">2456.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">2087.60</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">971.40</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-1]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="43">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11801 (2015-01-21) Львів Куркін - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="44">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="45">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">_18222</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">WH ременной продовжувач (допнік) ||18222000</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">2.50</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">euro</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">144.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.30</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">230.40</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">105.40</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.30</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-1]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+
+</Workbook>

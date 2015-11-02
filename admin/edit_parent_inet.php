@@ -5,7 +5,7 @@ session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"none")){
   exit();
 }
-
+echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 //echo "<pre>"; print_r(var_dump($_POST));
 //die();
 
@@ -226,8 +226,8 @@ echo "</body>";
 //========================================================================================================
 
 echo "\n<form method='post' >"; //action='edit_table.php'
-echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_save' value='",$m_setup['menu save'],"'/>";
+echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_dell' value='",$m_setup['menu dell'],"'/>";
 echo "\n<input type='submit' name='_select' value='",$m_setup['menu select and re'],"'/>";
 echo "\n<input type='submit' name='_reload_path' value='Перечитать дерево путей'/>";
@@ -365,23 +365,26 @@ echo "<td>
 echo "<td></td>";
 echo "</tr>";
 
-
+?>
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>
+<?php
 echo "\n<tr><td>",$m_setup['menu memo']," 1:</td><td>"; # Group name 1
-echo "<textarea cols='50' rows='10'  name='parent_inet_memo_1'>" . mysql_result($ver,0,"parent_inet_memo_1") . "</textarea></td>";
+echo "<textarea cols='50' rows='50'  name='parent_inet_memo_1'>" . mysql_result($ver,0,"parent_inet_memo_1") . "</textarea></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 
 
 echo "\n<tr><td>",$m_setup['menu memo']," 2:</td><td>"; # Group name 1
-echo "<textarea cols='50' rows='10'  name='parent_inet_memo_2'>" . mysql_result($ver,0,"parent_inet_memo_2") . "</textarea></td>";
+echo "<textarea cols='50' rows='0'  name='parent_inet_memo_2'>" . mysql_result($ver,0,"parent_inet_memo_2") . "</textarea></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 
 
 echo "\n<tr><td>",$m_setup['menu memo']," 3:</td><td>"; # Group name 1
-echo "<textarea cols='50' rows='10'  name='parent_inet_memo_3'>" . mysql_result($ver,0,"parent_inet_memo_3") . "</textarea></td>";
+echo "<textarea cols='50' rows='0'  name='parent_inet_memo_3'>" . mysql_result($ver,0,"parent_inet_memo_3") . "</textarea></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";

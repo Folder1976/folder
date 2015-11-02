@@ -9,39 +9,21 @@ if (!session_verify($_SERVER["PHP_SELF"],"none")){
 include 'money2str.lib.php';
 include "libmail.php";
 
-
-
- //==================================SETUP===========================================
- $setup = mysql_query("SET NAMES utf8");
-$tQuery = "SELECT 
-	  `setup_name`, 
-	  `setup_param`
-	  FROM `tbl_setup`
-	  ";
-$setup = mysql_query($tQuery);
-$m_setup = array();
-$count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
- $count++;
-}
 //=========================================================
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
-$setup = mysql_query("SET NAMES utf8");
+$setup1 = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `setup_menu_name`, 
 	  `setup_menu_".$_SESSION[BASE.'lang']."`
-	  FROM `tbl_setup_menu`
-
-";
+	  FROM `tbl_setup_menu`";
 //echo $tQuery;
-$setup = mysql_query($tQuery);
-//$m_setup = array();
+$setup1 = mysql_query($tQuery);
+//$setup = array();
 $count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
+while ($count<mysql_num_rows($setup1)){
+ $setup[mysql_result($setup1,$count,0)]=mysql_result($setup1,$count,1);
  $count++;
 }
 //==================================SETUP=MENU==========================================
@@ -64,7 +46,7 @@ $tQuery = "SELECT
 	  FROM `tbl_mail_tmp` 
 	  ORDER BY `mail_tmp_sort` ASC
 ";
-
+//echo ''.$tQuery;
 $ver = mysql_query($tQuery);
 //echo $tQuery;
 echo "
@@ -84,14 +66,14 @@ echo "
   <td>
    </td><td>
   <input type='text' style='width:50px' name='operation_id' value='",$operation_id,"'/><br>
-  <input type='checkbox' name='mail' value='mail' checked>",$m_setup['menu email'],"<br>
+  <input type='checkbox' name='mail' value='mail' checked>",$setup['menu email'],"<br>
   <input type='checkbox' name='sms' value='sms' checked>sms<br>
   </td><td>";
   echo "<input type='radio' name='tmp' value='none' checked";
   echo ">none<br>
-  <input type='radio' name='tmp' value='print'>",$m_setup['menu print sale'],"<br>
-  <input type='radio' name='tmp' value='warehouse'>",$m_setup['menu print ware'],"<br>
-  <input type='radio' name='tmp' value='bay'>",$m_setup['menu print bay'],"<br>
+  <input type='radio' name='tmp' value='print'>",$setup['menu print sale'],"<br>
+  <input type='radio' name='tmp' value='warehouse'>",$setup['menu print ware'],"<br>
+  <input type='radio' name='tmp' value='bay'>",$setup['menu print bay'],"<br>
   </td><td>
   \n<select style='width:250px' size='5' name='mail_tmp'>";
    $count=0;
@@ -111,7 +93,7 @@ echo "
  </tr>
  <tr>
   <td colspan=\"5\" align=\"center\">
-  <input type='submit' name='action' value='",$m_setup['menu send mail'],"' style='width:100%;height:80px;'/>
+  <input type='submit' name='action' value='",$setup['menu send mail'],"' style='width:100%;height:80px;'/>
 </td>
 </tr>
 </table>
@@ -249,17 +231,17 @@ $fielss_tmp_str="";
   
     //$style = "<>";
     $fielss_tmp_str_name = str_replace("&count","<b>N",$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&tovar_artkl","<b>".$m_setup['menu artkl'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&tovar_name_1","<b>".$m_setup['menu name1'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_price","<b>".$m_setup['print price'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_item","<b>".$m_setup['print items'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_discount","<b>".$m_setup['print discount'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_summ","<b>".$m_setup['print summ'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_from","<b>".$m_setup['print from'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&price_tovar_1","<b>".$m_setup['print bay'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&summ_upper","<b>".$m_setup['print upper summ'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&operation_detail_to","<b>".$m_setup['print to'],$fielss_tmp_str_name);
-    $fielss_tmp_str_name = str_replace("&memo","<b>".$m_setup['menu memo'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&tovar_artkl","<b>".$setup['menu artkl'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&tovar_name_1","<b>".$setup['menu name1'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_price","<b>".$setup['print price'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_item","<b>".$setup['print items'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_discount","<b>".$setup['print discount'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_summ","<b>".$setup['print summ'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_from","<b>".$setup['print from'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&price_tovar_1","<b>".$setup['print bay'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&summ_upper","<b>".$setup['print upper summ'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&operation_detail_to","<b>".$setup['print to'],$fielss_tmp_str_name);
+    $fielss_tmp_str_name = str_replace("&memo","<b>".$setup['menu memo'],$fielss_tmp_str_name);
 $fields_for_out .= $fielss_tmp_str_name."</thead>";
     //=================Fields==============================================
 $count = 0;
@@ -269,7 +251,7 @@ while ($count < mysql_num_rows($fields)){
     $tovar_name = mysql_result($fields,$count,"tovar_name_1");
     //echo $tovar_name;
     if($template_name!="bay" and $template_name!="warehouse"){
-	$tovar_name = explode($m_setup['tovar name sep'], $tovar_name);
+	$tovar_name = explode($setup['tovar name sep'], $tovar_name);
 	$fielss_tmp_str = str_replace("&tovar_name_1",$tovar_name[0],$fielss_tmp_str);
     }else{
 		if(strlen($tovar_name)>50){
@@ -310,59 +292,42 @@ while ($count < mysql_num_rows($fields)){
 $count++;
 }
 $fields_for_out .= "</table>";
-$tmp_header = str_replace("&DELIVE PRINT",$m_setup['DELIVE PRINT'],$tmp_header);
-$tmp_header = str_replace("&ANALITIC PRINT",$m_setup['ANALITIC PRINT'],$tmp_header);
-$tmp_header = str_replace("&ANALITIC WARE PRINT",$m_setup['ANALITIC WARE PRINT'],$tmp_header);
-$tmp_header = str_replace("&PACING PRINT",$m_setup['PACING PRINT'],$tmp_header);
-$tmp_header = str_replace("&print nak no",$m_setup['print nak no'],$tmp_header);
-$tmp_header = str_replace("&print print",$m_setup['print print'],$tmp_header);
-$tmp_header = str_replace("&print vidal",$m_setup['print vidal'],$tmp_header);
-$tmp_header = str_replace("&print supplier",$m_setup['print supplier'],$tmp_header);
-$tmp_header = str_replace("&print otrimal",$m_setup['print otrimal'],$tmp_header);
-$tmp_header = str_replace("&print delivery",$m_setup['print delivery'],$tmp_header);
-$tmp_header = str_replace("&print summ",$m_setup['print summ'],$tmp_header);
-$tmp_header = str_replace("&print pdv",$m_setup['print pdv'],$tmp_header);
-$tmp_header = str_replace("&print string",$m_setup['print string'],$tmp_header);
-$tmp_header = str_replace("&print items",$m_setup['print items'],$tmp_header);
-$tmp_header = str_replace("&print bay",$m_setup['print bay'],$tmp_header);
-$tmp_header = str_replace("&print sale",$m_setup['print sale'],$tmp_header);
-$tmp_header = str_replace("&print memo",$m_setup['print memo'],$tmp_header);
-$tmp_header = str_replace("&print upper summ",$m_setup['print upper summ'],$tmp_header);
+$tmp_header = str_replace("&DELIVE PRINT",$setup['DELIVE PRINT'],$tmp_header);
+$tmp_header = str_replace("&ANALITIC PRINT",$setup['ANALITIC PRINT'],$tmp_header);
+$tmp_header = str_replace("&ANALITIC WARE PRINT",$setup['ANALITIC WARE PRINT'],$tmp_header);
+$tmp_header = str_replace("&PACING PRINT",$setup['PACING PRINT'],$tmp_header);
+$tmp_header = str_replace("&print nak no",$setup['print nak no'],$tmp_header);
+$tmp_header = str_replace("&print print",$setup['print print'],$tmp_header);
+$tmp_header = str_replace("&print vidal",$setup['print vidal'],$tmp_header);
+$tmp_header = str_replace("&print supplier",$setup['print supplier'],$tmp_header);
+$tmp_header = str_replace("&print otrimal",$setup['print otrimal'],$tmp_header);
+$tmp_header = str_replace("&print delivery",$setup['print delivery'],$tmp_header);
+$tmp_header = str_replace("&print summ",$setup['print summ'],$tmp_header);
+$tmp_header = str_replace("&print pdv",$setup['print pdv'],$tmp_header);
+$tmp_header = str_replace("&print string",$setup['print string'],$tmp_header);
+$tmp_header = str_replace("&print items",$setup['print items'],$tmp_header);
+$tmp_header = str_replace("&print bay",$setup['print bay'],$tmp_header);
+$tmp_header = str_replace("&print sale",$setup['print sale'],$tmp_header);
+$tmp_header = str_replace("&print memo",$setup['print memo'],$tmp_header);
+$tmp_header = str_replace("&print upper summ",$setup['print upper summ'],$tmp_header);
 
 $tmp_header = str_replace("&fields",$fields_for_out,$tmp_header);
 echo $mail_tmp,"<br><br>";
 echo $tmp_header;
 
-//==================================MAIL===========================================
-$setup = mysql_query("SET NAMES utf8");
-$tQuery = "SELECT 
-	  `setup_name`, 
-	  `setup_param`
-	  FROM `tbl_setup`
-	  WHERE 
-	  `setup_name` like '%email%'
-
-";
-
-$setup = mysql_query($tQuery);
 $m = new Mail("UTF-8");
 $m_sms = new Mail("UTF-8");
-//$this->headers = "Date: ".date("D, j M Y G:i:s")." +0200\r\n";;
-$m_setup = array();
-$count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
- $count++;
-}
+
 
 //======================END MAIL IF NEED===================================================================
+//echo '<pre>'; print_r(var_dump($setup)); die();
 if(isset($_REQUEST["mail"])){
-  $m->From($m_setup['email name'].";".$m_setup['email']);
-  $m->smtp_on($m_setup['email smtp'],$m_setup['email login'],$m_setup['email pass'],$m_setup['email port']);//465 587
+  $m->From($setup['email name'].";".$setup['email']);
+  $m->smtp_on($setup['email smtp'],$setup['email login'],$setup['email pass'],$setup['email port']);//465 587
   $m->Priority(2);
   $m->Body($mail_tmp."<br>".$tmp_header);
   $m->text_html="text/html";
-  $m->Subject($m_setup['email name']." order:".$operation_id);
+  $m->Subject($setup['email name']." order:".$operation_id);
   $m->To(mysql_result($ver,0,"klienti_email"));
   echo "Sending....";
   $error = $m->Send();
@@ -372,13 +337,13 @@ if(isset($_REQUEST["mail"])){
 }
 //======================END SMS IF NEED===================================================================
 if(isset($_REQUEST["sms"])){
-  $m_sms->From($m_setup['email sms name'].";".$m_setup['email']);
-  $m_sms->smtp_on($m_setup['email smtp'],$m_setup['email login'],$m_setup['email pass'],$m_setup['email port']);//465 587
+  $m_sms->From($setup['email sms name'].";".$setup['email']);
+  $m_sms->smtp_on($setup['email smtp'],$setup['email login'],$setup['email pass'],$setup['email port']);//465 587
   $m_sms->Priority(2);
   $m_sms->Body($tmp_sms);
   $m_sms->text_html="text/html";
-  $m_sms->Subject($m_setup['email sms name'].";".$m_setup['email sms login'].";".$m_setup['email sms pass']);
-  $m_sms->To(mysql_result($ver,0,"klienti_phone_1").$m_setup['email sms web']);
+  $m_sms->Subject($setup['email sms name'].";".$setup['email sms login'].";".$setup['email sms pass']);
+  $m_sms->To(mysql_result($ver,0,"klienti_phone_1").$setup['email sms web']);
   $error = $m_sms->Send();
     if($error==1){echo "<br>SMS sended OK";}
       else{echo "<br><b>SMS DONT send!!! Error number - ", $error; }

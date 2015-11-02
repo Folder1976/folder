@@ -20,6 +20,7 @@ $sql = "SELECT W.warehouse_unit_".$inet_warehouse." as ware,
 		T.tovar_name_1,
 		P.price_tovar_".$inet_price." as price,
 		P.price_tovar_2 as price_rozn,
+		P.price_tovar_1 as price_zakup,
 		T.tovar_artkl,
 		T.tovar_memo,
 		T.tovar_dimension,
@@ -42,6 +43,7 @@ while($tmp = mysql_fetch_assoc($r)){
   $out[$tmp['tovar_id']]['ware'] 			= $tmp['ware'];
   $out[$tmp['tovar_id']]['price'] 			= $tmp['price'];
   $out[$tmp['tovar_id']]['price_rozn'] 			= $tmp['price_rozn'];
+  $out[$tmp['tovar_id']]['price_zakup'] 		= $tmp['price_zakup'];
   $out[$tmp['tovar_id']]['tovar_artkl'] 	      	= $tmp['tovar_artkl'];
   $out[$tmp['tovar_id']]['tovar_memo'] 			= $tmp['tovar_memo'];
   $out[$tmp['tovar_id']]['tovar_dimension'] 	      	= $tmp['tovar_dimension'];

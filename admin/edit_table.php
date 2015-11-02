@@ -38,6 +38,7 @@ $JsHttpRequest=new JsHttpRequest("utf8");//"windows-1251");
 
 $count = 0;
 
+$page_to_return = $_REQUEST["_page_to_return"];
 $table_name = $_REQUEST["_table_name"];
 $id_name = $_REQUEST["_id_name"];
 $id_value = $_REQUEST["_id_value"];
@@ -121,17 +122,36 @@ if (isset($_REQUEST["_return"]))
 {
 echo $_REQUEST["_return"];
 }
-//echo "hhhhhhhhhhhhh",$iKey_dell;
+
+
 if (isset($_REQUEST["_dell"]))
 {
+  
+    if(!isset($_REQUEST["_dell_yes"])){
+      ?>
+	<h2>УДАЛИТЬ?</h2>
+	<a href="edit_table.php?_id_value=<?php echo $id_value; ?>&_dell_yes=true&_dell&_page_to_return=<?php echo $page_to_return; ?>&_id_name=<?php echo $id_name; ?>&_table_name=<?php echo $table_name; ?>">ДА</a>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a HREF="javascript:" onclick="history.back();">НЕТ</a>
+	
+      <?php
+      die();
+    }
+  
   $ver = mysql_query("DELETE FROM `" . $table_name . "`" . $s_sql_string_where);
+  
   // esli eto tablica tovara
   if($table_name=="tbl_tovar"){
     $ver = mysql_query("DELETE FROM `tbl_warehouse_unit` WHERE `warehouse_unit_tovar_id`='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_price_tovar` WHERE `price_tovar_id`='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_description` WHERE `descripton_tovar_id`='".$id_value."'");
     }
-  $result_string = "<br><br>Nom -> " . $id_value . " - DELETED OK";
+  
+  echo '<h1>Удалил</h1>';
+  $id_value = (int)$id_value - 1;
+  $id_to_return = $id_value;
+  
+  //$result_string = "<br><br>Nom -> " . $id_value . " - DELETED OK";
 }
 
 if (isset($_REQUEST["_save"]))

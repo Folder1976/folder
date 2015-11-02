@@ -308,7 +308,7 @@ echo "</select></td>";
     while ($count1 < mysql_num_rows($warehouse))
     {
     echo "\n<option ";
-	#echo mysql_result($ver,0,"klienti_group") , " " , mysql_result($kli_grp,$count,"klienti_group_id");
+	echo mysql_result($ver,0,"operation_detail_to") , " " , mysql_result($warehouse,$count1,"warehouse_id");
 	if (mysql_result($ver,0,"operation_detail_to") == mysql_result($warehouse,$count1,"warehouse_id")) echo "selected ";
     echo "value=" . mysql_result($warehouse,$count1,"warehouse_id") . ">" . mysql_result($warehouse,$count1,"warehouse_name") . "</option>";
     $count1++;

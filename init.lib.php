@@ -67,7 +67,7 @@ $html="";
     $html .= "<input class='user_login' type='password' style='width:100px' name='pass' id='pass' placeholder='пароль'>";// onfocus='clear_login(this.id);'>
     $html .="</td>
 	  <td>
-	    <input class='user_login' type='image' value='login' onClick='submit();' src='resources/login.gif' height='25'>
+	    <input class='user_login' type='image' value='login' onClick='submit();' src='".HOST_URL."/resources/login.gif' height='25'>
 	  </td>
 	</tr><tr><td>  
     ";

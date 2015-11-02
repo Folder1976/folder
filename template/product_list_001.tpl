@@ -43,7 +43,7 @@
         <div class="product_list">
             <?php if(isset($products) && count($products) > 0){ ?>
                 <?php foreach($products as $artkl => $product){ ?>
-                        <a href="<?php echo $product['alias']; ?>">
+                        <a href="<?php echo $product['alias']; ?>" target="_blank">
                             <div class="product">
                             <!-- Product title-->               
                                 <div class="product_title">
@@ -53,8 +53,15 @@
                             <!-- Product picture-->               
                                 <div class="product_pic">
                                     <img src="<?php echo $product['img']?>" title="<?php echo $product['name']?>" wigth="200" height="200">
+                                    
+                                    <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
+                                        <div style="display: block; top:10px;">
+                                            &nbsp;&nbsp;<a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red><b>редактировать</b></font></a>
+                                        </div>
+                                    <?php }?>
+                                
                                 </div>
-                            
+                                
                             <!-- Product characteristic-->               
                                 <div class="product_characteristic">
                                     <?php if(isset($product['attributes'])){ ?>
@@ -73,7 +80,7 @@
                             
                             <!-- Product Price-->               
                                 <div class="product_price">
-                                    <?php echo $product['price'].' '.$currency_name[$setup['price default lang']];?>
+                                    <?php echo ceil($product['price']).' '.$currency_name[$setup['price default lang']];?>
                                 </div> 
                             
                             <!-- Product KEY-->               

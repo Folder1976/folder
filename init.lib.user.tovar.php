@@ -64,7 +64,10 @@ if($tmp=="")
 		  WHERE
 		      `warehouse_unit_tovar_id`='".$id."'";
       $ver = mysql_query($tQuery);
-      $zakaz = mysql_result($ver,0,0);
+      $zakaz = 0;
+      if(mysql_num_rows($ver) > 0){
+       $zakaz = mysql_result($ver,0,0);
+      }
  // echo $zakaz," - ",$sum;
   if($sum == 0){
       if($zakaz > 0){

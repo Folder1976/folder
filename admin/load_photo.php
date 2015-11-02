@@ -66,8 +66,6 @@ $count=0;
   $uploaddir = UPLOAD_DIR.$name.'/';
   //$uploaddir = '/hosting/b18149151/data/www/folder.com.ua/resources/products/'.$name.'/';
   
-  echo '<br>'.$uploaddir.'<br>';
-  
   if(!file_exists($uploaddir)){
       mkdir($uploaddir,0777);
       chmod($uploaddir,0777);
@@ -101,8 +99,7 @@ while(isset($_FILES['userfile']['error'][$filecount])){
     $handle->process($uploaddir);
     $handle->clean($uploaddir);
    }
-   echo $uploaddir.$name.".".$count.".origin.".$ext,$uploaddir.$name.".".$count.".tmp.".$ext;
-    copy($uploaddir.$name.".".$count.".origin.".$ext,$uploaddir.$name.".".$count.".tmp.".$ext);
+   copy($uploaddir.$name.".".$count.".origin.".$ext,$uploaddir.$name.".".$count.".tmp.".$ext);
     $handle = new upload($uploaddir.$name.".".$count.".tmp.".$ext);//www.verot.net/php_class_upload_docs.htm
     if($handle->uploaded)
     {

@@ -14,18 +14,18 @@ mysqli_set_charset($folder,"utf8");
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
-$setup = mysql_query("SET NAMES utf8");
+$setup1 = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `setup_menu_name`, 
 	  `setup_menu_".$_SESSION[BASE.'lang']."`
 	  FROM `tbl_setup_menu`
 ";
 //echo $tQuery;
-$setup = mysql_query($tQuery);
-$m_setup = array();
+$setup1 = mysql_query($tQuery);
+
 $count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
+while ($count<mysql_num_rows($setup1)){
+ $setup[mysql_result($setup1,$count,0)]=mysql_result($setup1,$count,1);
  $count++;
 }
 
@@ -34,7 +34,7 @@ if(!isset($_GET['func'])){
   die();
 }
 
-$setup = mysqli_query($folder, "SET NAMES utf8");
+$setup1 = mysqli_query($folder, "SET NAMES utf8");
 $tQuery = "SELECT * FROM tbl_functions WHERE function_alias = '".mysql_real_escape_string($_GET['func'])."' ORDER BY function_sort ASC";
 $res = mysqli_query($folder,  $tQuery);
 
@@ -49,6 +49,7 @@ echo "<header>
 ";
 
 while($func = mysqli_fetch_assoc($res)){
+  //echo '<pre>'; print_r(var_dump(  $func ));
   $title = $func['function_name'];
   include $func['function_patch'];
 }

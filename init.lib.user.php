@@ -292,7 +292,7 @@ $price2 = $price2/100*(100-$_SESSION[BASE.'userdiscount']);
 $price2 = number_format($price2,2,'.','');
 //================END=PRICE =========================================      
 $tovar_tmp = "<td width=\"".$ColsW."\" align=\"center\" valign=\"top\" height=\"390px\">";
-      $tovar_tmp .= "<table width=\"200px\"  class=\"menu_top\" height=\"100%\" border=\"0px\" valign='top'><tr>
+      $tovar_tmp .= "<table width=\"200px\"  class=\"menu_top\" height=\"100%\" border=\"0px\"><tr>
 		      <td valign=\"top\" align=\"center\" height=\"160px\" >";
 	  
 	  if(strpos($title,"add dell")!==false)
@@ -600,7 +600,7 @@ $price2 = $price2/100*(100-$_SESSION[BASE.'userdiscount']);
 $price2 = number_format($price2,2,'.','');
 //================END=PRICE =========================================      
 $tovar_tmp = "<td width=\"".$ColsW."\" align=\"center\" valign=\"top\" height=\"390px\">";
-      $tovar_tmp .= "<table width=\"200px\"  class=\"menu_top\" height=\"100%\" border=\"0px\" valign='top'><tr>
+      $tovar_tmp .= "<table width=\"200px\"  class=\"menu_top\" height=\"100%\" border=\"0px\"><tr>
 		      <td valign=\"top\" align=\"center\" height=\"160px\" >";
      
       if (strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){
@@ -864,12 +864,13 @@ function user_item_list_view($id,$setup){
   $Category = new Category($folder);
   $children = $Category->getCategoryChildren($id);
    
-   //echo "<pre>"; print_r(var_dump());
+ //echo "<pre>===".$id; print_r(var_dump($children));
    
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
 $getName = mysql_query("SET NAMES utf8");
+/*
 $SgetName = "SELECT 	`tovar_inet_id_parent`,
 			`tovar_artkl`,
 			`tovar_name_".$_SESSION[BASE.'lang']."` AS tovar_name,
@@ -905,10 +906,23 @@ $SgetName = "SELECT 	`tovar_inet_id_parent`,
 			)
 			ORDER BY `tovar_name_1` ASC
 			";
+*/
+$SgetName = "SELECT 	`tovar_inet_id_parent`,
+			`tovar_artkl`,
+			`tovar_name_".$_SESSION[BASE.'lang']."` AS tovar_name,
+			`tovar_id`,
+			`tovar_inet_id`,
+			`price_tovar_curr_".$setup['web default price']."` as curr1,
+			`price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2
+			FROM 
+			`tbl_tovar`
+			LEFT JOIN tbl_price_tovar ON price_tovar_id = tovar_id
+			WHERE 
+			`tovar_inet_id_parent` IN (".implode(",", $children).")
+			and `tovar_inet_id` > 0
+			ORDER BY `tovar_name_1` ASC
+			";
 
-if(!$id){
-$SgetName .= " ,`tovar_id` DESC LIMIT 0, 80";
-}
 $getName = mysql_query($SgetName);
 
 if (!$getName){
@@ -935,7 +949,7 @@ $count=0;
 while($count<mysql_num_rows($ver)){
     $date = new DateTime(mysql_result($ver,$count,"operation_data"));
     $date = $date->format('Y-m-d');
-    $html .= "<table width=\"100%\" class=\"menu_top\"><tr><td align=\"center\" class=\"tovar_list_price\" valign='top'>".
+    $html .= "<table width=\"100%\" class=\"menu_top\"><tr><td align=\"center\" class=\"tovar_list_price\">".
 	      $date.
 	      "<hr></td></tr></table>";
     $id = mysql_result($ver,$count,"operation_id");
@@ -1854,9 +1868,9 @@ $html .= "
 </script>";
 return $html;
 }
-function find_result($find,$setup,$setup) {
-$html = "";
+function find_result($find) {
 global $setup;
+$html = "";
 
 if(!isset($_SESSION[BASE.'userprice'])) $_SESSION[BASE.'userprice']=$setup['web default price'];
 if(!empty($find))
@@ -1977,13 +1991,9 @@ if(!empty($find))
 return $html;
   
 }
-function user_registration($request) {
+function user_registration($setup,$setup) {
     $html = "";
 global $setup;
-
-foreach($request as $index => $value){
-    $setup[$index] = $value;
-}
 
 $html .= "<table><tr><td>
 	  <img src=\"".HOST_URL."/resources/info/info.png\">
@@ -2212,7 +2222,7 @@ if(mysql_num_rows($ver)>0) $errors .= "ERROR! - ".$setup['user wrong phone']."<b
     $region = mysql_query($SgetName); 
  
  
-$html .= "<table width=100% height=100% valign='top'><tr><td align='center' valign='top'>";
+$html .= "<table width=100% height=100% ><tr><td align='center' valign='middle'>";
 $html .= session_verify($_SERVER["PHP_SELF"]."?".$_SERVER['QUERY_STRING']);
 $html .= "<br>".$errors."<br><br>";
 //============FIND====================================================================================
@@ -2461,7 +2471,7 @@ $html .= "\n<script type='text/javascript'>";
     
 //echo "<title>Klient edit</title>";
 //echo "\n<body>\n";
-$html .= "\n<table width=\"100%\" cellspacing='0' cellpadding='0' class=\"edituser\"><tr><td align=\"center\" valign='top'>
+$html .= "\n<table width=\"100%\" cellspacing='0' cellpadding='0' class=\"edituser\"><tr><td align=\"center\">
 	  $err<br>";
 $html .= "<form method='POST' action='index.php'>
       <input type='submit' name='submit' class='key_button' value='".$setup['menu user edit']."'/>";
@@ -2575,7 +2585,9 @@ $html .= "\n</table></form>";
     
 }
 function user_rem_pass($setup) {
+  global $setup;
 include 'admin/libmail.php';
+$m = new Mail("UTF-8");
 $html = "";
 $errors = ""; 
  
@@ -2609,7 +2621,7 @@ $new_pass=substr(uniqid(rand(),true),0,6);
 	  `klienti_id`='".mysql_result($ver,0,0)."'
     ";
   $ver1 = mysql_query($tQuery);
-
+//echo $setup['email name'] . ' '. $setup['email'];
   $m->From($setup['email name'].";".$setup['email']);
   $m->smtp_on($setup['email smtp'],$setup['email login'],$setup['email pass'],$setup['email port']);//465 587
   $m->Priority(2);
@@ -2619,7 +2631,7 @@ $new_pass=substr(uniqid(rand(),true),0,6);
   $m->To($_REQUEST['useremail']);
   $error = $m->Send();
     if($error==1){
-	$html .= "<table width=100% height=100% class=\"edituser\"><tr><td align='center' valign='top'>";
+	$html .= "<table width=100% height=100% class=\"edituser\"><tr><td align='center' valign='middle'>";
 	$html .= $setup['email sended'];
 	$html .= "</td></tr></table>";
 	//header ('Refresh: 2; url=index.php');

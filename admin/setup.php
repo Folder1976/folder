@@ -38,7 +38,7 @@ echo "<br><ul class=\"setup_menu\">Настройки
 echo "<li><a href='edit_klient.php' target='_blank'>",$m_setup['setup klient'],"</a></li>";
 echo "<li><a href='edit_klienti_group.php' target='_blank'>",$m_setup['setup klient group'],"</a></li>";
 echo "<li><a href='edit_delivery.php' target='_blank'>",$m_setup['setup delivery'],"</a></li>";
-echo "<li><a href='edit_nakl-group.php' target='_blank'>",$m_setup['setup nakl'],"</a></li>";
+echo "<li><a href='edit_nakl-group.php' target='_blank'>Редактировать внутрение группы товаров</a></li>";
 echo "<li><a href='edit_inet_parent_table.php' target='_blank'>",$m_setup['setup nakl inet'],"</a></li>";
 echo "<li><a href='edit_status.php' target='_blank'>",$m_setup['setup status'],"</a></li>";
 echo "<li><a href='edit_warehouse.php' target='_blank'>",$m_setup['setup warehouse'],"</a></li>";

@@ -1,0 +1,26 @@
+.attribute_list{
+    list-style-type: none;
+    padding-left: 0;
+    margin-left: 5px;
+}
+.attribute_list input{
+    width: 200px;
+    padding-left: 5px;
+    margin-top: 10px;
+}
+
+.attribute_list select{
+    width: 200px;
+    padding-left: 5px;
+    margin-top: 0px;
+}
+
+.edit_attribute_list{
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+.edit_attribute_list th,td{
+    padding-left: 10px;
+    padding-right: 10px;
+}

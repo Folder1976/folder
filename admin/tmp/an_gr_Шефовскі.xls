@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>FolderUser</Author>
+  <LastAuthor>FolderUser</LastAuthor>
+  <Created>2014-04-11T07:17:05Z</Created>
+  <LastSaved>2014-04-11T07:27:31Z</LastSaved>
+  <Version>11.9999</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9015</WindowHeight>
+  <WindowWidth>16275</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>45</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Arial Cyr" x:CharSet="204"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+   </Style>
+  <Style ss:ID="s22">
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+    <Interior ss:Color="#ffff00" ss:Pattern="Solid"/>
+   </Style>
+   <Style ss:ID="s23">
+    <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+   </Style>
+   <Style ss:ID="s24">
+    <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Arial Cyr" x:CharSet="204" ss:Bold="1" ss:Italic="1"/>  
+    <Borders>
+      <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="1"/>
+      <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="1"/>
+    </Borders>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="&list name">
+  <Table ss:ExpandedColumnCount="20" ss:ExpandedRowCount="32" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="1" ss:Width="25"/>
+   <Column ss:Index="2" ss:Width="55"/>
+   <Column ss:Index="3" ss:Width="220"/>
+   <Column ss:Index="4" ss:Width="40"/>
+   <Column ss:Index="5" ss:Width="20"/>
+   <Column ss:Index="6" ss:Width="20"/>
+   <Column ss:Index="7" ss:Width="30"/>
+   <Column ss:Index="8" ss:Width="18"/>
+   <Column ss:Index="9" ss:Width="30"/>
+   <Column ss:Index="10" ss:Width="30"/>
+   <Column ss:Index="11" ss:Width="18"/>
+   <Column ss:Index="12" ss:Width="25"/>
+   <Column ss:Index="13" ss:Width="40"/>
+   <Column ss:Index="14" ss:Width="20"/>
+   <Column ss:Index="15" ss:Width="200"/>
+   <Row ss:Index="1">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">Вхiднi данi</Data></Cell>
+		<Cell ss:Index="8" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">Зкореговано</Data></Cell></Row><Row ss:Index="2">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Закуп:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">3051</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell></Row><Row ss:Index="3">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Продано:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">4135</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell></Row><Row ss:Index="4">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Дохiд-Коефiцiент:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="String">1084(1.36)</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String"></Data></Cell></Row><Row ss:Index="5">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Процент з-ти:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">5</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">%</Data></Cell></Row><Row ss:Index="6">
+		<Cell ss:Index="3" ss:StyleID="s23"><Data ss:Type="String">Нараховано з-ти:</Data></Cell>
+		<Cell ss:Index="4" ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number">206.75</Data></Cell>
+		<Cell ss:Index="7" ss:StyleID="s23"><Data ss:Type="String">грн</Data></Cell>
+		<Cell ss:Index="8" ss:Formula="=SUM(R[4]C[4]:R[32]C[4])"  ss:MergeAcross="2" ss:StyleID="s23"><Data ss:Type="Number"></Data></Cell></Row><Row ss:Index="7">
+		<Cell ss:StyleID="s23" ss:Index="2"><Data ss:Type="String">курси: Все 0 , грн 1 , usd 20 , euro 25 , zl 5 , Инт 20 , </Data></Cell></Row>
+<Row ss:Index="9">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11792 (2015-01-21) Батальйон "СІЧ" - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="10">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="11">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H5914/MR</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">CPU штаны мультикамо (PolyCotton) ||SP-CPU-PR-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">21.56</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">949.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1290.64</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">428.24</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="12">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7214/M-57</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US ACU кепка мультикам (NYCO R/S) ||CZ-ACU-PR-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">4.31</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">190.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">129.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">43.00</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="13">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">3</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7214/XL-61</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US ACU кепка мультикам (NYCO R/S) ||CZ-ACU-PR-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">4.31</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">190.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">129.20</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">43.00</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="14">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">4</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H47141/MR</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">US ACU китель мультикам (NYCO R/S) ||BL-ACU-PR-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">23.03</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">1013.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.20</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">1377.68</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">456.48</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.20</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="15">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">K13028-M</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Кобура набедренная MOLLE tactical backpack мультикам ||M51613028-CP</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">7.61</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">350.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">2.30</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">238.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">85.80</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">2.30</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-5]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+<Row ss:Index="17">
+		<Cell ss:StyleID="s23" ss:Index="1">
+				    <Data ss:Type="String">#11915 (2015-01-27) Батальйон "СІЧ" - Відправлено-Продано</Data></Cell>
+
+
+		</Row>
+
+
+<Row ss:Index="18">
+		<Cell ss:StyleID="s24" ss:Index="1"><Data ss:Type="String">N</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="2"><Data ss:Type="String">арт</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="3"><Data ss:Type="String">назва</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="4"><Data ss:Type="String">закуп</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="5"><Data ss:Type="String"></Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="String">к-ть</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="7"><Data ss:Type="String">цiна</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="8"><Data ss:Type="String">кф</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="9"><Data ss:Type="String">продж</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="10"><Data ss:Type="String">дохiд</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="11"><Data ss:Type="String">%</Data></Cell>
+		<Cell ss:StyleID="s24" ss:Index="12"><Data ss:Type="String">з-та</Data></Cell>
+		
+	  </Row>
+<Row ss:Index="19">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H7611N</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Балаклава коет с 1-м отв.(ComfortDry) ||CZ-KO2-FG-11</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">5.66</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">183.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">1.62</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">124.44</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">11.24</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">1.62</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="20">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">2</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H26141/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Куртка PATRIOT флисовая мультикам 390г/м (superfine) ||BL-PAT-HF-14</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">31.03</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">932.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">1.50</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">633.76</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">13.16</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">1.50</Data></Cell>
+
+		
+		
+	  </Row>
+
+
+
+<Row ss:Index="21">
+		<Cell ss:StyleID="s21" ss:Index="1"><Data ss:Type="Number">3</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="2"><Data ss:Type="String">H33111/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="3"><Data ss:Type="String">Термофутболка (95% полиэстер 5% спандекс) койот ||BL-UN2-PO-11/2XL</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="4"><Data ss:Type="Number">10.44</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="5"><Data ss:Type="String">usd</Data></Cell>
+
+		<Cell ss:StyleID="s24" ss:Index="6"><Data ss:Type="Number">1</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="7"><Data ss:Type="Number">312.00</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="8"><Data ss:Type="Number">1.49</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="9"><Data ss:Type="Number">212.16</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="10"><Data ss:Type="Number">3.36</Data></Cell>
+
+		<Cell ss:StyleID="s22" ss:Index="11"><Data ss:Type="Number">5</Data></Cell>
+
+		<Cell ss:StyleID="s21" ss:Index="12"
+		    ss:Formula="=RC[-3]/100*RC[-1]"><Data ss:Type="Number">1.49</Data></Cell>
+
+		<Cell ss:Formula="=SUM(R[-3]C[-1]:RC[-1])" ss:StyleID="s24" ss:Index="13"><Data ss:Type="String"></Data></Cell>
+		
+	  </Row>
+
+
+
+
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <PageMargins x:Bottom="0.984251969" x:Left="0.78740157499999996"
+     x:Right="0.78740157499999996" x:Top="0.984251969"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>5</ActiveRow>
+     <ActiveCol>3</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+
+</Workbook>

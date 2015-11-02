@@ -1,0 +1,129 @@
+
+<!--&operation_data
+&operation_id
+&operation_summ
+&klienti_name_1
+&klienti_phone_1-->
+
+
+
+<table><tr>
+  <td rowspan=6 style='width:180px'>
+    <table class="menu_top">
+    <tr><td><a href='edit_nakl_print.php?tmp=beznal_rah&operation_id=&iKlient_id' target='&blank'>&nbsp &print_beznal_rah &nbsp</a></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=beznal_nakl&operation_id=&iKlient_id' target='&blank'>&nbsp &print_beznal_nakl &nbsp</a></td></tr>
+   <tr><td><a href='edit_nakl_print.php?tmp=beznal_into&operation_id=&iKlient_id' target='&blank'>&nbsp &print_beznal_into &nbsp</a></td></tr>
+    <tr><td></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=print&operation_id=&iKlient_id' target='&blank'>&nbsp &print_sale &nbsp</a></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=warehouse&operation_id=&iKlient_id' target='&blank'>&nbsp &print_warehouse &nbsp</a></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=bay&operation_id=&iKlient_id' target='&blank'>&nbsp &print_bay &nbsp</a></td></tr>
+    <tr><td></td></tr>
+    <tr><td><a href='send_mail.php?operation_id=&iKlient_id&key=none' target='_blank'>&nbsp &send_mail &nbsp</a></td></tr>
+    </table>
+  </td>
+  
+  <td style='width:150px' align=right>
+    &klient_menu:
+  </td>
+  <td style='width:600px'>
+    <b>&klienti_name_1<b>
+  </td>
+  <td stylr='width:12-px' align=right>
+    &beznal_rah:
+  </td>
+  <td>
+   <input type='text'  style='width:50px'  id='beznal_rah' value='&beznal_rah_value' onChange='set_nakl_field("operation_beznal_rah",this.value)'/>
+  </td>
+    <td align=right>
+    &beznal_rah_date:
+  </td>
+  <td>
+   <input type='text'  style='width:100px'  id='beznal_rah_date' value='&beznal_rah_date_value' onChange='set_nakl_field("operation_beznal_rah_date",this.value)'/>
+  </td>
+  
+</tr><tr>  
+
+ <td align=right>
+    &phone_menu:
+  </td>
+   <td>
+    <b>&klienti_phone_1<b>
+  </td>
+  <td align=right>
+    &beznal_nakl:
+  </td>
+    <td>
+   <input type='text'  style='width:50px'  id='beznal_nakl' value='&beznal_nakl_value' onChange='set_nakl_field("operation_beznal_nakl",this.value)'/>
+  </td>
+  <td align=right>
+    &beznal_nakl_date:
+  </td>
+    <td>
+   <input type='text'  style='width:100px'  id='beznal_nakl_date' value='&beznal_nakl_date_value' onChange='set_nakl_field("operation_beznal_nakl_date",this.value)'/>
+  </td>
+  
+</tr><tr>  
+ 
+  <td align=right>
+    &delivery_menu:
+  </td>
+   <td>
+    <b>&delivery<b>
+  </td>
+  <td align=right>
+    &beznal_pidstava:
+  </td>
+    <td colspan="3">
+   <input type='text'  style='width:300px'  id='beznal_pidstava' value='&beznal_pidstava_value' onChange='set_nakl_field("operation_beznal_pidstava",this.value)'/>
+  </td>
+
+</tr><tr>  
+
+   <td align=right>&klient_menu &memo_menu:
+   </td>
+  <td>
+    <b>&klienti_memo<b>
+  </td>
+  <td align=right>
+    &beznal_memo:
+  </td>
+    <td colspan="3">
+   <input type='text'  style='width:300px'  id='beznal_memo' value='&beznal_memo_value' onChange='set_nakl_field("operation_beznal_memo",this.value)'/>
+  </td>
+  
+</tr><tr>  
+  
+  <td align=right>
+    &operation_menu &memo_menu:
+  </td>
+  <td>
+    <b>&operation_memo<b>
+  </td>
+  <td align=right>
+    &beznal_firm:
+  </td>
+    <td colspan="3">
+   &firm
+  </td>
+
+</tr><tr>  
+
+  <td align=right>
+    .
+  </td>
+  <td>
+    <b><b>
+  </td>
+  <td align=right>
+    &status_menu:
+  </td>
+    <td colspan="3">
+   &status
+  </td>
+ 
+
+  
+  
+</tr></table>
+
+</td></tr></table>

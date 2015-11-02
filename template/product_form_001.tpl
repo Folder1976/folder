@@ -2,7 +2,7 @@
 <!-- Main right col -->
 <div class="product_main">
     <div class="product_title">
-        <?php echo $product['artkl'].' - '.$product['name']; ?>
+        <?php echo $product['artkl'].' - '.$product['name'];?>
     </div>
     <div class="product_info_wrap">
         <div class="product_photos">
@@ -30,12 +30,12 @@
                                 <?php echo $value['size']; ?>
                                 <?php if (strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
                                     &nbsp;&nbsp;
-                                        <a href="admin/edit_tovar.php?tovar_id=<?php echo $value['id']; ?>" class="admin">
+                                        <a href="/admin/edit_tovar.php?tovar_id=<?php echo $value['id']; ?>" class="admin" target="_blank">
                                         <b><font color=red>ред.</font></b></a>
                                 <?php }?>
                             </td>
                             <td align=center class="price">
-                                <?php echo $value['price'].' '.$currency_name[$setup['price default lang']]; ?>
+                                <?php echo ceil($value['price']).' '.$currency_name[$setup['price default lang']]; ?>
                             </td>
                           
                             <td align=center>

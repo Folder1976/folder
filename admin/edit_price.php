@@ -9,8 +9,7 @@ echo "<b>Nuzno napisat svaz s tablicej tbl_price_tovar
 if (!session_verify($_SERVER["PHP_SELF"])){
   exit();
 }
-
-
+echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 
 //==================================SETUP===========================================
 if ($_SESSION[BASE.'lang'] <1){
@@ -102,8 +101,8 @@ echo "\n</form>";
 //========================================================================================================
 
 echo "\n<form method='post' action='edit_table.php'>";
-echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_save' value='",$m_setup['menu save'],"'/>";
+echo "\n<input type='submit' name='_add' value='",$m_setup['menu add'],"'/>";
 echo "\n<input type='submit' name='_dell' value='",$m_setup['menu dell'],"'/>";
 
 echo "\n<input type='hidden' name='_id_value' value='"  , $iKlient_id  , "'/>";

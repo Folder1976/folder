@@ -1,38 +1,27 @@
-<div>
-</div> 
 <?php
 if(session_id()){
 }else{
   session_start();
 }
-
 include_once 'config/config.php';
 echo '
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Chrome, Safari, IE -->
-<link rel="shortcut icon" href="http://folder.com.ua/favicon.ico">
- 
-<!-- Firefox, Opera (Chrome и Safari могут но не будут) -->
-<link rel="icon" href="http://folder.com.ua/favicon.ico">
-<link rel="shortcut icon" href="http://folder.com.ua/favicon.ico" type="image/png">
-
 <title>'.MAIN_TITLE.'</title>    
-
-
+<link rel="shortcut icon" href="'.HOST_URL.'/resources/favicon.png" type="image/png">
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
  	<script type="text/javascript" src="'.HOST_URL.'/js/jquery-2.1.4.min.js"></script>
  	<script language="javascript" src="'.HOST_URL.'/script.js"></script>
         <script language="javascript" src="'.HOST_URL.'/admin/JsHttpRequest.js"></script>
-	<script type="text/javascript" src="lightbox/js/lightbox-plus-jquery.min.js"></script>
+	<script type="text/javascript" src="'.HOST_URL.'/lightbox/js/lightbox-plus-jquery.min.js"></script>
 	
 	<link rel="stylesheet" type="text/css" media="all" href="'.HOST_URL.'/css/styles.css">
 	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/sturm.css">
 	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/main.css">
 	
-	<link rel="stylesheet" href="lightbox/css/lightbox.css">
+	<link rel="stylesheet" href="'.HOST_URL.'/lightbox/css/lightbox.css">
 	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/sturm.css">
 	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/demo.css">
 	
@@ -42,19 +31,17 @@ echo '
 </head>
 ';
 
-//echo '<pre>'.print_r(var_dump($_GET));
+
 
 include_once 'config/core.php';
 include 'init.lib.php';
 include 'init.lib.user.php';
 include 'init.lib.user.tovar.php';
 include 'seo_url.php';
-include_once("servises/analyticstracking.php");
+
 //if(isset($_GET['find'])) unset($_GET['_route_']);
 
 //Если вход по алиас - подставим переменные в ГЕТ
-
-
 if(isset($_GET['_route_'])){
     $Alias->resetGET($_GET['_route_']);
 }
@@ -243,14 +230,22 @@ if (!isset($_SESSION[BASE.'userprice'])){
 
 
 //header ('Content-Type: text/html; charset=utf-8');
+$find = '';
+if(isset($_GET['find'])) $find = $_GET['find'];
 
 echo "<script>
+    function getObj(objID)
+    {
+      if (document.getElementById) {return document.getElementById(objID);}
+      else if (document.all) {return document.all[objID];}
+      else if (document.layers) {return document.layers[objID];}
+    }
       function clear_field(){
 	 // alert('gg');
 	  document.getElementById('comment_txt').value='';
       }
       function hidde_elem(){
-	if(getObj('city').value == '' || getObj('city').value == '",$setup['menu find-str'],"')
+	if(getObj('city').value == '')
 	  getObj('info').style.visibility = 'hidden';
      }
    
@@ -462,19 +457,41 @@ echo "\nfunction update(table,name,value,id,tovar){
 }
 
 //=================================================================================
+echo "
+<div id=\"fb-root\"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1582359991987210',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = \"//connect.facebook.net/en_US/sdk.js\";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+";
 
   echo "</head>  
   <body onload=\"start();\" onmouseover=\"hidde_elem();\">";
 
 $body = "";
 $find="";
-if(isset($_REQUEST['find']))$find=mysql_real_escape_string($_REQUEST['find']);
+if(isset($_GET['find']))$find=mysql_real_escape_string($_GET['find']);
+
 
 $parent=0;
 if(isset($_REQUEST['parent']))
   $_REQUEST['parent'];
 
-  if(isset($_REQUEST['parent'])&&!isset($_REQUEST['tovar_id'])){
+  if(isset($_REQUEST['parent'])&&!isset($_REQUEST['tovar_id'])&&(!isset($_GET['find']))){
       if($_REQUEST['parent']=='last' or $_REQUEST['parent']=='-1'){
 	$body = user_last_item_list_view(120,$setup);
       }elseif($_REQUEST['parent']=='-2'){ //last operation list tovar
@@ -497,8 +514,9 @@ if(isset($_REQUEST['parent']))
 	//$body .= user_subcatalog_view(mysql_real_escape_string($_REQUEST['parent']));
 	$body .= user_item_list_view(mysql_real_escape_string($_REQUEST['parent']),$setup);
       }
-  }elseif(isset($_REQUEST['find'])){
-	$body = find_result(mysql_real_escape_string($_REQUEST['find']),$setup,$setup);
+  }elseif(isset($_GET['find'])){
+    
+	$body = find_result(mysql_real_escape_string($_GET['find']));
   }elseif(isset($_REQUEST['operation_id'])){
 	    if(isset($_SESSION[BASE.'usersetup'])){
 		if (strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){
@@ -506,7 +524,7 @@ if(isset($_REQUEST['parent']))
 	    }}
   }elseif(isset($_REQUEST['user'])){
 	if($_REQUEST['user']=="new" and !isset($_SESSION[BASE.'userid'])){
-	    $body = user_registration($_REQUEST);
+	    $body = user_registration($setup,$_REQUEST,$setup);
 	}elseif($_REQUEST['user']=="edit"){
 	    $body = user_edit($setup,$_REQUEST);
 	}elseif($_REQUEST['user']=="rem_pass"){
@@ -524,7 +542,7 @@ if(isset($_REQUEST['parent']))
 	}
   }elseif(isset($_REQUEST['submit'])){
 	if($_REQUEST['submit']==$setup['menu user register']){
-	    $body = user_registration($_REQUEST);
+	    $body = user_registration($setup,$_REQUEST,$setup);
 	}elseif($_REQUEST['submit']==$setup['menu user edit']){
 	    $body = user_edit($setup,$_REQUEST);
 	}
@@ -564,7 +582,7 @@ if(isset($_REQUEST['parent']))
 	    $body .= info(100,$setup,mysql_real_escape_string($_REQUEST["key"]));
 	    
 	}
-      $body .= user_last_item_list_view(8,$setup);
+      $body .= user_last_item_list_view(20,$setup);
   }
   
 $korzina="";  

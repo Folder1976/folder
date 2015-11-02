@@ -1,0 +1,26 @@
+<?php
+if(!isset($_GET['tovar_id'])){
+    echo 'Нет ИД товара!';
+    die();
+}
+$tovar_id = $_GET['tovar_id'];
+
+$sql = "SELECT attribute_group_id, attribute_group_name FROM tbl_attribute_group ORDER BY attribute_group_name ASC;";
+$group = $folder->query($sql) or die(mysql_error());
+
+echo '<select name="attribute_group_id" id="attribute_group_id" style="width:300px">
+        <option value="0">- - -</option>';
+        while($grp = $group->fetch_assoc()){
+            echo '<option value="'.$grp['attribute_group_id'].'" ';
+            if($grp['attribute_group_id'] == $tovar['attribute_group_id']) echo 'selected';
+            echo '>'.$grp['attribute_group_name'].'</option>';
+        }
+echo '</select> <a href="main.php?func=attribute_group_edit" target = "_blank">Редактор</a><br>";
+    <div class = "attribute_list"></div>';
+
+
+
+//echo 'attribute - '.$tovar['attribute_group_id'];
+//print_r(var_dump($_GET));
+
+?>

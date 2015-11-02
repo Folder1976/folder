@@ -1,0 +1,98 @@
+
+<!--&operation_data
+&operation_id
+&operation_summ
+&klienti_name_1
+&klienti_phone_1-->
+
+
+
+<table><tr>
+  <td rowspan=5 style='width:160px'>
+    <table class="menu_top">
+    <tr><td><a href='edit_nakl_print.php?tmp=print&operation_id=&iKlient_id' target='_blank'>&nbsp &print_sale &nbsp</a></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=warehouse&operation_id=&iKlient_id' target='_blank'>&nbsp &print_warehouse &nbsp</a></td></tr>
+    <tr><td><a href='edit_nakl_print.php?tmp=bay&operation_id=&iKlient_id' target='_blank'>&nbsp &print_bay &nbsp</a></td></tr>
+    <tr><td><a href='send_mail.php?operation_id=&iKlient_id&key=none'>&nbsp &send_mail &nbsp</a></td></tr>
+    </table>
+  </td>
+  
+  <td style='width:150px' align=right>
+    &klient_menu:
+  </td>
+  <td style='width:600px'>
+    <b>&klienti_name_1<b>
+  </td>
+  <td stylr='width:12-px' align=right>
+    &data_menu:
+  </td>
+  <td>
+   <input type='text'  style='width:200px'  id='data' value='' onChange='set_nakl_field()'/>
+  </td>
+  
+</tr><tr>  
+
+ <td align=right>
+    &phone_menu:
+  </td>
+   <td>
+    <b>&klienti_phone_1<b>
+  </td>
+    <td align=right>
+    &warehouse_menu:
+  </td>
+  <td>
+   <input type='text'  style='width:50px'  id='warehouse' value='' onChange='set_nakl_field()'/>
+  </td>
+  
+</tr><tr>  
+ 
+  <td align=right>
+    &delivery_menu:
+  </td>
+   <td>
+    <b>&delivery<b>
+  </td>
+  <td align=right>
+    TTN:
+  </td>
+    <td>
+   <input type='text'  style='width:200px'  id='ttn' value='' onChange='set_nakl_field()'/>
+  </td>
+  
+</tr><tr>  
+  
+  <td align=right>
+    &klient_menu &memo_menu:
+  </td>
+  <td>
+    <b>&klienti_memo<b>
+  </td>
+  <td align=right>
+    &memo_menu:
+  </td>
+    <td>
+   <input type='text'  style='width:300px'  id='coment' value='' onChange='set_nakl_field()'/>
+  </td>
+
+</tr><tr>  
+
+  <td align=right>
+    &operation_menu &memo_menu:
+  </td>
+  <td>
+    <b>&operation_memo<b>
+  </td>
+  <td align=right>
+    &status_menu:
+  </td>
+    <td>
+   &status
+  </td>
+ 
+
+  
+  
+</tr></table>
+
+</td></tr></table>

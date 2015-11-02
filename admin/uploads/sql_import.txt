@@ -1,0 +1,830 @@
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Авдеевка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Александрия','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Александровск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Алмазная','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Алупка','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Алушта','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Алчевск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Амвросиевка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ананьев','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Андрушёвка','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Антрацит','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Апостолово','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Армянск','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Артёмовск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Артёмовск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Арциз','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ахтырка','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Балаклея','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Балта','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бар','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Барановка','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Барвенково','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Батурин','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бахмач','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бахчисарай','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Баштанка','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Белая Церковь','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Белгород-Днестровский','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Белз','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Белогорск','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Белополье','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Беляевка','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бердичев','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бердянск','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Берегово','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бережаны','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Березань','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Березне','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Берестечко','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Берислав','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бершадь','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бобринец','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бобрка','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бобровица','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Богодухов','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Богуслав','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Болград','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Болехов','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Борзна','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Борислав','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Борисполь','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Борщёв','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Боярка','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бровары','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Броды','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Брянка','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бурштын','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бурынь','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Буск','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Буча','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Бучач','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Валки','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Васильевка','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Васильков','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ватутино','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вахрушево','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вашковцы','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Великие Мосты','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Верхнеднепровск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вижница','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Винница','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Виноградов','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вишнёвое','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Владимир-Волынский','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вознесенск','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Волноваха','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Волочиск','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Волчанск','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вольногорск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вольнянск','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Вышгород','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Гадяч','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Гайворон','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Гайсин','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Галич','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Геническ','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Герца','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Глиняны','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Глобино','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Глухов','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Голая Пристань','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Горловка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Горное','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Городенка','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Городище','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Городня','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Городок','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Городок','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Горохов','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Гребёнка','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Гуляйполе','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дебальцево','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Деражня','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дергачи','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Джанкой','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дзержинск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Димитров','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Днепродзержинск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Днепропетровск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Днепрорудное','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Добромиль','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Доброполье','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Докучаевск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Долина','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Долинская','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Донецк','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дрогобыч','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дружковка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дубляны','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дубно','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дубровица','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Дунаевцы','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Евпатория','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Енакиево','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Жашков','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ждановка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Жёлтые Воды','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Жидачов','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Житомир','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Жмеринка','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Жолква','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Залещики','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Запорожье','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Заставна','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Збараж','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Зборов','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Звенигородка','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Здолбунов','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Зеньков','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Зимогорье','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Змиёв','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Знаменка','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Золотое','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Золотоноша','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Золочев','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Зоринск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Зугрэс','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ивано-Франковск','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Измаил','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Изюм','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Изяслав','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ильинцы','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ильичёвск','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Инкерман','город со специальным статусом Севастополь');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ирпень','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Иршава','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ичня','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кагарлык','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Казатин','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Калиновка','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Калуш','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Каменец-Подольский','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Каменка','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Каменка-Бугская','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Каменка-Днепровская','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Камень-Каширский','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Канев','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Карловка','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Каховка','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Керчь','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Киверцы','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Киев','город со специальным статусом Киев');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Килия','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кировоград','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кировское','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кицмань','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кобеляки','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ковель','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кодыма','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Коломыя','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Комсомольск','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Конотоп','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Константиновка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Корец','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Коростень','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Коростышев','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Корсунь-Шевченковский','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Корюковка','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Косов','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Костополь','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Котовск','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Краматорск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Красилов','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Красноармейск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Красноград','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Краснодон','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Краснопартизанск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Красноперекопск','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','КрасныйЛиман','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','КрасныйЛуч','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кременец','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кременчуг','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','КривойРог','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кролевец','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Кузнецовск','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Купянск','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ладыжин','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лановцы','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лебедин','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лисичанск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лозовая','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лохвица','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лубны','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Луганск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Лутугино','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Луцк','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Любомль','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Люботин','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Львов','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Макеевка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','МалаяВиска','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Малин','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Марганец','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мариуполь','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мелитополь','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мена','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мерефа','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Миргород','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мироновка','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Миусинск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Могилёв-Подольский','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Молодогвардейск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Молочанск','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Монастыриска','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Монастырище','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мостиска','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Мукачево','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Надворная','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Нежин','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Немиров','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Нетешин','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Николаев','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Николаев','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Никополь','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новая Каховка','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новая Одесса','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новгород-Северский','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новоазовск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Нововолынск','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новоград-Волынский','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новогродовка','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новоднестровск','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новодружеск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новомиргород','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новомосковск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новопсков','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новоселица','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новоукраинка','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новый Буг','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Новый Роздол','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Носовка','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Обухов','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Овруч','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Одесса','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Орджоникидзе','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Орехов','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Острог','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Очаков','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Павлоград','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Первомайск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Первомайск','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Первомайский','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Перевальск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Перемышляны','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Перечин','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Перещепино','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Переяслав-Хмельницкий','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Першотравенск','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Петровское','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Пирятин','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Погребище','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Подволочиск','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Подгайцы','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Подгородное','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Пологи','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Полонное','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Полтава','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Попасная','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Почаев','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Приволье','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Прилуки','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Приморск','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Припять','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Пустомыты','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Путивль','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Пятихатки','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рава-Русская','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Радехов','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Радивилов','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Радомышль','Житомирская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рахов','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ржищев','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ровеньки','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ровно','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рогатин','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рожище','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ромны','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рубежное','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Рудки','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Саки','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Самбор','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сарны','Ровненская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Свалява','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сватово','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Свердловск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Светловодск','Кировоградская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Севастополь','город со специальным статусом Севастополь');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Северодонецк','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Седнев','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Селидово','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Семёновка','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Середина-Буда','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Симферополь','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Синельниково','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Скадовск','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Скалат','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сквира','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сколе','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Славута','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Славутич','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Славянск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Смела','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Снежное','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Снигирёвка','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Снятын','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сокаль','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сокиряны','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Соледар','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Старобельск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Староконстантинов','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','СтарыйКрым','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','СтарыйСамбор','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Стаханов','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сторожинец','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Стрый','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Судак','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Сумы','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Суходольск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Счастье','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Таврийск','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тальное','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тараща','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Татарбунары','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Теплогорск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Теплодар','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Теребовля','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Терновка','Днепропетровская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тернополь','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тетиев','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тлумач','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Токмак','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Торез','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тростянец','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Трускавец','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тульчин','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тысменица','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Тячев','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Угледар','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Угнев','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ужгород','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Узин','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Украинка','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Умань','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Устилуг','Волынская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Фастов','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Феодосия','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Харцызск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Харьков','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Херсон','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хмельник','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хмельницкий','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хорол','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хотин','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Христиновка','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хуст','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Хыров','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Цюрупинск','Херсонская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Червоноград','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Червонозаводское','Полтавская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Червонопартизанск','Луганская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Черкассы','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чернигов','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чернобыль','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Черновцы','Черновицкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чигирин','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чоп','Закарпатская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чортков','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Чугуев','Харьковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шаргород','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шахтёрск','Донецкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шепетовка','Хмельницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шостка','Сумская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шпола','Черкасская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Шумск','Тернопольская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Щёлкино','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Щорс','Черниговская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Энергодар','Запорожская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Южное','Одесская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Южноукраинск','Николаевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Яворов','Львовская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Яготин','Киевская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ялта','Автономная Республика Крым');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ямполь','Винницкая область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Яремче','Ивано-Франковская область');
+
+INSERT INTO `tbl_ukraina`(`ukraina_id`, `ukraina_city`, `ukraina_region`) VALUES ('','Ясиноватая','Донецкая область');
+

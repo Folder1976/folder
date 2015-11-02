@@ -52,7 +52,7 @@ if(empty($_SERVER['QUERY_STRING'])){
 
 header ('Content-Type: text/html; charset=utf8');
 if ($key <> "none"){
-  echo "<p align='right' style='color:#610b0b;font-size:xx-small'>User: <b>",$_SESSION[BASE.'username'],"</b>
+  echo "<p align='right' style='color:#610b0b;'>User: <b>",$_SESSION[BASE.'username'],"</b>
   <a href='login.php'> (exit)</a>";
   }
   
