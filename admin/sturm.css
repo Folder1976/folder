@@ -1,7 +1,7 @@
 
 body{
  background:none;
- font:10px Verdana, Geneva, sans-serif;
+ font:14px Verdana, Geneva, sans-serif;
  margin:0px;
  padding:0px;
  }
@@ -66,7 +66,7 @@ table.barcode td{
 
 table.menu_top{
   background:none;
-  font:10px Verdana, Geneva, sans-serif;
+  font:14px Verdana, Geneva, sans-serif;
   border:0px solid #c0bf8f;
 }
 table.menu_top td{
@@ -116,7 +116,7 @@ a.medium_bold{
 }
 a.small{
   background:none;
-  font:8px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   color:black;
   border:none;
 }
@@ -148,14 +148,14 @@ form {
 input.user_login {
  background: transparent; 
  font-weight: normal;
- font:10px Verdana, Geneva, sans-serif;
+ font:12px Verdana, Geneva, sans-serif;
 }
 
 /*======================MAIN==================================*/
 table.main {
     border-collapse:collapse;
     border: none; /*1px solid #000000;*/
-    font:10px Verdana, Geneva, sans-serif;
+    font:12px Verdana, Geneva, sans-serif;
     padding: 10px 10px 10px 10px;
     margin: 0px;
     background: #ececec;
@@ -258,7 +258,7 @@ input.find_string {
 	padding: 0;
 	text-align: left;
 	background: #7f7F7F;
-	font:10px Verdana, Geneva, sans-serif;
+	font:12px Verdana, Geneva, sans-serif;
 	}
 #menu li a {
 	display: block;
@@ -273,7 +273,7 @@ div.chat_main{
 	 width:250px;
 	 position:fixed;
 	 background: #7f7F7F;
-	 font:10px Verdana, Geneva, sans-serif;
+	 font:12px Verdana, Geneva, sans-serif;
 	 text-decoration: none;
 	}
 div.chat_tmp{
@@ -285,7 +285,7 @@ div.chat_tmp{
 	 display:none;
 	 position:fixed;
 	 background: #7f7F7F;
-	 font:10px Verdana, Geneva, sans-serif;
+	 font:12px Verdana, Geneva, sans-serif;
 	 text-decoration: none;
 	}
 div.chat{
@@ -308,7 +308,7 @@ div.unvis {
     display: none;
     background: #7f7F7F;
     padding: 0px 10px 10px 10px; 
-    	font:10px Verdana, Geneva, sans-serif;
+    	font:12px Verdana, Geneva, sans-serif;
 	text-decoration: none;
 	
     }
@@ -318,13 +318,13 @@ table.find_print th{
       border:1px solid;
       margin:0px;
       padding:5px; 
-      font:11px Verdana, Geneva, sans-serif;
+      font:12px Verdana, Geneva, sans-serif;
 }
 table.find_print td{
       border:1px solid;
       margin:0px;
       padding:5px; 
-      font:11px Verdana, Geneva, sans-serif;
+      font:12px Verdana, Geneva, sans-serif;
 }
 
 
@@ -346,7 +346,7 @@ input.nak_field_item {
   border:1px solid;
 }
 input.nak_field_price {
-  font:11px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   width:60px;
   height:25px;
  /* font-size:medium;*/
@@ -355,7 +355,7 @@ input.nak_field_price {
   border:1px solid;
 }
 input.nak_field_zakup {
-  font:10px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   color:#5e5e5e;
   width:45px;
   height:25px;
@@ -365,7 +365,7 @@ input.nak_field_zakup {
   border:1px solid black;
 }
 input.nak_field_discount {
-  font:10px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   color:#5e5e5e;
   width:30px;
   height:25px;
@@ -398,7 +398,7 @@ select.nak_field_warehouse_to {
   border:1px solid;
 }
 input.nak_field_add {
-  font:10px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   width:20px;
   height:25px;
   font-size:medium;
@@ -410,7 +410,7 @@ input:hover.nak_field_add_all {
   background-color:#5e5e5e;
 }
 input.nak_field_add_all {
-  font:10px Verdana, Geneva, sans-serif;
+  font:12px Verdana, Geneva, sans-serif;
   width:25px;
   height:25px;
   text-align:center;

@@ -13,7 +13,7 @@ session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"none")){
   exit();
 }
-//connect_to_mysql();
+
 
 $count = 0;
 //$iKey_add = $_REQUEST["_add"];
@@ -23,12 +23,8 @@ $id_value = $_REQUEST["_id_value"];
 $page_to_return = $_REQUEST["_page_to_return"];
 
 
-//echo $iKey_add, $iKey_dell, $iKey_save, "- > <br>";
-
-
-
 $ver = mysql_query("SET NAMES utf8");
-//echo "<br>",$iKey_dell,"<br>";
+
 if (isset($_REQUEST["_dell"]))
 {
     if(!isset($_REQUEST["_dell_yes"])){
@@ -45,7 +41,7 @@ if (isset($_REQUEST["_dell"]))
 
     $product = $ProductEdit->getProductInfo($id_value);
     
-    $sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovat_artkl` ="'.$product['tovar_artkl'].'"';
+    $sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovar_artkl` ="'.$product['tovar_artkl'].'"';
     $folder->query($sql) or die('alternative artikles dell ((');
     
     $ver = mysql_query("DELETE FROM `tbl_tovar` WHERE `tovar_id` ='".$id_value."'");
@@ -57,20 +53,18 @@ if (isset($_REQUEST["_dell"]))
     $result_string = "<br><br>Nom -> " . $id_value . " - DELETED OK";
     
     $Alias->dellAliasOnProductID($id_value);
-    echo '<h1>Удалил</h1>';
     $id_value = $id_value - 1;
 }
 
 if (isset($_REQUEST["_save"]))
 {
 //Update tovar ================================================================
-//echo $_REQUEST['tovar_inet_id'];
 
 //Обновляем Алиас
 $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
 
 	  //Сохраняем альтернативные артиклы
-	  $sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovat_artkl` ="'.$_REQUEST['tovar_artkl'].'"';
+	  $sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'"';
 	  $folder->query($sql) or die('alternative artikles dell ((');
 	  
 	  foreach($_REQUEST as $key => $value){
@@ -79,12 +73,39 @@ $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
 		//И если он не пустой
 		if($_REQUEST[$key] != ''){
 		    $sql = 'INSERT INTO `tbl_tovar_postav_artikl` 
-			      SET `tovat_artkl` ="'.$_REQUEST['tovar_artkl'].'",
+			      SET `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'",
 			       `tovar_postav_artkl` ="'.$_REQUEST[$key].'",
 			       `postav_id` ="'.$_REQUEST['postav_'.$key].'"
 			      ';
-			      echo '<br>'.$sql;
-		    $folder->query($sql) or die('alternative artikles Add ((');
+			$folder->query($sql) or die('alternative artikles Add ((');
+	
+		}
+	      }
+	  }
+   
+  //Сохраняем детали по поставщику
+	  $sql = 'DELETE FROM `tbl_tovar_suppliers_items` WHERE `tovar_id` ="'.$id_value.'"';
+	  $folder->query($sql) or die('alternative postav dell ((');
+  
+	  foreach($_REQUEST as $key => $value){
+	      //Если найден поставщик
+	      if(strpos($key,'row_postav*') !== false AND strpos($key,'row_postav*') == 0){
+		//И если он не пустой
+		
+		if($_REQUEST[$key] != '' AND $_REQUEST[$key] != '0'){
+		//echo $_REQUEST[$key].' ==== ';
+		$x = str_replace('row_postav*','',$key);
+		    $sql = 'INSERT INTO `tbl_tovar_suppliers_items` 
+			      SET `tovar_id` ="'.$id_value.'",
+			       `postav_id` ="'.$_REQUEST[$key].'",
+			       `zakup` ="'.$_REQUEST['zakup_'.$key].'",
+			       `zakup_curr` ="'.$_REQUEST['zakup_curr_'.$x].'",
+			       `price_1` ="'.$_REQUEST['price_'.$key].'",
+			       `items` ="'.$_REQUEST['items_'.$key].'"
+			       ';
+				   
+		//echo $key.$sql;	die();	   
+		    $folder->query($sql) or die(' Чтото не так намучено с альтернативными поставщиками (( Возможно дубляж');
 	
 		}
 	      }
@@ -98,6 +119,7 @@ $date = date("Y-m-d G:i:s");
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_barcode')>0) $sql_str .= "`tovar_barcode`='".$_REQUEST['tovar_barcode']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_parent')>0) $sql_str .= "`tovar_parent`='".$_REQUEST['tovar_parent']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_artkl')>0) $sql_str .= "`tovar_artkl`	='".$_REQUEST['tovar_artkl']."',";
+	if(strpos($_SESSION[BASE.'usersetup'],'tovar_model')>0) $sql_str .= "`tovar_model`	='".$_REQUEST['tovar_model']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_size')>0) 	$sql_str .= "`tovar_size`	='".$_REQUEST['tovar_size']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_name_1')>0) $sql_str .= "`tovar_name_1`='".$_REQUEST['tovar_name_1']."',";
 								    $sql_str .= "`time_to_kill`='".date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']))."',";
@@ -106,9 +128,11 @@ $date = date("Y-m-d G:i:s");
 	if(strpos($_SESSION[BASE.'usersetup'],'original_supplier_link')>0) $sql_str .= "`original_supplier_link`	='".$_REQUEST['original_supplier_link']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_memo')>0) $sql_str .= "`tovar_memo`	='".$_REQUEST['tovar_memo']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_dimension')>0) $sql_str .= "`tovar_dimension`='".$_REQUEST['tovar_dimension']."',";
-	if(strpos($_SESSION[BASE.'usersetup'],'tovar_supplier')>0) $sql_str .= "`tovar_supplier`='".$_REQUEST['tovar_supplier']."',";
+	if(strpos($_SESSION[BASE.'usersetup'],'brand_id')>0) $sql_str .= "`brand_id`='".$_REQUEST['brand_id']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_min_order')>0) $sql_str .= "`tovar_min_order`='".$_REQUEST['tovar_min_order']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_seazon')>0) $sql_str .= "`tovar_seazon`	='".$_REQUEST['tovar_seazon']."',";
+	if(strpos($_SESSION[BASE.'usersetup'],'tovar_size_table')>0) $sql_str .= "`tovar_size_table`	='".$_REQUEST['tovar_size_table']."',";
+	if(strpos($_SESSION[BASE.'usersetup'],'tovar_video_url')>0) $sql_str .= "`tovar_video_url`	='".$_REQUEST['tovar_video_url']."',";
 								
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_inet_id')>0) $sql_str .= "`tovar_inet_id`	='".$_REQUEST['tovar_inet_id']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_last_edit')>0) $sql_str .= "`tovar_last_edit`='".$date."',";
@@ -117,7 +141,6 @@ $date = date("Y-m-d G:i:s");
 	$sql = substr($sql_str,0,-1)." WHERE `tovar_id`='".$id_value."'
 		";
     $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
-  // echo $sql_str." - ", $ver,"<br>";die();
 
 //Update price ================================================================
      $sql_str = "UPDATE `tbl_price_tovar` SET ";
@@ -131,18 +154,16 @@ $date = date("Y-m-d G:i:s");
       }
      $sql_str = substr($sql_str,0,-1)." WHERE `price_tovar_id`='".$id_value."'";
      $ver = mysql_query($sql_str);
-     //echo $sql_str." - ", $ver,"<br>";
 
 //Update description ================================================================
-   $sql_str = "UPDATE `tbl_description` SET ";
-     $count=0;
-     while($count++ < $_REQUEST['_description_count']){
-	$sql_str .= "`description_".$count."`	 ='".str_replace('\'','"', $_REQUEST['description_'.$count])."',";
-    }
-     $sql = substr($sql_str,0,-1)." WHERE `description_tovar_id`='".$id_value."'";
-
-     $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
-     //echo $sql_str." - ", $ver,"<br>";
+    $sql = 'INSERT INTO `tbl_description` SET
+			`description_1`	 ="'.str_replace('"','\'', $_REQUEST['description_1']).'",
+			`description_tovar_id`="'.$id_value.'"
+			ON DUPLICATE KEY UPDATE
+			`description_1`	 ="'.str_replace('"','\'', $_REQUEST['description_1']).'"
+			
+			;';
+    $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
      
   //Перезапись аттрибутов
     $ver = mysql_query("DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id`='".$id_value."'");
@@ -154,16 +175,22 @@ $date = date("Y-m-d G:i:s");
 	}
       }
     }
-echo '<h1>Сохранил</h1>';
     
 }
 if (isset($_REQUEST["_add"]))
 {
   
+if(!isset($_REQUEST['tovar_supplier'])) $_REQUEST['tovar_supplier'] = 1;
+if(!isset($_REQUEST['tovar_min_order'])) $_REQUEST['tovar_min_order'] = 1;
+if(!isset($_REQUEST['tovar_seazon'])) $_REQUEST['tovar_seazon'] = 1;
+if(!isset($_REQUEST['original_supplier_link'])) $_REQUEST['original_supplier_link'] = '';
+
+if(!isset($_REQUEST['price_tovar_3'])) $_REQUEST['price_tovar_3'] = 1;
+if(!isset($_REQUEST['price_tovar_curr_3'])) $_REQUEST['price_tovar_curr_3'] = 1;
+if(!isset($_REQUEST['price_tovar_cof_3'])) $_REQUEST['price_tovar_cof_3'] = 1;
 
 
 //Insert tovar ================================================================
-//echo $_REQUEST['tovar_inet_id'];
 $date = date("Y-m-d G:i:s");
 $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
     $sql_str = "INSERT INTO `tbl_tovar` (
@@ -171,6 +198,7 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 		`on_ware`,
 		`tovar_parent`,
 		`tovar_artkl`,
+		`tovar_model`,
 		`tovar_size`,
 		`tovar_name_1`,
 		`time_to_kill`,
@@ -185,19 +213,24 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 		`original_supplier_link`,
 		`tovar_inet_id`,
 		`tovar_purchase_currency`,
-		`tovar_sale_currency`
+		`tovar_sale_currency`,
+		`tovar_video_url`,
+		`tovar_size_table`,
+		`brand_id`
+		
 		)VALUES(
 		'".$_REQUEST['tovar_barcode']."',
 		'".$_REQUEST['on_ware']."',
 		'".$_REQUEST['tovar_parent']."',
 		'".$_REQUEST['tovar_artkl']."',
+		'".$_REQUEST['tovar_model']."',
 		'".$_REQUEST['tovar_size']."',
 		'".$_REQUEST['tovar_name_1']."',
 		'".$date_kill."',
 		'".$_REQUEST['parsing']."',
 		'".$_REQUEST['tovar_memo']."',
 		'".$_REQUEST['tovar_dimension']."',
-		'".$_REQUEST['tovar_supplier']."',
+		/*'".$_REQUEST['tovar_supplier']."'*/1,
 		'".$_REQUEST['tovar_min_order']."',
 		'".$_REQUEST['tovar_seazon']."',
 		'".$date."',
@@ -205,25 +238,23 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 		'".$_REQUEST['original_supplier_link']."',
 		'1',
 		'2',
-		'4'
+		'4',
+		'".$_REQUEST['tovar_video_url']."',
+		'".$_REQUEST['tovar_size_table']."',
+		'".$_REQUEST['brand_id']."'
 		)";
     $ver = mysql_query($sql_str);
     $id_value=mysql_insert_id();
-    //echo $sql_str." - ", $ver," Inserted = ",$id_value,"<br>";
     
     //Обновляем Алиас
     $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
     
     $sql_str = "UPDATE `tbl_tovar` SET `tovar_inet_id`='".$id_value."' WHERE `tovar_id`='".$id_value."'";
     $ver = mysql_query($sql_str);
-    //echo $sql_str." - ", $ver," Inserted = ",$id_value,"<br>";
-//Clear subtable if is present ==================================================================  
+ //Clear subtable if is present ==================================================================  
     $ver = mysql_query("DELETE FROM `tbl_warehouse_unit` WHERE `warehouse_unit_tovar_id`='".$id_value."'");
-    //echo "DELETE FROM `tbl_warehouse_unit` WHERE `warehouse_unit_tovar_id`='".$id_value."' - ",$ver,"<br>";
     $ver = mysql_query("DELETE FROM `tbl_price_tovar` WHERE `price_tovar_id`='".$id_value."'");
-    //echo "DELETE FROM `tbl_price_tovar` WHERE `price_tovar_id`='".$id_value."' - ",$ver,"<br>";
     $ver = mysql_query("DELETE FROM `tbl_description` WHERE `descripton_tovar_id`='".$id_value."'");
-    //echo "DELETE FROM `tbl_description` WHERE `description_tovar_id`='".$id_value."' - ",$ver,"<br>";
   
 //Insert price ================================================================
      $sql_str = "INSERT INTO `tbl_price_tovar` (";
@@ -240,30 +271,22 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
       $sql_str .= "'".$id_value."')";
      
      $ver = mysql_query($sql_str) or die($sql_str .'<br>'.mysql_error());
-     //echo $sql_str." - ", $ver,"<br>";
+
 //Insert description ================================================================
-     $sql_str = "INSERT INTO `tbl_description` (";
-     $count=0;
-     while($count++ < $_REQUEST['_description_count']){
-	$sql_str .= "`description_".$count."`,";
-      }
-      $sql_str .= "`description_tovar_id`)VALUES(";
-     
-     $count=0;
-     while($count++ < $_REQUEST['_description_count']){
-	 $sql_st .= str_replace('\'','"', "'".$_REQUEST['description_'.$count]."',");
-       }
-      $sql_str .= "'".$id_value."')";
-      
-      
-     $ver = mysql_query($sql_str) or die($sql_str.'<br>'.mysql_error());
-     //echo $sql_str." - ", $ver,"<br>";
+    $sql = 'INSERT INTO `tbl_description` SET
+			`description_1`	 ="'.str_replace('\'','"', $_REQUEST['description_1']).'",
+			`description_tovar_id`="'.$id_value.'"
+			ON DUPLICATE KEY UPDATE
+			`description_1`	 ="'.str_replace('\'','"', $_REQUEST['description_1']).'"
+			
+			;';
+    $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
+   
 
 //Insert description ================================================================
      $sql_str = "INSERT INTO `tbl_warehouse_unit` (`warehouse_unit_tovar_id`) VALUES ('".$id_value."')";
      $ver = mysql_query($sql_str);
-     //echo $sql_str." - ", $ver,"<br>";
-     
+      
 //Перезапись аттрибутов
     $ver = mysql_query("DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id`='".$id_value."'");
     foreach($_POST as $index => $value){
@@ -282,21 +305,41 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 	  //И если он не пустой
 	  if($_REQUEST[$key] != ''){
 	      $sql = 'INSERT INTO `tbl_tovar_postav_artikl` 
-			SET `tovat_artkl` ="'.$_REQUEST['tovar_artkl'].'",
+			SET `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'",
 			 `tovar_postav_artkl` ="'.$_REQUEST[$key].'",
 			 `postav_id` ="'.$_REQUEST['postav_'.$key].'"
 			';
-			echo '<br>'.$sql;
 	      $folder->query($sql) or die('alternative artikles Add ((');
   
 	  }
 	}
     }
-
-echo '<h1>Добавил</h1>';
+    
+    
+      //Сохраняем детали по поставщику
+      foreach($_REQUEST as $key => $value){
+	  //Если найден поставщик
+	  if(strpos($key,'row_postav*') !== false AND strpos($key,'row_postav*') == 0){
+	    //И если он не пустой
+	    if($_REQUEST[$key] != '' AND $_REQUEST[$key] != '0'){
+		  $x = str_replace('row_postav*','',$key);
+		$sql = 'INSERT INTO `tbl_tovar_suppliers_items` 
+			  SET `tovar_id` ="'.$id_value.'",
+			   `postav_id` ="'.$_REQUEST[$key].'",
+			   `zakup` ="'.$_REQUEST['zakup_'.$key].'",
+			   `zakup_curr` ="'.$_REQUEST['zakup_curr_'.$x].'",
+			   `price_1` ="'.$_REQUEST['price_'.$key].'",
+			   `items` ="'.$_REQUEST['items_'.$key].'"
+			   ';
+		$folder->query($sql) or die(' Чтото не так намучено с альтернативными поставщиками (( Возможно дубляж');
+    
+	    }
+	  }
+      }
+   
      
 }
-//echo "<br>---",$id_value;
+
 header ('Refresh: 1; url=edit_tovar.php?tovar_id='.$id_value);
 
 ?>

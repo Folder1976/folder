@@ -92,8 +92,7 @@ return trim($ret);
  
 // service function to select the group of digits
 function dec_digits_group($number, $power, $digits = 1) {
-return (int) bcmod(bcdiv($number, bcpow(10, $power * $digits, 8)),
-bcpow(10, $digits, 8));
+return (int) 1;//bcmod(bcdiv($number, bcpow(10, $power * $digits, 8)),bcpow(10, $digits, 8));
 }
  
 // service function to get plural form for the number

@@ -859,80 +859,7 @@ $count++;
 
 return $http;
 }
-function user_item_list_view($id,$setup){
-  global $folder;
-  $Category = new Category($folder);
-  $children = $Category->getCategoryChildren($id);
-   
- //echo "<pre>===".$id; print_r(var_dump($children));
-   
-if ($_SESSION[BASE.'lang'] <1){
-  $_SESSION[BASE.'lang']=1;
-}
-$getName = mysql_query("SET NAMES utf8");
-/*
-$SgetName = "SELECT 	`tovar_inet_id_parent`,
-			`tovar_artkl`,
-			`tovar_name_".$_SESSION[BASE.'lang']."` AS tovar_name,
-			`tovar_id`,
-			`tovar_inet_id`,
-			`price_tovar_".$setup['web default price']."` as price1,
-			`price_tovar_".$_SESSION[BASE.'userprice']."` as price2,
-			`price_tovar_curr_".$setup['web default price']."` as curr1,
-			`price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2,
-				IF(`tovar_inet_id_parent`='".$id."',
-				  `description_".$_SESSION[BASE.'lang']."`,
-				  (SELECT `parent_inet_memo_".$_SESSION[BASE.'lang']."`
-					  FROM `tbl_parent_inet`
-					  WHERE `parent_inet_id` = `tovar_inet_id_parent`)) AS tovar_memo,
-			`parent_inet_type`		  
-			FROM 
-			`tbl_tovar`,
-			`tbl_price_tovar`,
-			`tbl_description`,
-			`tbl_parent_inet`
-			WHERE 
-			`tovar_id`=`price_tovar_id` and
-			`tovar_inet_id`>0 and
-			`parent_inet_id`=`tovar_inet_id_parent` and
-			`tovar_id`=`description_tovar_id` and
-			(`tovar_inet_id_parent` IN (".implode(",", $children).") or 
-			`tovar_inet_id_parent` IN (SELECT
-						  `parent_inet_id`
-						   FROM `tbl_parent_inet`
-						   WHERE
-						   `parent_inet_parent` = '".$id."' and
-						   `parent_inet_type`='2')
-			)
-			ORDER BY `tovar_name_1` ASC
-			";
-*/
-$SgetName = "SELECT 	`tovar_inet_id_parent`,
-			`tovar_artkl`,
-			`tovar_name_".$_SESSION[BASE.'lang']."` AS tovar_name,
-			`tovar_id`,
-			`tovar_inet_id`,
-			`price_tovar_curr_".$setup['web default price']."` as curr1,
-			`price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2
-			FROM 
-			`tbl_tovar`
-			LEFT JOIN tbl_price_tovar ON price_tovar_id = tovar_id
-			WHERE 
-			`tovar_inet_id_parent` IN (".implode(",", $children).")
-			and `tovar_inet_id` > 0
-			ORDER BY `tovar_name_1` ASC
-			";
 
-$getName = mysql_query($SgetName);
-
-if (!$getName){
-  echo "Query error - tbl_price - ",$SgetName;
-  exit();
-}
-
-return tovar_view($getName,"none",$setup);
-
-}
 function last_operation_list_tovar($setup){
  $ver = mysql_query("SET NAMES utf8");
 $SgetName = "SELECT `operation_id`, `operation_data`
@@ -2723,12 +2650,25 @@ $html .= "
       </script>
 ";
 
+$name = '';
+$tel = '';
+$email = '';
+$deliv = '';
+
+if(mysql_num_rows($user) > 0){
+
+  $name = mysql_result($user,0,"klienti_name_1");
+  $tel = mysql_result($user,0,"klienti_phone_1");
+  $email = mysql_result($user,0,"klienti_email");
+  $deliv = mysql_result($user,0,"delivery_name");
+  
+}
 
 $html .= "<table class=\"edituser\"><tr>";
-$html .= "<td>".$setup['user name']." : </td><td>".mysql_result($user,0,"klienti_name_1")."</td></tr><tr>";
-$html .= "<td>".$setup['user tel']." : </td><td>".mysql_result($user,0,"klienti_phone_1")."</td></tr><tr>";
-$html .= "<td>".$setup['user email']." : </td><td>".mysql_result($user,0,"klienti_email")."</td></tr><tr>";
-$html .= "<td>".$setup['user delive']." : </td><td>".mysql_result($user,0,"delivery_name")."</td></tr><tr>";
+$html .= "<td>".$setup['user name']." : </td><td>".$name."</td></tr><tr>";
+$html .= "<td>".$setup['user tel']." : </td><td>".$tel."</td></tr><tr>";
+$html .= "<td>".$setup['user email']." : </td><td>".$email."</td></tr><tr>";
+$html .= "<td>".$setup['user delive']." : </td><td>".$deliv."</td></tr><tr>";
 $html .= "<td><a href='".HOST_URL."/user_edit.php'> (".$setup['menu edit'].")</a></td><td align=right><b>".$setup['user order sum']." ".$_SESSION[BASE.'userordersumm']." ".$_SESSION[BASE.'usercurr']."</b></td></tr><tr>";
 $html .= "</tr></table>";
 

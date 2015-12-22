@@ -1,4 +1,5 @@
 <?php
+header ('Content-Type: text/html; charset=utf8');
 include_once "config/config.php";
 function connect_to_mysql(){
 //echo "<pre>".print_r(var_dump(get_defined_vars()));
@@ -50,7 +51,7 @@ if(empty($_SERVER['QUERY_STRING'])){
 }
 
 
-header ('Content-Type: text/html; charset=utf8');
+
 if ($key <> "none"){
   echo "<p align='right' style='color:#610b0b;'>User: <b>",$_SESSION[BASE.'username'],"</b>
   <a href='login.php'> (exit)</a>";

@@ -33,7 +33,7 @@ echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'>
 <title>Setup</title>
 </header>";
 
-echo "<br><ul class=\"setup_menu\">Настройки
+echo "<div style=\"float: left;width:32%;\"><ul class=\"setup_menu\"><h2>Настройки</h2>
     ";
 echo "<li><a href='edit_klient.php' target='_blank'>",$m_setup['setup klient'],"</a></li>";
 echo "<li><a href='edit_klienti_group.php' target='_blank'>",$m_setup['setup klient group'],"</a></li>";
@@ -45,9 +45,12 @@ echo "<li><a href='edit_warehouse.php' target='_blank'>",$m_setup['setup warehou
 echo "<li><a href='edit_shop.php' target='_blank'>",$m_setup['setup shop'],"</a></li>";
 echo "<li><a href='none.php' target='_blank'>",$m_setup['setup price'],"</a></li>";
 echo "<li><a href='edit_curr.php' target='_blank'>",$m_setup['setup curr'],"</a></li>";
+echo "<li><a href='edit_info.php?info_id=0&info_list_sort=' target='_blank'>Страницы информации</a></li>";
+echo "<li><a href='edit_brands.php' target='_blank'>Редактировать бренды</a></li>";
+echo "<li><a href='tools/translate_edit.php' target='_blank'>Словосочетания автозамены. (псевдопереводчик)</a></li>";
 echo "</ul>";
 
-echo "<br><ul class=\"setup_menu\">Работа";
+echo "<ul class=\"setup_menu\"><h2>Работа</h2>";
 
 $r = $folder->query('SELECT function_id, function_alias, function_name, function_patch, function_level FROM tbl_functions ORDER BY function_sort ASC');
 while($func = $r->fetch_assoc()){
@@ -59,7 +62,7 @@ echo "<li><a href='get_analitics.php' target='_blank'>",$m_setup['menu klient an
 echo "<li><a href='get_findlog.php' target='_blank'>",$m_setup['menu findlog'],"</a></li>";
 echo "</ul>";
 
-echo "<br><ul class=\"setup_menu\">Система";
+echo "<br><ul class=\"setup_menu\"><h2>Система</h2>";
 echo "<li><a href='set_all_ostatki.php' target='_blank'>",$m_setup['menu set_all_ostatki'],"</a></li>";
 echo "<li><a href='clear_op_det.php' target='_blank'>",$m_setup['menu clear_op_det'],"</a></li>";
 echo "<li><a href='restore_nakl.php' target='_blank'>",$m_setup['menu restore_nakl'],"</a></li>";
@@ -82,7 +85,24 @@ if (strpos($_SESSION[BASE.'usersetup'],"habibulin")>0){
     echo "<li><a href='edit_habibulin_parent.php?habibulin_parent_id=last' target='_blank'>",$m_setup['setup habibulin parent'],"</a></li>";
     echo "<li><a href='get_habibulin.php' target='_blank'>",$m_setup['setup habibulin'],"</a></li>";
 }
-echo "</ul>";
-
-
+echo "</ul></div>";
 ?>
+
+<div style="float: left;width:32%;"><ul class=\"setup_menu\"><h2>Товары</h2>
+	<li><a href="main.php?func=import_universal">Импорт УНИВЕРСАЛ</a></li>
+	<li><a href="main.php?func=import_price">Импорт Остатки и Цены</a></li>
+	<li><a href="main.php?func=import_on_model">Импорт по моделям товаров</a></li>
+	<li><a href="main.php?func=alternative_artikles">Универсальные артиклы товаров</a></li>
+	<li><a href="main.php?func=import_photo">Импорт Фотографий файлы</a></li>
+	<li><a href="main.php?func=import_url_photo_excel">Импорт Фотографий Excel</a></li>
+</ul>
+  <ul class=\"setup_menu\"><h2>Города и доставки</h2>
+	<li><a href="main.php?func=city">Города</a></li>
+	
+  </ul>
+
+
+
+
+
+</div>

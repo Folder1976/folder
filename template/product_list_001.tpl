@@ -19,7 +19,36 @@
                     <?php } ?>
                 </ul>
             <?php } ?>
-  
+
+<!-- Бренды -->  
+            <?php if(isset($brands) AND count($brands) > 0 ){ ?>
+                    <label class="left_menu_title">Производитель</label>
+                    <ul class="attribute_filter_main">
+                        <?php foreach($brands as $i => $item){ ?>
+                            <li class="attribute_filter">
+                                <input type="checkbox" class="brand_filter_check" id="brand-<?php echo $index?>" value="<?php echo $item;?>"
+                                <?php if(isset($_GET['brand-'.$index][$item])) echo ' checked '; ?>
+                                value="<?php echo $i; ?>"><?php echo $item;?>
+                            </li>
+                        <?php } ?>
+                    </ul>
+             <?php } ?>
+
+<!-- Страны -->  
+            <?php if(isset($country) AND count($country) > 0 ){ ?>
+                    <label class="left_menu_title">Страна</label>
+                    <ul class="attribute_filter_main">
+                        <?php foreach($country as $i => $item){ ?>
+                            <li class="attribute_filter">
+                                <input type="checkbox" class="country_filter_check" id="country-<?php echo $index?>" value="<?php echo $item;?>"
+                                <?php if(isset($_GET['country-'.$index][$item])) echo ' checked '; ?>
+                                value="<?php echo $i; ?>"><?php echo $item;?>
+                            </li>
+                        <?php } ?>
+                    </ul>
+            <?php } ?>
+
+<!-- Атрибуты -->  
             <?php if(isset($attribute_filter)){ ?>
                 <?php foreach($attribute_filter as $index => $value){ ?>
                     <label class="left_menu_title"><?php echo $value['title']; ?></label>
@@ -62,7 +91,14 @@
                                 
                                 </div>
                                 
-                            <!-- Product characteristic-->               
+                            <!-- Product brand country-->               
+                                <div class="product_brand_country">
+                                    <?php if(isset($product['brand_country'])){ ?>
+                                        <li class="product_brand_country_li"><?php echo $product['brand_country'];?></li>
+                                    <?php } ?>
+                                </div>
+                      
+                           <!-- Product characteristic-->               
                                 <div class="product_characteristic">
                                     <?php if(isset($product['attributes'])){ ?>
                                         <ul>
@@ -73,20 +109,26 @@
                                     <?php } ?>
                                 </div>
                       
-                            <!-- Product memo-->               
+                            <!-- Product memo-->
+                            <a href="<?php echo $product['alias']; ?>" target="_blank">
                                 <div class="product_memo">
-                                    <?php echo $product['memo'];?>&nbsp;
+                                    <?php if(isset($product['memo']) AND $product['memo'] != ''){ ?>
+                                        <?php echo $product['memo'];?>&nbsp;
+                                    <?php } ?>
                                 </div> 
-                            
-                            <!-- Product Price-->               
+                            </a>
+                            <!-- Product Price-->
+                            <!--a href="<?php echo $product['alias']; ?>" target="_blank"-->
                                 <div class="product_price">
                                     <?php echo ceil($product['price']).' '.$currency_name[$setup['price default lang']];?>
                                 </div> 
-                            
-                            <!-- Product KEY-->               
+                            <!--/a-->
+                            <!-- Product KEY-->
+                            <a href="<?php echo $product['alias']; ?>" target="_blank">
                                 <div class="product_key">
                                     КУПИТЬ
-                                </div> 
+                                </div>
+                            </a>
                       
                             </div>
                         </a>
@@ -104,6 +146,28 @@
     $(document).ready(function(){
         
         $('.attribute_filter_check').on('change', function(){     
+        var params = '';
+            $("input:checkbox:checked").each(function(){
+                 params = params + this.id+'['+$(this).val()+']&';                               
+            });
+
+        var url = window.location.href    
+            
+        window.location.replace(window.location.pathname + "?"+params);
+        });
+      
+        $('.brand_filter_check').on('change', function(){     
+        var params = '';
+            $("input:checkbox:checked").each(function(){
+                 params = params + this.id+'['+$(this).val()+']&';                               
+            });
+
+        var url = window.location.href    
+            
+        window.location.replace(window.location.pathname + "?"+params);
+        });
+      
+        $('.country_filter_check').on('change', function(){     
         var params = '';
             $("input:checkbox:checked").each(function(){
                  params = params + this.id+'['+$(this).val()+']&';                               

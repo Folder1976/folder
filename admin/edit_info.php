@@ -1,11 +1,16 @@
 <?php
+//header ('Content-Type: text/html; charset=utf8');
 include 'init.lib.php';
+
+
 connect_to_mysql();
 session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"+")){
   exit();
 }
-
+echo "<link rel='stylesheet' type='text/css' href='sturm.css'>";
+echo "\n<script src='JsHttpRequest.js'></script>";
+echo "\n<script type='text/javascript'>";
 //==================================SETUP===========================================
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
@@ -17,6 +22,7 @@ $tQuery = "SELECT
 	  FROM `tbl_setup_menu`
 ";
 //echo $tQuery;
+
 $setup = mysql_query($tQuery);
 $m_setup = array();
 $count=0;
@@ -45,15 +51,13 @@ if(isset($_REQUEST[$this_table_id_name])) $iKlient_id=$_REQUEST[$this_table_id_n
 
 
 $ver = mysql_query("SET NAMES utf8");
-  $ver = mysql_query("SELECT * FROM " . $this_table_name . " WHERE " . $this_table_id_name . " = " . $iKlient_id . " ORDER BY $this_table_id_name DESC");
-  
+  $sql = "SELECT * FROM " . $this_table_name . " WHERE " . $this_table_id_name . " = " . $iKlient_id . " ORDER BY $this_table_id_name DESC";
+  $ver = mysql_query($sql);
+
   $info_list = mysql_query("SELECT * FROM " . $this_table_name . " WHERE `info_key` = '" . $info_list_sort . "'  ORDER BY `$this_table_id_name` DESC");
   $info_key = mysql_query("SELECT `info_key` FROM " . $this_table_name . " GROUP BY `info_key`");
 
-header ('Content-Type: text/html; charset=utf8');
-echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
-echo "\n<script src='JsHttpRequest.js'></script>";
-echo "\n<script type='text/javascript'>";
+
 //===================JAVA================================
     echo "
     function find_window_script(tbl,id,name,sel_name,target){
@@ -111,7 +115,8 @@ $tmp=0;
 while ($tmp < mysql_num_rows($info_key))
 {
   echo "\n<option ";
-	if (mysql_result($ver,0,"info_key") == mysql_result($info_key,$tmp,"info_key")) echo "selected ";
+	if (mysql_result($ver,0,"info_key") ==
+	      mysql_result($info_key,$tmp,"info_key")) echo "selected ";
   
   echo "value=" . mysql_result($info_key,$tmp,"info_key") . ">" . mysql_result($info_key,$tmp,"info_key") . "</option>";
   $tmp++;

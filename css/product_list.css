@@ -89,11 +89,33 @@
     
 }
 
-.product_characteristic{
+.product_brand_country{
+     margin-top: -5px;
     width: 100%;
     display: block;
-    height: 70px;
-    min-height: 70px;
+    height: 15px;
+    min-height: 15px;
+    margin-left: 40px;
+    overflow: hidden;
+    float: left;
+    text-align: left;
+    z-index: 1;
+
+}
+.product_brand_country_li{
+    text-decoration: none;
+    list-style: none;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.product_characteristic{
+    margin-top: -5px;
+    width: 100%;
+    display: block;
+    height: 55px;
+    min-height: 55px;
     overflow: hidden;
     float: left;
     text-align: left;

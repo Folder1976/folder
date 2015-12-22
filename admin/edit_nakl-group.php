@@ -83,7 +83,7 @@ if (!$ware)
 //}
 //===========================================================================================================
 
-header ('Content-Type: text/html; charset=utf8');
+//header ('Content-Type: text/html; charset=utf8');
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
 echo "\n<script src='JsHttpRequest.js'></script>";
 echo "\n<script type='text/javascript'>";

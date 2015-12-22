@@ -16,9 +16,8 @@ $setup = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `setup_menu_name`, 
 	  `setup_menu_".$_SESSION[BASE.'lang']."`
-	  FROM `tbl_setup_menu`
-";
-echo $tQuery."<br>";
+	  FROM `tbl_setup_menu`";
+
 $setup = mysql_query($tQuery);
 $m_setup = array();
 $count=0;
@@ -94,9 +93,7 @@ if (!$deliv)
 }
 
 //===========================================================================================================
-
-header ('Content-Type: text/html; charset=utf8');
-echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
+echo "<link rel='stylesheet' type='text/css' href='sturm.css'>";
 echo "\n<script src='JsHttpRequest.js'></script>";
 echo "\n<script type='text/javascript'>";
 //===================JAVA================================
@@ -373,7 +370,25 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 }
+echo "\n<tr><td colspan=\"3\"><b>Настройки поставщика:</b></td><td>"; # Group name 1
+echo "</tr>";
 
+if(strpos($_SESSION[BASE.'usersetup'],'delivery_days')>0){
+echo "\n<tr><td>Доставка дней:</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  name='delivery_days' value='" . mysql_result($ver,0,"delivery_days") . "'/></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+}
+if(strpos($_SESSION[BASE.'usersetup'],'price_coef')>0){
+echo "\n<tr><td>Коэф. наценки (1 = 100%):</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px' name='price_coef' value='" . mysql_result($ver,0,"price_coef") . "' placeholder=\"1.50\" /></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+}
+echo "\n<tr><td colspan=\"3\"><b>Цены и скидки</b>:</td><td>"; # Group name 1
+echo "</tr>";
 //=====================================================================================================================
 if(strpos($_SESSION[BASE.'usersetup'],'klienti_price')>0){
 echo "\n<td>Klient Price:</td><td>"; # Group klienti

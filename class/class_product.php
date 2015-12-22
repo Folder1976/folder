@@ -25,6 +25,14 @@ class Product {
 	 *Вернет главную картинку продутка
 	 */
 	public function getProductPicOnArtkl($artkl){
+		
+		global $setup;
+		$sep =  $setup['tovar artikl-size sep'];
+		
+		if(strpos($artkl, $sep) !== false){
+			$tmp = explode($sep, $artkl);
+			$artkl = $tmp[0];
+		}
 	
 		$sql = $this->base->query("SELECT pic_name FROM tbl_tovar_pic WHERE tovar_artkl = '".$artkl."'");
 		if($sql->num_rows == 0){
@@ -32,6 +40,45 @@ class Product {
 		}else{
 			$tmp = $sql->fetch_assoc();
 			return HOST_URL.'/resources/products/'.$tmp['pic_name'];
+		}
+		
+	}
+	
+	/*
+	 *Вернет количество возможное к заказу
+	 */
+	public function getProductOnWare($id){
+	
+		$sql = $this->base->query("SELECT SUM(items) as item FROM tbl_tovar_suppliers_items WHERE tovar_id = '$id'");
+		if($sql->num_rows == 0){
+			return 0;
+		}else{
+			$tmp = $sql->fetch_assoc();
+			return $tmp['item'];
+		}
+		
+	}
+	
+	/*
+	 *Вернет массив детального по наличию цене и доставке товара
+	 */
+	public function getProductDelivInfo($id){
+	
+		$sql = "SELECT items, price_1, delivery_days, postav_id
+									FROM tbl_tovar_suppliers_items
+									LEFT JOIN tbl_klienti ON postav_id = klienti_id
+									WHERE tovar_id = '$id' AND items > 0
+									ORDER BY delivery_days ASC;";
+					
+		$r = $this->base->query($sql);
+		if($r->num_rows == 0){
+			return false;
+		}else{
+			$return = array();
+			while($tmp = $r->fetch_assoc()){
+				$return[] = $tmp;
+			}
+			return $return;
 		}
 		
 	}
@@ -73,8 +120,23 @@ class Product {
 	 *Вернет цену продукта в валюте сайта
 	 */
 	public function getProductPrice($product_id){
-		global $setup, $currency;
+	//	global $setup, $currency;
+		$min_price = 7777777;
 		
+		$sql = "SELECT price_1 as price FROM tbl_tovar_suppliers_items WHERE tovar_id = '$product_id';";
+		$r = $this->base->query($sql);
+		if($r->num_rows == 0){
+			return 0;
+		}else{
+			while($tmp = $r->fetch_assoc()){
+				if($min_price > $tmp['price'] AND $tmp['price'] > 0) $min_price = $tmp['price'];
+				if($min_price == 7777777) $min_price = 0;
+			}
+			return $min_price;
+		}
+	
+		
+		/*
 		$i = $setup['price default price'];
 		
 		$sql = "SELECT
@@ -90,7 +152,7 @@ class Product {
 			return ($tmp['price'] *
 				$currency[$tmp['valuta']]);
 		}
-		
+		*/
 	}
 	
 	
@@ -129,6 +191,58 @@ class Product {
 		
 	}
 	
+	/*
+	 *Вернет массив ид всех продуктов
+	 */
+	public function getAllProductsId(){
+		
+		$sql = "SELECT tovar_id
+			FROM tbl_tovar;";
+		$res = $this->base->query($sql) or die('osaidueqadytfdsgflijksdgfl<br>'.$sql.'<br>'.mysql_error());
+		
+		if($res->num_rows == 0){
+			return false;
+		}else{
+			$return = array();
+			while($tmp = $res->fetch_assoc()){
+				$return[$tmp['tovar_id']] = $tmp['tovar_id'];	
+			}
+			
+			return $return;
+		}
+		
+	}
+	
 
+	/*
+	 *Вернет массив ид всех продуктов без алиасов
+	 */
+	public function getAllNoAliasProductsId(){
+		
+		$array = $this->getAllProductsId();
+		
+		$sql = 	"SELECT seo_url FROM  tbl_seo_url WHERE seo_url like 'tovar_id=%' AND seo_alias <> '';";
+		$r = $this->base->query($sql);
+		
+		if($r->num_rows == 0){
+			return $array;		
+		}else{
+			$tmp = array();
+			while($parent = $r->fetch_assoc()){
+				$parent['seo_url'] = str_replace('tovar_id=','',$parent['seo_url']);
+				//echo '<br>'.$parent['seo_url'];
+				if(isset($array[$parent['seo_url']])){
+					unset($array[$parent['seo_url']]);
+				}
+			}
+			
+			return $array;
+		}
+		
+	return false;
+		
+	}
+	
+	
 }
 ?>

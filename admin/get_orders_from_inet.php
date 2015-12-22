@@ -1,10 +1,12 @@
 <?php
 //echo "Import ogders \n TURN OFF";
 //exit();
-
+header ('Content-Type: text/html; charset=utf8');
 include 'init.lib.php';
 connect_to_mysql();
-$time = 60;
+$time = 300;
+header ("Refresh: ".$time."; url=get_orders_from_inet.php");
+
 
 session_start();
   if (isset($_REQUEST['lang'])){
@@ -54,8 +56,8 @@ $date_tmp = date("Y-m-d G:i:s",time()-$time);//-strtotime(60);
       if(mysql_result($nakl,$count,"operation_status")==$c) $count_c++;
   $count++;
   }
-header ('Content-Type: text/html; charset=utf8');
-echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
+
+echo "<link rel='stylesheet' type='text/css' href='sturm.css'>";
  //echo "<a href='get_orders_from_inet.php'>Reload</a>";
     echo "<a href='log_list.php' target='_blank'>";
     echo "<b>pages view : ",mysql_result($log,0,"count")," / ".($time)."s.</a>";
@@ -77,8 +79,5 @@ echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>"
     echo "<br><b><a href='edit_comment.php' target='_blank'
     >New comments (",$count_comm,")</a>";
    } 
-  
 
-
-header ("Refresh: ".$time."; url=get_orders_from_inet.php");
 ?>

@@ -14,14 +14,35 @@ if (!$supplier)
   echo "Query error - tbl_Supplier";
   exit();
 }else{
-  $Suppliers = array('0' => 'Всем');
+  $Suppliers = array('0' => 'Для всех (без учета поставщика)');
   while($tmp = $supplier->fetch_assoc()){
-    $Suppliers[$tmp['klienti_id']] = $tmp['klienti_name_1'];
+
+	$Suppliers[$tmp['klienti_id']] = $tmp['klienti_name_1'];
+
   }
 }
 
+if(!isset($_GET['klienti_id']) OR (isset($_GET['klienti_id']) AND $_GET['klienti_id'] == '0')){
+    
+    echo '<form method="GET">
+	    <br>Выбрать поставщика:
+	    <select name="klienti_id">
+	    <option value="0">Выбрать поставщика!</option>
+    ';
+    
+    foreach($Suppliers as $index => $val){
+	    echo '<option value="'.$index.'">'.$val.'</option>';
+    }
+    
+    echo '</select>
+    <input type="submit" value="export" name="export">
+    </form>
+    ';
+    die();
+}
+
 //Получим альтернативные артиклы
-$artikles = $folder->query("SELECT * FROM tbl_tovar_postav_artikl ORDER BY `tovat_artkl` ASC");
+$artikles = $folder->query("SELECT * FROM tbl_tovar_postav_artikl WHERE postav_id='".$_GET['klienti_id']."' ORDER BY `tovar_artkl` ASC");
 if (!$artikles)
 {
   echo "Query error - tbl_tovar_postav_artikl";
@@ -40,11 +61,9 @@ $objPHPExcel->getProperties()->setCreator("Folder")
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()
 	->setTitle('alt_artikles')
-	->setCellValue('A1', "id")
-	->setCellValue('B1', "tovat_artkl")
-	->setCellValue('C1', "tovar_postav_artkl")
-	->setCellValue('D1', "postav_id")
-	->setCellValue('E1', "postav_name");
+	->setCellValue('A1', "tovar_artkl")
+	->setCellValue('B1', "tovar_postav_artkl")
+	->setCellValue('C1', "Поставщик");
 	
 $objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getFont()->setBold(true);	
 
@@ -52,11 +71,9 @@ $L = 2;
 while($tmp = $artikles->fetch_assoc()){
 
    $objPHPExcel->getActiveSheet()
-		->setCellValue('A'.$L, $tmp['id'])
-                ->setCellValue('B'.$L, $tmp["tovat_artkl"])
-                ->setCellValue('C'.$L, $tmp["tovar_postav_artkl"])
-                ->setCellValue('D'.$L, $tmp["postav_id"])
-                ->setCellValue('E'.$L, $Suppliers[$tmp["postav_id"]]);
+               ->setCellValue('A'.$L, $tmp["tovar_artkl"])
+               ->setCellValue('B'.$L, $tmp["tovar_postav_artkl"])
+               ->setCellValue('C'.$L, $Suppliers[$tmp["postav_id"]]);
 		
 		$L++;
 

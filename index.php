@@ -1,43 +1,311 @@
 <?php
+//echo phpinfo();
 if(session_id()){
 }else{
   session_start();
 }
+
 include_once 'config/config.php';
-echo '
-<!DOCTYPE html>
-<html>
-<head>
-<title>'.MAIN_TITLE.'</title>    
-<link rel="shortcut icon" href="'.HOST_URL.'/resources/favicon.png" type="image/png">
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-	<!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
- 	<script type="text/javascript" src="'.HOST_URL.'/js/jquery-2.1.4.min.js"></script>
- 	<script language="javascript" src="'.HOST_URL.'/script.js"></script>
-        <script language="javascript" src="'.HOST_URL.'/admin/JsHttpRequest.js"></script>
-	<script type="text/javascript" src="'.HOST_URL.'/lightbox/js/lightbox-plus-jquery.min.js"></script>
-	
-	<link rel="stylesheet" type="text/css" media="all" href="'.HOST_URL.'/css/styles.css">
-	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/sturm.css">
-	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/main.css">
-	
-	<link rel="stylesheet" href="'.HOST_URL.'/lightbox/css/lightbox.css">
-	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/sturm.css">
-	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/demo.css">
-	
-	<!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->
- 	<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->
-	
-</head>
-';
+include_once 'class/class_system.php';
+$System = new System($folder);
 
-
+$System->saveLog();
 
 include_once 'config/core.php';
 include 'init.lib.php';
-include 'init.lib.user.php';
-include 'init.lib.user.tovar.php';
+//include 'init.lib.user.php';
+//include 'init.lib.user.tovar.php';
 include 'seo_url.php';
+
+require_once 'libs/SocialAuther/autoload.php';
+
+connect_to_mysql();
+  
+//Список главных категорий
+$categories = $Category->getCategoryMain(); 
+
+//В самом начале - не прилетел ли нам логин из социалки!!! ===========================================
+  $adapters = array();
+  global $adapterConfigs;
+  
+  foreach ($adapterConfigs as $adapter => $settings) {
+		  $class = 'SocialAuther\Adapter\\' . ucfirst($adapter);
+		  $adapters[$adapter] = new $class($settings);
+  }
+ 
+  if (isset($_GET['provider']) && array_key_exists($_GET['provider'], $adapters)) {
+	  $auther = new SocialAuther\SocialAuther($adapters[$_GET['provider']]);
+  
+	if ($auther->authenticate()) {
+		$user = array(
+		  'provider' 	=> $auther->getProvider(),
+		  'id' 			=> $auther->getSocialId(),
+		  'name' 		=> $auther->getName(),
+		  'email' 		=> $auther->getEmail(),
+		  'page' 		=> $auther->getSocialPage(),
+		  'sex' 		=> $auther->getSex(),
+		  'birthday' 	=> $auther->getBirthday(),
+		  'avatar' 		=> $auther->getAvatar()
+		);
+	  
+	  if(isset($user['id']) AND $user['id'] != ''){
+		  include_once 'libs/user_social.php';
+		  include 'skin/index.php';
+		  die();
+	  }
+	}
+  }
+  
+//======================================================================================================================
+
+//==Блок если нам чтото прилетело============================================================
+if(isset($_POST['reviewer-comment'])){
+	include_once('class/class_comment.php');
+	$Comment = new Comment($folder);
+  
+	$Comment->addComment($_POST);
+	
+	//Перезагрузим страницу нафиг
+	header('Location: '.$_SERVER['REQUEST_URI'].'?reviewer-comment=true');
+}
+
+
+//==============================================================
+
+//Если прилетел логин
+if(isset($_POST['login']) AND $_POST['login'] == true){
+  $User->userLogin();
+//Если есть куки этого юзера но он не залогинен - залогинем его
+}elseif(isset($_COOKIE[BASE.'userid']) AND !isset($_SESSION[BASE.'login'])){
+  $User->userLoginOnCookie();
+}
+//Если пользователь подлогинен - возьмем его параметры
+if(isset($_SESSION[BASE.'userid'])){
+  $User->loadUserSetting($_SESSION[BASE.'userid']);
+}
+
+if(!isset($_SESSION[BASE.'userprice'])){
+  $_SESSION[BASE.'userprice'] = $setup['web default price'];
+}
+
+//Если регистрация
+if(isset($_GET['registration'])){
+
+  include_once("skin/registration.php");
+  die();
+}
+
+if(!isset($_SESSION[BASE.'userlevel'])) $_SESSION[BASE.'userlevel'] = 10;
+
+
+//Если прилетела ПОИСК
+if(isset($_GET['search'])){
+ 	
+	$search = mysqli_escape_string($folder, $_GET['search']);
+	
+	if(strlen($search) > 4){
+	  include_once("libs/products_control.php");
+	  $data = user_item_list_view($search,$setup, 'FIND');
+	  include 'skin/search_result.php';
+	}else{
+	  include 'skin/search_result.php';
+	}
+	
+	die();
+	
+
+}
+
+
+//Если пользователь вылогинился
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'logout'){
+  $User->logoutUser();
+  unset($_GET['_route_']);
+}
+
+//Если пользователь зашел в кабинет
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_personal'){
+  
+  if($user = $User->getLoginedUserInfo()){
+	include 'skin/account_personal.php';
+	die();
+  }else{
+	include 'skin/index.php';
+    die();
+  }
+
+}
+
+//Если пользователь зашел в корзину
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_cart'){
+
+  include 'class/class_control_cart.php';
+  $ControlCart = new ControlCart($folder);
+  
+  $cart = $ControlCart->getLoginedUserCart($User->getActiveUserKey(), $Product);
+  
+  include 'skin/account_cart.php';
+  die();
+
+}
+
+//Если пользователь зашел в список заказов
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_orders'){
+  
+  if($user = $User->getLoginedUserInfo()){
+	include 'skin/account_orders.php';
+	die();
+  }else{
+	include 'skin/index.php';
+    die();
+  }
+
+}
+
+//Если пользователь зашел в пароль
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'restore_pass'){
+ 
+	include 'skin/restore_pass.php';
+	die();
+ }
+
+//Напоминалка пароля
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_password'){
+  
+  if($user = $User->getLoginedUserInfo()){
+	include 'skin/account_password.php';
+	die();
+  }else{
+	include 'skin/index.php';
+    die();
+  }
+
+}
+
+//Формирование заказа - Адрес доставки
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'cart'){
+  include 'class/class_transport.php';
+  $Transport = new Transport($folder);
+  
+  include 'class/class_control_cart.php';
+  $ControlCart = new ControlCart($folder);
+  
+  $user = $User->getLoginedUserInfo();
+  $user['key'] = $User->getActiveUserKey();
+  $cart = $ControlCart->getLoginedUserCart($user['key'], $Product);
+  $transport['city'] = $Transport->getTranspComp();
+
+	include 'skin/cart_2.php';
+	die();
+}
+
+//Подтверждение отправки заказа
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'order'){
+  include 'class/class_control_cart.php';
+  $ControlCart = new ControlCart($folder);
+  
+  $user = $User->getLoginedUserInfo();
+  $user['key'] = $User->getActiveUserKey();
+  $cart = $ControlCart->getLoginedUserCart($user['key'], $Product);
+ 
+  $order = $Order->createUserOrder($_POST, $user, $cart);
+
+  if($order){
+	include 'skin/cart_3.php';
+	die();
+  }
+
+}
+
+//Если пользователь зашел в гардероб
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_wardrobe'){
+  
+  if($user = $User->getLoginedUserInfo()){
+	include 'skin/account_wardrobe.php';
+	die();
+  }else{
+	include 'skin/index.php';
+    die();
+  }
+
+}
+
+
+//Если прилетели на главную страницу = Запустим скин главной
+if(!isset($_GET['_route_'])){
+  include 'skin/index.php';
+  die();
+}
+
+
+//Если прилетела категория
+if(isset($_GET['parent'])){
+  $categ_id_list = '*';
+  foreach($categories as $index => $tmp){
+	  $categ_id_list .= $index . '*';
+  }
+ 
+  $parent = mysqli_escape_string($folder, $_GET['parent']);
+ 
+  //Если это главная категория - тогда первый шаблон
+  if(strpos($categ_id_list, '*' . $_GET['parent'] . '*') !== false){
+	
+	
+	$categ_selected = $Category->getCategoryInfo((int)$parent);
+	$ids = $Category->getCategoryChildren((int)$parent);
+	$category_children = $Category->getCategoriesInfo($ids);
+	
+	include 'skin/catalog_1.php';
+	die();
+  }else{
+	//Если подкатегория - тогда второй шаблон
+	
+	include_once("libs/products_control.php");
+	$data = user_item_list_view($parent,$setup);
+	include 'skin/catalog_2.php';
+	die();
+  }
+}
+
+//Если прилетела НОВИНКИ
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'lates_products'){
+ 	
+	include_once("libs/products_control.php");
+	$data = user_item_list_view(0,$setup, 120);
+	include 'skin/lates_products.php';
+	die();
+
+}
+
+
+
+//Если прилетел товар
+if(isset($_GET['tovar_id'])){
+    $product_id = mysqli_escape_string($folder, $_GET['tovar_id']);
+
+	if(!isset($Comment)){
+	  include_once('class/class_comment.php');
+	  $Comment = new Comment($folder);
+	}
+	
+	include_once("libs/product_control.php");
+	
+	$product = user_item_view($product_id);
+	
+	$product['comments'] = $Comment->getComments($product['artkl']);
+	
+	include 'skin/product.php';
+	die();
+}
+
+//Если мы дошли до этого места - значит мы не нашли нуждной нам страницы
+	include 'skin/404.php';
+	die();
+
+echo "<pre>";  print_r(var_dump( $_GET )); echo "</pre>";
+
+
+
 
 //if(isset($_GET['find'])) unset($_GET['_route_']);
 
@@ -69,169 +337,38 @@ if(verify_black_list($_SERVER['REMOTE_ADDR']))
 }
 save_log($_SERVER['REMOTE_ADDR'],$_SERVER["PHP_SELF"]."?".$_SERVER['QUERY_STRING']);
 
-//$menu_information = "";
-$temp_header = "admin/template/main.html";
-$tmp_header = file_get_contents($temp_header);  
-$user_level=10;
-//if(!isset($_SESSION[BASE.'userlevel']))$_SESSION[BASE.'userlevel']=1;
-if(!isset($_SESSION[BASE.'username']))$_SESSION[BASE.'username']=null; 
-if(!isset($_SESSION[BASE.'usersetup']))$_SESSION[BASE.'usersetup']=null; 
-if(!isset($_SESSION[BASE.'userlevel']))$_SESSION[BASE.'userlevel']=$user_level; 
-if(!isset($_SESSION[BASE.'userdiscount']))$_SESSION[BASE.'userdiscount']=0; 
-if(!isset($_SESSION[BASE.'usergroup_setup']))$_SESSION[BASE.'usergroup_setup']=null; 
-
-
-
-$key = "";
-if(isset($_REQUEST['key'])) $key=(string)$_REQUEST['key'];
-if($key=="exit"){
-$_SESSION[BASE.'login']=null;
-$_SESSION[BASE.'userid']=null;
-$_SESSION[BASE.'username']=null;
-$_SESSION[BASE.'usersetup']=null;
-$_SESSION[BASE.'pass']=null;
-$_SESSION[BASE.'userorder']=null;
-$_SESSION[BASE.'userordersumm']=null;
-$_SESSION[BASE.'userlevel']=$user_level;
-$_SESSION[BASE.'userprice']=null;
-$_SESSION[BASE.'userdiscount']=null;
-$_SESSION[BASE.'usergroup_setup']=null;
-//Перечитаем меню каталогов если человек залогинился. Для этого обнулим переменную сессии.
-$_SESSION[BASE.'user menu'] = null;
-}
-
-  if(!isset($_SESSION[BASE.'lang']))$_SESSION[BASE.'lang']=1;
-  
-  if (isset($_REQUEST['lang'])){
-    $_SESSION[BASE.'lang'] = (int)mysql_real_escape_string($_REQUEST['lang']);
-    $_SESSION[BASE.'user menu']=null;
-	if ($_SESSION[BASE.'lang'] <1){
-	      $_SESSION[BASE.'lang']=1;
-	}
-	if ($_SESSION[BASE.'lang'] >3){
-	      $_SESSION[BASE.'lang']=1;
-	}
-  }
-   
-
-if(isset($_REQUEST['comment_txt'])){
-  $comment_txt = (string)mysql_real_escape_string($_REQUEST['comment_txt']);
-  $dell = array("<",
-		">",
-		"img",
-		"src",
-		"script",
-		"php",
-		"\"",
-		"'",
-		"href"
-		);
-  $comment_txt = str_replace($dell,"*",$comment_txt);
-  
-  $tmp = mysql_query("SET NAMES utf8");
-  $tmp = mysql_query("SELECT `comments_klient` FROM `tbl_comments` WHERE `comments_memo`='".$comment_txt."' and `comments_tovar`='".mysql_real_escape_string($_REQUEST['tovar_id'])."'");
- 
-  if(mysql_num_rows($tmp)==0){
-      $tmp = mysql_query("SET NAMES utf8");
-      $tmp = mysql_query("INSERT INTO `tbl_comments` 
-		      (`comments_tovar`,`comments_klient`,`comments_memo`)
-		      VALUES
-		      ('".(int)mysql_real_escape_string($_REQUEST['tovar_id'])."',
-			'".$_SESSION[BASE.'userid']."',
-			'".$comment_txt."')
-		      ");
-  }
-}
-//==================================================================
-//echo $_REQUEST["login"],$_REQUEST["pass"],$_REQUEST["logining"]=='1',"<br>";
-
-if(isset($_REQUEST["pass"]) and !empty($_REQUEST["login"]) and $_REQUEST["logining"]=='1'){
-$ver = mysql_query("SET NAMES utf8");
-$sqlStr = "SELECT 
-		    `klienti_name_1`,
-		    `klienti_id`,
-		    `klienti_setup`,
-		    `klienti_email`,
-		    `klienti_discount`,
-		    `klienti_inet_id`,
-		    `klienti_price`,
-		    `klienti_group_setup`
-		    FROM `tbl_klienti`,`tbl_klienti_group` 
-		    WHERE upper(`klienti_email`)='".mb_strtoupper(addslashes(mysql_real_escape_string($_REQUEST["login"])),'UTF-8')."' 
-		    and `klienti_pass`='".md5((string)mysql_real_escape_string($_REQUEST["pass"]))."'
-		    and `klienti_group`=`klienti_group_id`
-		    ";
-		    
-$ver = mysql_query($sqlStr);
-if (!$ver)
-{
-
-//echo "1 User not found or login+pass not corect!";
-if(strpos($_REQUEST['web'],"key=exit")) $web = "index.php?user=new";
-if(!isset($_SESSION[BASE.'userid'])) $web = "index.php?user=new";
-header ('Refresh: 0; url='.$web);
-}
-$curr = mysql_query("SET NAMES utf8");
-$curr = mysql_query("SELECT 
-		    `currency_name_shot` FROM `tbl_currency` 
-		    WHERE `currency_id`='1'");
-		    
-if(mysql_num_rows($ver)==0){
-//echo "<b> User not found or login+pass not corect!</b>";
-$web = $_REQUEST['web'];
-if(strpos($_REQUEST['web'],"key=exit")) $web = "".HOST_URL."/index.php";
-if(!isset($_SESSION[BASE.'userid'])) $web = "".HOST_URL."/index.php?user=new";
-header ('Refresh: 0; url='.$web);
-}else{
-    if(empty($_SESSION[BASE.'userorder'])){
-	$oper = mysql_query("SET NAMES utf8");
-	$oper = mysql_query("SELECT 
-		    `operation_id`,
-		    `operation_summ`
-		    FROM `tbl_operation` 
-		    WHERE `operation_klient`='".mysql_result($ver,0,"klienti_id")."' 
-		    and `operation_status`='16'
-		    and `operation_dell`='0'");
-	if(mysql_num_rows($oper)>0){
-	      $_SESSION[BASE.'userorder']=mysql_result($oper,0,"operation_id");
-	      $_SESSION[BASE.'userordersumm']=mysql_result($oper,0,"operation_summ");
-	}else{
-	      $_SESSION[BASE.'userorder']=null;
-	      $_SESSION[BASE.'userordersumm']=null;
-	}
-    }
-
-$_SESSION[BASE.'login']=mysql_result($ver,0,"klienti_email");
-$_SESSION[BASE.'userlevel']=mysql_result($ver,0,"klienti_inet_id");
-$_SESSION[BASE.'username']=mysql_result($ver,0,"klienti_name_1");
-$_SESSION[BASE.'userid']=mysql_result($ver,0,"klienti_id");
-$_SESSION[BASE.'usersetup']=mysql_result($ver,0,"klienti_setup");
-$_SESSION[BASE.'userdiscount']=mysql_result($ver,0,"klienti_discount");
-$_SESSION[BASE.'userprice']=mysql_result($ver,0,"klienti_price");
-$_SESSION[BASE.'usercurr']=mysql_result($curr,0,0);
-$_SESSION[BASE.'usergroup_setup']=mysql_result($ver,0,"klienti_group_setup");
-
-$sSQL = "UPDATE `tbl_klienti` SET `klienti_ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `klienti_id`='".$_SESSION[BASE.'userid']."'";
-$ver = mysql_query($sSQL);
-
-//Перечитаем меню каталогов если человек залогинился. Для этого обнулим переменную сессии.
-$_SESSION[BASE.'user menu'] = null;
-}
-$web = mysql_real_escape_string($_REQUEST['web']);
-if(strpos($_REQUEST['web'],"key=exit")) $web = "index.php";
-if(!isset($_SESSION[BASE.'userid'])) $web = "index.php?user=new";
-header ('Refresh: 0; url='.$web);
-}
-//==================================================================
-
-if (!isset($_SESSION[BASE.'userprice'])){
-  $_SESSION[BASE.'userprice'] = $setup['web default price'];
-}
 
 
 //header ('Content-Type: text/html; charset=utf-8');
 $find = '';
 if(isset($_GET['find'])) $find = $_GET['find'];
+
+echo '
+<!DOCTYPE html>
+<html>
+<head>
+<title>'.$Info->getTitle().'</title>    
+<link rel="shortcut icon" href="'.HOST_URL.'/resources/favicon.png" type="image/png">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
+ 	<script type="text/javascript" src="'.HOST_URL.'/js/jquery-2.1.4.min.js"></script>
+ 	<script language="javascript" src="'.HOST_URL.'/script.js"></script>
+        <script language="javascript" src="'.HOST_URL.'/admin/JsHttpRequest.js"></script>
+	<!--script type="text/javascript" src="'.HOST_URL.'/lightbox/js/lightbox.js"></script-->
+	
+	<link rel="stylesheet" type="text/css" media="all" href="'.HOST_URL.'/css/styles.css">
+	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/sturm.css">
+	<link rel="stylesheet" media="screen" type="text/css" href="'.HOST_URL.'/css/main.css">
+	
+	<!--link rel="stylesheet" href="'.HOST_URL.'/lightbox/css/lightbox.css"-->
+	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/sturm.css">
+	<link rel="stylesheet" media="all"    type="text/css" href="'.HOST_URL.'/css/demo.css">
+	
+	<!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->
+ 	<!--script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script-->
+	
+</head>
+';
 
 echo "<script>
     function getObj(objID)
@@ -459,7 +596,7 @@ echo "\nfunction update(table,name,value,id,tovar){
 //=================================================================================
 echo "
 <div id=\"fb-root\"></div>
-<script>
+<!--script>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '1582359991987210',
@@ -475,7 +612,7 @@ echo "
      js.src = \"//connect.facebook.net/en_US/sdk.js\";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-</script>
+</script-->
 
 ";
 
@@ -599,6 +736,9 @@ if(isset($_SESSION[BASE.'userorder'])) {
     $korzina .= "</div>";
 }
 
+include_once(".assets/analyticstracking.php");
+include_once(".assets/analytics_yandex.php");
+
 $tmp_header = str_replace("&chat",chat(),$tmp_header);
 $tmp_header = str_replace("&body",$body,$tmp_header);
 $tmp_header = str_replace("&order",$korzina,$tmp_header);
@@ -639,5 +779,6 @@ $tmp_header .= "<div id='info2' class='info'></div></body>
 echo $tmp_header;
 echo "";
 echo $_SESSION[BASE.'chat'];
+
 echo "</html>";
 ?>

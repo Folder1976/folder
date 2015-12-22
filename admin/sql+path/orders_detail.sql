@@ -1,0 +1,2 @@
+ALTER TABLE  `tbl_operation_detail` ADD  `delivery_days` INT NOT NULL AFTER  `operation_detail_dell` ;
+ALTER TABLE  `tbl_operation_detail` ADD  `product_postav_id` INT NOT NULL AFTER  `delivery_days` ;

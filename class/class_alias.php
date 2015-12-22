@@ -66,6 +66,89 @@ class Alias {
 		
 		return strtolower(str_replace($rus, $lat, $str));
 	}
+	
+	public function generateAlias($tovar_id){
+		
+		include_once ("class_product.php");
+		if(!isset($Product)) $Product = new Product($this->base);
+		include_once ("../admin/class/class_product_edit.php");
+		if(!isset($ProductEdit)) $ProductEdit = new ProductEdit($this->base);
+		include_once ("../admin/class/class_brand.php");
+		if(!isset($Brand)) $Brand = new Brand($this->base);
+		  
+		$category_id = $Product->getCategoryID($tovar_id);
+	 
+	 	$category_alias = $this->getCategoryAlias($category_id);
+	      
+		$tovar_artkl = $ProductEdit->getProductArtkl($tovar_id);
+	      
+		$brand = $Brand->getBrandCodeOnProductId($tovar_id);
+	      
+		$alias = $category_alias.'/'.$brand.'/'.$tovar_artkl;
+	      
+		$alias = str_replace('//','/',$alias);
+	      
+		return $alias;
+	}
+	
+	
+	
+	public function updateCategoryAlias($id){
+		
+		include_once ("class_category.php");
+		if(!isset($Category)) $Category = new Category($this->base);
+		  
+		$category = $Category->getCategoryPath($id);
+		
+		if($category){
+
+			$alias = '';
+			
+			foreach($category as $val){
+				$alias .= $this->getAliasFromStr($val) . '/';
+			}
+		
+			$alias = trim($alias, ' /');
+			
+			$sql = "INSERT INTO `tbl_seo_url`(`seo_id`, `seo_url`, `seo_alias`, `seo_main`)
+					VALUES ('','parent=$id','$alias','0')
+					ON DUPLICATE KEY UPDATE `seo_alias` = '$alias'";
+			
+			$sql = $this->base->query($sql);
+			
+		}
+	 	
+	}
+
+	public function updateProductAlias($tovar_id){
+		
+		include_once ("class_product.php");
+		if(!isset($Product)) $Product = new Product($this->base);
+		include_once ("../admin/class/class_product_edit.php");
+		if(!isset($ProductEdit)) $ProductEdit = new ProductEdit($this->base);
+		include_once ("../admin/class/class_brand.php");
+		if(!isset($Brand)) $Brand = new Brand($this->base);
+		  
+		$category_id = $Product->getCategoryID($tovar_id);
+	 
+	 	$category_alias = $this->getCategoryAlias($category_id);
+	      
+		$tovar_artkl = $ProductEdit->getProductArtkl($tovar_id);
+	      
+		$brand = $Brand->getBrandCodeOnProductId($tovar_id);
+	      
+		$alias = $category_alias.'/'.$brand.'/'.$tovar_artkl;
+	      
+		$alias = str_replace('//','/',$alias);
+	      
+		$sql = "INSERT INTO `tbl_seo_url`(`seo_id`, `seo_url`, `seo_alias`, `seo_main`)
+				VALUES ('','tovar_id=$tovar_id','$alias','0')
+				ON DUPLICATE KEY UPDATE `seo_alias` = '$alias'";
+		
+		$sql = $this->base->query($sql);
+		
+	}
+
 
 	
 }

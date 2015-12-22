@@ -331,7 +331,7 @@ if(isset($_REQUEST["mail"])){
   $m->To(mysql_result($ver,0,"klienti_email"));
   echo "Sending....";
   $error = $m->Send();
-  //echo "<br>",$m->Send();
+  echo "<br>",$m->Send();
     if($error==1){echo "<br>Email sended OK";}
       else{echo "<br><b>Email DONT send!!! Error number - ", $error; }
 }

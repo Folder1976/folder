@@ -4,7 +4,7 @@ include 'init.lib.php';
 
 connect_to_mysql();
 session_start();
-if (!session_verify($_SERVER["PHP_SELF"],"+")){
+if (!session_verify($_SERVER["PHP_SELF"],"none")){
   exit();
 }
 //print_r ($_REQUEST);
@@ -43,12 +43,6 @@ $table_name = $_REQUEST["_table_name"];
 $id_name = $_REQUEST["_id_name"];
 $id_value = $_REQUEST["_id_value"];
 $result_string="";
-
-//echo " ",$table_name," ",$id_name," ",$id_value," ",$iKey_dell;
-//exit();
-
-echo $table_name, "<br>";
-//echo $iKey_add, $iKey_dell, $iKey_save, "- > <br>";
 
 $s_name="";
 $s_value="";
@@ -114,9 +108,7 @@ if (isset($_REQUEST["_save"]))
     }
 }
 
-//$s_sql_string .= "INSERT INTO `" . $table_name . "`(`" . $id_name . "`" . $s_name . ") VALUES ('" . $id_value . "'" . $s_value . ")";
 $s_sql_string_where = " WHERE `" . $id_name . "` = '" . $id_value . "'";
-//echo $s_sql_string_where; //$s_sql_string_where, $iKey_save;
 
 if (isset($_REQUEST["_return"]))
 {
@@ -147,11 +139,9 @@ if (isset($_REQUEST["_dell"]))
     $ver = mysql_query("DELETE FROM `tbl_description` WHERE `descripton_tovar_id`='".$id_value."'");
     }
   
-  echo '<h1>Удалил</h1>';
   $id_value = (int)$id_value - 1;
   $id_to_return = $id_value;
   
-  //$result_string = "<br><br>Nom -> " . $id_value . " - DELETED OK";
 }
 
 if (isset($_REQUEST["_save"]))
@@ -159,18 +149,14 @@ if (isset($_REQUEST["_save"]))
   $s_sql_string .= "UPDATE `" . $table_name . "` SET " . $s_value . " ".$s_sql_string_where;
   $ver = mysql_query("SET NAMES utf8");
   $ver = mysql_query($s_sql_string);// . $s_sql_string_where);
-  //echo "<br>",$s_sql_string;
   $result_string = "<br>Nom -> " . mysql_insert_id() . " - SAVE OK";
 }
 if (isset($_REQUEST["_add"]))
 {
   $s_sql_string = "INSERT INTO `" . $table_name . "`(`" . $id_name . "`," . $s_name . ") VALUES (''," . $s_value . ")";
-  echo $s_sql_string;
   $ver = mysql_query("SET NAMES utf8");
   $ver = mysql_query($s_sql_string);
   $result_string = "<br><br>Nom -> " . mysql_insert_id() . " - ADDED OK";
-  //echo "<br><br> ------ ",$table_name," ",$_REQUEST["_bank"];
-      // esli eto tablica tovara
     if($table_name=="tbl_tovar"){
       $ver = mysql_query("INSERT INTO `tbl_warehouse_unit` (`warehouse_unit_tovar_id`) VALUES ('".mysql_insert_id()."')");
       $ver = mysql_query("INSERT INTO `tbl_price_tovar` (`price_tovar_id`) VALUES ('".mysql_insert_id()."')");
@@ -224,12 +210,8 @@ if (isset($_REQUEST["_add"]))
 
 if (isset($_REQUEST["_copy"]))
 {
- // $s_sql_string = "INSERT INTO `" . $table_name . "`(`" . $id_name . "`," . $s_name . ") VALUES (''," . $s_value . ")";
-  echo "CREATE TEMPORARY TABLE `tbl_tmp` AS SELECT * FROM `".$table_name."` WHERE `".$id_name."`='".$id_value."'<br>";
-   echo "UPDATE `tbl_tmp` SET `".$id_name."`=NULL<br>";
-   echo "INSERT INTO `".$table_name."` SELECT * FROM `tbl_tmp`<br>";
   
- $ver = mysql_query("SET NAMES utf8");
+  $ver = mysql_query("SET NAMES utf8");
   $ver = mysql_query("CREATE TEMPORARY TABLE `tbl_tmp` AS SELECT * FROM `".$table_name."` WHERE `".$id_name."`='".$id_value."'");
   $ver = mysql_query("UPDATE `tbl_tmp` SET `".$id_name."`=NULL");
   $ver = mysql_query("INSERT INTO `".$table_name."` SELECT * FROM `tbl_tmp`");
@@ -253,40 +235,16 @@ if (isset($_REQUEST["_copy"]))
       }
 
  $result_string = "<br><br>Nom `".$table_name."` -> " . $last_insert_id. " - ADDED OK";
-    // esli eto tablica tovara 
- /*   if($table_name=="tbl_tovar"){ 
-    $ver = mysql_query("INSERT INTO `tbl_warehouse_unit` (`warehouse_unit_tovar_id`) VALUES ('".$last_insert_id."')");
-    $result_string .= "<br><br>Nom `tbl_warehouse_unit` -> " . $last_insert_id. " - ADDED OK";
-    
-    //  $ver = mysql_query("INSERT INTO `tbl_price_tovar` (`price_tovar_id`) VALUES ('".mysql_insert_id()."')");
-      $ver = mysql_query("CREATE TEMPORARY TABLE `tbl_tmp` AS SELECT * FROM `tbl_price_tovar` WHERE `price_tovar_id`='".$id_value."'");
-      $ver = mysql_query("UPDATE `tbl_tmp` SET `price_tovar_id`='".$last_insert_id."'");
-      $ver = mysql_query("INSERT INTO `tbl_price_tovar` SELECT * FROM `tbl_tmp`");
-      $ver = mysql_query("DROP TABLE `tbl_tmp`");
-    $result_string .= "<br><br>Nom `tbl_price_tovar` -> " . $last_insert_id. " - ADDED OK";
- 
-    //  $ver = mysql_query("INSERT INTO `tbl_description` (`description_tovar_id`) VALUES ('".mysql_insert_id()."')");
-      $ver = mysql_query("CREATE TEMPORARY TABLE `tbl_tmp` AS SELECT * FROM `tbl_description` WHERE `description_tovar_id`='".$id_value."'");
-      $ver = mysql_query("UPDATE `tbl_tmp` SET `description_tovar_id`='".$last_insert_id."'");
-      $ver = mysql_query("INSERT INTO `tbl_description` SELECT * FROM `tbl_tmp`");
-      $ver = mysql_query("DROP TABLE `tbl_tmp`");
-    $result_string .= "<br><br>Nom `tbl_description` -> " . $last_insert_id. " - ADDED OK";
- 
-    }*/
 }
 
-echo "<title>" . $result_string . "</title>";
-echo "<body>" . $result_string . "</body>";
+//echo "<title>" . $result_string . "</title>";
+//echo "<body>" . $result_string . "</body>";
 
 if (mysql_insert_id()==0 or $id_to_return > 1){
- // $id_to_return = "";
 }else{
   $id_to_return = mysql_insert_id();
 }
-echo "<br> page - ";
-//echo  $page_to_return,"<br>";
-//echo  $id_to_return,"<br>";
 
-if(isset($_REQUEST["_page_to_return"])) header ('Refresh: 1; url=' . $_REQUEST["_page_to_return"] . $id_to_return);
+if(isset($_REQUEST["_page_to_return"])) header ('Refresh: 0; url=' . $_REQUEST["_page_to_return"] . $id_to_return);
 
 ?>

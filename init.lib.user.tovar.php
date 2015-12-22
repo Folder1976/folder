@@ -48,13 +48,15 @@ $count=0;
 		  WHERE
 		      `warehouse_unit_tovar_id`='".$id."'
 ";
-if($tmp=="")
+if($tmp != '')
 {
   $sum = 0;
 }else{
   $ver = mysql_query($tQuery);
-  $sum = mysql_result($ver,0,0);
-  if($sum < 0) $sum = 0;
+  if(mysql_num_rows($ver) > 0){
+      $sum = mysql_result($ver,0,0);
+      if($sum < 0) $sum = 0;
+  }
 }
       $ver = mysql_query("SET NAMES utf8");
       $tQuery = "SELECT 

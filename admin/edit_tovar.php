@@ -1,5 +1,5 @@
 <?php
-
+header ('Content-Type: text/html; charset=utf8');
 include 'init.lib.php';
 connect_to_mysql();
 session_start();
@@ -115,6 +115,18 @@ if (!$tovar_supplier)
     $Suppliers[$tmp['klienti_id']] = $tmp['klienti_name_1'];
   }
 }
+$r = mysql_query("SET NAMES utf8");
+$r = mysql_query("SELECT `brand_id`,`brand_name` FROM tbl_brand ORDER BY `brand_name` ASC");# WHERE klienti_id = " . $iKlient_id);
+if (!$r)
+{
+  echo "Query error - tbl_brand";
+  exit();
+}else{
+  $Brands = array();
+  while($tmp = mysql_fetch_assoc($r)){
+    $Brands[$tmp['brand_id']] = $tmp['brand_name'];
+  }
+}
 $tQuery="SELECT * FROM `tbl_description` WHERE `description_tovar_id`='".$iKlient_id."'";
 $tovar_description = mysql_query("SET NAMES utf8");
 $tovar_description = mysql_query($tQuery);# WHERE klienti_id = " . $iKlient_id);
@@ -149,15 +161,11 @@ if (!$curr)
 
 
 
-header ('Content-Type: text/html; charset=utf8');
+
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'>";
 echo "<link rel='stylesheet' type='text/css' href='css/style.css'>";
 ?>
 
-<!-- редактор -->
-<!-- 1 -->
-<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-<script>tinymce.init({selector:'textarea'});</script>
 
 <!-- 2 
 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
@@ -317,6 +325,13 @@ echo "\n<table border = 1 cellspacing='0' cellpadding='0'><tr>";
   include ("class/class_product_edit.php");
   $ProductEdit = new ProductEdit($folder);
 
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_name_1')>0){
+echo "\n<tr><td>",$setup['menu name1']," ",mysql_result($lang,0,"web_lang_lang"),":</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  name='tovar_name_1' value='" . mysql_result($ver,0,"tovar_name_1") . "'/></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+}
 //======================================group================================================================================
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_parent')>0){
 echo "\n<td>",$setup['menu group'],":</td><td>"; # Group klienti
@@ -335,27 +350,7 @@ echo "</select></td>";
 echo "<td><a href='edit_nakl-group.php?tovar_parent_id=", mysql_result($ver,0,'tovar_parent'),"' target='_blank'>",$setup['menu edit'],"</a>
     <a href='#none' onClick='find_window_script(\"tbl_parent\",\"tovar_parent_id\",\"tovar_parent_name\",\"".$setup['menu group']. " - ".$setup['menu find']."\",\"tovar_parent\"),0'> [",$setup['menu find'],"] </a>
     </td>";
-/*echo "<td rowspan=\"20\" valign=\"top\">";
-
-$count8=0;
-$rowcount=5;
-$id = mysql_result($ver,0,"tovar_inet_id");
-while($count8<20){
-    
-    if($rowcount==0){
-    echo "<br>";
-    $rowcount=5;
-    }
-    echo "<img src=\"http://folder.com.ua/resources/products/$id/$id.$count8.large.jpg\" height=\"100px\">";
-
-$rowcount--;   
-$count8++;
- } 
-echo "</td>";
-echo "</tr>";*/
 }
-
-
 
 echo "\n<tr><td>Спарсить:</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='parsing' class='parsing_link' value='" . mysql_result($ver,0,"parsing") . "'/></td>";
@@ -389,10 +384,19 @@ echo "</tr>";
 
 
 echo "\n<tr><td>Alias:</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  name='tovar_alias' value='" . $Alias->getProductAlias($_GET['tovar_id']) . "'/></td>";
+echo "\n<input type='text'  style='width:400px' class='tovar_alias' name='tovar_alias' value='" . $Alias->getProductAlias($_GET['tovar_id']) . "'/></td>";
+echo "<td><a href='javascript:' class='alias_gen'>генерить</a></td>";
+echo "<td></td>";
+echo "</tr>";
+
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_model')>0){
+echo "\n<tr><td>Модель товара:</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  name='tovar_model' value='" . mysql_result($ver,0,"tovar_model") . "'/></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
+}
+
 
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_artkl')>0){
 echo "\n<tr><td>Артикул:</td><td>"; # Group name 1
@@ -401,6 +405,7 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 
+//====================================================================================================================
 $alternative_artkl = $ProductEdit->getProductAlternativeArtikles(mysql_result($ver,0,"tovar_artkl"));
 
   echo '\n<tr style="background-color:#FFFACD;"><td valign="top">Альтернативные Артикулы:</td><td>'; # Group name 1
@@ -412,7 +417,7 @@ $alternative_artkl = $ProductEdit->getProductAlternativeArtikles(mysql_result($v
 if($alternative_artkl){
 
     foreach($alternative_artkl as $value){
-      
+     //echo "<pre>";  print_r(var_dump( $value )); echo "</pre>";
 	echo '<tr class="row_alt_artkl_'.$value['id'].'">
 	      <td><input type="text"  style="width:150px"  name="alt_artkl*'.$value['id'].'" value="' . $value['tovar_postav_artkl'] . '"/></td>';
 	echo '<td><select name="postav_alt_artkl*'.$value['id'].'" style="width:195px">';
@@ -438,24 +443,18 @@ if($alternative_artkl){
       echo '</td></tr>';
   echo '</table>
 	<td valign="top"><a href="main.php?func=alternative_artikles" target="_blank">Альт.редактор</a></td>';
-  echo "<td></td>
-      <td></td>";
+  echo "<td></td>";
   echo '</tr>';
 
 
 
 }
 
+//====================================================================================================================
+
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_size')>0){
 echo "\n<tr><td>",$setup['menu size'],":</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='tovar_size' value='" . mysql_result($ver,0,"tovar_size") . "'/></td>";
-echo "<td></td>";
-echo "<td></td>";
-echo "</tr>";
-}
-if(strpos($_SESSION[BASE.'usersetup'],'tovar_name_1')>0){
-echo "\n<tr><td>",$setup['menu name1']," ",mysql_result($lang,0,"web_lang_lang"),":</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  name='tovar_name_1' value='" . mysql_result($ver,0,"tovar_name_1") . "'/></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
@@ -495,11 +494,15 @@ echo "</tr>";
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_dimension')>0){
 echo "\n<td>",$setup['menu dimension'],":</td><td>"; # Group klienti
 echo "\n<select name='tovar_dimension' style='width:100px'>";# OnChange='submit();'>";
+$dim = '';
 $count=0;
 while ($count < mysql_num_rows($dimension))
 {
   echo "\n<option ";
-	if (mysql_result($ver,0,"tovar_dimension") == mysql_result($dimension,$count,"dimension_id")) echo "selected ";
+	if (mysql_result($ver,0,"tovar_dimension") == mysql_result($dimension,$count,"dimension_id")){
+	    echo "selected ";
+	    $dim = mysql_result($dimension,$count,"dimension_name") ;
+	}
   echo "value=" . mysql_result($dimension,$count,"dimension_id") . ">" . mysql_result($dimension,$count,"dimension_name")  . "</option>";
   $count++;
 }
@@ -507,10 +510,30 @@ echo "</select></td>";
 echo "<td><a href='edit_tovar_dimension.php?klienti_id=", mysql_result($ver,0,'tovar_dimension'),"' target='_blank'>",$setup['menu edit'],"</a></td>";
 echo "<td></td>";
 echo "</tr>";
+}//======================================BRAND================================================================================
+if(strpos($_SESSION[BASE.'usersetup'],'brand_id')>0){
+echo "\n<td>Производитель:</td><td>"; # Group klienti
+echo "\n<select name='brand_id' style='width:400px'>";# OnChange='submit();'>";
+$dim = '';
+$count=0;
+foreach($Brands as $id => $value)
+{
+  echo "\n<option ";
+	if (mysql_result($ver,0,"brand_id") == $id){
+	  echo "selected ";
+	}
+  echo "value=" . $id . ">" . $value . "</option>";
+  $count++;
+}
+echo "</select></td>";
+echo "<td><a href='edit_brands.php?brand_id=", mysql_result($ver,0,'brand_id'),"' target='_blank'>",$setup['menu edit'],"</a></td>";
+echo "<td></td>";
+echo "</tr>";
 }
 //=====================================================================================================================
 
 //====================================Supplier==================================================================================
+/*
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_supplier')>0){
 echo "\n<td>",$setup['menu suppliter'],":</td><td>"; # Group klienti
 echo "\n<select name='tovar_supplier' style='width:400px'>";# OnChange='submit();'>";
@@ -527,7 +550,91 @@ echo "<td><a href='edit_klient.php?klienti_id=", mysql_result($ver,0,'tovar_supp
 echo "<td></td>";
 echo "</tr>";
 }
+*/
 //=====================================================================================================================
+//====================================================================================================================
+$alternative_artkl = $ProductEdit->getProductPostavInfo(mysql_result($ver,0,"tovar_id"));
+
+  echo '\n<tr style="background-color:#97FFFF;"><td valign="top">Поставщики:</td><td>'; # Group name 1
+  echo '<table style="background-color:#97FFFF;">
+	<!--tr>
+	<th>Арткл</th>
+	<th>Поставщик</th>
+	</tr-->';
+
+$r = $folder->query('SELECT currency_id, currency_name_shot FROM tbl_currency ORDER BY currency_id ASC;');
+$currency_a = array();
+while($tmp = $r->fetch_assoc()){
+  $currency_a[$tmp['currency_id']] = $tmp['currency_name_shot'];
+}
+
+  
+if($alternative_artkl){
+global $curr_name;
+    foreach($alternative_artkl as $value){
+      
+	echo '<tr class="row_price_'.$value['postav_id'].'">
+	      <td>Закуп : <input type="text"  style="width:60px"  name="zakup_row_postav*'.$value['postav_id'].'" value="' . $value['zakup'] . '"/>
+		  <select name="zakup_curr_'.$value['postav_id'].'" style="width:45px">';
+			foreach($curr_name as $id => $name){
+			  if($id == $value['zakup_curr']){
+			echo "<option value=" . $id . " selected>" . $name . "</option>";  
+			  }else{
+			echo "<option value=" . $id . ">" . $name  . "</option>";
+			  }
+			}
+	echo '</select></td>';
+	
+	echo '<td><select name="row_postav*'.$value['postav_id'].'" style="width:155px">';
+	    foreach($Suppliers as $id => $name){
+	      if($id == $value['postav_id']){
+		echo "<option value=" . $id . " selected>" . $name  . "</option>";  
+	      }else{
+		echo "<option value=" . $id . ">" . $name  . "</option>";
+	      }
+	    }
+	echo '</select></td>
+	    <td rowspan="2"><a href="javascript:" class="row_dell" id="dell_price_'.$value['postav_id'].'">dell</a></td>
+	    </tr>';
+	echo '<tr class="row_price_'.$value['postav_id'].'">
+	      <td>Цена : <input type="text"  style="width:70px"  name="price_row_postav*'.$value['postav_id'].'" value="' . $value['price_1'] . '"/> '.$curr_name[1].'</td>
+	      <td>К-во : <input type="text"  style="width:70px"  name="items_row_postav*'.$value['postav_id'].'" value="' . $value['items'] . '"/> '.$dim.'</td>
+	    </tr>
+	    <tr class="row_price_'.$value['postav_id'].'"><td colspan="3" height="5px" style="background-color:gray;"></td></tr>
+	    ';
+    }
+  }
+  
+  //Для нового
+  
+ echo '<tr><td>Закуп : <input type="text"  style="width:60px"  name="zakup_row_postav*0" value="" placeholder="0.00"/>
+	  <select name="zakup_curr_0" style="width:45px">';
+				 foreach($curr_name as $id => $name){
+				   if($id == $value['zakup_curr']){
+				 echo "<option value=" . $id . " selected>" . $name . "</option>";  
+				   }else{
+				 echo "<option value=" . $id . ">" . $name  . "</option>";
+				   }
+				 }
+		 echo '</select></td>';
+  echo '<td><select name="row_postav*0" style="width:155px">';
+	  foreach($Suppliers as $id => $name){
+	      echo "<option value=" . $id . ">" . $name  . "</option>";
+	  }
+      echo '</td>
+	  <td rowspan="2">&nbsp;</td>
+	  </tr>';
+      echo '<tr class="row_price_0">
+	    <td>Цена : <input type="text"  style="width:70px"  name="price_row_postav*0" value="" placeholder="0.00"/> '.$curr_name[1].'</td>
+	    <td>К-во : <input type="text"  style="width:70px"  name="items_row_postav*0" value="" placeholder="0"/> '.$dim.'</td>
+	  </tr>';
+	    
+  echo '</table>
+	<td valign="top"><a href="main.php?func=suppliers_editor" target="_blank">Поставщики</a></td>';
+  echo "<td></td>";
+  echo '</tr>';
+
+//====================================================================================================================
 
 echo "\n<tr><td>URL с фото (автомат!):</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  class='url_photo' placeholder='Копипаст сюда URL фото. Загруза автоматическая!'/></td>";
@@ -535,6 +642,14 @@ echo "<td><span class='url_photo_info'></span></td>";
 echo "<td></td>";
 echo "</tr>";
 
+//=====================================================================================================================
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_video_url')>0){
+echo "\n<tr><td><img src='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS8SnZT7r1tXRrAIP5jfMhZcXhtPUBOkmwivur3jDPLxa64Wiqa5A' height='20px'></td><td>"; # Group name 1
+echo "\n<input type='text' rows='3' style='width:400px'  name='tovar_video_url' placeholder='Копипаст сюда URL Youtube!' value='" . mysql_result($ver,0,"tovar_video_url") . "'/></td>";
+echo "<td><span class='url_youtube'></span></td>";
+echo "<td></td>";
+echo "</tr>";
+}
 //=====================================================================================================================
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_min_order')>0){
 echo "\n<tr><td>",$setup['menu min order'],":</td><td>"; # Group name 1
@@ -620,7 +735,7 @@ echo "<td></td>";
 echo "</tr>";
 }
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_inet_id')>0){
-echo "\n<tr><td>Tovar Inet ID:</td><td>"; # Group name 1
+echo "\n<tr><td>Уровень отображения товара<br> (0) не показывать</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px' name='tovar_inet_id' value='" . mysql_result($ver,0,"tovar_inet_id") . "'/></td>";
 echo "<td>
       <a href=\"get_pic_from_jobe.php?id=",mysql_result($ver,0,"tovar_inet_id"),"\" target=\"_blank\">Find pic on Job site</a> </td>";
@@ -628,61 +743,100 @@ echo "<td></td>";
 echo "</tr>";
 }
 
-echo "\n</table>";//</form>"; 
+
 //=========================================================================================================================
 //=========================================================================================================================
 //============================================PRICE=============================================================================
 //=========================================================================================================================
+echo "\n<tr style=\"background-color:#FFFACD;\"><td>Цены товара</td><td>"; # Group name 1
 
-echo "\n<table border = 1 cellspacing='0' cellpadding='0'>";
 
-//======================================================================================================================
-$count=0;
-while ($count < mysql_num_rows($price_name)){
-  
-  if(strpos($_SESSION[BASE.'usersetup'],"price_tovar_".strval($count+1))>0){
-  
-    echo "\n
-    <tr>
-      <td>",mysql_result($price_name,$count,"price_name"),":</td>
-      <td> 
-	<input style='width:100px' type='text' name='price_tovar_".strval($count+1),"' id='price_tovar_".strval($count+1),"' value='",number_format(mysql_result($price,0,"price_tovar_".strval($count+1)),2,".",""),"'/>
-      </td>
-      <td> 
-	<select name='price_tovar_curr_",$count+1,"' style='width:100px'>";# OnChange='submit();'>";
-	$count_t=0;
-      while ($count_t < mysql_num_rows($curr)){
-      echo "<option ";
-	if (mysql_result($curr,$count_t,"currency_id") == mysql_result($price,0,"price_tovar_curr_".strval($count+1))) echo "selected ";
-	echo "value=" . mysql_result($curr,$count_t,"currency_id")  . ">" . mysql_result($curr,$count_t,"currency_name")."</option>";
-	$count_t++;
+    echo "\n<table border = 1 cellspacing='0' cellpadding='0'>";
+    
+    //======================================================================================================================
+    $count=0;
+    while ($count < mysql_num_rows($price_name)){
+      
+      if(strpos($_SESSION[BASE.'usersetup'],"price_tovar_".strval($count+1))>0){
+      
+	echo "\n
+	<tr>
+	  <td>",mysql_result($price_name,$count,"price_name"),":</td>
+	  <td> 
+	    <input style='width:100px' type='text' name='price_tovar_".strval($count+1),"' id='price_tovar_".strval($count+1),"' value='",number_format(mysql_result($price,0,"price_tovar_".strval($count+1)),2,".",""),"'/>
+	  </td>
+	  <td> 
+	    <select name='price_tovar_curr_",$count+1,"' style='width:100px'>";# OnChange='submit();'>";
+	    $count_t=0;
+	  while ($count_t < mysql_num_rows($curr)){
+	  echo "<option ";
+	    if (mysql_result($curr,$count_t,"currency_id") == mysql_result($price,0,"price_tovar_curr_".strval($count+1))) echo "selected ";
+	    echo "value=" . mysql_result($curr,$count_t,"currency_id")  . ">" . mysql_result($curr,$count_t,"currency_name")."</option>";
+	    $count_t++;
+	  }
+	  echo "</select></td>";
+      
+	     $html = "<td>
+	     <input type='text' style='width:40px;background:#9e9e9e;text-align:right' name='price_tovar_cof_".strval($count+1)."' id='price_tovar_cof_".strval($count+1)."' 
+	    value='".number_format(mysql_result($price,0,"price_tovar_cof_".strval($count+1)),"3",".","")."' 
+	    onChange='update(this.value,this.id)'/>
+	    </td>";
+	    
+	    /*if($count == 0){
+	    $html .="<td>
+		    <a href=\"javascript:set_price_auto('$iKlient_id','coef');\">".$setup['menu generate coef']."</a>
+		    </td><td>
+		    <a href=\"javascript:set_price_auto('$iKlient_id','price');\">".$setup['menu generate price']."</a>
+		    ".$setup['menu generate warning']."
+		    </td>";
+	    }*/
+	    
+	    $html .= "</tr>";
+	    
+	    echo $html;
       }
-      echo "</select></td>";
-  
-         $html = "<td>
-         <input type='text' style='width:40px;background:#9e9e9e;text-align:right' name='price_tovar_cof_".strval($count+1)."' id='price_tovar_cof_".strval($count+1)."' 
-	value='".number_format(mysql_result($price,0,"price_tovar_cof_".strval($count+1)),"3",".","")."' 
-	onChange='update(this.value,this.id)'/>
-	</td>";
-	
-	/*if($count == 0){
-	$html .="<td>
-		<a href=\"javascript:set_price_auto('$iKlient_id','coef');\">".$setup['menu generate coef']."</a>
-		</td><td>
-		<a href=\"javascript:set_price_auto('$iKlient_id','price');\">".$setup['menu generate price']."</a>
-		".$setup['menu generate warning']."
-		</td>";
-	}*/
-	
-	$html .= "</tr>";
-	
-	echo $html;
-  }
-$count++;
-}
-echo "\n<input type='hidden' name='_price_count' value='",$count,"'/>";
+    $count++;
+    }
+    echo "\n<input type='hidden' name='_price_count' value='",$count,"'/>";
+    
+    echo "</table>";//</form>";
+echo "</td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
 
-echo "</table>";//</form>";
+//============================================DESCRIPTION=============================================================================
+//=========================================================================================================================
+echo "\n<tr style=\"background-color:#FFFACD;\"><td colspan=\"4\">"; # Group name 1
+echo "<table border = 1 cellspacing='0' cellpadding='0' width='100%'>";
+ $count=0;
+  while ($count<1){
+    $lang_id = mysql_result($lang,$count,"web_lang_id");
+    $lang_name = mysql_result($lang,$count,"web_lang_lang");
+   // echo "description_".$count+1;
+   if(strpos($_SESSION[BASE.'usersetup'],'tovar_size_table')>0){
+   
+      echo "<tr><td><b>Таблица размеров товара</b>
+	    <a href='javascript:' class='translate' data-find-id='size_table'><b>Перевести</b></a>
+ 	    &nbsp;&nbsp;&nbsp;&nbsp;(<a href='tools/translate_edit.php' target='_blank'>Редактировать</a>)
+      <br> 
+      <textarea cols='100' width='1000' rows='10' id='size_table' name='tovar_size_table'>",mysql_result($ver,0,"tovar_size_table"),"</textarea>
+	</td></tr>";
+   }
+    echo "<tr><td>&nbsp;</td></tr>
+	<tr><td><b>Описание товара</b>
+	  <a href='javascript:' class='translate' data-find-id='description_1'><b>Перевести</b></a>
+	<br> 
+      <textarea cols='100' rows='40' id='description_1' name='description_",($count+1),"'>",mysql_result($tovar_description,0,"description_".($count+1)),"</textarea>
+	</td></tr>";
+	
+    $count++;}
+echo "\n<input type='hidden' name='_description_count' value='",$count,"'/></table>";
+echo "</td>";
+echo "</tr>";  
+
+
+echo "\n</table>";//</form>"; 
 //=========================================================================================================================
 //=========================================================================================================================
 echo '<!--Фильтры и атрибуты-->';
@@ -827,41 +981,23 @@ echo '</td>
 echo '</td>
   </tr><tr>
   <td>';
-//============================================DESCRIPTION=============================================================================
-//=========================================================================================================================
-
-
-echo "<table border = 1 cellspacing='0' cellpadding='0'>";
-//======================================================================================================================
- // echo "<tr>";
-  
- $count=0;
-//while ($count<mysql_num_rows($lang)){
-  while ($count<1){
-    $lang_id = mysql_result($lang,$count,"web_lang_id");
-    $lang_name = mysql_result($lang,$count,"web_lang_lang");
-   // echo "description_".$count+1;
-      echo "<tr><td>",$lang_name,"<br> 
-      <textarea cols='100' rows='40' name='description_",($count+1),"'>",mysql_result($tovar_description,0,"description_".($count+1)),"</textarea>
-	</td></td>";
-	
-    $count++;}
-echo "\n<input type='hidden' name='_description_count' value='",$count,"'/>
- 
-  </table></form>";
   //echo "
   //</td><td valign='top'>
   //<div id='find_window'></div><br>
   //<div id='find_div'></div>
   //<div id='view'></div>
-  echo "</td></tr></table> ";
+  echo "</td></tr></table></form> ";
   
 
   
 echo "\n</body>";
 
 ?>
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 <script>
+tinymce.init({selector:'textarea'});
+
+
   $(document).on('change','.select_attr', function(){
    
       var id = $(this).attr('id');
@@ -903,6 +1039,7 @@ echo "\n</body>";
 		    $('.url_photo_info').html('<font color="red">Загрузка...</font>');
               },
               success: function(msg){
+		    console.log(msg);
 		    $('.url_photo_info').html('Готово');
                     $('.url_photo').val('');
 		    $('.photo_list').append("<a href='edit_tovar.php?tovar_id=<?php echo $iKlient_id;?>&dellphoto="+msg+"'>Удалить</a>|");
@@ -922,7 +1059,56 @@ echo "\n</body>";
       
     });
    
+    $(document).on('click','.alias_gen', function(){
+     
+   	$.ajax({
+              type: "GET",
+              dataType: "text",
+              url: "alias/get_tovar_alias.php",
+              data: "tovar_id=<?php echo $iKlient_id;?>",
+	      beforeSend: function(msg){
+		    //$('.url_photo_info').html('<font color="red">Загрузка...</font>');
+              },
+              success: function(msg){
+		    console.log(msg);
+		    $('.tovar_alias').val(msg);
+              }
+	});
+      
+    });
+    
+    $(document).on('click','.translate', function(){
+
+ 	var find_id = $(this).attr('data-find-id');
+  	var find_txt = tinyMCE.get(find_id).getContent();
+	
+	find_txt = find_txt.replace(/&/g, '***')
+	
+	$.ajax({
+              type: "POST",
+              dataType: "text",
+              url: "tools/translate_ajax.php",
+              data: "txt="+find_txt,
+	      beforeSend: function(msg){
+		    //$('.url_photo_info').html('<font color="red">Загрузка...</font>');
+              },
+              success: function(msg){
+		   //msg = msg.replace(/***/g, '&');
+		   tinyMCE.get(find_id).setContent(msg, {format : 'raw'});
+              }
+	});
+      
+    });
+   
    $(document).on('click','.alt_artkl_dell', function(){
+      var id = $(this).attr('id');
+      id = id.replace('dell', 'row');
+      
+      $('.'+id).remove();
+      
+    });
+   
+  $(document).on('click','.row_dell', function(){
       var id = $(this).attr('id');
       id = id.replace('dell', 'row');
       

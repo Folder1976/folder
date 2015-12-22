@@ -1,6 +1,7 @@
 <?php
 include "config.php";
 include 'init.lib.php';
+
 connect_to_mysql();
 session_start();
 if (!session_verify($_SERVER["PHP_SELF"],"none")){
@@ -35,8 +36,8 @@ if(!isset($_GET['func'])){
 }
 
 $setup1 = mysqli_query($folder, "SET NAMES utf8");
-$tQuery = "SELECT * FROM tbl_functions WHERE function_alias = '".mysql_real_escape_string($_GET['func'])."' ORDER BY function_sort ASC";
-$res = mysqli_query($folder,  $tQuery);
+$sql = "SELECT * FROM tbl_functions WHERE function_alias = '".mysql_real_escape_string($_GET['func'])."' ORDER BY function_sort ASC";
+$functions = mysqli_query($folder,  $sql);
 
 
 
@@ -48,10 +49,11 @@ echo "<header>
 \n
 ";
 
-while($func = mysqli_fetch_assoc($res)){
+while($func = mysqli_fetch_assoc($functions)){
   //echo '<pre>'; print_r(var_dump(  $func ));
   $title = $func['function_name'];
   include $func['function_patch'];
+  //echo $func['function_patch'].'=============================================================';
 }
 
 echo "<title>$title</title>\n

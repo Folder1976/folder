@@ -1,7 +1,9 @@
 <?php
     include_once ('../config/config.php');
     $uploaddir = UPLOAD_DIR;
-    global $folder, $separator;
+    global $folder, $setup;
+    $separator = $setup['tovar artikl-size sep'];
+
 
     //echo 'ajax load photo - ok';
     // print_r(var_dump($_GET));  
@@ -42,16 +44,12 @@
 	mkdir($uploaddir.$name,0777);
 	chmod($uploaddir.$name,0777);
     }else{ //Если папка есть - найдем последнюю номерацию для добавления
-	if ($handle = opendir($uploaddir.$name)) {
-	   
-	    while (false !== ($file = readdir($handle))) { 
-		if(strpos($file,'small') !== false){
-		    $image_count++;
-		}
-	    }
-	    
-	    closedir($handle); 
+	
+	//Находим дырку для фотки.. или же в конец очереди
+	while(file_exists($uploaddir.$name.'/'.$name.'.'.$image_count.'.small.jpg')){
+	    $image_count++;
 	}
+
     }
    
     //Запишем в таблицу имя картинки - не проверяем наличие этой записи 

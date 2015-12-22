@@ -2,6 +2,7 @@
 include 'init.lib.php';
 connect_to_mysql();
 session_start();
+global $setup;
 if (!session_verify($_SERVER["PHP_SELF"],"none")){
   exit();
 }
@@ -54,8 +55,6 @@ reload_path();
 		   parent_inet_parent = '".$_POST['parent_inet_parent']."',
 		   parent_inet_sort = '".$_POST['parent_inet_sort']."',
 		   parent_inet_1 = '".$_POST['parent_inet_1']."',
-		   parent_inet_2 = '".$_POST['parent_inet_2']."',
-		   parent_inet_3 = '".$_POST['parent_inet_3']."',
 		   parent_inet_info = '".$_POST['parent_inet_info']."',
 		   parent_inet_type = '".$_POST['parent_inet_type']."',
 		   attribute_group_id = '".$_POST['attribute_group_id']."',
@@ -150,7 +149,6 @@ $p_info = mysql_query("SET NAMES utf8");
 $p_info = mysql_query("SELECT `info_id`,`info_header_1` FROM `tbl_info` WHERE `info_key`='size' ORDER BY `info_header_1` ASC");# WHERE klienti_id = " . $iKlient_id);
 //===========================================================================================================
 
-header ('Content-Type: text/html; charset=utf8');
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
 echo "\n<script src='../js/jquery-2.1.4.min.js'></script>";
 echo "\n<script src='attribute/attribute_get.js'></script>";
@@ -296,6 +294,13 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 
+echo "\n<tr><td>URL с фото (автомат!):</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  class='url_photo' placeholder='Копипаст сюда URL фото. Загруза автоматическая!'/></td>";
+echo "<td><span class='url_photo_info'></span></td>";
+echo "<td></td>";
+echo "</tr>";
+
+/*
 echo "\n<tr><td>",$m_setup['menu name2']," 2:</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='parent_inet_2' value='" . mysql_result($ver,0,"parent_inet_2") . "'/></td>";
 echo "<td></td>";
@@ -308,7 +313,7 @@ echo "\n<input type='text'  style='width:400px'  name='parent_inet_3' value='" .
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
-
+*/
 
 $sql = "SELECT attribute_group_id, attribute_group_name FROM tbl_attribute_group ORDER BY attribute_group_name ASC;";
 $group = $folder->query($sql) or die(mysql_error());
@@ -396,7 +401,10 @@ echo "\n</table></form>";
   <div id='find_window'></div><br>
   <div id='find_div'></div>
   <div id='view'></div>
-  </td><td valign='top'>";
+  </td><td valign='top'>
+  <td valign=\"top\" rowspan=\"2\" class=\"photo_list\">
+ <img src='/resources/products/!category/". $iKlient_id. ".small.jpg' id='image'></div><br><br>";
+ 
 $tmp = 0;
 while($tmp<mysql_num_rows($p_parent)){
   echo "<a class=\"meddium\" href='edit_parent_inet.php?parent_inet_id=", mysql_result($p_parent,$tmp,"parent_inet_id")," ' target='_blank'>[",
@@ -417,27 +425,28 @@ echo "</td></tr></table> ";
   
   //===========================PHOTO========================
   $link="GR".mysql_result($ver,0,"parent_inet_id");
-    $path_to = "../resources/products/".$link."/";
+    $path_to = "../resources/category/";
     	
-    	if(isset($_REQUEST['dellphoto'])){ 
-	  $tmp2 = explode(".",$_REQUEST['dellphoto']);
-	  $tmp = substr($_REQUEST['dellphoto'],0,-9);
-	//echo $path_to.$tmp2[3].".small.jpg";
-	$massiv = glob($path_to."*.".$tmp2[3].".*.jpg");
-	$x=-1;
-	  while ($x++ < count($massiv)-1){
-	    echo unlink($massiv[$x]);
-	    }
-
-	echo unlink($tmp,"small.jpg");
-	  if($tmp2[3]==0){	
-	    $massiv = glob($path_to."*.small.jpg");
-	    if(count($massiv)>0){
-	     rename(substr($massiv[0],0,-9)."small.jpg",$tmp."small.jpg");
-	     rename(substr($massiv[0],0,-9)."medium.jpg",$tmp."medium.jpg");
-	     rename(substr($massiv[0],0,-9)."large.jpg",$tmp."large.jpg");
-	    }
-	  }
+    	if(isset($_REQUEST['dellphoto'])){
+		  die();
+				$tmp2 = explode(".",$_REQUEST['dellphoto']);
+				$tmp = substr($_REQUEST['dellphoto'],0,-9);
+			  //echo $path_to.$tmp2[3].".small.jpg";
+			  $massiv = glob($path_to."*.".$tmp2[3].".*.jpg");
+			  $x=-1;
+				while ($x++ < count($massiv)-1){
+				  echo unlink($massiv[$x]);
+				  }
+		  
+			  echo unlink($tmp,"small.jpg");
+				if($tmp2[3]==0){	
+				  $massiv = glob($path_to."*.small.jpg");
+				  if(count($massiv)>0){
+				   rename(substr($massiv[0],0,-9)."small.jpg",$tmp."small.jpg");
+				   rename(substr($massiv[0],0,-9)."medium.jpg",$tmp."medium.jpg");
+				   rename(substr($massiv[0],0,-9)."large.jpg",$tmp."large.jpg");
+				  }
+				}
       }
     $massiv = glob($path_to."*.small.jpg");
      $photo = "<table><tr>";
@@ -456,3 +465,43 @@ echo "</td></tr></table> ";
 echo "\n</body>";
 
 ?>
+
+<script>
+   $(document).on('change','.url_photo', function(){
+     
+     var photo_url = $('.url_photo').val();
+	//console.log("import/import_url_photo.php?tovar_id=<?php echo $iKlient_id;?>&url="+photo_url);  
+       if (photo_url != '') {
+	$.ajax({
+              type: "GET",
+              dataType: "text",
+              url: "import/import_url_photo_category.php",
+              data: "category_id=<?php echo $iKlient_id;?>&url="+photo_url,
+	      beforeSend: function(msg){
+		    $('.url_photo_info').html('<font color="red">Загрузка...</font>');
+              },
+              success: function(msg){
+		    console.log(msg);
+			
+			$('#image').attr('src' ,msg);
+			
+		    $('.url_photo_info').html('Готово');
+                    $('.url_photo').val('');
+		    //$('.photo_list').append("<a href='edit_tovar.php?tovar_id=<?php echo $iKlient_id;?>&dellphoto="+msg+"'>Удалить</a>|");
+		    //$('.photo_list').append("<a href='edit_tovar.php?tovar_id=<?php echo $iKlient_id;?>&mainphoto="+msg+"'>Главная</a>|<br>");
+		    $('<img />', {
+			src: msg,
+			width: '150px',
+			height: '150px'
+		    }).appendTo($('.photo_list'));
+		   $('.photo_list').append("<br><br>");
+   
+                    console.log(msg);
+                    //$("#carfit_name_list").html(msg);
+              }
+	});
+      }
+      
+    });
+  
+</script>

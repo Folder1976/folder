@@ -1,11 +1,13 @@
 <link rel="stylesheet" media="screen" type="text/css" href="<?php echo HOST_URL; ?>/css/product_form.css">
+<script src="<?php echo HOST_URL; ?>/lightbox2-master/dist/js/lightbox-plus-jquery.min.js"></script>
+ <link rel="stylesheet" href="<?php echo HOST_URL; ?>/lightbox2-master/dist/css/lightbox.css">
 <!-- Main right col -->
 <div class="product_main">
     <div class="product_title">
-        <?php echo $product['artkl'].' - '.$product['name'];?>
+        <h1><?php echo $product['artkl'].' - '.$product['name'];?></h1>
     </div>
     <div class="product_info_wrap">
-        <div class="product_photos">
+        <div class="product_photos" id="gallery">
             <!--img title="" src="" class="main_photo"-->
                 <?php echo $product['photos'] ?>
         </div>
@@ -13,7 +15,7 @@
             <div class="card">
                 <table class="product_size">
                     <tr>
-                        <th>Артикл</th>
+                        <!--th>Артикл</th-->
                         <th>Размер</th>
                         <th>Цена</th>
                         <th>Наличие</th>
@@ -22,10 +24,10 @@
                     </tr>
                     <?php foreach($product['size'] as $value){?>
                         <tr>
-                            <td align=left>
+                            <!--td align=left>
                                 <?php echo $product['artkl'];?>
                                 <?php if($value['size'] != 'нет') echo $separator.$value['size'];?>
-                            </td>
+                            </td-->
                             <td align=center>    
                                 <?php echo $value['size']; ?>
                                 <?php if (strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
@@ -72,13 +74,37 @@
                 <?php } ?>
             </div>
             
-            <div class="product_memo_main">
-                <label class=product_attribute_title>Описание</label>
-                <div class="product_memo">
-                    <?php echo $product['memo'];?>
-                    <?php //echo '<pre>'; print_r(var_dump($product['size']));?>
-                </div>
-            </div>
+	    <?php if(isset($product['tovar_size_table']) AND $product['tovar_size_table'] != ''){ ?>
+		<div class="product_memo_main">
+		    <label class=product_attribute_title>Таблица размеров</label>
+		    <div class="product_size_table">
+			<?php echo $product['tovar_size_table'];?>
+			<?php //echo '<pre>'; print_r(var_dump($product['size']));?>
+		    </div>
+		</div>
+	    <?php } ?>
+	    
+	    <?php if(isset($product['memo']) AND $product['memo'] != ''){ ?>
+		<div class="product_memo_main">
+		    <label class=product_attribute_title>Описание</label>
+		    <div class="product_memo">
+			<?php echo $product['memo'];?>
+			<?php //echo '<pre>'; print_r(var_dump($product['size']));?>
+		    </div>
+		</div>
+	    <?php } ?>
+	    
+	    <?php if(isset($product['tovar_video_url']) AND $product['tovar_video_url'] != ''){ ?>
+		<div class="product_memo_main">
+		    <label class=product_attribute_title>Видео</label>
+		    <div class="product_youtube">
+			<?php echo $product['tovar_video_url'];?>
+			<?php //echo '<pre>'; print_r(var_dump($product['size']));?>
+		    </div>
+		</div>
+	    <?php } ?>
+
+
         </div>
     </div>
     

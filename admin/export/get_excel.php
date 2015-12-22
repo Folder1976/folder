@@ -1,5 +1,5 @@
 <?php
-
+header ('Content-Type: text/html; charset=utf8');
 include '../config/config.php';
 
 global $setup, $folder;
@@ -24,28 +24,33 @@ if(count($ProductsID) == 0){
 
 //Если все прилетело и есть массив с иД-шками товаров - работаем
 
-$sql = 'SELECT tovar_id,
-                tovar_artkl AS code,
-                on_ware,
-                seo_alias AS parent,
-                tovar_parent_name AS tovar_group,
-                tovar_name_1 AS name,
-                klienti_name_1 AS supplier,
-                price_tovar_1 AS price1,
-                price_tovar_2 AS price2,
-                price_tovar_3 AS price3,
-                price_tovar_4 AS price4,
-                price_tovar_curr_1 AS currency,
-                tovar_dimension AS dimm,
-                description_1 AS memo
-                FROM tbl_tovar
-                LEFT JOIN tbl_seo_url ON TRIM(LEADING \'parent=\' FROM seo_url) = tovar_inet_id_parent
-                LEFT JOIN tbl_klienti ON klienti_id = tovar_supplier
-                LEFT JOIN tbl_parent ON tovar_parent_id = tovar_parent
-                LEFT JOIN tbl_price_tovar ON price_tovar_id = tovar_id
-                LEFT JOIN tbl_description ON description_tovar_id = tovar_id
-                 WHERE tovar_id IN ('.implode(',', $ProductsID).')
-                 ORDER BY tovar_code ASC;';
+$sql = 'SELECT 	T.tovar_id,
+                T.tovar_artkl AS code,
+		T.tovar_model AS model,
+                T.on_ware,
+                A.seo_alias AS parent,
+                PR.tovar_parent_name AS tovar_group,
+                T.tovar_name_1 AS name,
+                K.klienti_name_1 AS supplier,
+		B.brand_code,
+                P.price_tovar_1 AS price1,
+                P.price_tovar_2 AS price2,
+                P.price_tovar_3 AS price3,
+                P.price_tovar_4 AS price4,
+                P.price_tovar_curr_1 AS currency,
+                T.tovar_dimension AS dimm,
+                D.description_1 AS memo,
+		T.tovar_size_table,
+		T.tovar_video_url
+                FROM tbl_tovar T
+                LEFT JOIN tbl_seo_url A ON TRIM(LEADING \'parent=\' FROM A.seo_url) = T.tovar_inet_id_parent
+                LEFT JOIN tbl_klienti K ON K.klienti_id = T.tovar_supplier
+                LEFT JOIN tbl_parent PR ON PR.tovar_parent_id = T.tovar_parent
+                LEFT JOIN tbl_brand B ON B.brand_id = T.brand_id
+                LEFT JOIN tbl_price_tovar P ON P.price_tovar_id = T.tovar_id
+                LEFT JOIN tbl_description D ON D.description_tovar_id = T.tovar_id
+                 WHERE T.tovar_id IN ('.implode(',', $ProductsID).')
+                 ORDER BY T.tovar_code ASC;';
 
 $Products = $folder->query($sql);
 
@@ -87,22 +92,22 @@ $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()
 	->setTitle('Sheet1')
 	->setCellValue('A1', "code")
-	->setCellValue('B1', "on_ware")
-	->setCellValue('C1', "parent")
-	->setCellValue('D1', "group")
-	->setCellValue('E1', "name")
-	->setCellValue('F1', "supplier")
-	->setCellValue('G1', "price1")
+	->setCellValue('B1', "model")
+	->setCellValue('C1', "on_ware")
+	->setCellValue('D1', "parent")
+	->setCellValue('E1', "group")
+	->setCellValue('F1', "name")
+	->setCellValue('G1', "brand")
 	->setCellValue('H1', "price2")
-	->setCellValue('I1', "price3")
-	->setCellValue('J1', "price4")
-	->setCellValue('K1', "currency")
-	->setCellValue('L1', "dimm")
-	->setCellValue('M1', "Photo")
+	->setCellValue('I1', "currency")
+	->setCellValue('J1', "dimm")
+	->setCellValue('K1', "photo")
+	->setCellValue('L1', "video")
+	->setCellValue('M1', "size")
 	->setCellValue('N1', "memo");
 
 //Шапка аттрибутов
-$col = 14;
+$col = 13;
 $AttributeOnCol = array(); //Тут индекс номер колонки а в значении ид_атрибута
 foreach($AttributesName as $index => $tmp){
     $objPHPExcel->getActiveSheet()
@@ -115,33 +120,32 @@ foreach($AttributesName as $index => $tmp){
 }
 $objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getFont()->setBold(true);
 
-
 // Пишем основные данные
 $L = 2;
 while($Product = $Products->fetch_assoc()){
     
     $objPHPExcel->getActiveSheet()
 		->setCellValue('A'.$L, $Product['code'])
-                ->setCellValue('B'.$L, $Product["on_ware"])
-                ->setCellValue('C'.$L, $Product["parent"])
-                ->setCellValue('D'.$L, $Product["tovar_group"])
-                ->setCellValue('E'.$L, $Product["name"])
-                ->setCellValue('F'.$L, $Product["supplier"])
-                ->setCellValue('G'.$L, $Product["price1"])
+                ->setCellValue('B'.$L, $Product["model"])
+                ->setCellValue('C'.$L, $Product["on_ware"])
+                ->setCellValue('D'.$L, $Product["parent"])
+                ->setCellValue('E'.$L, $Product["tovar_group"])
+                ->setCellValue('F'.$L, $Product["name"])
+                ->setCellValue('G'.$L, $Product["brand_code"])
                 ->setCellValue('H'.$L, $Product["price2"])
-                ->setCellValue('I'.$L, $Product["price3"])
-                ->setCellValue('J'.$L, $Product["price4"])
-                ->setCellValue('K'.$L, $Product["currency"])
-                ->setCellValue('L'.$L, $Product["dimm"])
-                ->setCellValue('M'.$L, 'insert URL photo')
-                ->setCellValue('N'.$L, $Product["memo"]);
+                ->setCellValue('I'.$L, $Product["currency"])
+                ->setCellValue('J'.$L, $Product["dimm"])
+                ->setCellValue('K'.$L, 'insert URL photo')
+                ->setCellValue('L'.$L, $Product["tovar_video_url"])
+		->setCellValue('M'.$L, $Product["tovar_size_table"])
+		->setCellValue('N'.$L, $Product["memo"]);
 		
                 
     //Пишем аттрибуты
 //echo '<pre>'; print_r(var_dump($AttributesName)); 
 //echo '<pre>'; print_r(var_dump($AttributeOnCol)); 
  
-    $col = 14;
+    $col = 13;
    foreach($AttributesName as $index => $tmp){
         
         $value = '';

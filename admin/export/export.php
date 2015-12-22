@@ -340,7 +340,7 @@ if($find_flag==1 and $find_str_sql != "")
       }
   }
 
-header ('Content-Type: text/html; charset=utf8');
+//header ('Content-Type: text/html; charset=utf8');
 echo "<header><title>Find tovar</title><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
 
 //echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";

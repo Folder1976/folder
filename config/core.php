@@ -6,15 +6,23 @@ include_once("class/class_alias.php");
 include_once("class/class_attribute.php");
 include_once("class/class_main.php");
 include_once("class/class_product.php");
+include_once("admin/class/class_brand.php");
+include_once 'class/class_info.php';
+include_once 'class/class_order.php';  
+include_once 'class/class_user.php';
 
+$User = new User($folder);
+$Order = new Order($folder);
+$Info = new Info($folder);
 $Alias = new Alias($folder);
 $Category = new Category($folder);
 $Attribute = new Attribute($folder);
 $Main = new Main($folder);
 $Product = new Product($folder);
+$Brand = new Brand($folder);
 
-include_once("libs/product_control.php");
-include_once("libs/products_control.php");
+//include_once("libs/product_control.php");
+//include_once("libs/products_control.php");
 
 if(!isset($_SESSION[BASE.'lang'])) $_SESSION[BASE.'lang'] = 1;
 

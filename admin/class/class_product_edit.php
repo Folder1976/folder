@@ -7,6 +7,27 @@ class ProductEdit {
 		$this->base = $sql_connect;
 	}
 	
+	public function dellAllSupplierItems($supplier_id){
+		$sql = 'DELETE FROM tbl_tovar_suppliers_items WHERE postav_id = \''.$supplier_id.'\';';
+		$this->base->query($sql);
+	}
+	
+	public function addNewSupplierItem($data){
+		
+		$sql = "INSERT INTO tbl_tovar_suppliers_items SET
+				tovar_id = '".$data['id']."',
+				postav_id = '".$data['postav_id']."',
+				zakup = '".$data['zakup']."',
+				zakup_curr = '".$data['zakup_curr']."',
+				price_1 = '".(int)$data['price_1']."',
+				items = '".$data['items']."';";
+		
+		
+		$this->base->query($sql);
+		
+		return $this->base->insert_id;
+	}
+		
 	public function addProduct($data){
 		
 		$sql = "INSERT INTO tbl_tovar ";
@@ -24,6 +45,55 @@ class ProductEdit {
 		$this->base->query($sql);
 		
 		return $this->base->insert_id;
+	}
+	
+	public function getProductIdOnArtiklAndSupplier($tovar_artkl, $postavID = 0){
+		
+		//Если поставщик ( 0 ) - ищем сначала в основной базе. А если указан - начинем с альтернативных артикулов
+		if($postavID == 0){
+
+			$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tovar_artkl.'";';
+			$tovar = $this->base->query($sql);
+			
+			if($tovar->num_rows == 0){
+				$sql = 'SELECT tovar_artkl FROM tbl_tovar_postav_artikl WHERE tovar_postav_artkl = "'.$tovar_artkl.'";';
+				$tovar = $this->base->query($sql);
+			
+				//если чтото нашли
+				if($tovar->num_rows > 0){
+					$tmp = $tovar->fetch_assoc();
+					$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
+					$tovar = $this->base->query($sql);
+					
+				}	
+			}
+
+		}else{
+
+			$sql = 'SELECT tovar_artkl FROM tbl_tovar_postav_artikl WHERE tovar_postav_artkl = "'.$tovar_artkl.'" AND postav_id = "'.$postavID.'";';
+			$tovar = $this->base->query($sql);
+			
+			//если чтото нашли
+			if($tovar->num_rows > 0){
+				$tmp = $tovar->fetch_assoc();
+				$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
+				$tovar = $this->base->query($sql);
+				
+			}else{
+				$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tovar_artkl.'";';
+				$tovar = $this->base->query($sql);
+			}
+			
+		}
+		
+		//Если нашли чтото
+		if($tovar->num_rows > 0){
+			$tmp = $tovar->fetch_assoc();
+			return $tmp['tovar_id'];
+		}else{
+			return false;
+		}
+		
 	}
 	
 	public function updatePrice($data){
@@ -96,6 +166,30 @@ class ProductEdit {
 	}
 	
 	/*
+	 *Вернет артикл продукта
+	 */
+	public function getProductArtkl($product_id){
+		global $setup;
+		
+		$sql = $this->base->query("SELECT tovar_artkl FROM tbl_tovar WHERE tovar_id = '".$product_id."'");
+		
+		if($sql->num_rows == 0){
+			return false;
+		}else{
+			$artkl = $sql->fetch_assoc();
+			$artkl = $artkl['tovar_artkl'];
+			
+			if(strpos($artkl, $setup['tovar artikl-size sep']) !== false){
+				$tmp = explode($setup['tovar artikl-size sep'], $artkl);
+				$artkl = $tmp[0];
+			}
+			
+			return $artkl;
+		}
+		
+	}
+	
+	/*
 	 *Вернет описание продукта
 	 */
 	public function getProductMemo($product_id){
@@ -125,11 +219,31 @@ class ProductEdit {
 	/*
 	 *Принимает стринг Артикл товара
 	 *
+	 *Вернет массив цен и остатков поставщиков
+	 */
+	public function getProductPostavInfo($product_id){
+		
+		$sql = $this->base->query("SELECT * FROM  tbl_tovar_suppliers_items WHERE tovar_id = '".$product_id."'");
+		if($sql->num_rows == 0){
+			return false;
+		}else{
+			$return = array();
+			while($tmp = $sql->fetch_assoc()){
+				$return[] = $tmp;
+			}
+			return $return;
+		}
+
+	}
+	
+	/*
+	 *Принимает стринг Артикл товара
+	 *
 	 *Вернет массив альтернативных артикулов и поставщиков
 	 */
 	public function getProductAlternativeArtikles($product_artkl){
 		
-		$sql = $this->base->query("SELECT * FROM tbl_tovar_postav_artikl WHERE tovat_artkl = '".$product_artkl."'");
+		$sql = $this->base->query("SELECT * FROM tbl_tovar_postav_artikl WHERE tovar_artkl = '".$product_artkl."'");
 		if($sql->num_rows == 0){
 			return false;
 		}else{
