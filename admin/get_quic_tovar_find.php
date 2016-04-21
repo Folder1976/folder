@@ -15,20 +15,9 @@ $JsHttpRequest=new JsHttpRequest("utf8");//"windows-1251");
 if ($_SESSION[BASE.'lang'] <1){
   $_SESSION[BASE.'lang']=1;
 }
-$setup = mysql_query("SET NAMES utf8");
-$tQuery = "SELECT 
-	  `setup_name`, 
-	  `setup_param`
-	  FROM `tbl_setup`
 
-";
-$setup = mysql_query($tQuery);
-$m_setup = array();
-$count=0;
-while ($count<mysql_num_rows($setup)){
- $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
- $count++;
-}
+global $setup;
+ $m_setup = $setup;
 //==================================SETUP=MENU==========================================
 
 $count = 0;

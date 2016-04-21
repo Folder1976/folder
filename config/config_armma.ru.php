@@ -1,4 +1,8 @@
 <?php
+if(session_id()){
+}else{
+  session_start();
+}
 
 date_default_timezone_set('Europe/moscow');
 /* Настройки подключения к БД */
@@ -7,11 +11,10 @@ $dbbase = 'armma_db';
 $dbuser = "armma_sql";
 $dbpasswd = "4FhAS+EQ";
 
+define("HOST_URL", "http://" . $_SERVER["HTTP_HOST"]);
+define("HOST_URL_ST", "" . $_SERVER["HTTP_HOST"]);
 
-define("HOST_URL", "http://armma.ru");
-define("HOST_URL_ST", "armma.ru");
-
-define('SKIN_URL','http://armma.ru/skin/');
+define('SKIN_URL','http://' .$_SERVER["HTTP_HOST"] . '/skin/');
 define('SKIN_PATH','/home/armma/armma.ru/docs/skin/');
 
 define("DB_HOST", $dbhost);
@@ -39,17 +42,26 @@ define('VIEW_EMPTY_PRODUCT',true);
 define('DEFAULT_USER_PASS', 'L2jg#hf%u4y3');
 
 //Настройки из сетапа
-$setup = array(
+/*
                 'email' => 'foldersergey@gmail.com',
                 'email name' => 'Armma',
                 'email login' => 'foldersergey@gmail.com',
                 'email pass' => 'ckjyjgjnfv2015',
-                'email port' => '465',
+                'email smtp' => 'ssl://smtp.gmail.com',
+		    'email port' => '465',
+*/
+
+$setup = array(
+                'email' => 'mail@armma.ru',
+                'email name' => 'Armma',
+                'email login' => 'mail@armma.ru',
+                'email pass' => 'armmaru2015',
+                'email smtp' => 'mail.nic.ru',
+				'email port' => '587',
                 'email sms login' => '+79895203449*',
                 'email sms name' => 'Armma',
                 'email sms pass' => '*****',
                 'email sms web' => '@mail.alp***hasms.com.ua',
-                'email smtp' => 'ssl://smtp.gmail.com',
                 'klient id pref' => '30011976',
                 'load patch' => '/armma.ru/docs/resources/',
                 'price default lang' => '1',
@@ -96,34 +108,34 @@ $Month_r = array(
 
     $adapterConfigs = array(
     'vk' => array(
-        'client_id'     => '3774741',
-        'client_secret' => '3nLWEs45iWeKypmVR2CU',
-        'redirect_uri'  => 'http://localhost/auth/?provider=vk'
+        'client_id'     => '5411321', //OK
+        'client_secret' => '8axlsiFGTio6tJygb9c5',
+        'redirect_uri'  => HOST_URL.'/registration?provider=vk' 
     ),
     'odnoklassniki' => array(
         'client_id'     => '168635560',
         'client_secret' => 'C342554C028C0A76605C7C0F',
-        'redirect_uri'  => 'http://localhost/auth?provider=odnoklassniki',
+        'redirect_uri'  => HOST_URL.'/registration?provider=odnoklassniki',
         'public_key'    => 'CBADCBMKABABABABA'
     ),
     'mailru' => array(
         'client_id'     => '770076',
         'client_secret' => '5b8f8906167229feccd2a7320dd6e140',
-        'redirect_uri'  => 'http://localhost/auth/?provider=mailru'
+        'redirect_uri'  => HOST_URL.'/registration?provider=mailru'
     ),
     'yandex' => array(
         'client_id'     => 'bfbff04a6cb60395ca05ef38be0a86cf',
         'client_secret' => '219ba8388d6e6af7abe4b4b119cbee48',
-        'redirect_uri'  => 'http://localhost/auth/?provider=yandex'
+        'redirect_uri'  => HOST_URL.'/registration?provider=yandex'
     ),
     'google' => array(
         'client_id'     => '333193735318.apps.googleusercontent.com',
         'client_secret' => 'lZB3aW8gDjIEUG8I6WVcidt5',
-        'redirect_uri'  => 'http://localhost/auth?provider=google'
+        'redirect_uri'  => HOST_URL.'/registration?provider=google'
     ),
     'facebook' => array(
-        'client_id'     => '474854576027946',
-        'client_secret' => 'ff561a9bbc42207bdaf4f9e90fe26721',
+        'client_id'     => '1767283856824450', //OK
+        'client_secret' => 'aeed65528b839f2f31edd207cc0473ab',
         'redirect_uri'  => HOST_URL.'/registration?provider=facebook'
     )
 );

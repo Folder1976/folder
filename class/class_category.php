@@ -56,7 +56,8 @@ class Category {
 		$sql = "SELECT parent_inet_id, parent_inet_1, seo_alias, parent_inet_parent
 						FROM tbl_parent_inet 
 						LEFT JOIN tbl_seo_url ON seo_url = CONCAT('parent=', parent_inet_id)
-						WHERE parent_inet_parent = '".$parent_id."'";
+						WHERE parent_inet_parent = '".$parent_id."'
+						ORDER BY parent_inet_sort ASC";
 		$sql = $this->base->query($sql);
 		
 		if($sql->num_rows == 0){
@@ -110,6 +111,20 @@ class Category {
 	
 	public function getCategoryChildren($parent_id){
 		$sql = "SELECT category_id FROM tbl_parent_inet_path WHERE path_id = '".$parent_id."'";
+		$sql = $this->base->query($sql);
+		
+		if($sql->num_rows == 0){
+			return false;
+		}else{
+			while($res = $sql->fetch_assoc()){
+				$parent[] = $res['category_id'];
+			}
+			return $parent;	
+		}
+		
+	}
+	public function getCategoryChildrenCateg($parent_id){
+		$sql = "SELECT parent_inet_id AS category_id FROM tbl_parent_inet WHERE parent_inet_parent = '".$parent_id."' ORDER BY parent_inet_sort ASC";
 		$sql = $this->base->query($sql);
 		
 		if($sql->num_rows == 0){
@@ -232,6 +247,52 @@ class Category {
 
 	}
 	
+	//Вернет ИД всех категорий и урл
+	public function getAllCategoryIdAndUrl(){
+		$sql = "SELECT parent_inet_id, seo_alias, parent_inet_1 AS name
+					FROM tbl_parent_inet
+					LEFT JOIN tbl_seo_url ON seo_url = CONCAT('parent=', parent_inet_id)
+					ORDER BY name ASC, seo_alias ASC;";
+					
+		$r = $this->base->query($sql) or Die($sql);
+		
+		if($r->num_rows == 0){
+			return false;		
+		}else{
+			$tmp = array();
+			while($parent = $r->fetch_assoc()){
+				$tmp[$parent['parent_inet_id']] = $parent;	
+			}
+			
+			return $tmp;
+		}
+		
+	return false;
+
+	}
+	
+	//Вернет Внутренние каталоги
+	public function getParents(){
+		$sql = "SELECT * FROM tbl_parent
+					ORDER BY tovar_parent_name ASC;";
+					
+		$r = $this->base->query($sql) or Die($sql);
+		
+		if($r->num_rows == 0){
+			return false;		
+		}else{
+			$tmp = array();
+			while($parent = $r->fetch_assoc()){
+				$tmp[$parent['tovar_parent_id']] = $parent;	
+			}
+			
+			return $tmp;
+		}
+		
+	return false;
+
+	}
+	
 	//Вернет ИД всех категорий без алиасов
 	public function getNoAliasCategoryId(){
 		$categorys = $this->getAllCategoryId();
@@ -266,6 +327,7 @@ class Category {
 		foreach($parents_id as $id){
 			$sql = 'SELECT parent_inet_id,
 					parent_inet_1 as name,
+					parent_inet_parent as parent_id,
 					parent_inet_memo_1 as memo,
 					parent_inet_info as info
 				FROM 
@@ -273,12 +335,15 @@ class Category {
 					WHERE 
 					`parent_inet_type`=\'1\' and 
 					`parent_inet_id`=\''.$id.'\' and
-					`parent_inet_view` < "'.$_SESSION[BASE.'userlevel'].'"';
+					`parent_inet_view` < "'.$_SESSION[BASE.'userlevel'].'"
+					ORDER BY `parent_inet_sort` ASC
+					';
 			$parents = $this->base->query($sql);
 
 			while($parent = $parents->fetch_assoc()){
 				$alias = $Alias->getCategoryAlias($parent['parent_inet_id']);
 				$return[$parent['parent_inet_id']]['id'] = $parent['parent_inet_id'];
+				$return[$parent['parent_inet_id']]['parent_id'] = $parent['parent_id'];
 				$return[$parent['parent_inet_id']]['name'] = $parent['name'];
 				$return[$parent['parent_inet_id']]['memo'] = $parent['memo'];
 				$return[$parent['parent_inet_id']]['info'] = $parent['info'];
@@ -292,19 +357,22 @@ class Category {
 	}
 	
 	//Вернет информацию для указаной категории
-	public function getCategoryInfo($id){
+	public function getCategoryInfo($id, $key = ''){
 		global $Alias;
 		$return = array();
 		$sql = 'SELECT parent_inet_id,
 				parent_inet_1 as name,
 				parent_inet_memo_1 as memo,
-				parent_inet_info as info
+				parent_inet_view AS level,
+				parent_inet_info as info,
+				(SELECT count(tovar_id) FROM tbl_tovar WHERE tovar_inet_id_parent = parent_inet_id) AS tovar_count
 			FROM 
 			`tbl_parent_inet` 
 				WHERE 
 				`parent_inet_type`=\'1\' and 
 				`parent_inet_id`=\''.$id.'\' and
-				`parent_inet_view` < "'.$_SESSION[BASE.'userlevel'].'"';
+				`parent_inet_view` < "'.$_SESSION[BASE.'userlevel'].'"
+				ORDER BY parent_inet_sort ASC';
 		$parents = $this->base->query($sql);
 
 		if($parents->num_rows == 0){
@@ -316,7 +384,9 @@ class Category {
 			$return['id'] = $parent['parent_inet_id'];
 			$return['name'] = $parent['name'];
 			$return['memo'] = $parent['memo'];
+			$return['level'] = $parent['level'];
 			$return['info'] = $parent['info'];
+			$return['tovar_count'] = $parent['tovar_count'];
 			$return['alias'] = $alias;
 			$return['url'] = $alias;
 			$return['id'] = $parent['parent_inet_id'];

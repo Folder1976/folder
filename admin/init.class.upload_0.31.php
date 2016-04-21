@@ -2203,7 +2203,7 @@ class upload {
         // system, you can deactivate it here; just set it to false
         $this->mime_fileinfo            = true;     // MIME detection with Fileinfo PECL extension
         $this->mime_file                = true;     // MIME detection with UNIX file() command
-        $this->mime_magic               = true;     // MIME detection with mime_magic (mime_content_type())
+        $this->mime_magic               = false;     // MIME detection with mime_magic (mime_content_type())
         $this->mime_getimagesize        = true;     // MIME detection with getimagesize()
 
         // get the default max size from php.ini

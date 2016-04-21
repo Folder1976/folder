@@ -33,8 +33,8 @@ echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'>
 <title>Setup</title>
 </header>";
 
-echo "<div style=\"float: left;width:32%;\"><ul class=\"setup_menu\"><h2>Настройки</h2>
-    ";
+echo '<div style="float: left;width:32%;"><ul class="setup_menu"><h2>Настройки</h2>
+    ';
 echo "<li><a href='edit_klient.php' target='_blank'>",$m_setup['setup klient'],"</a></li>";
 echo "<li><a href='edit_klienti_group.php' target='_blank'>",$m_setup['setup klient group'],"</a></li>";
 echo "<li><a href='edit_delivery.php' target='_blank'>",$m_setup['setup delivery'],"</a></li>";
@@ -88,20 +88,31 @@ if (strpos($_SESSION[BASE.'usersetup'],"habibulin")>0){
 echo "</ul></div>";
 ?>
 
-<div style="float: left;width:32%;"><ul class=\"setup_menu\"><h2>Товары</h2>
+<div style="float: left;width:32%;"><ul class="setup_menu"><h2>Товары</h2>
 	<li><a href="main.php?func=import_universal">Импорт УНИВЕРСАЛ</a></li>
 	<li><a href="main.php?func=import_price">Импорт Остатки и Цены</a></li>
 	<li><a href="main.php?func=import_on_model">Импорт по моделям товаров</a></li>
 	<li><a href="main.php?func=alternative_artikles">Универсальные артиклы товаров</a></li>
+	<li><a href="main.php?func=relink_photo">Починить линки товар-фото</a></li>
 	<li><a href="main.php?func=import_photo">Импорт Фотографий файлы</a></li>
 	<li><a href="main.php?func=import_url_photo_excel">Импорт Фотографий Excel</a></li>
 </ul>
-  <ul class=\"setup_menu\"><h2>Города и доставки</h2>
+  <ul class="setup_menu"><h2>Города и доставки</h2>
 	<li><a href="main.php?func=city">Города</a></li>
 	
   </ul>
+ <ul class="setup_menu"><h2>Инструменты</h2>
+	<li><a href="main.php?func=find_on_sturm">Поиск товаров на Штурме (Excel)</a></li>
+	<li><a href="main.php?func=add_products">Автомат добавления продуктов</a></li>
+	
+  </ul>
+</div>
 
-
+<div style="float: left;width:32%;">
+  <ul class="setup_menu"><h2>Реклама</h2>
+	<li><a href="main.php?func=banner">Банеры</a></li>
+	<li><a href='edit_info.php?info_list_sort=information' target='_blank'>Страницы информации</a></li>
+  </ul>
 
 
 

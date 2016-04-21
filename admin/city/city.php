@@ -7,6 +7,7 @@
 			$gde_name	= htmlspecialchars($_POST['gde_name'], ENT_QUOTES, 'UTF-8');
 			$days		= htmlspecialchars($_POST['days'], ENT_QUOTES, 'UTF-8');
 			$phone		= htmlspecialchars($_POST['phone'], ENT_QUOTES, 'UTF-8');
+			$money		= htmlspecialchars($_POST['money'], ENT_QUOTES, 'UTF-8');
 	
 			if($name != '' AND $translite != ''){
 				//if(isset($_POST['select_menu']) AND $_POST['select_menu'] == 'editbody'){
@@ -16,6 +17,7 @@
 							KudaLable='$kuda_name',
 							GdeLable='$gde_name',
 							DeliveryDays='$days',
+							money='$money',
 							Localphone='$phone';";
 				//}
 				
@@ -77,6 +79,7 @@
 			<th><b>Назв. Где?</b></th>
 			<th><b>Телефон</b></th>
 			<th><b>Доставка дн.</b></th>
+			<th><b>Стоимость</b></th>
 			<th><b></b></th>
 		</tr>
 
@@ -90,6 +93,7 @@
 			<td><input type="text" name="gde_name" maxlength="100" size="20" /></td>
 			<td><input type="text" name="phone" maxlength="100" size="10" /></td>
 			<td><input type="text" name="days" maxlength="100" size="5" /></td>
+			<td><input type="text" name="money" maxlength="100" size="5" /></td>
 			<td><input class="add" type="submit" value="Add" /></td>
 		</tr>
 		</form>
@@ -109,6 +113,7 @@
 					<td><input type="text" class="field" id="gde_name'.$i.'" maxlength="100" size="20" value="'.$Edit["GdeLable"].'"/></td>
 					<td><input type="text" class="field" id="phone'.$i.'" maxlength="100" size="10" value="'.$Edit["Localphone"].'"/></td>
 					<td><input type="text" class="field" id="days'.$i.'" maxlength="100" size="5" value="'.$Edit["DeliveryDays"].'" /></td>
+					<td><input type="text" class="field" id="money'.$i.'" maxlength="100" size="5" value="'.$Edit["money"].'" /></td>
 					<td><a href="javascript:" class="dell" id="'.$Edit["CityID"].'">Удалить</a></td>
 				</tr>';
 				$i += 1;
@@ -125,12 +130,13 @@
 					var gde_name = $('#gde_name'+id).val();
 					var phone = $('#phone'+id).val();
 					var days = $('#days'+id).val();
+					var money = $('#money'+id).val();
 					var key = 'edit';
 					
 					$.ajax({
 						url: 'city/ajax-save-city.php',
 						dataType: 'text',
-						data: 'id='+id+'&translite='+translite+'&name='+name+'&kuda_name='+kuda_name+'&gde_name='+gde_name+'&phone='+phone+'&days='+days+'&'+key,
+						data: 'id='+id+'&translite='+translite+'&money='+money+'&name='+name+'&kuda_name='+kuda_name+'&gde_name='+gde_name+'&phone='+phone+'&days='+days+'&'+key,
 						beforeSend: function(){
 							$('.msg').css('display','block');
 						},

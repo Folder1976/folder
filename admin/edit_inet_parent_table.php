@@ -182,7 +182,7 @@ echo "\nParent:<select name='_parent' style='width:550px' onChange='submit();'>"
      
   echo "<option value='0' selected>parent</option>";
   echo "<option value='".mysql_result($parent,0,0)."'>..</option>";
-  
+  $parent = mysql_result($parent,0,0);
   while ($count < mysql_num_rows($ver))
     {
 	echo "\n<option ";
@@ -215,6 +215,7 @@ $html = "<tr>
       <th>parent_id</th>      
       <th>Sort</th>
       <th>Товаров</th>
+      <th><a href=\"?_parent=".$parent."\">[..]</a></th>
       <th>RUS</th>
       <th>Аттрибуты</th>
       <th>Alias</th>
@@ -269,13 +270,16 @@ $html .= "<td align='right'><font size='1'>"
       $html .= '<b>'.$tmp.'</b>';
   $html .= '</td>';
   //----
+  $html .= '<td style="width:30px"><a href="?_parent='.mysql_result($ver,$count,"parent_inet_id").'">[ТУДА]</a></td>';
+  
+  
   $html .= "<td>
-    <input type='text' style='width:200px' id='parent_inet_1*".mysql_result($ver,$count,"parent_inet_id")."' 
+    <input type='text' style='width:300px' id='parent_inet_1*".mysql_result($ver,$count,"parent_inet_id")."' 
       value='" . mysql_result($ver,$count,"parent_inet_1") . "' onChange='update(this.value,this.id)'/>
     </td>";
 
   //---- Аттрибуты
-  $html .= "<td><select id='attribute_group_id*".mysql_result($ver,$count,"parent_inet_id")."' style='width:300px' onChange='update(this.value,this.id)'>";# OnChange='submit();'>";
+  $html .= "<td><select id='attribute_group_id*".mysql_result($ver,$count,"parent_inet_id")."' style='width:100px' onChange='update(this.value,this.id)'>";# OnChange='submit();'>";
   $html .= '<option value="0">- - -</option>';
   
   foreach($group as $index => $value)
@@ -295,7 +299,7 @@ $html .= "<td align='right'><font size='1'>"
     }
     
   $html .= "<td>
-    <input type='text' style='width:150px' id='alias*".mysql_result($ver,$count,"parent_inet_id")."' 
+    <input type='text' style='width:400px' id='alias*".mysql_result($ver,$count,"parent_inet_id")."' 
       value = '" . $alias . "' onChange='updateAlias(this.value,this.id)'/>
     </td>";
   //----
@@ -317,7 +321,7 @@ $html .= "<td align='right'><font size='1'>"
     </td>";
   //----
   $html .= "<td>
-    <input type='text' style='width:600px' id='parent_inet_memo_1*".mysql_result($ver,$count,"parent_inet_id")."' 
+    <input type='text' style='width:300px' id='parent_inet_memo_1*".mysql_result($ver,$count,"parent_inet_id")."' 
       value='" . mysql_result($ver,$count,"parent_inet_memo_1") . "' onChange='update(this.value,this.id)'/>
     </td>";
   //----

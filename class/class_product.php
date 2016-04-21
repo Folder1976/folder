@@ -21,6 +21,11 @@ class Product {
 		
 	}
 
+	public function getProductsCount(){
+		
+	}
+	
+	
 	/*
 	 *Вернет главную картинку продутка
 	 */
@@ -77,6 +82,39 @@ class Product {
 			$return = array();
 			while($tmp = $r->fetch_assoc()){
 				$return[] = $tmp;
+			}
+			return $return;
+		}
+		
+	}
+	
+	/*
+	 *Вернет массив вариантов цветов для модели
+	 */
+	public function getColorVariants($model, $main_color){
+	
+		$sql = 'SELECT T.tovar_id, seo_alias, attribute_value AS color_name, id AS color_id
+				FROM tbl_tovar T
+				LEFT JOIN tbl_seo_url ON seo_url = CONCAT("tovar_id=", T.tovar_id)
+				LEFT JOIN tbl_attribute_to_tovar A ON attribute_id="2" AND A.tovar_id = T.tovar_id
+				LEFT JOIN tbl_colors ON A.attribute_value = color
+				WHERE tovar_model = "'.$model.'" GROUP BY id;';
+		$r = $this->base->query($sql);
+		if($r->num_rows == 0){
+			return false;
+		}else{
+			$return = array();
+			while($tmp = $r->fetch_assoc()){
+				if($tmp['color_name']){
+
+					if((int)$tmp['color_id']	< 10){
+						$tmp['color_id'] = '00'.$tmp['color_id'];
+					}elseif((int)$tmp['color_id']	< 100){
+						$tmp['color_id'] = '0'.$tmp['color_id'];
+					}
+		
+					$return[$tmp['color_name']] = $tmp;
+				}
 			}
 			return $return;
 		}
@@ -155,14 +193,13 @@ class Product {
 		*/
 	}
 	
-	
 	/*
 	 *Принимает артикл продукта
 	 *
 	 *Вернет массив братьев продукта
 	 */
 	public function getProductBrotherOnArtikl($product_artkl){
-		
+         
 		global $setup;
 		
 		$separator = $setup['tovar artikl-size sep'];
@@ -187,6 +224,40 @@ class Product {
 			}
 			
 			return $return;
+		} 
+	
+	
+	}
+	
+	//Вернет - есть ли этот артикл (включая братьев в социальной сети)
+	public function getProductSocial($product_artkl){
+		
+		global $setup;
+		
+		$separator = $setup['tovar artikl-size sep'];
+		
+		$artkl = $product_artkl;
+		if(strpos($product_artkl, $separator) !== false){
+			list($artkl,$size) = explode($separator, $product_artkl);
+		}
+		
+		$sql = "SELECT tovar_id,
+				social_fb,
+				social_vk
+			FROM tbl_tovar WHERE tovar_artkl LIKE '".$artkl.$separator."%'";
+		$res = $this->base->query($sql) or die('osaid333uytfdsgflijksdgfl<br>'.$sql.'<br>'.mysql_error());
+		
+		if($res->num_rows == 0){
+			return false;
+		}else{
+			
+			$fb = '';
+			$vk = '';
+			while($tmp = $res->fetch_assoc()){
+				if($tmp['social_fb']) $fb = 'facebook';
+				if($tmp['social_vk']) $vk = 'vkontakte';
+			}
+			return $fb. '*' . $vk;
 		}
 		
 	}

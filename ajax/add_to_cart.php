@@ -13,6 +13,8 @@ $User = new User($folder);
 $user_key = $User->getActiveUserKey();
 
 $price      = mysqli_real_escape_string($folder, $_POST['price']);
+$price = str_replace(' ', '', $price);
+
 $delive_days = mysqli_real_escape_string($folder, $_POST['delive_days']);
 $items      = mysqli_real_escape_string($folder, $_POST['items']);
 $postav_id      = mysqli_real_escape_string($folder, $_POST['postav_id']);
@@ -61,15 +63,18 @@ $sql = 'SELECT order_item, product_price FROM tbl_orders WHERE order_customer = 
 $r = $folder->query($sql) or die('error add_to_cart');
 
 $summ = 0;
+$items = 0;
 if($r->num_rows > 0){
     while($row = $r->fetch_assoc()){
         $summ += ((int)$row['order_item'] * (float)$row['product_price']);
+        $items+= (int)$row['order_item'];
     }
 }
 
 
     $return['msg'] = 'Товар добавлен в корзину';
     $return['summ'] = $summ;
+    $return['items'] = $items;
     $return['err'] = false;        
     echo json_encode($return);
             

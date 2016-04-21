@@ -45,35 +45,41 @@
     </div>
 </div>
 
-<div class="row section">
-    <div class="medium-17 columns section__col-content right">
+<div class="row row_large section">
+    <div class="large-19 medium-17 columns section__col-content right">
         <h1 class="section__title"><?php echo $categ_selected['name']; ?> - Armma.ru</h1>
         <div class="catalog">
             <?php if($category_children){ ?> 
                 <?php foreach($category_children as $children){ ?>
                       <?php if($children['id'] != $categ_selected['id']){ ?>
-                                <a href="<?php echo HOST_URL.'/'.$children['url']; ?>.html" class="catalog__item">
+                        <?php if($children['parent_id'] == $categ_selected['id']){ ?>
+                                 <a href="<?php echo HOST_URL.'/'.$children['url']; ?>.html" class="catalog__item">
                                     <span class="catalog__img" style="background-image: url(<?php echo HOST_URL; ?>/resources/products/!category/<?php echo $children['id']; ?>.medium.jpg);"></span>
                                     <span class="catalog__title"><?php echo $children['name']; ?>
                                     </span>
                                 </a>
                         <?php } ?>
+                      <?php } ?>
                 <?php } ?>
             <?php } ?>
         </div>
-
+<!-- Банеры -->
         <div class="row">
-            <div class="medium-12 columns catalog-banner">
-                <a href="#"><img src="<?php echo SKIN_URL; ?>/img/catalog/banners/banner_1.jpg" alt=""></a>
-            </div>
-
-            <div class="medium-12 columns catalog-banner">
-                <a href="#"><img src="<?php echo SKIN_URL; ?>/img/catalog/banners/banner_2.jpg" alt=""></a>
-            </div>
+            <?php if(isset($banners)){ ?>
+            <?php foreach($banners as $banner){ ?>
+                <div class="medium-12 columns catalog-banner">
+                        <?php if($banner['url'] == ''){ ?>
+                                <img src="<?php echo $banner['img']; ?>" alt="<?php echo $banner['title']; ?>" title="Картинка <?php echo $banner['title']; ?>">
+                        <?php }else{ ?>
+                                <a href="<?php echo $banner['url']; ?>"><img src="<?php echo $banner['img']; ?>" alt="<?php echo $banner['title']; ?>" title="Картинка <?php echo $banner['title']; ?>"></a>
+                        <?php } ?>
+                </div>
+            <?php } ?>
+            <?php } ?>
         </div>
     </div>
 
-    <div class="medium-7 columns left hide-for-small-only">
+    <div class="large-5 medium-7 columns left hide-for-small-only">
         <ul class="l-menu">
         <?php if($categories){ ?>
             <?php foreach($categories as $ind => $categ){ ?>
@@ -83,12 +89,14 @@
                         <ul class="l-menu__sub">
                             <?php foreach($category_children as $children) { ?>
                                 <?php if($children['id'] != $categ_selected['id']){ ?>
+                                   <?php if($children['parent_id'] == $categ_selected['id']){ ?>
                                         <li class="l-menu__sub-item"><a href="<?php echo HOST_URL.'/'.$children['url']; ?>.html" class="l-menu__sub-link"><?php echo $children['name']; ?></a>
                                         <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
-                                                &nbsp;&nbsp;<a href="<?php echo HOST_URL;?>/admin/edit_parent_inet.php?parent_inet_id=<?php echo $children['id'];?>"><font color=red><b>ред.</b></font></a>
+                                                &nbsp;&nbsp;<a href="<?php echo HOST_URL;?>/admin/edit_parent_inet.php?parent_inet_id=<?php echo $children['id'];?>" target="_blank"><font color=red><b>ред.</b></font></a>
                                         <?php }?>
                                
                                         </li>
+                                   <?php } ?>
                                 <?php } ?>
                             <?php } ?>
                         </ul>

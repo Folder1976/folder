@@ -2,7 +2,7 @@
 include '../config/config.php';
 if(session_id()){
 }else{
-  session_start();
+  //session_start();
 }
 global $folder;
 
@@ -42,7 +42,7 @@ if(strlen($tmp['klienti_pass']) < 10){
                         <li>Пароль : <b>'.$pass.'</b></li>
                     </ul>
             ';
-            
+
             include '../admin/libmail.php';
             $m = new Mail("UTF-8");
             $m->From($setup['email name'].";".$setup['email']);

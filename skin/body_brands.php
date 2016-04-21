@@ -5,7 +5,7 @@
         </div>
 
         <div class="medium-6 columns text-right small-only-text-left">
-            <a href="#" class="btn btn_light">Все бренды</a>
+            <a href="javascript:" class="btn btn_light brands_key">Все бренды</a>
         </div>
     </header>
     <?php
@@ -16,21 +16,25 @@
             <div class="brends">
                 <?php if(isset($brands) AND $brands){ ?>
                 <?php foreach($brands as $brand){ ?>
-                    <!--div class="brend"><img src="<?php echo HOST_URL; ?>/resources/brends/<?php echo $brand['brand_code']; ?>.jpg" alt=""></div>
+                    <div class="brend">
+                        <a href="brend/<?php echo $brand['brand_code']; ?>">
+                            <img src="<?php echo HOST_URL; ?>/resources/brends/<?php echo $brand['brand_code']; ?>.png" title="Картинка <?php echo $brand['brand_name']; ?>">
+                        </a>
+                    </div>
                 <?php } ?>
                 <?php } ?>
-                
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/crosman.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/crosman.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/danner.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/caa.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/stirling.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/umarex.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/propper.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/mcnett.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/revision.png" alt=""></div><!--
-                --><div class="brend"><img src="<?php echo SKIN_URL; ?>img/brends/snugpak.png" alt=""></div>
             </div>
         </div>
     </div>
 </article>
+<style>
+    .brends{
+        height: 220px;
+        overflow: hidden;
+    }
+</style>
+<script>
+    $(document).on('click', '.brands_key', function(){
+        $('.brends').css('height','auto');   
+    });
+</script>

@@ -5,6 +5,7 @@
                 <?php $count = 1; ?>
                 <?php foreach($categories as $Ind => $category){?>                           
                 <a href="<?php echo HOST_URL.'/'.$category['url']; ?>.html"
+                        style="font-size: 14px;"
                         class="hc-menu__link"
                         data-dropdown="catalog-menu-catalog_<?php echo $count; ?>"
                         aria-controls="catalog-menu-catalog_<?php echo $count; ?>"
@@ -13,34 +14,61 @@
                         <span class="hc-menu__name"><?php echo $category['name']; ?></span>
                 </a>
                         
-                    <div id="catalog-menu-catalog_<?php echo $count; ?>" data-dropdown-content class="f-dropdown dropdown hc-menu__sub" aria-hidden="true" tabindex="-1" aria-autoclose="false">
-                        <div class="row">
+                    <div id="catalog-menu-catalog_<?php echo $count; ?>" data-dropdown-content
+                                    class="f-dropdown dropdown hc-menu__sub"
+                                    aria-hidden="true"
+                                    tabindex="-1"
+                                    aria-autoclose="false"
+                                    >
+                        <div class="row" >
                             <div class="large-6 medium-4 columns">
                                 <img src="<?php echo SKIN_URL; ?>img/menu-icons/<?php echo $category['url']; ?>.jpg" alt="Картинка <?php echo $category['name']; ?>">
                             </div>
                             
                             <?php $sub_menus = $Category->getCategoryChildrenFull($Ind); ?>
-                            <div class="large-9 medium-10 columns">
+                            <div class="large-9 medium-10 columns" >
                                 <?php if($sub_menus){ ?>
-                                    <?php $row = (int)($sub_menus['count'] / 2); ?>
+                                    
+                                     <!-- Отключаем чилдренов для одежды и снаряжения-->
+                                    <?php if($category['url'] != 'odezhda' AND $category['url'] != 'takticheskoe_snarjazenie' AND $category['url'] != 'snarjazenie'){ ?>
+                                        <?php $row_mem = $row = (int)($sub_menus['count'] / 2); ?>
+                                    <?php }else{ ?>
+                                        <?php $row_mem = $row = (int)(count($sub_menus) / 2); ?>
+                                    <?php } ?>
                            
                                     <ul class="hc-menu__sub-list">
+                                        
                                         <?php foreach($sub_menus as $sub_menu){ ?>
                                             <li class="hc-menu__sub-item">
                                                 <a href="<?php echo HOST_URL.'/'.$sub_menu['url'];?>.html" class="hc-menu__sub-link"><?php echo $sub_menu['name']; ?></a>
-                                                <?php if($sub_menu['children']){ ?>
-                                                    <ul class="hc-menu__sub-list">
-                                                        <?php foreach($sub_menu['children'] as $sub_childr){ ?>
-                                                            <li class="hc-menu__sub-item"><a href="<?php echo HOST_URL.'/'.$sub_childr['url']; ?>.html" class="hc-menu__sub-link hc-menu__sub-link_inner"><?php echo $sub_childr['name']; ?></a></li>
-                                                            <?php $row--; ?>
-                                                        <?php } ?>
-                                                    </ul>
+                                    
+                                                <!-- Отключаем чилдренов для одежды и снаряжение-->
+                                                <?php if($category['url'] != 'odezhda' AND $category['url'] != 'takticheskoe_snarjazenie' AND $category['url'] != 'snarjazenie'){ ?>
+                                                    <?php if($sub_menu['children']){ ?>
+                                                        <ul class="hc-menu__sub-list">
+                                                            <?php $limit = 5; ?>
+                                                            <?php foreach($sub_menu['children'] as $sub_childr){ ?>
+                                                                
+                                                                <?php if($limit > 0){ ?>
+                                                                    <li class="hc-menu__sub-item"><a href="<?php echo HOST_URL.'/'.$sub_childr['url']; ?>.html" class="hc-menu__sub-link hc-menu__sub-link_inner"><?php echo $sub_childr['name']; ?></a></li>
+                                                                <?php }elseif($limit == 0){ ?>
+                                                                    <li class="hc-menu__sub-item"><a href="<?php echo HOST_URL.'/'.$sub_menu['url']; ?>.html" class="hc-menu__sub-link hc-menu__sub-link_inner">еще...</a></li>
+                                                                    <?php //break; ?>
+                                                                <?php } ?>
+                                                                
+                                                                <?php $limit--;?>
+                                                                <?php $row--; ?>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    <?php } ?>
                                                 <?php } ?>
+                                    
                                             </li>
                                             <?php $row--; ?>
                                             
                                             <!--Если перевалили за половину счетчика - начнем новую колонку -->
-                                            <?php if($row < 0) { ?>
+                                            <?php if($row < 1) { ?>
+                                                <?php $row = $row_mem; ?>
                                                 </ul></div>
                                                 <div class="large-9 medium-10 columns">
                                                      <ul class="hc-menu__sub-list">
@@ -148,3 +176,39 @@
                 </div>
             </div>
         </nav>
+        <div id="div_memo_back_text"><br>Загружаю . . .</div>
+        <div id="div_memo_back"><br></div>
+        <style>
+            #div_memo_back{
+                display: none;
+                position:  fixed;
+                top: 0;
+                left: 0;
+                text-align: center;
+                width: 100%;
+                min-height: 100%;
+                color: #840000;
+                font-weight: bold;
+                opacity: 0.4;
+                z-index: 9998;
+                background-color: #936B6B;
+            }
+            #div_memo_back_text{
+                display: none;
+                position:  fixed;
+                margin-top: -10px; 
+                top: 0;
+                left: 0;
+                text-align: center;
+                width: 100%;
+                color: #FFFFFF;
+                z-index: 9999;
+                font-weight: bold;
+            }
+        </style>
+        <script>
+            $(document).on('click', '.hc-menu a', function(){
+                $('#div_memo_back').show();
+                $('#div_memo_back_text').show();
+            });
+        </script>

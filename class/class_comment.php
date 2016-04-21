@@ -32,10 +32,18 @@ class Comment {
 	public function addComment($data){
 		$sql = 'INSERT INTO tbl_comments SET
 					comments_tovar = \''.$data['reviewer-product'].'\',
+					comments_ip = \''.$_SERVER['REMOTE_ADDR'].'\',
 					comments_date = \''.date('Y-m-d H:i:s').'\',
 					comments_name = \''.$data['reviewer-name'].'\',
 					comments_email = \''.$data['reviewer-email'].'\',
 					comments_memo = \''.$data['reviewer-comment'].'\'
+					';
+		$this->base->query($sql);
+		
+	}
+public function addToBlackList($ip){
+		$sql = 'INSERT INTO tbl_black_ip_list SET
+					black_ip_ip = \''.$ip.'\'
 					';
 		$this->base->query($sql);
 		

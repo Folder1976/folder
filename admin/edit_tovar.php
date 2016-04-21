@@ -3,6 +3,111 @@ header ('Content-Type: text/html; charset=utf8');
 include 'init.lib.php';
 connect_to_mysql();
 session_start();
+
+if(isset($_GET['all_photo_dell'])){
+    $name = $_GET['all_photo_dell'];
+    
+    $dir = UPLOAD_DIR.''.$name;
+    $dh = opendir($dir);
+    while (false !== ($filename = readdir($dh))) {
+        if($filename != '.' AND $filename != '..'){
+            //$filetime = filemtime($dir . '/' . $filename);
+            //echo '<br>'.$dir.'/'.$filename;
+            unlink($dir.'/'.$filename);
+        }
+    }
+    
+    header('Location: ?tovar_id='.$_GET['tovar_id']);
+}
+
+
+  include "../class/class_alias.php";
+  $Alias = new Alias($folder);
+  include ("../class/class_category.php");
+  $Category = new Category($folder);
+  include ("../class/class_attribute.php");
+  $Attribute = new Attribute($folder);
+  include ("../class/class_product.php");
+  $Product = new Product($folder);
+  include ("class/class_product_edit.php");
+  $ProductEdit = new ProductEdit($folder);
+  
+
+if(isset($_GET['key']) AND $_GET['key'] == 'dellall'){
+  
+  $tmp = explode('#', $_GET['artkl']);
+  $artikl = $tmp[0];
+  
+  if(isset($_GET['key2']) AND $_GET['key2'] == 'OK'){
+		$brothers = $Product->getProductBrotherOnArtikl($_GET['artkl']);
+
+		$products_id = '';
+		foreach($brothers as $index => $value){
+			$products_id .= $value['tovar_id'].',';
+			$ver = mysql_query("DELETE FROM `tbl_seo_url` WHERE `seo_url`='tovar_id=".$value['tovar_id']."'");
+		}
+		$products_id = trim($products_id, ',');
+		
+		$sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovar_artkl` IN ('.$products_id.');';
+		$folder->query($sql) or die('alternative artikles dell ((');
+		
+		$sql = 'DELETE FROM `tbl_tovar` WHERE `tovar_id` IN ('.$products_id.');';
+		$folder->query($sql) or die('links dell (( '.$sql);
+		
+		$sql = 'DELETE FROM `tbl_tovar` WHERE `tovar_id` IN ('.$products_id.');';
+		$folder->query($sql) or die('links dell (( '.$sql);
+		
+		$sql = 'DELETE FROM `tbl_price_tovar` WHERE `price_tovar_id` IN ('.$products_id.');';
+		$folder->query($sql) or die('links dell (( '.$sql);
+		
+		$sql = 'DELETE FROM `tbl_description` WHERE `description_tovar_id` IN ('.$products_id.')';
+		$folder->query($sql) or die('links dell (( '.$sql);
+		
+		$sql = 'DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id` IN ('.$products_id.')';
+		$folder->query($sql) or die('links dell (( '.$sql);
+		
+		$sql = 'DELETE FROM `tbl_tovar_links` WHERE `product_id` IN ('.$products_id.')';
+		$folder->query($sql) or die('links dell (( '.$sql);
+
+		echo '<h1>Удалено</h1>';
+		
+  }else{
+    
+        $brothers = $Product->getProductBrotherOnArtikl($_GET['artkl']);
+
+		$products_id = '';
+        $errors = '';
+		foreach($brothers as $index => $value){
+			
+            $sql = "SELECT operation_detail_operation FROM tbl_operation_detail WHERE operation_detail_tovar='".$value['tovar_id']."'";
+			$r = $folder->query($sql);
+		
+            if($r->num_rows > 0){
+                 while($tmp = $r->fetch_assoc()){
+                    $errors .= '<h4>'.$tmp['operation_detail_operation'].'</h4>';
+                }
+            }
+        
+        }
+    
+        if($errors == ''){
+    
+            echo '<h2>Удалить все по артиклу - <b>'.$artikl.'<b></h2>
+              <a href="edit_tovar.php?key=dellall&key2=OK&artkl='.$_GET['artkl'].'">ДА</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="edit_tovar.php?tovar_id='.$_GET['product_id'].'">НЕТ</a>';
+        }else{
+            echo '<h2><a href="edit_tovar.php?tovar_id='.$_GET['product_id'].'">Вернуться в редактор</a></h2>';
+            echo '<h2>Этот товар есть в следующих накладных:</h2>';
+            echo '<br>'.$errors;
+            
+        }
+  }
+  return false;
+}
+//header("Content-Type: text/html; charset=UTF-8");
+//echo "<pre>";  print_r(var_dump( $_SESSION )); echo "</pre>";
+
 if (!session_verify($_SERVER["PHP_SELF"],"+")){
   exit();
 }
@@ -13,7 +118,7 @@ echo '<h3><a href=\'/admin/setup.php\'>>> Настройки</a></h3>';
 $sql = "SELECT * FROM tbl_tovar WHERE tovar_id = '".$_GET['tovar_id']."';";
 $r = $folder->query($sql) or die(mysql_error());
 $tovar = $r->fetch_assoc();
-
+$product_id = $_GET['tovar_id'];
  
 
 //==================================SETUP===========================================
@@ -115,6 +220,8 @@ if (!$tovar_supplier)
     $Suppliers[$tmp['klienti_id']] = $tmp['klienti_name_1'];
   }
 }
+
+//Бренды
 $r = mysql_query("SET NAMES utf8");
 $r = mysql_query("SELECT `brand_id`,`brand_name` FROM tbl_brand ORDER BY `brand_name` ASC");# WHERE klienti_id = " . $iKlient_id);
 if (!$r)
@@ -127,6 +234,10 @@ if (!$r)
     $Brands[$tmp['brand_id']] = $tmp['brand_name'];
   }
 }
+
+
+
+
 $tQuery="SELECT * FROM `tbl_description` WHERE `description_tovar_id`='".$iKlient_id."'";
 $tovar_description = mysql_query("SET NAMES utf8");
 $tovar_description = mysql_query($tQuery);# WHERE klienti_id = " . $iKlient_id);
@@ -186,6 +297,7 @@ echo "\n<script type='text/javascript'>
 //find_window_tree(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"".$setup['menu parent inet']. " - ".$setup['menu find']."\",\"tovar_inet_id_parent\",\"0\"
     echo "function set_tree_select(id){
 	  document.getElementById('tovar_inet_id_parent').value=id;
+	  document.getElementById('bro_category').value=id;
     }
       ";
     
@@ -312,18 +424,8 @@ echo "\n<input type='hidden' name='_select' value='" , $return_page , "'/>";
 
 echo "\n<input type='hidden' name='_page_to_return' value='" , $this_page_name , "?" , $this_table_id_name, "='/>";
 
-echo "\n<table border = 1 cellspacing='0' cellpadding='0'><tr>";
+echo "\n<table border = 1 cellspacing='0' cellpadding='0'>";
 
-  include "../class/class_alias.php";
-  $Alias = new Alias($folder);
-  include ("../class/class_category.php");
-  $Category = new Category($folder);
-  include ("../class/class_attribute.php");
-  $Attribute = new Attribute($folder);
-  include ("../class/class_product.php");
-  $Product = new Product($folder);
-  include ("class/class_product_edit.php");
-  $ProductEdit = new ProductEdit($folder);
 
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_name_1')>0){
 echo "\n<tr><td>",$setup['menu name1']," ",mysql_result($lang,0,"web_lang_lang"),":</td><td>"; # Group name 1
@@ -396,14 +498,130 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 }
-
+$main_model = mysql_result($ver,0,"tovar_model");
 
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_artkl')>0){
-echo "\n<tr><td>Артикул:</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  name='tovar_artkl' value='" . mysql_result($ver,0,"tovar_artkl") . "'/></td>";
+  echo "\n<tr><td>Артикул:</td><td>"; # Group name 1
+  echo "\n<input type='text'  style='width:400px'  name='tovar_artkl' value='" . mysql_result($ver,0,"tovar_artkl") . "'/></td>";
+  echo "<td></td>";
+  echo "<td></td>";
+  echo "</tr>";
+}
+//======================================parent inet===============================================================================
+?>
+<tr style="background-color: #A5CAFF;">
+<?php
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_inet_id_parent')>0){
+echo "\n<td>",$setup['menu parent inet'],":</td><td>"; # Group klienti
+echo "\n<select name='tovar_inet_id_parent' id='tovar_inet_id_parent' style='width:300px'>";# OnChange='submit();'>";
+$count=0;
+while ($count < mysql_num_rows($parent_inet))
+{
+  echo "\n<option ";
+	#echo mysql_result($ver,0,"klienti_group") , " " , mysql_result($kli_grp,$count,"klienti_group_id");
+	if (mysql_result($ver,0,"tovar_inet_id_parent") == mysql_result($parent_inet,$count,"parent_inet_id")){
+	    echo "selected ";
+	    $parent_inet_type = mysql_result($parent_inet,$count,"parent_inet_type");
+	    $parent_inet_id = mysql_result($parent_inet,$count,"parent_inet_id");
+	 }
+  
+  echo "value=" . mysql_result($parent_inet,$count,"parent_inet_id") . ">".mysql_result($parent_inet,$count,"parent_inet_id")." - " . mysql_result($parent_inet,$count,"parent_inet_1") . "</option>";
+  $count++;
+}
+echo "</select>
+	<a href='#none' onClick='find_window_tree(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"".$setup['menu parent inet']. " - ".$setup['menu find']."\",\"tovar_inet_id_parent\",\"0\");'> <b>[дерево раскрыть]</b></a>
+	</td><td><a href='edit_parent_inet.php?parent_inet_id=", mysql_result($ver,0,'tovar_inet_id_parent'),"' target='_blank'>",$setup['menu edit'],"</a>
+    <!--a href='#none' onClick='find_window_script(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"".$setup['menu parent inet']. " - ".$setup['menu find']."\",\"tovar_inet_id_parent\")'> [",$setup['menu find'],"] </a-->
+    </td>";
+echo "<td></td>";
+echo "</tr>";
+}
+//====================================================================================================================
+
+echo "\n<tr><td>URL с фото (автомат!):</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  class='url_photo' placeholder='Копипаст сюда URL фото. Загруза автоматическая!'/></td>";
+echo "<td><span class='url_photo_info'></span></td>";
+echo "<td></td>";
+echo "</tr>";
+
+//=====================================================================================================================
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_video_url')>0){
+echo "\n<tr><td><img src='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS8SnZT7r1tXRrAIP5jfMhZcXhtPUBOkmwivur3jDPLxa64Wiqa5A' height='20px'></td><td>"; # Group name 1
+echo "\n<input type='text' rows='3' style='width:400px'  name='tovar_video_url' placeholder='Копипаст сюда URL Youtube!' value='" . mysql_result($ver,0,"tovar_video_url") . "'/></td>";
+echo "<td><span class='url_youtube'></span></td>";
+echo "<td></td>";
+echo "</tr>";
+}
+//=====================================================================================================================
+if(strpos($_SESSION[BASE.'usersetup'],'tovar_min_order')>0){
+echo "\n<tr><td>",$setup['menu min order'],":</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  name='tovar_min_order' value='" . mysql_result($ver,0,"tovar_min_order") . "'/></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
+}
+
+
+
+//===================================================================================================================
+//Линки
+$r = mysql_query("SET NAMES utf8");
+$r = mysql_query("SELECT * FROM tbl_tovar_links WHERE product_id = '".$iKlient_id."';");
+if (!$r){
+  echo "Query error - tbl_tovar_links";
+  exit();
+}else{
+  $Links = array();
+  while($tmp = mysql_fetch_assoc($r)){
+    $Links[] = $tmp;
+  }
+}
+
+
+  echo '\n<tr style="background-color:#C0FF6D;"><td valign="top">Линки поставщика:<br>! Один на поставщика</td><td>'; # Group name 1
+  echo '<table style="background-color:#C0FF6D;"><tr>
+	<th>URL</th>
+	<th>Поставщик</th>
+	</tr>';
+	
+if($Links){
+
+    foreach($Links as $value){
+		//echo "<pre>";  print_r(var_dump( $value )); echo "</pre>";
+		echo '<tr class="row_url'.$value['links_id'].'">
+			   <td><input type="text"  style="width:150px"  name="url*'.$value['links_id'].'" value="' . $value['url'] . '"/>';
+			  
+			  if(strpos($value['url'] , 'militarist.') !== false){	   
+			   echo '<a href="http://armma.ru/admin/main.php?func=add_products&supplier=militarist&links&url='.$value['url'].'">перепарс</a>';
+			  }
+		echo 	'</td>';
+		echo '<td><select name="postav_url*'.$value['links_id'].'" style="width:195px">';
+	    
+		foreach($Suppliers as $id => $name){
+	      if($id == $value['postav_id']){
+			  echo "<option value=" . $id . " selected>" . $name  . "</option>";  
+	      }else{
+			  echo "<option value=" . $id . ">" . $name  . "</option>";
+	      }
+	    }
+		
+		echo '</td>
+	    <td><a href="javascript:" class="dell_url" id="dell_url'.$value['links_id'].'">dell</a></td>
+	    </tr>';
+    }
+}
+  
+  //Для нового
+  echo '<tr><td><input type="text"  style="width:150px"  name="url*0" value="" placeholder="новый адрес"/></td>';
+      echo '<td><select name="postav_url*0" style="width:195px">';
+	  foreach($Suppliers as $id => $name){
+	      echo "<option value=" . $id . ">" . $name  . "</option>";
+	  }
+      echo '</td></tr>';
+  echo '</table>
+	<td valign="top"><!--a href="main.php?func=alternative_artikles" target="_blank">Альт.редактор</a--></td>';
+  echo "<td></td>";
+  echo '</tr>';
 
 //====================================================================================================================
 $alternative_artkl = $ProductEdit->getProductAlternativeArtikles(mysql_result($ver,0,"tovar_artkl"));
@@ -417,7 +635,7 @@ $alternative_artkl = $ProductEdit->getProductAlternativeArtikles(mysql_result($v
 if($alternative_artkl){
 
     foreach($alternative_artkl as $value){
-     //echo "<pre>";  print_r(var_dump( $value )); echo "</pre>";
+    // echo "<pre>";  print_r(var_dump( $value )); echo "</pre>";
 	echo '<tr class="row_alt_artkl_'.$value['id'].'">
 	      <td><input type="text"  style="width:150px"  name="alt_artkl*'.$value['id'].'" value="' . $value['tovar_postav_artkl'] . '"/></td>';
 	echo '<td><select name="postav_alt_artkl*'.$value['id'].'" style="width:195px">';
@@ -445,10 +663,6 @@ if($alternative_artkl){
 	<td valign="top"><a href="main.php?func=alternative_artikles" target="_blank">Альт.редактор</a></td>';
   echo "<td></td>";
   echo '</tr>';
-
-
-
-}
 
 //====================================================================================================================
 
@@ -513,7 +727,9 @@ echo "</tr>";
 }//======================================BRAND================================================================================
 if(strpos($_SESSION[BASE.'usersetup'],'brand_id')>0){
 echo "\n<td>Производитель:</td><td>"; # Group klienti
-echo "\n<select name='brand_id' style='width:400px'>";# OnChange='submit();'>";
+echo "\n<select name='brand_id' style='width:400px'>
+	  <option value=\"0\">Выбрать бренд!</option>
+	  ";# OnChange='submit();'>";
 $dim = '';
 $count=0;
 foreach($Brands as $id => $value)
@@ -634,57 +850,9 @@ global $curr_name;
   echo "<td></td>";
   echo '</tr>';
 
-//====================================================================================================================
 
-echo "\n<tr><td>URL с фото (автомат!):</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  class='url_photo' placeholder='Копипаст сюда URL фото. Загруза автоматическая!'/></td>";
-echo "<td><span class='url_photo_info'></span></td>";
-echo "<td></td>";
-echo "</tr>";
 
-//=====================================================================================================================
-if(strpos($_SESSION[BASE.'usersetup'],'tovar_video_url')>0){
-echo "\n<tr><td><img src='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcS8SnZT7r1tXRrAIP5jfMhZcXhtPUBOkmwivur3jDPLxa64Wiqa5A' height='20px'></td><td>"; # Group name 1
-echo "\n<input type='text' rows='3' style='width:400px'  name='tovar_video_url' placeholder='Копипаст сюда URL Youtube!' value='" . mysql_result($ver,0,"tovar_video_url") . "'/></td>";
-echo "<td><span class='url_youtube'></span></td>";
-echo "<td></td>";
-echo "</tr>";
-}
-//=====================================================================================================================
-if(strpos($_SESSION[BASE.'usersetup'],'tovar_min_order')>0){
-echo "\n<tr><td>",$setup['menu min order'],":</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  name='tovar_min_order' value='" . mysql_result($ver,0,"tovar_min_order") . "'/></td>";
-echo "<td></td>";
-echo "<td></td>";
-echo "</tr>";
-}
-//======================================parent inet===============================================================================
-if(strpos($_SESSION[BASE.'usersetup'],'tovar_inet_id_parent')>0){
-echo "\n<td>",$setup['menu parent inet'],":</td><td>"; # Group klienti
-echo "\n<select name='tovar_inet_id_parent' id='tovar_inet_id_parent' style='width:400px'>";# OnChange='submit();'>";
-$count=0;
-while ($count < mysql_num_rows($parent_inet))
-{
-  echo "\n<option ";
-	#echo mysql_result($ver,0,"klienti_group") , " " , mysql_result($kli_grp,$count,"klienti_group_id");
-	if (mysql_result($ver,0,"tovar_inet_id_parent") == mysql_result($parent_inet,$count,"parent_inet_id")){
-	    echo "selected ";
-	    $parent_inet_type = mysql_result($parent_inet,$count,"parent_inet_type");
-	    $parent_inet_id = mysql_result($parent_inet,$count,"parent_inet_id");
-	 }
-  
-  echo "value=" . mysql_result($parent_inet,$count,"parent_inet_id") . ">".mysql_result($parent_inet,$count,"parent_inet_id")." - " . mysql_result($parent_inet,$count,"parent_inet_1") . "</option>";
-  $count++;
-}
-echo "<td><a href='edit_parent_inet.php?parent_inet_id=", mysql_result($ver,0,'tovar_inet_id_parent'),"' target='_blank'>",$setup['menu edit'],"</a>
-    <a href='#none' onClick='find_window_script(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"".$setup['menu parent inet']. " - ".$setup['menu find']."\",\"tovar_inet_id_parent\")'> [",$setup['menu find'],"] </a>
-    <a href='#none' onClick='find_window_tree(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"".$setup['menu parent inet']. " - ".$setup['menu find']."\",\"tovar_inet_id_parent\",\"0\");'> [+] </a>
-    
-    </td>";
-echo "<td></td>";
-echo "</tr>";
-}
-echo "</select></td>";//======================================on warehouse inet===============================================================================
+//echo "</select></td>";//======================================on warehouse inet===============================================================================
 if(strpos($_SESSION[BASE.'usersetup'],'on_ware')>0){
 echo "\n<td>Наличие на сайте:</td><td>"; # Group klienti
 echo "\n<select name='on_ware' id='on_ware' style='width:400px'>";# OnChange='submit();'>";
@@ -728,8 +896,18 @@ echo "<td></td>";
 echo "</tr>";
 }
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_last_edit')>0){
-echo "\n<tr><td>Tovar Last Edit:</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px' disabled name='tovar_last_edit' value='" . mysql_result($ver,0,"tovar_last_edit") . "'/></td>";
+  
+$r = mysql_query("SET NAMES utf8");
+$r = mysql_query("SELECT `klienti_name_1` FROM tbl_klienti WHERE `klienti_id`='".mysql_result($ver,0,"tovar_last_edit_user")."'");# WHERE klienti_id = " . $iKlient_id);
+$user_edit = '';
+if(mysql_num_rows($r) > 0){
+	$tmp = mysql_fetch_assoc($r);
+    $user_edit = ' ('. $tmp['klienti_name_1'].')';
+}
+  
+  
+echo "\n<tr><td>Последнее изменение:</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px' disabled name='tovar_last_edit' value='" . mysql_result($ver,0,"tovar_last_edit") . $user_edit . "'/></td>";
 echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
@@ -841,9 +1019,175 @@ echo "\n</table>";//</form>";
 //=========================================================================================================================
 echo '<!--Фильтры и атрибуты-->';
 
-echo '</td><td valign="top" rowspan = "2"><b>Аттрибуты товара</b><br><br>';
+echo '</td><td valign="top" rowspan = "2">';
 
+  $main_art = $ProductEdit->getProductArtkl(mysql_result($ver,0,"tovar_id"));
+  $brothers = $Product->getProductBrotherOnArtikl($main_art);
+
+  $id = $_GET['tovar_id'];
   
+  //Получим цвет товара
+  $sql = "SELECT attribute_value FROM tbl_attribute_to_tovar 
+	  WHERE attribute_id = '2' AND tovar_id = '$id' LIMIT 0, 1";
+    $r = $folder->query($sql) or die(mysql_error());
+  $main_color = '';
+  if($r->num_rows > 0){
+    $tmp = $r->fetch_assoc();
+    $main_color = $tmp['attribute_value'];
+  }
+  
+ $bro_pro = array();
+//Если вообще стоит это выводить!
+if(count($brothers) > 0){
+
+	  if(count($brothers) == 1){
+		$bro_pro[] = mysql_result($ver,0,"tovar_id");
+	  }else{
+		foreach($brothers as $index => $value){
+		  $bro_pro[] = $value['tovar_id'];
+		}
+	  }
+}		
+	  ?>
+	  <table class="main_filds">
+		<tr>
+		  <th colspan="2">Важные поля (Смена)</th>
+		</tr>
+		<tr>
+		  <th width="40px">Название
+			<input type="hidden" id="old_art" value="<?php echo $main_art; ?>">
+			<input type="hidden" id="bro_prods" value="<?php echo implode(',', $bro_pro); ?>">
+		  </th>
+		  <th>Параметн</th>
+		</tr>
+		<tr>
+		  <td>Артикл</td>
+		  <td align="left"><input type="text" id="bro_art" style="width: 250px;" value="<?php echo $main_art; ?>"></td>
+		</tr>
+		<tr>
+		  <td colspan="2" align="center"><b></b><a href="javascript:" class="dell_all_photo">Удалить все фото товара</a></b></td>
+		</tr>
+        <script>
+            $(document).on('click', '.dell_all_photo', function(){
+                if(confirm("Удалить все фото?")){
+                    location.href = "?all_photo_dell=<?php echo $main_art;?>&tovar_id=<?php echo $product_id; ?>";
+                }
+            });
+            
+        </script>
+		<tr>
+		  <td>Модель</td>
+		  <td align="left"><input type="text" id="bro_model" style="width: 250px;" value="<?php echo $main_model; ?>"></td>
+		</tr>
+		<tr>
+		  <td>Цвет</td>
+		  <td align="left"><input type="text" id="bro_color" style="width: 250px;" value="<?php echo $main_color; ?>"></td>
+		</tr>
+		<tr>
+		  <td>Название</td>
+		  <td align="left"><input type="text" id="bro_name" style="width: 250px;" value='<?php echo str_replace("'", '\'',mysql_result($ver,0,"tovar_name_1")); ?>'></td>
+		</tr>
+		<tr>
+		  <td>Бренд</td>
+		  <td align="left">
+			  <select id='bro_brand' style='width:250px'>
+			  <option value=\"0\">Выбрать бренд!</option>
+			  <?php			  
+			  $dim = '';
+			  $count=0;
+			  foreach($Brands as $id => $value)
+			  {
+				echo "\n<option ";
+				  if (mysql_result($ver,0,"brand_id") == $id){
+					echo "selected ";
+				  }
+				echo "value=" . $id . ">" . $value . "</option>";
+				$count++;
+			  }
+			  echo "</select>";	  
+		  ?></td>
+		</tr>
+	   <tr>
+		  <td>Категория</td>
+		  <td align="left">
+			  <select id='bro_category' style='width:190px'>
+			  <?php
+			  $count=0;
+			  while ($count < mysql_num_rows($parent_inet))
+			  {
+				echo "\n<option ";
+				  if (mysql_result($ver,0,"tovar_inet_id_parent") == mysql_result($parent_inet,$count,"parent_inet_id")){
+					  echo "selected ";
+					  $parent_inet_type = mysql_result($parent_inet,$count,"parent_inet_type");
+					  $parent_inet_id = mysql_result($parent_inet,$count,"parent_inet_id");
+				   }
+				echo "value=" . mysql_result($parent_inet,$count,"parent_inet_id") . ">".mysql_result($parent_inet,$count,"parent_inet_id")." - " . mysql_result($parent_inet,$count,"parent_inet_1") . "</option>";
+				$count++;
+			  }
+			  ?>
+			  </select>
+				  <a href='#none' onClick='find_window_tree("tbl_parent_inet","parent_inet_id","parent_inet_1","<?php echo $setup['menu parent inet']. " - ".$setup['menu find']; ?>","bro_category","0");'><b>[дерево]</b></a>
+		  </td>
+		</tr>
+       	<tr>
+		  <td>Показывать ( > 0)</td>
+		  <td align="left"><input type="text" id="show" style="width: 250px;" value="<?php echo mysql_result($ver,0,"tovar_inet_id"); ?>"></td>
+		</tr>
+		<tr>
+		  <td colspan="2" align="center" height="30px"><b><a href="javascript:" class="change_name">[ Изменить родственные товары ]</a></b></td>
+		</tr>
+	  </table>
+	  
+	  
+	  
+	  <hr>
+	  <style>
+		.main_filds {
+		  background-color: #FF9999;
+		  border-spacing: 0;
+		  border-collapse: collapse;
+		}
+		.main_filds th{
+		  border: 1px solid black;
+		}
+		.main_filds td{
+		  padding-bottom: 3px;
+		  padding-top: 3px;
+		  border: 1px solid black;
+		}
+	  </style>
+	  <script>
+		$(document).on('click', '.change_name', function(){
+		  var ids 	= $('#bro_prods').val();	
+		  var old_art = $('#old_art').val();	
+		  var new_art = $('#bro_art').val();	
+		  var model = $('#bro_model').val();	
+		  var color = $('#bro_color').val();	
+		  var name 	= $('#bro_name').val();	
+		  var show 	= $('#show').val();	
+		  var brand 	= $('#bro_brand').val();	
+		  var category 	= $('#bro_category').val();	
+		  
+		  $.ajax({
+			type: "POST",
+			url: "ajax/ajax_brother_rename.php",
+			dataType: "text",
+			data: "old_art="+old_art+"&show="+show+"&new_art="+new_art+"&color="+color+"&model="+model+"&brand="+brand+"&category="+category+"&name="+name+"&ids="+ids,
+			beforeSend: function(){
+				$('.change_name').html('[ Ждите! Страница будет перезагружена... ]');
+			},
+			success: function(msg){
+			  console.log( msg );
+			  //location.reload();
+			}
+		  });
+		  
+		
+		});
+	  </script>
+
+<b>Аттрибуты товара <font color="red">Ajax!</font></b><br>
+<?php
   $attr_group_id = $Category->getCategoryAttributeGroupID(mysql_result($ver,0,'tovar_inet_id_parent'));
   $group_name = $Category->getAttributeGroupNameOnCategoryID($attr_group_id);
   
@@ -855,16 +1199,43 @@ echo '</td><td valign="top" rowspan = "2"><b>Аттрибуты товара</b>
 	  LEFT JOIN tbl_attribute_to_group G ON A.attribute_id = G.attribute_id
 	  LEFT JOIN tbl_attribute_to_tovar T ON T.attribute_id = A.attribute_id AND T.tovar_id = '$id'
 	  WHERE G.attribute_group_id = '$attr_group_id' 
-	  ORDER BY G.attribute_sort ASC;";
+	  ORDER BY G.attribute_sort ASC";
   //echo $sql;
   $group = $folder->query($sql) or die(mysql_error());
-  
+  ?>
+  <script>
+	$(document).on('change', '.attr', function(){
+		
+		var value = $(this).val();
+		var id = $(this).attr('id');
+			id = id.replace('attr*', '');
+			value = $('.attr'+id).val();
+	
+		var product_id = "<?php echo $product_id; ?>";
+		
+		$.ajax({
+		  type: "POST",
+		  url: "attribute/ajax_edit_attribute.php",
+		  dataType: "text",
+		  data: "id="+id+"&product_id="+product_id+"&value="+value+"&key=edit",
+		  beforeSend: function(){
+		  },
+		  success: function(msg){
+			console.log(  msg );
+		  }
+		});
+		
+	});
+  </script>
+  <?php
   echo '<ul class = "attribute_list"><b>'.$group_name.'</b> <a href="'.HOST_URL.'/admin/main.php?func=attribute_group_edit&attribute_group_id='.$attr_group_id.'" target = "_blank"> редактировать</a>';
 	  while($attr = $group->fetch_assoc()){
 	      echo '<li>
-		  <input type = "text" name = "attr*'.$attr['attribute_id'].'" class = "attr'.$attr['attribute_id'].'" id = "attr*'.$attr['attribute_id'].'" value = "'.$attr['attribute_value'].'" placeholder = "'.$attr['attribute_name'].'">
+		  <input type = "text" name = "attr*'.$attr['attribute_id'].'" class = "attr attr'.$attr['attribute_id'].'" id = "attr*'.$attr['attribute_id'].'" value = "'.$attr['attribute_value'].'" placeholder = "'.$attr['attribute_name'].'">
 		  '.$attr['attribute_name'].'';
 		  $values = $Attribute->getAttributeValues($attr['attribute_id']);
+		  
+		  
 		  
 		  if(count($values) > 0){
 		    echo '<br>
@@ -881,7 +1252,9 @@ echo '</td><td valign="top" rowspan = "2"><b>Аттрибуты товара</b>
   //Тут выведем список товаров братьев
   $brothers = $Product->getProductBrotherOnArtikl(mysql_result($ver,0,"tovar_artkl"));
   if(count($brothers) > 1){
-    echo '</ul class = "attribute_list"><b>Список родственных товаров</b>';
+    echo '</ul class = "attribute_list"><b>Список родственных товаров</b> => ';
+	echo '</ul class = "attribute_list"><a href="edit_tovar.php?product_id='.$product_id.'&key=dellall&artkl='.mysql_result($ver,0,"tovar_artkl").'" class="dellall">Удалить все</a></b>
+		  <br>&nbsp;';
 	foreach($brothers as $index => $value){
 	  echo '<li><a href=edit_tovar.php?tovar_id='.$value['tovar_id'].'>'.$value['tovar_artkl'].' '.$value['tovar_name_1'].'</a></li>';
 	  
@@ -978,8 +1351,26 @@ echo '</td>
     $photo .= "";
     echo $photo;
   
-echo '</td>
-  </tr><tr>
+echo '</td><td valign="top" rowspan="2" class="photo_list">
+		<b>Напоминалка цветов</b><br>
+	  ';
+		  
+		  $colors = $Attribute->getAttributeValues(2);
+		  $Attribute->resetColorsVariants($colors);
+		  $values = $Attribute->getColorsVariants();
+		  
+		  foreach($values as $count => $val){
+			if($count < 10){
+			  echo '<br>00'.$count.' = '.$val;  
+			}elseif($count < 100){
+			  echo '<br>0'.$count.' = '.$val;
+			}else{
+			  echo '<br>'.$count.' = '.$val;  
+			}
+		  }
+	
+
+echo '</td></tr><tr>
   <td>';
   //echo "
   //</td><td valign='top'>
@@ -1004,23 +1395,28 @@ tinymce.init({selector:'textarea'});
       
       id = id.replace('select_', '');
 
-      $('.'+id).val($(this).val());
+	  var value = $(this).val();
+	  console.log(id+' '+value);
+	 
+	   $('.'+id).val(value);
+	  $('.'+id).trigger('change');
+     
     });
   
   $(document).on('click','.startparsing', function(){
       var link = $('.parsing_link').val();
       
       if (link != '') {
-	$.ajax({
-              type: "POST",
-              dataType: "text",
-              url: "parsing/ajax_parsing.php",
-              data: "link="+link,
-              success: function(msg){
-                    console.log(msg);
-                    //$("#carfit_name_list").html(msg);
-              }
-	});
+		$.ajax({
+				  type: "POST",
+				  dataType: "text",
+				  url: "parsing/ajax_parsing.php",
+				  data: "link="+link,
+				  success: function(msg){
+						console.log(msg);
+						//$("#carfit_name_list").html(msg);
+				  }
+		});
       }
     
     });
@@ -1097,6 +1493,14 @@ tinymce.init({selector:'textarea'});
 		   tinyMCE.get(find_id).setContent(msg, {format : 'raw'});
               }
 	});
+      
+    });
+   
+   $(document).on('click','.dell_url', function(){
+      var id = $(this).attr('id');
+      id = id.replace('dell', 'row');
+      
+      $('.'+id).remove();
       
     });
    

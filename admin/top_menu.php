@@ -69,10 +69,25 @@ if (!$sort)
   exit();
 }
 
-echo "<table class='menu_top' widht=100%><tr><td>"; #Global Table
+echo "<table class='menu_top' widht=100%><tr>
+	  <td>";
+  
+  
+echo "<table class='key'><tr>";
+echo "<tr><td class='key'><a class='key' href='edit_tovar_find.php?operation_id=0&_find=find-str' target='_blank'>",$m_setup['menu tovar list'],"</a></td>";
+echo "<td class='key'><a class='key' href='edit_tovar_table.php' target='_blank'>",$m_setup['menu tovar edit'],"</a></td>
+	  </tr><tr>";
+echo "<td class='key'><a class='key' href='edit_nakl_add_new.php' target='_blank'>",$m_setup['menu new nakl'],"</a></td>";
+echo "\n<td class='key'><a class='key' href='get_bank.php' target='_blank'>",$m_setup['menu bank'],"</a></td>
+	  </tr><tr>";
+echo "\n<td class='key'><a class='key' href='edit_nakl_print.php?tmp=wareanalytics&operation_id=0' target='_blank'>",$m_setup['menu inventar'],"</a></td>";
+echo "\n<td class='key'><a class='key' href='setup.php' target='_blank'>",$m_setup['menu setup'],"</a></td>";
+echo "</tr><tr></table>
+ 
+</td>";
 
 # Status operation
-echo "<form method='post' action='operation_list.php' target='operation_list'>";
+echo "<td valign=\"top\"><form method='post' action='operation_list.php' target='operation_list'>";
 
 echo "<input type='hidden' name='iGroupSelected' value='" . $iKlientGroup . "'/>";
 echo "<table class='menu_top' cellspacing='0' cellpadding='0'><tr><td width = 50>";
@@ -115,7 +130,7 @@ echo "</select>";
 
 
 echo "</td></tr>
-      <tr><td>
+      <tr><td valign=\"top\">
     
       </td><td>".$m_setup['menu nakl']."<br>
 	<input type='text' name='operation_id' style='width:70px' method='post' OnEnter='submit();'>
@@ -135,7 +150,7 @@ echo "</select>";
 echo "</td></tr>
 </table></form>";
 
-echo "</td><td>"; #Global table
+echo "</td><td valign=\"top\">"; #Global table
 
 # Klient Group
 
@@ -147,7 +162,7 @@ if (!$ver)
   exit();
 }
 echo "<form method='post' action='top_menu.php'>";# target='operation_list'>";
-echo "<table class='menu_top'><tr><td>";
+echo "<table class='menu_top'><tr><td valign=\"top\">";
 echo $m_setup['menu klient gr'],":</td><td><select name='iKlientGroup' method='post' OnChange='submit();' style='width:200px' >";
 $count=0;
 while ($count < mysql_num_rows($ver))
@@ -171,10 +186,11 @@ echo "</form>";
 echo "</td><td valign=top>";
 echo "<table class='key'><tr>";
 echo "<tr><td class='key'><a class='key' href='edit_tovar_find.php?operation_id=0&_find=find-str' target='_blank'>",$m_setup['menu tovar list'],"</a></td>";
-echo "\n<td class='key'><a class='key' href='edit_tovar_table.php' target='_blank'>",$m_setup['menu tovar edit'],"</a></td>";
+echo "\n<td class='key'><a class='key' href='edit_tovar_table.php' target='_blank'>",$m_setup['menu tovar edit'],"</a></td>
+	  </tr><tr>";
 echo "\n<td class='key'><a class='key' href='edit_nakl_add_new.php' target='_blank'>",$m_setup['menu new nakl'],"</a></td>";
-echo "</tr><tr>";
-echo "\n<td class='key'><a class='key' href='get_bank.php' target='_blank'>",$m_setup['menu bank'],"</a></td>";
+echo "\n<td class='key'><a class='key' href='get_bank.php' target='_blank'>",$m_setup['menu bank'],"</a></td>
+	  </tr><tr>";
 echo "\n<td class='key'><a class='key' href='edit_nakl_print.php?tmp=wareanalytics&operation_id=0' target='_blank'>",$m_setup['menu inventar'],"</a></td>";
 echo "\n<td class='key'><a class='key' href='setup.php' target='_blank'>",$m_setup['menu setup'],"</a></td>";
 echo "</tr><tr>";

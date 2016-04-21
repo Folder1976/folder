@@ -27,6 +27,37 @@ while($tmp = $ware_tmp->fetch_assoc()){
     $all_ware[$tmp['warehouse_id']] = $tmp['warehouse_name'];
 }
 
+$r = $folder->query('SELECT operation_customer_memo FROM `tbl_operation` WHERE `operation_id`=\''.$value2.'\';');
+$tmp = $r->fetch_assoc();
+
+$memo_tmp = explode('*', $tmp['operation_customer_memo']);
+
+$customer_memo = '<table style="width:100%">
+		<tr>
+			<td style="width:40%;">'.$memo_tmp[0].'</td>
+			<td style="width:60%;">'.$memo_tmp[5].'</td>
+		</tr>
+		<tr>
+			<td style="width:40%;">'.$memo_tmp[1].'</td>
+			<td style="width:60%;">'.$memo_tmp[6].'</td>
+		</tr>
+		<tr>
+			<td style="width:40%;">'.$memo_tmp[2].'</td>
+			<td style="width:60%;">'.$memo_tmp[7].'</td>
+		</tr>
+		<tr>
+			<td style="width:40%;">'.$memo_tmp[3].'</td>
+			<td style="width:60%;"></td>
+		</tr>
+		<tr>
+			<td style="width:40%;">'.$memo_tmp[4].'</td>
+			<td style="width:60%;"></td>
+		</tr>
+
+	</table>
+';
+
+
 
 if(mysql_result($tmp1,0,0)==$setup['shop default status']) $sort = "time";
 //=====================================================
@@ -47,18 +78,21 @@ $Fields = "
      `operation_detail_operation`, `operation_detail_zakup`,
      `tovar_id`,
      `tovar_artkl`,
-     `tovar_name_1`,
-     `tbl_warehouse_unit`.*"; //Tovar
+     `tovar_name_1`/*,
+     `tbl_warehouse_unit`.* */"; //Tovar
 $ver = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT " . $Fields . " 
-	  FROM `tbl_operation_detail`,`tbl_tovar`,`tbl_warehouse_unit` 
-	  WHERE 
-	  `warehouse_unit_tovar_id`=`tovar_id` ";
-if(!$restore) 
-  $tQuery .= " and `operation_detail_dell`='0' ";
-$tQuery .= "and `operation_detail_tovar`=`tovar_id` 
-	  and `operation_detail_operation`='" . $value2 . "' 
-	  GROUP BY `operation_detail_id` ";
+	  FROM `tbl_operation_detail`
+	  LEFT JOIN `tbl_tovar` ON `operation_detail_tovar`=`tovar_id` 
+	  WHERE ";
+	  
+if(!$restore){ 
+		$tQuery .= "`operation_detail_dell`='0' and `operation_detail_operation`='" . $value2 . "' GROUP BY `operation_detail_id` ";
+	}else{
+		$tQuery .= "`operation_detail_operation`='" . $value2 . "' GROUP BY `operation_detail_id` ";
+	}
+	
+	  
 if($restore){
     $tQuery .= "ORDER BY `operation_detail_id` DESC";
 }else if($sort=="time"){
@@ -68,17 +102,20 @@ if($restore){
 }	  
 //echo $_REQUEST['restore'];
 //echo $_REQUEST['sort'];
-// echo $tQuery;
+//echo $tQuery;
+
 $ver = mysql_query($tQuery);
 if (!$ver)
 {
   echo "\nQuery error List - $tQuery";
   exit();
 }
+/*
 $ware = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT `warehouse_id`,`warehouse_name` FROM `tbl_warehouse`";
 $ware = mysql_query($tQuery);
-
+*/
+/*
 $deliv = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  `delivery_id`,
@@ -91,20 +128,47 @@ $tQuery = "SELECT
 $deliv = mysql_query($tQuery);
 //echo number_format($value2,5,".","");
 //echo $tQuery;
+*/
 $count=0;
 $summ = 0;
 $http = "";
 
-$http .= "<a href='edit_klient.php?klienti_id=".mysql_result($deliv,0,"klienti_id")."' target=_blank>change </a><b>".mysql_result($deliv,0,"delivery_name")."</b>";
+//$http .= "<a href='edit_klient.php?klienti_id=".mysql_result($deliv,0,"klienti_id")."' target=_blank>change </a><b>".mysql_result($deliv,0,"delivery_name")."</b>";
 
+
+
+$http .= "<style>
+	.customer_info{
+		float: left;
+		display: block;
+		width:100%;
+	}
+	.customer_info td{
+		border: none;
+	}
+	.order_info{
+		float: left;
+		display: block;
+	}
+</style>";
+
+$http .= '<div style="clear: both;"></div>
+		<div class="customer_info">'.$customer_memo.'</div>';
 if($restore){
-	  $http .= "<br><input type='text' style='width:300px' id='find*".mysql_result($ver,$count,'operation_detail_operation')."'
+	  $http .= "<br><input type='text' style='width:300px' class='find_add' data-id='".mysql_result($ver,$count,'operation_detail_operation')."'
+		    value=''
+			placeholder='Часть кода или названия'
+		    /> <b><font color=red><<<< Поиск товара для добавления!</font></b>";
+	/*
+	$http .= "<br><input type='text' style='width:300px' id='find*".mysql_result($ver,$count,'operation_detail_operation')."'
 		    value='find' 
 		    onClick='set_field_clear(\"".mysql_result($ver,$count,'operation_detail_operation')."\");'
 		    onChange='find(this.value,\"".mysql_result($ver,$count,'operation_detail_operation')."\");'/>";
+		    */
 }
 
-$http .="<table><tr class=\"nak_header_find\">
+$http .="<br><div class=\"order_info\">
+		<table><tr class=\"nak_header_find\">
 	    <th></th>
 	    <th>art</th>
 	    <th>name</th>";
@@ -132,8 +196,9 @@ $http .= "</tr>";
       if($restore){
 //echo "dffffffff - $restore -ffffff";
 	  if(strpos($_SESSION[BASE.'usersetup'],'view_zakup')>0){
-	  $http .= "<td><input type='text' style='width:40px' disabled id='operation_detail_zakup*".mysql_result($ver,$count,'operation_detail_id')."' 
-		    value='".mysql_result($ver,$count,'operation_detail_zakup')."' ></td>";
+	  $http .= "<td><input type='text' style='width:40px'  id='operation_detail_zakup*".mysql_result($ver,$count,'operation_detail_id')."' 
+		    value='".mysql_result($ver,$count,'operation_detail_zakup')."'
+			onChange='update_detail_fil(".mysql_result($ver,$count,'operation_detail_id').",this.value,\"operation_detail_zakup\",$value2);'></td>";
 	  }
 	  $http .= "<td><input type='text' style='width:40px' id='operation_detail_price*".mysql_result($ver,$count,'operation_detail_id')."' 
 		    value='".mysql_result($ver,$count,'operation_detail_price')."' 
@@ -164,8 +229,8 @@ $http .= "</tr>";
        $summ += number_format(mysql_result($ver,$count,'operation_detail_summ'),2,".","");
       
 //Warehouse Name Set
-$http .= "<td>";
-
+//$http .= "<td>";
+/*
 if($restore){
 	  $count1=0;
 	  $http .= "<select style='width:100px' 
@@ -203,17 +268,19 @@ if($restore){
 	  $http .= $all_ware[$from];
 	  $http .= " [".mysql_result($ver,$count,"warehouse_unit_".(string)($from))."]";
     
-}  
-$http .= "</td>";
+}
+*/
+$http .= "<td></td>";
   //=====================
-if($restore){
-      $http .= "<td>".mysql_result($ver,$count,'warehouse_unit_7')."</td>";
 
-  $http .= "<td><input type='text' style='width:60px' id='operation_detail_memo*".mysql_result($ver,$count,'operation_detail_id')."'
+if($restore){
+      $http .= "<td></td>";//$http .= "<td>".mysql_result($ver,$count,'warehouse_unit_7')."</td>";
+
+  $http .= "<td><input type='text' style='width:160px' id='operation_detail_memo*".mysql_result($ver,$count,'operation_detail_id')."'
 		    value='".mysql_result($ver,$count,'operation_detail_memo')."' 
 		    onChange='update_detail_fil(".mysql_result($ver,$count,'operation_detail_id').",this.value,\"operation_detail_memo\",$value2);'></td>";
 }else{
-      $http .= "<td>".mysql_result($ver,$count,'warehouse_unit_7')."</td>";
+      $http .= "<td></td>";//$http .= "<td>".mysql_result($ver,$count,'warehouse_unit_7')."</td>";
       $http .= "<td>".mysql_result($ver,$count,'operation_detail_memo')."</td>";
 }
 if($restore){
@@ -225,13 +292,13 @@ if($restore){
 	  dell - $summ </a>  </td>";
     }
 } 
- 
+  
 $http .= "</tr>";      
        $count++;
 }
     
 $http .="</table>";
-$http .= "SUMM = ".$summ;
+$http .= "<b>SUMM = ".$summ.'</b></div>';
 //    $http .= $count."*".$http;
 echo $http;
 

@@ -24,15 +24,20 @@ if(isset($_REQUEST['_reload_path'])){
   reload_path();
 }
 
+include_once 'class/class_product_edit.php';
+$ProductEdit = new ProductEdit($folder);
 
+if(!isset($_POST['parent_inet_view'])){
+  $_POST['parent_inet_view'] = '1';
+}
 //UPDATE
   if (isset($_REQUEST["_save"])){
  $folder->query("UPDATE tbl_parent_inet SET
 		    parent_inet_parent = '".$_POST['parent_inet_parent']."',
 		   parent_inet_sort = '".$_POST['parent_inet_sort']."',
 		   parent_inet_1 = '".$_POST['parent_inet_1']."',
-		   parent_inet_2 = '".$_POST['parent_inet_2']."',
-		   parent_inet_3 = '".$_POST['parent_inet_3']."',
+		   parent_inet_2 = '".$_POST['parent_inet_1']."',
+		   parent_inet_3 = '".$_POST['parent_inet_1']."',
 		   parent_inet_info = '".$_POST['parent_inet_info']."',
 		   parent_inet_type = '".$_POST['parent_inet_type']."',
 		   parent_inet_view = '".$_POST['parent_inet_view']."',
@@ -245,16 +250,32 @@ echo "\n<table border = 1 cellspacing='0' cellpadding='0'><tr>";
 //=====================================================================================================================
 echo "\n<td>",$m_setup['menu parent name'],":</td><td>"; # Group klienti
 echo "\n<input type='hidden'  style='width:0px'  name='parent_inet_parent' id='parent_inet_parent' value='" . mysql_result($ver,0,"parent_inet_parent") . "'/>";
-echo "\n<input type='text'  style='width:400px'  id='parent_inet_parent_text' value='" . mysql_result($parent,0,"parent_inet_1") . "'/>";
+echo "\n<input type='text'  style='width:300px'  id='parent_inet_parent_text' value='" . mysql_result($parent,0,"parent_inet_1") . "'/>";
 
-echo "</td>
-      <td><a href='edit_parent_inet.php?parent_inet_id=", mysql_result($ver,0,'parent_inet_parent'),"' target='_blank'>",$m_setup['menu edit'],"</a>
-      <a href='#none' onClick='find_window_script(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"Up parent find/Sort\",\"parent_inet_parent\")'> [",$m_setup['menu find'],"] </a>
-      </td>";
+echo "<a href='edit_parent_inet.php?parent_inet_id=", mysql_result($ver,0,'parent_inet_parent'),"' target='_blank'>",$m_setup['menu edit'],"</a>
+      <!--a href='#none' onClick='find_window_script(\"tbl_parent_inet\",\"parent_inet_id\",\"parent_inet_1\",\"Up parent find/Sort\",\"parent_inet_parent\")'> [",$m_setup['menu find'],"] </a-->
+      </td>
+	  ";
 echo "<td rowspan=\"13\" valign=\"top\">";
 
 $count8=0;
 $id = $iKlient_id;
+
+echo $ProductEdit->getCategoryTree();
+?>
+<script>
+  $(document).on('click', '.tree-carfit', function(){
+	  var id = $(this).attr('id');
+	  var name = $(this).html();
+	  
+	  $('#parent_inet_parent').val(id);
+	  $('#parent_inet_parent_text').val(name);
+	  
+  });
+  
+  </script>
+
+<?php
 /*
 while($count8<8){
     if(mysql_result($ver,0,"parent_inet_type")==1){
@@ -318,7 +339,7 @@ echo "</tr>";
 $sql = "SELECT attribute_group_id, attribute_group_name FROM tbl_attribute_group ORDER BY attribute_group_name ASC;";
 $group = $folder->query($sql) or die(mysql_error());
 echo "\n<tr><td>Группа атрибутов:</td><td>"; # Group name 1
-echo "\n<select name='attribute_group_id' id='attribute_group_id' style='width:400px'>";# OnChange='submit();'>";
+echo "\n<select name='attribute_group_id' id='attribute_group_id' style='width:300px'>";# OnChange='submit();'>";
 echo '<option value="0">- - -</option>';
 while ($grp = $group->fetch_assoc())
 {
@@ -328,8 +349,7 @@ while ($grp = $group->fetch_assoc())
   echo "value=" . $grp['attribute_group_id'] . ">" . $grp['attribute_group_name'] . "</option>";
   $count++;
 }
-echo "</select></td>";
-echo '<td><a href="'.HOST_URL.'/admin/main.php?func=attribute_group_edit&attribute_group_id='.mysql_result($ver,0,"attribute_group_id").'" target = "_blank"> редактировать</a></td>';
+echo "</select>".'<a href="'.HOST_URL.'/admin/main.php?func=attribute_group_edit&attribute_group_id='.mysql_result($ver,0,"attribute_group_id").'" target = "_blank"> редактировать</a></td>';
 echo "<td></td>";
 echo "</tr>";
 
@@ -361,14 +381,14 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 
-
+/*
 echo "\n<tr><td>",$m_setup['menu view'],":</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px'  name='parent_inet_view' value='" . mysql_result($ver,0,"parent_inet_view") . "'/></td>";
-echo "<td>
+echo "\n<input type='text'  style='width:300px'  name='parent_inet_view' value='" . mysql_result($ver,0,"parent_inet_view") . "'/>
 <a href=\"get_pic_from_jobe.php?id=",mysql_result($ver,0,"parent_inet_id"),"\" target=\"_blank\">Find pic on Job site</a> 
 </td>";
 echo "<td></td>";
 echo "</tr>";
+*/
 
 ?>
 <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>

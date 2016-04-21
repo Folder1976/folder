@@ -162,7 +162,7 @@ class Attribute {
 		
 		$return = array();
 		
-		$sql = 'SELECT DISTINCT attribute_value FROM tbl_attribute_to_tovar WHERE attribute_id = \''.$attribute_id.'\'';
+		$sql = 'SELECT DISTINCT attribute_value FROM tbl_attribute_to_tovar WHERE attribute_id = \''.$attribute_id.'\' ORDER BY attribute_value ASC;';
 		
 		$res = $this->base->query($sql);
 		
@@ -171,6 +171,45 @@ class Attribute {
 		}
 		
 		return $return;
+		
+	}
+	
+	/*
+	 *Вернет коды цветов из нашей внутренней системы
+	 */
+	public function getColorsVariants(){
+		
+		$return = array();
+		
+		$sql = 'SELECT * FROM tbl_colors ORDER BY color ASC;';
+		
+		$res = $this->base->query($sql);
+		
+		while($tmp = $res->fetch_assoc()){
+			$return[$tmp['id']] = $tmp['color'];
+		}
+		
+		return $return;
+		
+	}
+	
+	/*
+	 *Получает массив цветов и добавляет недостаюзщие в нашу таблицу ассоциаций цветов
+	 */
+	public function resetColorsVariants($colors){
+		
+		foreach($colors as $color){
+			$sql = 'SELECT id FROM tbl_colors WHERE color = \''.$color.'\';';
+			$res = $this->base->query($sql);
+			
+			if($res->num_rows == 0){
+				
+				$sql = 'INSERT INTO tbl_colors SET color = \''.$color.'\';';
+				$this->base->query($sql);
+				
+			}
+			
+		}
 		
 	}
 	

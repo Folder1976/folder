@@ -22,7 +22,7 @@
   
   <ul>
     <li><a href="main.php?func=restore_alias&restore_parent_null">Востановить алиасы категорий (только у которых нет)</a></li>
-    <li><a href="main.php?func=restore_alias&restore_parent_all">Востановить алиасы категорий (ВСЕ)</a></li>
+    <li><a href="НАХЕРА ТЫ ЭТО НАЖАЛ ! ! ! //main.php?func=restore_alias&restore_parent_all">Востановить алиасы категорий (ВСЕ)<font color="red">ЗАБЛОЧЕНО!</font></a></li>
     <li>&nbsp;</li>
     <li><a href="main.php?func=restore_alias&restore_tovar_null">Востановить алиасы товаров (только у которых нет)</a></li>
     <li><a href="main.php?func=restore_alias&restore_tovar_all">Востановить алиасы товаров (ВСЕ)</a></li>

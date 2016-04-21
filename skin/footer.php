@@ -15,7 +15,7 @@
             </div>
 
             <div class="footer__copyright">
-                © 2015 интернет-магазин arma.ru.<br>
+                © 2015 интернет-магазин armma.ru.<br>
                 Все права защищены
             </div>
 
@@ -40,8 +40,8 @@
                 <div class="medium-8 small-12 columns f-menu">
                     <h4 class="f-menu__title">Информация</h4>
                     <ul class="f-menu__list">
-                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/news.html" class="f-menu__link">Обзоры</a></li>
-                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/news.html" class="f-menu__link">Статьи и новости</a></li>
+                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/press.html" class="f-menu__link">Обзоры</a></li>
+                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/news.html" class="f-menu__link">Новости</a></li>
                         <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/help.html" class="f-menu__link">Как выбрать</a></li>
                         <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/dostavka.html" class="f-menu__link">Доставка и оплата</a></li>
                         <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/contact.html" class="f-menu__link">Контакты</a></li>
@@ -81,7 +81,7 @@
                 <h4 class="f-menu__title">Мы в социальных сетях</h4>
                 <div class="socials">
     <a href="#" class="social"><span class="fa fa-youtube"></span></a>
-    <a href="#" class="social"><span class="fa fa-vk"></span></a>
+    <a href="http://vk.com/armma_ru" class="social"><span class="fa fa-vk"></span></a>
     <a href="#" class="social"><span class="fa fa-facebook"></span></a>
     <a href="#" class="social"><span class="fa fa-instagram"></span></a>
     
@@ -95,9 +95,6 @@
 </footer>
     <span class="btn-to-top"><img src="<?php echo SKIN_URL; ?>img/totop.png" alt=""></span>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="<?php echo HOST_URL; ?>/js/jquery.msgBox.js" type="text/javascript"></script>
-	<link href="<?php echo HOST_URL; ?>/css/msgBoxLight.css" rel="stylesheet" type="text/css">
     <script>
      $(document).on('click', '.rassilka', function(){
        

@@ -1,0 +1,17 @@
+/*
+.c-product{
+    width: 33%;
+}
+
+@media only screen and (max-width: 1024px){
+    .c-product {
+        width: 49%;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .c-product {
+        width: 98%;
+    }
+}
+*/

@@ -602,6 +602,104 @@ echo "</div>";
 //=================================================================
 }  
 }
-
-
 ?>
+<div class="msg_back"></div>
+<div class="msg">загрузка...</div>
+
+<style>
+  .msg_back{width: 100%;height: 100%;opacity: 0.7;display: none;position: fixed;background-color: gray;top:0;left:0;}
+  .msg{
+  display: none;
+  overflow: auto;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  margin-left: -600px;
+  padding: 20px;
+  width: 1200px;
+  height: 700px;
+  text-align: center;
+  border: 2px solid gray;
+  background-color: #FFC87C;
+  }
+  .find_result {
+	  border-collapse: collapse;
+	  border: 1px solid gray;
+  }
+  .find_result tr{
+	border-collapse: collapse;
+	margin: 0px;
+	border: 1px solid gray;
+  }
+  .find_result td{
+	border-collapse: collapse;
+	margin: 0px;
+	padding: 4px;
+	border: 1px solid gray;
+	/*background-color: #ffffff;*/
+  }
+  .find_result tr:hover{
+	background-color: #CCF9A9;
+  }
+  .postav{
+	cursor: pointer;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+  $(document).on('click', '.msg_back', function(){
+	$('.msg_back').hide();
+	$('.msg').hide();
+  });
+  
+  $(document).on('change', '.find_add', function(){
+	
+	var id = $(this).data('id');
+	var value = $(this).val();
+	
+	$.ajax({
+	  type: "POST",
+	  url: "ajax/find_product.php",
+	  dataType: "text",
+	  data: "id="+id+"&value="+value,
+	  beforeSend: function(){
+	  },
+	  success: function(msg){
+		$('.msg_back').show();
+		$('.msg').html(msg);
+		$('.msg').show();
+		//console.log( msg );
+	  }
+	});
+	
+  });
+  
+  $(document).on('click', '.select_product', function(){
+        
+        var tovar_id = $(this).data('id');
+        var postav = $(this).data('postav');
+        var zakup = $(this).data('zakup');
+        var price = $(this).data('price');
+        var operation = $(this).data('operation');
+        var days = $(this).data('days');
+        
+        $.ajax({
+            type: "POST",
+            url: "ajax/add_product_to_order.php",
+            dataType: "text",
+            data: "tovar_id="+tovar_id+"&postav_id="+postav+"&zakup="+zakup+"&price="+price+"&days="+days+"&operation="+operation,
+            beforeSend: function(){
+            },
+            success: function(msg){
+                console.log( msg );
+                viewNakl(operation,1,0);
+                viewNakl(operation,1,0);
+                $('.msg_back').trigger('click');
+            }
+            
+        });
+        
+  });
+  
+  
+</script>

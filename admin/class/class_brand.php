@@ -29,7 +29,7 @@ class Brand {
 	 *Вернет полный массив по бренду, включая страну
 	 */
 	public function getBrandOnProductId($product_id){
-		$sql = $this->base->query("SELECT brand_code,
+		$sql = $this->base->query("SELECT B.brand_id,
 						brand_code,
 						brand_name,
 						country_id,
@@ -90,7 +90,7 @@ class Brand {
 		$product_id = $tmp['tovar_id'];
 		
 		
-		$sql = $this->base->query("SELECT brand_code,
+		$sql = $this->base->query("SELECT B.brand_id,
 						brand_code,
 						brand_name,
 						country_id,

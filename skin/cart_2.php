@@ -60,7 +60,7 @@
             <form action="<?php echo HOST_URL; ?>/order.html" METHOD="POST" class="form" data-abide="ajax">
                 <fieldset class="form__fieldset">
                     <div class="row form__row">
-                        <label for="buyer-name" class="large-6 large-offset-4 medium-8 columns form__label"><span class="form__label-name">Ваше имя</span></label>
+                        <label for="buyer-name" class="large-6 large-offset-4 medium-8 columns form__label"><span class="form__label-name">Ваше Фамилия Имя</span></label>
                         <div class="large-10 medium-16 end columns">
                             <span class="form__error error">Вы не представились</span>
                             <input type="text" class="form__input" name="buyer-name"  id="buyer-name" required value="<?php echo isset($user['klienti_name_1']) ? $user['klienti_name_1'] : ''; ?>">
@@ -282,7 +282,8 @@
                     </div>
 
                     <div class="medium-12 columns form__row text-right small-only-text-left">
-                        <button class="btn btn_text-large" onClick="submit();">Оформить</button>
+                        <button class="btn btn_text-large" id="but1" onClick="submit();" style="display:none;">Оформить</button>
+                         <button class="btn btn_text-large" id="but2">Заполните одно поле для связи</button>
                     </div>
                 </div>
             </form>
@@ -298,3 +299,38 @@
 
 </body>
 </html>
+<script>
+        
+        $(document).ready(function(){
+                if($('#buyer-email').val() != '' ||  $('#buyer-phone').val() != ''){
+                        $('#but2').hide();
+                        $('#but1').show();
+                }
+        });
+        
+        $(document).on('change','#buyer-email', function(){
+                
+                if($('#buyer-email').val() != '' ||  $('#buyer-phone').val() != ''){
+                        $('#but2').hide();
+                        $('#but1').show();
+                }else{
+                        $('#but2_mes').show();
+                        $('#but2').show();
+                        $('#but1').hide();
+                }
+                
+        });
+        
+        $(document).on('change','#buyer-phone', function(){
+                
+                if($('#buyer-email').val() != '' ||  $('#buyer-phone').val() != ''){
+                        $('#but2').hide();
+                        $('#but1').show();
+                }else{
+                        $('#but2').show();
+                        $('#but1').hide();
+                }
+                
+        });
+        
+</script>

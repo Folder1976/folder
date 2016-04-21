@@ -35,17 +35,74 @@ class ProductEdit {
 		$fildvalue = '';
 		foreach($data as $index => $value){
 			$fild .= $index . ',';
-			$fildvalue .= '\''.$value . '\',';
+			$fildvalue .= '\''.str_replace("'",'"',$value) . '\',';
 		}
 		$fild = trim($fild, ' ,');
 		$fildvalue = trim($fildvalue, ' ,');
 		
 		$sql .= '('.$fild.') VALUES ('.$fildvalue.')';
 		
-		$this->base->query($sql);
+		$this->base->query($sql) or die('add product - ' . $sql);
 		
-		return $this->base->insert_id;
+		$product_id = $this->base->insert_id;
+		
+		//header("Content-Type: text/html; charset=UTF-8");
+		if(!isset($_SESSION[BASE.'userid'])){
+			@session_start();
+		}
+		//Установим дату и пользователя редактировавшего
+		$date = date("Y-m-d G:i:s");
+		$sql = 'UPDATE tbl_tovar SET
+				tovar_last_edit = \''.$date.'\',
+				tovar_last_edit_user = \''.$_SESSION[BASE.'userid'].'\'
+				WHERE tovar_id = \''.$product_id.'\';';
+		$this->base->query($sql) or die('add product - ' . $sql);
+	
+	//echo '';	
+		//Описание
+		$sql = 'INSERT INTO tbl_description SET
+					description_tovar_id = \''.$product_id.'\',
+					description_1 = \''.str_replace("'",'"',$data['tovar_memo']).'\';';
+		$tovar = $this->base->query($sql) or die('add product - ' . $sql);
+	
+		
+		$alias = '';
+		
+		//Получим алиас категории
+		$sql = 'SELECT seo_alias FROM tbl_seo_url WHERE seo_url = \'parent='.$data['tovar_inet_id_parent'].'\';';
+		$tovar = $this->base->query($sql);
+		if($tovar->num_rows > 0){
+			$tmp = $tovar->fetch_assoc();
+			$alias .= ''.$tmp['seo_alias'];
+		}
+		
+		//Получим код бренда
+		$sql = 'SELECT brand_code FROM tbl_brand WHERE brand_id = \''.$data['brand_id'].'\';';
+		$tovar = $this->base->query($sql) or die('add product - ' . $sql);
+		if($tovar->num_rows > 0){
+			$tmp = $tovar->fetch_assoc();
+			$alias .= '/'.$tmp['brand_code'];
+		}
+		
+		$alias .= '/'.$this->getProductArtkl($product_id);
+		
+		$sql = 'INSERT INTO tbl_seo_url SET
+					seo_url = \'tovar_id='.$product_id.'\',
+					seo_alias = \''.$alias.'\';';
+		$tovar = $this->base->query($sql) or die('add product - ' . $sql);
+		//echo '<br>'.$sql;
+		return $product_id;
 	}
+	
+	//Найти цыет в названии и прописать его
+	public function setColorOnProductName($tovar_id){
+	
+		$name = $this->getProductName($tovar_id);
+		
+		//$sql = 'SELECT ';
+	
+	}	
+	
 	
 	public function getProductIdOnArtiklAndSupplier($tovar_artkl, $postavID = 0){
 		
@@ -204,6 +261,20 @@ class ProductEdit {
 	}
 	
 	/*
+	 *Вернет Название продукта
+	 */
+	public function getProductName($product_id){
+		$sql = $this->base->query("SELECT tovar_name_1 AS name FROM tbl_tovar WHERE tovar_id = '".$product_id."'");
+		if($sql->num_rows == 0){
+			return false;
+		}else{
+			$tmp = $sql->fetch_assoc();
+			return $tmp['name'];
+		}
+		
+	}
+	
+	/*
 	 *Вернет массив продукта
 	 */
 	public function getProductInfo($product_id){
@@ -279,6 +350,58 @@ class ProductEdit {
 		
 	}
 	
+	public function getCategoryTree(){
+		
+		$sql = "SELECT parent_inet_id AS id,
+						parent_inet_parent AS parent,
+						parent_inet_1 AS name
+				FROM tbl_parent_inet
+				WHERE parent_inet_parent = '0'
+				;";
+		$rs = $this->base->query($sql) or die('osaiduytflijksdgfl<br>'.$sql.'<br>'.mysql_error());
+	
+		$body = "<div id=\"container-carfit\" class = \"product-carfit-tree\"><ul  id=\"celebTree-carfit\"><li><span id=\"span_0\"><a class = \"tree-carfit\" href=\"javascript:\" id=\"0\">Категории</a></span><ul>";
+		while ($Type = $rs->fetch_assoc()) {
+		if($Type['id'] != 0){
+			$body .=  "<li><span id=\"span_".$Type['id']."\"> <a class = \"tree-carfit\" href=\"javascript:\" id=\"".$Type['id']."\">".
+					$Type['name']. "</a>";
+			$body .= "</span>".$this->getCategoryTreeNext($Type['id']);
+			$body .= "</li>";
+		}
+		//$Types[$Type['id']]['id'] = $Type['id'];
+		//$Types[$Type['id']]['name'] = $Type['name'];
+		}
+		$body .= "</ul>
+			</li></ul></div>";
+	
+	
+	
+		return $body;	
+	}
 
+	
+	private function getCategoryTreeNext($parent){
+		$sql = "SELECT parent_inet_id AS id,
+						parent_inet_parent AS parent,
+						parent_inet_1 AS name
+				FROM tbl_parent_inet
+				WHERE parent_inet_parent = '".$parent."';";
+		$rs = $this->base->query($sql) or die('osaiduytflijksdgfl<br>'.$sql.'<br>'.mysql_error());
+	
+		$body = "";
+	
+		 while ($Type = $rs->fetch_assoc()) {
+			$body .=  "<li><span id=\"span_".$Type['id']."\"><a class = \"tree-carfit\" href=\"javascript:\" id=\"".$Type['id']."\">";
+			
+				$body .= $Type['name'];
+			
+			$body .= "</a></span>".$this->getCategoryTreeNext($Type['id']);
+			$body .= "</li>";
+		}
+		if($body != "") $body = "<ul>$body</ul>";
+		
+		return $body;
+	
+	}
 }
 ?>

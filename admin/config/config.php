@@ -3,6 +3,12 @@
 date_default_timezone_set('Europe/moscow');
 
 /* Настройки подключения к БД */
+$dbhost = "armma.mysql";
+$dbbase = 'armma_db';
+$dbuser = "armma_sql";
+$dbpasswd = "4FhAS+EQ";
+
+/* Настройки подключения к БД */
 $dbhost = "localhost";
 $dbbase = 'armma_db';
 $dbuser = "root";
@@ -32,7 +38,7 @@ $folder= mysqli_connect(DB_HOST,DB_USER,DB_PASS,BASE) or die("Error " . mysqli_e
 mysqli_set_charset($folder,"utf8");
 
 //Каталог для загрузки файлов
-define('UPLOAD_DIR','/var/www/armma.ru/resources/products/');
+define('UPLOAD_DIR','/home/armma/armma.ru/docs/resources/products/');
 
 //Настройки из сетапа
 $setup = array(
@@ -47,7 +53,7 @@ $setup = array(
                 'email sms web' => '@mail.alp***hasms.com.ua',
                 'email smtp' => 'mail.nic.ru',
                 'klient id pref' => '30011976',
-                'load patch' => 'localhost/armma.ru/resources/',
+                'load patch' => '/armma.ru/docs/resources/',
                 'price default lang' => '1',
                 'price default price' => '2',
                 'print default lang' => '1',

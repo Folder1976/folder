@@ -27,62 +27,33 @@
     <div class="row">
         <div class="medium-23 small-24 columns medium-centered">
             <div class="h-slider__list _fix" id="header-slider">
-                <div class="h-slider__item" data-img="<?php echo SKIN_URL; ?>img/banners/banner_1920_1200_1.jpg">
-                    <h3 class="h-slider__title">Качество.<br>Надежность.<br>Точность.</h3>
-                    <div class="h-slider__summary">
-                        <span class="h-slider__summary-text">
-                            Тактическое снаряжение и&nbsp;оружие
-                        </span>
-                    </div>
-
-                    <div class="row h-slider__footer">
-                        <div class="medium-12 columns">
-                            <div class="h-slider__price"><small>от</small> 15 800 ₽</div>
+                <?php if(isset($large_banners)){ ?>
+                <?php foreach($large_banners as $banner){ ?>
+                        <div class="h-slider__item" data-img="<?php echo $banner['img']; ?>">
+                            <h3 class="h-slider__title"><?php echo $banner['header']; ?></h3>
+                            <div class="h-slider__summary">
+                                <span class="h-slider__summary-text">
+                                    <?php echo $banner['title']; ?>
+                                </span>
+                            </div>
+        
+                            <div class="row h-slider__footer">
+                                <?php if($banner['price'] != ''){ ?>
+                                <div class="medium-12 columns">
+                                        <?php if($banner['url'] == ''){ ?>
+                                                <div class="h-slider__price"><?php echo $banner['price']; ?></div>
+                                        <?php }else{ ?>
+                                                <a href="<?php echo $banner['url']; ?>" target="_blank"><div class="h-slider__price"><?php echo $banner['price']; ?></div></a>
+                                        <?php }?>
+                                </div>
+                                <?php } ?>
+                                <div class="medium-12 columns text-right small-only-text-left">
+                                    <div class="h-slider__hint"><?php echo $banner['slogan']; ?></div>
+                                </div>
                         </div>
-
-                        <div class="medium-12 columns text-right small-only-text-left">
-                            <div class="h-slider__hint">*ЭКСКЛЮЗИВНАЯ КОЛЛЕКЦИЯ ОТ ARMA.RU</div>
-                        </div>
-                    </div>
                 </div>
-
-                <div class="h-slider__item" data-img="<?php echo SKIN_URL; ?>img/banners/banner_1920_1200_2.jpg">
-                    <h3 class="h-slider__title">Зимняя<br>распродажа</h3>
-                    <div class="h-slider__summary">
-                        <span class="h-slider__summary-text">
-                            Скидки на все виды оптики до&nbsp;50%
-                        </span>
-                    </div>
-
-                    <div class="row h-slider__footer">
-                        <div class="medium-12 columns">
-                            <div class="h-slider__price"><small>от</small> 15 800 ₽</div>
-                        </div>
-
-                        <div class="medium-12 columns text-right small-only-text-left">
-                            <div class="h-slider__hint">*ЭКСКЛЮЗИВНАЯ КОЛЛЕКЦИЯ ОТ ARMA.RU</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="h-slider__item" data-img="<?php echo SKIN_URL; ?>img/banners/banner_1920_1200_1.jpg">
-                    <h3 class="h-slider__title">Третий слайд.<br>Надежность.<br>Точность.</h3>
-                    <div class="h-slider__summary">
-                        <span class="h-slider__summary-text">
-                            Тактическое снаряжение и&nbsp;оружие
-                        </span>
-                    </div>
-
-                    <div class="row h-slider__footer">
-                        <div class="medium-12 columns">
-                            <div class="h-slider__price"><small>от</small> 15 800 ₽</div>
-                        </div>
-
-                        <div class="medium-12 columns text-right small-only-text-left">
-                            <div class="h-slider__hint">*ЭКСКЛЮЗИВНАЯ КОЛЛЕКЦИЯ ОТ ARMA.RU</div>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
+                <?php } ?>
             </div>
         </div>
     </div>

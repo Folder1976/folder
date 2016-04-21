@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="row form__row">
-                    <label for="account-name" class="medium-8 columns form__label">Имя</label>
+                    <label for="account-name" class="medium-8 columns form__label">Фамилия Имя</label>
                     <div class="medium-14 end columns">
                         <span class="form__error error">Вы не представились</span>
                         <input type="text" class="form__input" id="account-name" required value="<?php echo $user['klienti_name_1'];?>">

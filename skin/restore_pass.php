@@ -121,10 +121,10 @@
                         $('#submit').css('display','none');
                     },
                     success: function(msg){
-                        
+                       //console.log(  msg ); 
                         $('.msg').html(msg.msg);
                         $('#submit').css('display','block');
-                       console.log(  msg );
+                       
                     }
                 });
                         

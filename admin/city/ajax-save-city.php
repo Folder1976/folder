@@ -17,6 +17,7 @@ if(isset($_GET['id']) AND
 	$gde_name	= htmlspecialchars($_GET['gde_name'], ENT_QUOTES, 'UTF-8');
 	$days		= htmlspecialchars($_GET['days'], ENT_QUOTES, 'UTF-8');
 	$phone		= htmlspecialchars($_GET['phone'], ENT_QUOTES, 'UTF-8');
+	$money		= htmlspecialchars($_GET['money'], ENT_QUOTES, 'UTF-8');
 	$id	= $_GET['id'];
 
 	if(isset($_GET['edit'])){
@@ -26,7 +27,8 @@ if(isset($_GET['id']) AND
 				KudaLable='$kuda_name',
 				GdeLable='$gde_name',
 				DeliveryDays='$days',
-				Localphone='$phone'
+				Localphone='$phone',
+				money='$money'
 				WHERE CityID='".$id."';";
 		//echo $sql;
 		$folder->query($sql) or die ("Обновление города :(");		

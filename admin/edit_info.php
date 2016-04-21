@@ -115,8 +115,8 @@ $tmp=0;
 while ($tmp < mysql_num_rows($info_key))
 {
   echo "\n<option ";
-	if (mysql_result($ver,0,"info_key") ==
-	      mysql_result($info_key,$tmp,"info_key")) echo "selected ";
+	//if (mysql_result($ver,0,"info_key") ==
+	  if($info_list_sort == mysql_result($info_key,$tmp,"info_key")) echo "selected ";
   
   echo "value=" . mysql_result($info_key,$tmp,"info_key") . ">" . mysql_result($info_key,$tmp,"info_key") . "</option>";
   $tmp++;
@@ -189,40 +189,177 @@ echo "\n<input type='text'  style='width:100px'  name='info_key' value='" . mysq
 echo "<td></td>";
 echo "</tr>";
 
-echo "\n<tr><td>",$m_setup['menu parent name']," 3:</td><td>"; # Group name 1
+echo "\n<tr><td>ЧПУ (без .html) :</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:100px'  name='info_link' value='" . mysql_result($ver,0,"info_link") . "'/></td>";
 echo "<td></td>";
 echo "</tr>";
 
 //==================================================================================
-echo "\n<tr><td>",$m_setup['menu name1']," 1:</td><td>"; # Group name 1
+echo "\n<tr><td>Заголовк H1 :</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='info_header_1' value='" . mysql_result($ver,0,"info_header_1") . "'/></td>";
 echo "<td></td>";
 echo "</tr>";
 
-echo "\n<tr><td>",$m_setup['menu name1']," 2:</td><td>"; # Group name 1
+echo "\n<tr><td>Заголовок TITLE :</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='info_header_2' value='" . mysql_result($ver,0,"info_header_2") . "'/></td>";
 echo "<td></td>";
 echo "</tr>";
 
-echo "\n<tr><td>",$m_setup['menu name1']," 3:</td><td>"; # Group name 1
+echo "\n<tr><td>Meta Description :</td><td>"; # Group name 1
 echo "\n<input type='text'  style='width:400px'  name='info_header_3' value='" . mysql_result($ver,0,"info_header_3") . "'/></td>";
 echo "<td></td>";
 echo "</tr>";
 //==================================================================================
+?>
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>
+    /*
+	function elFinderBrowser (field_name, url, type, win) {
+                tinymce.activeEditor.windowManager.open({
+                  file: '/admin/elFinder-master/elfinder.html',// use an absolute path!
+                  title: 'elFinder 2.0',
+                  width: 900,  
+                  height: 450,
+                  resizable: 'yes'
+                }, {
+                  setUrl: function (url) {
+                    win.document.getElementById(field_name).value = url;
+                  }
+                });
+                return false;
+            }
+      */
+  
+  
+    function elFinderBrowser (field_name, url, type, win) {
+            tinymce.activeEditor.windowManager.open({
+              file: '/admin/elFinder-master/elfinder.html',// use an absolute path!
+              title: 'elFinder 2.0',
+              width: 900,  
+              height: 450,
+              resizable: 'yes'
+            }, {
+              setUrl: function (url) {
+                win.document.getElementById(field_name).value = 'elFinder-master/'+url;
+              }
+            });
+            return false;
+    }
+  
+            
+  
+	tinymce.init({
+			selector: "textarea",
+			height: 500,
+            file_browser_callback : elFinderBrowser,
+			plugins: [
+			  "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+			  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+			  "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+			],
+		  
+			toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+			toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+			toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+		  
+			menubar: false,
+			toolbar_items_size: 'small',
+		  
+			style_formats: [{
+			  title: 'Bold text',
+			  inline: 'b'
+			}, {
+			  title: 'Red text',
+			  inline: 'span',
+			  styles: {
+				color: '#ff0000'
+			  }
+			}, {
+			  title: 'Red header',
+			  block: 'h1',
+			  styles: {
+				color: '#ff0000'
+			  }
+			}, {
+			  title: 'Example 1',
+			  inline: 'span',
+			  classes: 'example1'
+			}, {
+			  title: 'Example 2',
+			  inline: 'span',
+			  classes: 'example2'
+			}, {
+			  title: 'Table styles'
+			}, {
+			  title: 'Table row 1',
+			  selector: 'tr',
+			  classes: 'tablerow1'
+			}],
+		  
+			templates: [{
+			  title: 'Test template 1',
+			  content: 'Test 1'
+			}, {
+			  title: 'Test template 2',
+			  content: 'Test 2'
+			}],
+			content_css: [
+			  '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+			  '//www.tinymce.com/css/codepen.min.css'
+			]
+	});
+  
+  
+  </script>
+  		<!-- jQuery and jQuery UI (REQUIRED) -->
+		<link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-echo "\n<tr><td>",$m_setup['menu memo']," 1:</td><td>"; # Group name 1
-echo "\n<textarea  cols='50' rows='10' name='info_memo_1' >" . mysql_result($ver,0,"info_memo_1") . "</textarea></td>";
+		<!-- elFinder CSS (REQUIRED) -->
+		<link rel="stylesheet" type="text/css" href="/elFinder-master/css/elfinder.full.css">
+		<link rel="stylesheet" type="text/css" href="/elFinder-master/css/theme.css">
+
+		<!-- elFinder JS (REQUIRED) -->
+		<script src="/elFinder-master/js/elfinder.min.js"></script>
+
+		<!-- elFinder translation (OPTIONAL) -->
+		<script src="/elFinder-master/js/i18n/elfinder.ru.js"></script>
+
+		<!-- elFinder initialization (REQUIRED) -->
+		<script type="text/javascript" charset="utf-8">
+			// Documentation for client options:
+			// https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+			$(document).ready(function() {
+				$('#elfinder').elfinder({
+					url : '/elFinder-master/php/connector.minimal.php'  // connector URL (REQUIRED)
+					// , lang: 'ru'                    // language (OPTIONAL)
+				});
+			});
+            
+            
+		</script>
+  
+  
+  
+<?php 
+echo "\n<tr><td valign=\"top\">",$m_setup['menu memo']," 1:</td><td>"; # Group name 1
+echo "\n<textarea  cols='100' rows='80' name='info_memo_1' >" . mysql_result($ver,0,"info_memo_1") . "</textarea></td>";
 echo "<td></td>";
 echo "</tr>";
 
-echo "\n<tr><td>",$m_setup['menu memo']," 2:</td><td>"; # Group name 1
-echo "\n<textarea  cols='50' rows='10' name='info_memo_2' >" . mysql_result($ver,0,"info_memo_2") . "</textarea></td>";
+echo "\n<tr><td colspan='3'>"; # Group name 1
+echo "<div id=\"elfinder\"></div>
+</td>";
+echo "</tr>";
+
+echo "\n<tr style=\"display:none;\"><td>",$m_setup['menu memo']," 2:</td><td>"; # Group name 1
+echo "\n<textarea  cols='100' rows='1' name='info_memo_2' >" . mysql_result($ver,0,"info_memo_2") . "</textarea></td>";
 echo "<td></td>";
 echo "</tr>";
 
-echo "\n<tr><td>",$m_setup['menu memo']," 3:</td><td>"; # Group name 1
-echo "\n<textarea  cols='50' rows='10' name='info_memo_3' >" . mysql_result($ver,0,"info_memo_3") . "</textarea></td>";
+echo "\n<tr style=\"display:none;\"><td>",$m_setup['menu memo']," 3:</td><td>"; # Group name 1
+echo "\n<textarea  cols='100' rows='1' name='info_memo_3' >" . mysql_result($ver,0,"info_memo_3") . "</textarea></td>";
 echo "<td></td>";
 echo "</tr>";
 

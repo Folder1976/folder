@@ -29,7 +29,7 @@ function user_item_view($tovar_id){
    }
    
    $min_price = array();
-   $min_price['price'] = 100000;
+   //$min_price['price'] = 100000;
    
    //Возьмем артикл и запросим все товары по этому артиклу
    $tmp = $tovars->fetch_assoc();
@@ -45,6 +45,7 @@ function user_item_view($tovar_id){
    //Получим товары по артиклу
    $sql = 'SELECT T.tovar_id,
                   T.tovar_artkl,
+                  T.tovar_model,
                   T.tovar_name_1 as tovar_name,
                   P.price_tovar_2 as price2,
                   P.price_tovar_curr_2 as curr2,
@@ -76,6 +77,8 @@ function user_item_view($tovar_id){
             $size = $x[1];
         }
       
+         $product['color'] = '';
+         
          //Берем аттрибуты товара и сверяем попадает он под фильтр ($no_filter == false)
          $attributes = $Attribute->getAttributesOnTovarID($tmp['tovar_id']);
 
@@ -88,9 +91,18 @@ function user_item_view($tovar_id){
                   if($value['char'] == 1){
                      $product['attributes'][$index]['name'] = $value['attribute_name'];
                      $product['attributes'][$index]['value'] = $value['attribute_value'];
+                     
+                     if($value['attribute_name'] == 'Цвет'){
+						$product['color'] = $value['attribute_value'];
+					 }
+                     
                   }
             }
          }
+         
+         $product['model'] = $tmp['tovar_model'];
+		 $product['color_variants']	= $Product->getColorVariants($product['model'],$product['color']);
+
          
          //Массив пишем по ключу Артикл
          $product['category_id'] = $tmp['tovar_inet_id_parent'];
@@ -110,7 +122,13 @@ function user_item_view($tovar_id){
          
          if(isset($product['size'][$size]['deliv']) AND $product['size'][$size]['deliv']){
             foreach($product['size'][$size]['deliv'] as $tmp1)
-            if($min_price['price'] > $tmp1['price_1']){
+            
+			if(!isset($min_price['price'])){
+				  $min_price['price']        = $tmp1['price_1'];
+                  $min_price['delive_days']  = $tmp1['delivery_days'];
+                  $min_price['postav_id']    = $tmp1['postav_id'];
+			
+			}elseif($min_price['price'] > $tmp1['price_1']){
                   $min_price['price']        = $tmp1['price_1'];
                   $min_price['delive_days']  = $tmp1['delivery_days'];
                   $min_price['postav_id']    = $tmp1['postav_id'];

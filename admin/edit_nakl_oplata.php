@@ -16,7 +16,10 @@ $tQuery = "SELECT
 	  `setup_menu_".$_SESSION[BASE.'lang']."`
 	  FROM `tbl_setup_menu`
 ";
+global $setup;
+
 //echo $tQuery;
+
 $setup = mysql_query($tQuery);
 $m_setup = array();
 $count=0;
@@ -24,6 +27,7 @@ while ($count<mysql_num_rows($setup)){
  $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
  $count++;
 }
+/*
 $setup = mysql_query("SET NAMES utf8");
 $tQuery = "SELECT 
 	  *
@@ -34,7 +38,7 @@ $count=0;
 while ($count<mysql_num_rows($setup)){
  $m_setup[mysql_result($setup,$count,0)]=mysql_result($setup,$count,1);
  $count++;
-}
+}*/
 //==================================SETUP=MENU==========================================
 $count = 0;
 $this_page_name = "edit_nakl_oplata.php";
@@ -103,7 +107,7 @@ if (!$bank)
  $parent = mysql_query($tQuery); 
   
   //==============================================================
-header ('Content-Type: text/html; charset=utf8');
+//header ('Content-Type: text/html; charset=utf8');
 echo "<title>",$m_setup['menu money'],"</title>";
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
 //==================JAVA===========================================

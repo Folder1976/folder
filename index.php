@@ -1,18 +1,24 @@
 <?php
 //echo phpinfo();
-if(session_id()){
-}else{
-  session_start();
-}
 
 include_once 'config/config.php';
 include_once 'class/class_system.php';
+
 $System = new System($folder);
 
 $System->saveLog();
 
 include_once 'config/core.php';
 include 'init.lib.php';
+
+$ip = $_SERVER['REMOTE_ADDR'];
+$sql = 'SELECT black_ip_id FROM tbl_black_ip_list WHERE black_ip_ip = "'.$ip.'" LIMIT 0,1';
+$r = $folder->query($sql);
+if($r->num_rows > 0){
+		die('disabled, ban on IP');
+}
+
+
 //include 'init.lib.user.php';
 //include 'init.lib.user.tovar.php';
 include 'seo_url.php';
@@ -20,7 +26,7 @@ include 'seo_url.php';
 require_once 'libs/SocialAuther/autoload.php';
 
 connect_to_mysql();
-  
+//echo "<pre>";  print_r(var_dump( $_SESSION )); echo "</pre>";  
 //Список главных категорий
 $categories = $Category->getCategoryMain(); 
 
@@ -103,7 +109,9 @@ if(isset($_GET['search'])){
  	
 	$search = mysqli_escape_string($folder, $_GET['search']);
 	
-	if(strlen($search) > 4){
+	$banners = $Banner->getMediumBanners('find');
+	
+	if(strlen($search) >= 3){
 	  include_once("libs/products_control.php");
 	  $data = user_item_list_view($search,$setup, 'FIND');
 	  include 'skin/search_result.php';
@@ -153,6 +161,11 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_cart'){
 if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_orders'){
   
   if($user = $User->getLoginedUserInfo()){
+	
+	$orders = $Order->getUserOrders($user['klienti_id']);
+	
+	//echo "<pre>";  print_r(var_dump( $orders )); echo "</pre>";
+	
 	include 'skin/account_orders.php';
 	die();
   }else{
@@ -233,8 +246,11 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_wardrobe'){
 
 //Если прилетели на главную страницу = Запустим скин главной
 if(!isset($_GET['_route_'])){
-  include 'skin/index.php';
-  die();
+		
+		$large_banners = $Banner->getMainPageBanners();
+		
+		include 'skin/index.php';
+		die();
 }
 
 
@@ -246,19 +262,23 @@ if(isset($_GET['parent'])){
   }
  
   $parent = mysqli_escape_string($folder, $_GET['parent']);
- 
+
   //Если это главная категория - тогда первый шаблон
   if(strpos($categ_id_list, '*' . $_GET['parent'] . '*') !== false){
 	
-	
 	$categ_selected = $Category->getCategoryInfo((int)$parent);
-	$ids = $Category->getCategoryChildren((int)$parent);
+	$ids = $Category->getCategoryChildrenCateg((int)$parent);
 	$category_children = $Category->getCategoriesInfo($ids);
 	
+	$banners = $Banner->getMediumBanners('catalog1');
+	
 	include 'skin/catalog_1.php';
+	
 	die();
   }else{
 	//Если подкатегория - тогда второй шаблон
+	
+	$banners = $Banner->getMediumBanners('catalog2');
 	
 	include_once("libs/products_control.php");
 	$data = user_item_list_view($parent,$setup);
@@ -270,8 +290,10 @@ if(isset($_GET['parent'])){
 //Если прилетела НОВИНКИ
 if(isset($_GET['_route_']) AND $_GET['_route_'] == 'lates_products'){
  	
+	$banners = $Banner->getMediumBanners('news');
+	
 	include_once("libs/products_control.php");
-	$data = user_item_list_view(0,$setup, 120);
+	$data = user_item_list_view(0,$setup, 300);
 	include 'skin/lates_products.php';
 	die();
 
@@ -298,11 +320,70 @@ if(isset($_GET['tovar_id'])){
 	die();
 }
 
+
+// ========================================= ВСЯКИЕ РАЗНЫЕ СТРАНИЧКИ =================
+//Если Новости
+if(isset($_GET['_route_']) AND ($_GET['_route_'] == 'news' OR $_GET['_route_'] == 'press')){
+	
+	$sql = 'SELECT * FROM tbl_info WHERE info_link="'.$_GET['_route_'].'" ORDER BY info_date DESC, info_id DESC;';
+	$r = $folder->query($sql);
+	//echo $sql;
+	$news = array();
+	while($tmp = $r->fetch_assoc()){
+	
+		$news[$tmp['info_id']]['h1'] 			= $tmp['info_header_1'];
+		$news[$tmp['info_id']]['title'] 		= $tmp['info_header_2'];
+		$news[$tmp['info_id']]['description'] 	= $tmp['info_header_3'];
+		$news[$tmp['info_id']]['text'] 		= str_replace('elFinder-master','/admin/elFinder-master',$tmp['info_memo_1']);
+		$news[$tmp['info_id']]['date'] 		= $tmp['info_date'];
+
+		$breadcrumb = $tmp['info_header_1'];
+		$h1 		= $tmp['info_header_1'];
+		$title 		= $tmp['info_header_2'];
+		$description = $tmp['info_header_3'];
+		
+	}
+	
+	include_once("skin/info_news.php");
+	die();
+}
+
+//Если информация
+if(isset($_GET['_route_']) AND ($_GET['_route_'] == 'dostavka' OR
+								$_GET['_route_'] == 'contact' OR
+								$_GET['_route_'] == 'size'
+							   )	
+									){
+
+	$sql = 'SELECT * FROM tbl_info WHERE info_link="'.$_GET['_route_'].'" ORDER BY info_sort ASC;';
+	$r = $folder->query($sql);
+	//echo $sql;
+	$tmp = $r->fetch_assoc();
+	
+	$h1 		= $tmp['info_header_1'];
+	$title 		= $tmp['info_header_2'];
+	$description = $tmp['info_header_2'];
+	$text 		= str_replace('elFinder-master', '/admin/elFinder-master', $tmp['info_memo_1']);
+
+
+	include_once("skin/info_info.php");
+	die();
+}
+
+//Если регистрация
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'help'){
+
+  include_once("skin/info_help.php");
+  die();
+}
+
+
 //Если мы дошли до этого места - значит мы не нашли нуждной нам страницы
 	include 'skin/404.php';
 	die();
 
 echo "<pre>";  print_r(var_dump( $_GET )); echo "</pre>";
+
 
 
 
@@ -348,7 +429,7 @@ echo '
 <html>
 <head>
 <title>'.$Info->getTitle().'</title>    
-<link rel="shortcut icon" href="'.HOST_URL.'/resources/favicon.png" type="image/png">
+<!--link rel="shortcut icon" href="'.HOST_URL.'/resources/fa11vicon.png" type="image/png" искать в heder_main-->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	<!--script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script-->
  	<script type="text/javascript" src="'.HOST_URL.'/js/jquery-2.1.4.min.js"></script>

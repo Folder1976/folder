@@ -91,6 +91,8 @@ echo "</table>";
 unset($SxGeo);
 
 echo "</body>";
+
+ini_set('display_errors','Off');
 if(isset($_GET['minut'])){ 
     header ("Refresh: ".$reload."; url=log_list.php?minut=".$_GET['minut']);
   }else{

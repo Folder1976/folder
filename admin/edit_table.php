@@ -179,6 +179,8 @@ if (isset($_REQUEST["_add"]))
 	    $tmp =  $tmp-$tmp-$tmp;
 	}
     
+	if(!isset($_REQUEST['_habibulin_parent'])) $_REQUEST['_habibulin_parent'] = 1;
+	
 	$tQuery = "INSERT INTO `tbl_habibulin`
 		    (`habibulin_id`, 
 		      `habibulin_data`, 

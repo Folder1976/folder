@@ -56,6 +56,10 @@ while($func = mysqli_fetch_assoc($functions)){
   //echo $func['function_patch'].'=============================================================';
 }
 
+if(!isset($title)){
+  echo 'Не прописано в базе!';
+}
+
 echo "<title>$title</title>\n
 </header>\n";
 

@@ -9,6 +9,9 @@ global $setup;
 
 $ProductsID = array();
 //echo '<pre>'; print_r(var_dump($setup));
+include '../class/class_category.php';
+$Category = new Category($folder);
+
 
 $count = 0;
 
@@ -81,9 +84,6 @@ $for_link .= "&".$set_rezervi;
 $usd2uah = "";
 if(isset($_REQUEST["usd2uah"])) $usd2uah=$_REQUEST["usd2uah"];
 $for_link .= "&".$usd2uah;
-
-
-
 
 $iPrice = 1;
 
@@ -237,95 +237,98 @@ $warehouse_count=0;
 $tmp = 0;
 if($s_list=="") $tmp =1;
 
-while ($warehouse_count < mysql_num_rows($warehouse))
-{
-if(mysql_result($warehouse,$warehouse_count,"warehouse_summ") == true){
-    if($tmp==1){
-      if($s_list==""){
-	  $s_empty .= " and (`warehouse_unit_".mysql_result($warehouse,$warehouse_count,"warehouse_id")."` ";
-      }else{
-	  $s_empty .= "+`warehouse_unit_".mysql_result($warehouse,$warehouse_count,"warehouse_id")."` ";
-      }
-    }    
- }
-    if($tmp==1){
-      if($s_list==""){
-	  $s_list .= mysql_result($warehouse,$warehouse_count,"warehouse_id");
-      }else{
-	  $s_list .= ",".mysql_result($warehouse,$warehouse_count,"warehouse_id");
-      }
-    }    
-    $Fields .= "`warehouse_unit_" . mysql_result($warehouse,$warehouse_count,"warehouse_id") . "`,";
-
-  $warehouse_count++;
-}
-//echo $s_empty;
 //=========================== find string=========================================================
 $find_flag=0;
 $table="";
-if ($find_str=="" or $find_str==$setup['menu find-str'])
-{
+if ($find_str=="" or $find_str==$setup['menu find-str']){
 //echo "[No find string]";
 //exit();
 }else{
-  $find_str_sql .= " and (upper(tovar_name_1) like '%" . mb_strtoupper($find_str,'UTF-8') . "%' or upper(tovar_artkl) like '%" . mb_strtoupper($find_str,'UTF-8') . "%'";
+  $find_str_sql .= " (upper(tovar_name_1) like '%" . mb_strtoupper($find_str,'UTF-8') . "%' or upper(tovar_artkl) like '%" . mb_strtoupper($find_str,'UTF-8') . "%'";
   $find_str_sql .= " or upper(tovar_name_2) like '%" . mb_strtoupper($find_str,'UTF-8') . "%'";
   $find_str_sql .= " or upper(tovar_name_3) like '%" . mb_strtoupper($find_str,'UTF-8') . "%')";
    $find_flag=1;
  }
-if ($find_str2=="" or $find_str2==$setup['menu find-nakl'])
-{
-//echo "[No find string]";
-//exit();
-}else{
-  $find_str_sql = " and `tovar_id`=`operation_detail_tovar` and `operation_detail_operation`='".$find_str2."' and `operation_detail_dell`='0'";
-  $find_flag=1;
-  $table=",`tbl_operation_detail`";
-  }
 
-if ($find_supplier==""){$find_supplier=0;}
-if ($find_supplier==0)
-{
-
-}else{
-    $find_str_sql .= " and (tovar_supplier='" . $find_supplier . "')";
-}
-
-if ($find_parent==""){$find_parent=1;}
-if ($find_parent==1)
-{
+  if ($find_parent==""){$find_parent=1;}
+  if ($find_parent==1){
 //echo "[No find Parent]";
 //exit();
 }else{
 //echo "[Finding Parent]";
-$find_str_sql .= " and (tovar_parent='" . $find_parent . "')";
+$find_str_sql .= " (tovar_parent='" . $find_parent . "')";
 } 
 //==================================================================================================
-$Fields .= "`tovar_id`,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`,`price_tovar_1`,`price_tovar_curr_1` "; //Tovar
+$Fields .= "T.tovar_id,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`, `social_fb`, `social_vk`, `tovar_last_edit` "; //Tovar
 $ver = mysql_query("SET NAMES utf8");
 
 $sort = "";
 
+/*
 if(isset($_REQUEST['sort'])){
   $sort = "ORDER BY `".$_REQUEST['sort']."` ASC";
 }else{
   $sort = "ORDER BY `tovar_name_1` ASC, `tovar_artkl` ASC";
 }
+*/
+
+if(isset($_GET['datasort'])){
+  $sort = "ORDER BY tovar_last_edit DESC, `tovar_name_1` ASC, `tovar_artkl` ASC";
+}else{
+  $sort = "ORDER BY `tovar_name_1` ASC, `tovar_artkl` ASC";
+}
+
   if(isset($_REQUEST['ware_empty'])){
       $s_empty .= ") <> '0' ";
   }else{
       $s_empty="";
   }  
+ 
+ $inet_categ = '';
+ if(isset($_GET['_category']) AND (int)$_GET['_category'] > 0){
+    
+    $tmp = $Category->getCategoryChildrenFull((int)$_GET['_category']);
+    $categories = array($_GET['_category'] => $_GET['_category']);
+ 
+  if($tmp){ 
+      foreach($tmp as $index => $name){
+        if(is_numeric($index)){
+          $categories[$index] = $index;
+        }
+      }
+  }
+      if(count($categories) > 0){
+        $inet_categ = ' AND tovar_inet_id_parent IN (' . implode(',', $categories) . ') ';
+      }
+  
+  
+ }
+
+ $sort_brand = '';
+ if(isset($_GET['_brand']) AND (int)$_GET['_brand'] > 0){
+  $sort_brand = ' AND brand_id = "'.$_GET['_brand'].'" ';
+ }
+ $sort_user = '';
+ if(isset($_GET['_user']) AND (int)$_GET['_user'] > 0){
+  $sort_user = ' AND tovar_last_edit_user = "'.$_GET['_user'].'" ';
+ }
+ $sort_supp = '';
+ if(isset($_GET['_supplier']) AND (int)$_GET['_supplier'] > 0){
+  $sort_supp = ' AND TSI.postav_id = "'.$_GET['_supplier'].'" ';
+ }
     
 $tQuery = "SELECT " . $Fields . " 
-	  FROM `tbl_tovar`,`tbl_warehouse_unit`".$table.",`tbl_parent`,`tbl_price_tovar` 
+	  FROM `tbl_tovar` T
+        LEFT JOIN `tbl_parent` ON `tovar_parent`=`tovar_parent_id` 
+	    LEFT JOIN `tbl_tovar_suppliers_items` TSI ON TSI.tovar_id=T.tovar_id 
 	  WHERE 
-	    `warehouse_unit_tovar_id`=`tovar_id` and 
-	    `tovar_id`=`price_tovar_id` and
-	    `tovar_parent`=`tovar_parent_id` 
 	    " . $s_empty . "
 	    " . $sort_parent_tovar . "
 	    " . $find_str_sql . "
+        " . $sort_brand . "
+        " . $sort_user . "
+        " . $inet_categ . " 
+	    " . $sort_supp . " 
 	  $sort";
 //echo $tQuery;
 
@@ -339,7 +342,34 @@ if($find_flag==1 and $find_str_sql != "")
 	exit();
       }
   }
+?>
+<script>
+  $(document).on('change', '.is_social', function(){
+      var id = $(this).attr('id');
+      var value = 0;
+      
+      if ($(this).is(":checked")) {
+        value = 1;
+      }
+      
+      //console.log(id);
+      $.ajax({
+        type: "POST",
+        url: "export/set_social.php",
+        dataType: "text",
+        data: "id="+id+"&value="+value,
+        beforeSend: function(){
+        },
+        success: function(msg){
+          console.log(  msg );
+        }
+      });
+    
+  });
+  
+  </script>
 
+<?php
 //header ('Content-Type: text/html; charset=utf8');
 echo "<header><title>Find tovar</title><link rel='stylesheet' type='text/css' href='sturm.css'></header>";
 
@@ -383,6 +413,23 @@ echo "
 
 <body>\n";//<p  style='font-family:vendana;font-size=22px'>";
 //============FIND====================================================================================
+
+?>
+<style>
+  .menu_top{
+    border: 1px solid black;
+    
+  }
+  .menu_top td {
+    border: 1px solid black;
+   /* background-color: red;*/
+    
+  }
+</style>
+
+<?php
+
+
 //<input type='hidden' name='MAX_FILE_SIZE' value='",1048*1048*1048,"'>
 echo "<form method='get' action='main.php'>
       
@@ -396,45 +443,52 @@ echo "<input type='button' name='test' value='",$setup['menu find'],"' onclick='
     id='_find1' name='_find1' value='" , $find_str , "' onChange='submit();' onClick='setclear(1);'/>";
 echo "
       </td><td>";
-echo $setup['menu find order'],":</td><td><input type='text' style='font-size:large;width:70px' id='_find2' name='_find2' value='" , $find_str2 , "' onChange='submit();' onClick='setclear(2);'/>";
-echo "</td><td>";
+        echo $setup['menu find order'],":</td>
+      <td><input type='text' style='font-size:large;width:70px' id='_find2' name='_find2' value='" , $find_str2 , "' onChange='submit();' onClick='setclear(2);'/>";
 
-echo "</td><td rowspan=\"2\" valing=\"top\">
-    <input type=\"checkbox\" name=\"set_rezervi\" id=\"set_rezervi\" ";
-    if(isset($_REQUEST['set_rezervi'])) echo " checked ";
-    
-echo "value=\"set_rezervi\">",$setup['menu set_rezervi'],"<br>
-    
-    <input type=\"checkbox\" name=\"usd2uah\" id=\"usd2uah\" ";
-    if(isset($_REQUEST['usd2uah'])) echo " checked ";
-    echo '><br>';
-    echo "<input type='button' name='export' class='export' value='Экспорт' onclick='submit();' tabindex='5'>";
+//=====================================================================================
+echo "</td>
+    <td>";
+echo "</td>";
+echo "<td rowspan=\"2\" valing=\"top\">";
+echo "<input type='button' name='export' class='export' id='export' value='Экспорт в эксель' onclick='submit();' tabindex='5'>";
+echo "</td>";
 
-    //echo '<pre>'; print_r(var_dump($_GET));
+     $ProductsID = array();
 
-//<input type='submit' name='_print' value='print'><input type='submit' name='_print' value='print' tabindex='100'>
-  echo "</td><td rowspan=\"2\">
+echo "</tr>";
 
-</tr><tr><td valing=\"middle\">";//========================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+//====================================================================================================================================
+
+echo "<tr><td valing=\"middle\">
+      Категори:<br>
+      Бренд:<br>
+      Редактор:
+
+      ";
 //==========================SHOP==========================================================
-echo "<a href='edit_shop.php?shop_id=$shop_selected' target='_blank'>",$setup['menu shop'],"[+]:</a>
-<br><br>
+echo "<!--a href='edit_shop.php?shop_id=$shop_selected' target='_blank'>",$setup['menu shop'],"[+]:</a>
       <a href='edit_nakl-group.php?tovar_parent_id=$find_parent' target='_blank'>",$setup['menu parent'],"[+]</a>
-     
+     <br>Категория на сайте:-->
       
-      </td><td><select name='_shop' style='width:350px' onChange='submit();'>";
-    $count=0;
-    while ($count < mysql_num_rows($shop))
-    {
-    echo "\n<option ";
-	if ($shop_selected == mysql_result($shop,$count,"shop_id")) echo "selected ";
-    echo "value=" . mysql_result($shop,$count,"shop_id") . ">" . mysql_result($shop,$count,"shop_name") . "</option>";
-    $count++;
-    }
-
-echo "</select><br>";
+      </td><td>
+      
+      <!--select name='_shop' style='width:350px' onChange='submit();'>";
+          $count=0;
+          while ($count < mysql_num_rows($shop))
+          {
+          echo "\n<option ";
+          if ($shop_selected == mysql_result($shop,$count,"shop_id")) echo "selected ";
+          echo "value=" . mysql_result($shop,$count,"shop_id") . ">" . mysql_result($shop,$count,"shop_name") . "</option>";
+          $count++;
+          }
+      
+      echo "</select><br-->";
 //==========================PARENT============================================================
-echo "<select name='_parent' id='_parent' style='width:350px' onChange='submit();'>";
+echo "<!--select name='_parent' id='_parent' style='width:350px' onChange='submit();'>";
     $count=0;
     while ($count < mysql_num_rows($parent))
     {
@@ -443,11 +497,65 @@ echo "<select name='_parent' id='_parent' style='width:350px' onChange='submit()
     echo "value=" . mysql_result($parent,$count,"tovar_parent_id") . ">" . mysql_result($parent,$count,"tovar_parent_name") . "</option>";
     $count++;
     }
+echo "</select-->";
 
-echo "</select>";
+      //Категории на сайте
+      $categs = $Category->getAllCategoryIdAndUrl();
+      echo "<select class=\"_category\" name=\"_category\" style='width:350px' onChange='submit();'>
+					<option value=\"0\">Выбрать категорию = все</option>";
+			foreach($categs as $value){ 
+				if($value['parent_inet_id'] > 0){
+                    if(isset($_GET['_category']) AND $_GET['_category'] == $value['parent_inet_id']){
+                        echo "<option selected value='" . $value['parent_inet_id'] . "'>". $value['name']. ' -> '.$value['seo_alias'] . "</option>";
+                    }else{
+                        echo "<option value='" . $value['parent_inet_id'] . "'>". $value['name']. ' -> '.$value['seo_alias'] . "</option>";
+                    }
+				} 
+			 } 
+	  echo '</select><br>';
+
+      //Бренд
+      include 'class/class_brand.php';
+      $Brand = new Brand($folder);
+      $brands = $Brand->getBrands();
+	  echo "<select class=\"_brand\" name=\"_brand\" style='width:350px' onChange='submit();'>
+					<option value=\"0\">Выбрать Бренд = все</option>";
+			foreach($brands as $value){ 
+				if($value['brand_id'] > 0){
+                    if(isset($_GET['_brand']) AND $_GET['_brand'] == $value['brand_id']){
+                        echo "<option selected value='" . $value['brand_id'] . "'>". $value['brand_name'] . "</option>";
+                    }else{
+                        echo "<option value='" . $value['brand_id'] . "'>". $value['brand_name'] . "</option>";
+                    }
+				} 
+			 } 
+	  echo '</select><br>';
+      
+      //Пользователь
+      include 'class/class_user.php';
+      $User = new User($folder);
+      $users = $User->getUsers();
+   
+	  echo "<select class=\"_user\" name=\"_user\" style='width:350px' onChange='submit();'>
+					<option value=\"0\">Выбрать редактора = все</option>";
+			foreach($users as $value){ 
+				if($value['id'] > 0){
+                    if(isset($_GET['_user']) AND $_GET['_user'] == $value['id']){
+                        echo "<option selected value='" . $value['id'] . "'>". $value['name'] . "</option>";
+                    }else{
+                        echo "<option value='" . $value['id'] . "'>". $value['name'] . "</option>";
+                    }
+				} 
+			 } 
+	  echo '</select>';
+		
 //=============================SUPPLIER==========================================================
 echo "</td><td>";//========================
-echo "<a href='edit_klient.php?klienti_id=$find_supplier' target='_blank'>",$setup['menu suppliter'],"[+]:</a></td><td><select name='_supplier' style='width:150px' onChange='submit();'>";
+echo "
+    Сортировать по дате создания <input type='checkbox' name='datasort'  onChange='submit();' ";
+      if(isset($_GET['datasort'])) echo ' checked ';
+    echo "><br>  
+    <a href='edit_klient.php?klienti_id=$find_supplier' target='_blank'>",$setup['menu suppliter'],"[+]:</a></td><td><select name='_supplier' style='width:150px' onChange='submit();'>";
       echo "\n<option ";
 	if ($find_supplier == 0) echo "selected ";
 	  echo "value=0>ALL</option>";
@@ -466,23 +574,6 @@ echo "</td><td>";//========================
 //=====================================================================================================================
 echo "</td></tr></table>";//========================
 $tmp = 0;
-while($tmp <mysql_num_rows($warehouse_list)){
-
-
-    echo "<input type=\"checkbox\" 
-	      name=\"ware*".mysql_result($warehouse_list,$tmp,"warehouse_id")."\" 
-	      id=\"ware*".mysql_result($warehouse_list,$tmp,"warehouse_id")."\" ";
-	if(isset($_REQUEST['ware*'.mysql_result($warehouse_list,$tmp,"warehouse_id")])) echo " checked ";
-    echo " value=\"".mysql_result($warehouse_list,$tmp,"warehouse_id")."\"
-	      >";
-    echo " ",mysql_result($warehouse_list,$tmp,"warehouse_shot_name")," ";
-
-$tmp++;
-}
-echo "&nbsp&nbsp<input type=\"checkbox\" name=\"ware_empty\" id=\"ware_empty\" ";
-    if(isset($_REQUEST['ware_empty'])) echo " checked ";
-echo "value=\"ware_empty\">",$setup['menu ware empty'];
-
 
 echo "\n</form>";
 //=====================================================================================================
@@ -505,19 +596,15 @@ echo "<tr class=\"nak_header_find\">
       <th width=20px  height=\"50px\"><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_id\">id >></a></th>
       <th width=100px><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_artkl\">".$setup['menu artkl']."</a>
 		      </th>
+              <th>Социал</th>
       <th><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_name_1\">".$setup['menu name1']."</a><br>
-		      </th>";
-       $tmp = 0;
-      while($tmp < mysql_num_rows($warehouse)){
-	  echo "<th class=\"ware_".mysql_result($warehouse,$tmp,"warehouse_id")."\" width='10px'>";
-	      echo "<div class='rotatedBlok' width='15px'>",
-	      mysql_result($warehouse,$tmp,"warehouse_shot_name"),
-	      "</div>";
-	  
-	  echo "</th>";
-      $tmp++;
-      }
-echo "<th width=10px></th>";
+		      </th>
+                         <th>Дата</th>
+  
+              
+              ";
+
+echo "<!--th width=10px></th-->";
 echo "</tr>";
 //echo mysql_num_rows($ver);
 $count=0;
@@ -535,11 +622,12 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
 	  reset_warehouse_on_tovar_id($id_tmp);
       }
       
-  $ProductsID[] = mysql_result($ver,$count,'tovar_id');
+      $product_id = mysql_result($ver,$count,'tovar_id');
+  $ProductsID[] = $product_id;
   echo "<tr class=\"nak_field_$i\">";
-  echo "<td width=50px><a class=\"small\" href='edit_tovar_history.php?tovar_id=",mysql_result($ver,$count,'tovar_id')," ' target='_blank'>",
+  echo "<td width=70px><a class=\"small\" href='edit_tovar_history.php?tovar_id=",$product_id," ' target='_blank'>",
     ($count+1) ;
-    if(mysql_result($ver,$count,"tovar_inet_id")>0) echo "&nbsp;web<br>";
+    if(mysql_result($ver,$count,"tovar_inet_id")>0) echo "&nbsp;web&nbsp;&nbsp;";
   echo $setup['menu history'],"&nbsp;</a>";
   
   
@@ -547,47 +635,23 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
   echo "<input type='hidden' name='",$long_name,"operation*",$id_tmp,"' value='" , $iKlient_id, "'/>
   </td>";
  
-  echo "<td><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>&nbsp;", mysql_result($ver,$count,'tovar_artkl'), "</a>&nbsp;</b></td>";
-  echo "<td width=1000px><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>", mysql_result($ver,$count,'tovar_name_1'), "</a></b></td>";
-
+  echo "<td width=150px><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>&nbsp;", mysql_result($ver,$count,'tovar_artkl'), "</a>&nbsp;</b></td>";
+  echo '<td width=90px>';
+      //facebook
+      echo "FB<input type='checkbox' id='social_fb*".$product_id."' class='is_social'";
+        if(mysql_result($ver,$count,'social_fb') == 1) echo ' checked ';
+      echo '>&nbsp;';
+      //vk
+      echo "VK<input type='checkbox' id='social_vk*".$product_id."' class='is_social'";
+        if(mysql_result($ver,$count,'social_vk') == 1) echo ' checked ';
+      echo '>';
+  echo "</td>";
   
-  $warehouse_count=0;
-  $warehouse_count_row = 0;
-  while ($warehouse_count < mysql_num_rows($warehouse))
-  {
-	$warehouse_unit= mysql_result($warehouse,$warehouse_count,"warehouse_id");
-      
-	  echo "<td id=\"" , mysql_result($ver,$count,"tovar_id") , "_" , mysql_result($warehouse,$warehouse_count,"warehouse_id")  , "\"
-	  class=\"ware_".mysql_result($warehouse,$warehouse_count,"warehouse_id")."\"
-	  style=\"border-left:1px solid;border-top:1px solid;\"
-	  align=\"center\">";
-	  if (mysql_result($ver,$count,"warehouse_unit_" . $warehouse_unit)>0) echo "<font color='black'><b>";
-	  elseif (mysql_result($ver,$count,"warehouse_unit_" . $warehouse_unit)<0) echo "<font color='red'><b>";
+  echo "<td><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>", mysql_result($ver,$count,'tovar_name_1'), "</a></b></td>";
+  echo '<td width=170px>';
+         echo mysql_result($ver,$count,'tovar_last_edit');
+  echo "</td>";
 
-	  if(isset($_REQUEST['set_rezervi'])){
-	      $tQuery = "SELECT SUM(operation_detail_item) as REZERV
-			 FROM `tbl_operation_detail`
-			 WHERE
-			 `operation_detail_tovar`='$id_tmp' and
-			 `operation_detail_dell`='0' and
-			 `operation_detail_to`='7' and
-			 `operation_detail_from`='$warehouse_unit'";
-			 //echo $tQuery,"<br>";
-	      $reserv = mysql_query("SET NAMES utf8");
-	      $reserv = mysql_query($tQuery);
-		      echo mysql_result($ver,$count,"warehouse_unit_" . $warehouse_unit) + mysql_result($reserv,0,0);
-	  }else{
-	      echo mysql_result($ver,$count,"warehouse_unit_" . $warehouse_unit);
-	  }
-
-	  
-	  
-	  echo "</td>";
-      $warehouse_count++;
-      $warehouse_count_row++;
-    
-  }
-  
 
     echo "\n</tr>";
 $count++;
@@ -598,7 +662,6 @@ echo "\n<td><input type='hidden' name='end*-1' value='end'/>";
 
 echo "\n</form>";
 }
-
 
 echo "<div id='nakl_info' class='nakl_info'>
 <table class='menu_top'> <tr><td align='right' colspan='2'>
@@ -665,14 +728,14 @@ echo "\n</body>";
 //print_r("test");
 //echo '<pre>'; print_r(var_dump($_SERVER));
 //print_r(phpinfo());
+ $_SESSION['export_products'] = implode(',',$ProductsID);
 ?>
 
 <script>
-    
-    $(document).on('click', '.export', function(){
-        location.href = 'export/get_excel.php?producs=<?php echo implode(';',$ProductsID);?>';        
+    $(document).on('click', '#export', function(){  
+      location.href = 'export/get_excel.php?producs=yes';
     });
-    
+
 </script>
 
 

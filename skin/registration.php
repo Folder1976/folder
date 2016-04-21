@@ -1,13 +1,36 @@
 <!doctype html>
+        <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1767283856824450',
+      xfbml      : true,
+      version    : 'v2.6'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <html class="no-js" lang="">
 <head>
         <?php $title = 'Регистрация нового пользователя'; ?>
         <?php $description = 'В этом разделе вы можете создать свой аккаунт'; ?>
     
         <?php include_once SKIN_PATH.'header_main.php'; ?>    
-        <?php include_once SKIN_PATH.'header_includes.php'; ?>
+        <?php include_once SKIN_PATH.'header_includes.php';?>
 </head>
 <body>
+<!--div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div-->
 <!--[if lt IE 9]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -112,7 +135,7 @@
 
 
     <?php include SKIN_PATH . 'footer.php'; ?> 
-    <span class="btn-to-top"><img src="img/totop.png" alt=""></span>
+
 </div>
     <?php include SKIN_PATH . 'footer_includes.php';?>
 </body>
@@ -125,9 +148,9 @@
 </style>
 <script>
         $(document).ready(function(){
-                console.log('1111');
-        $('#vk_login').html('<a href="" class="enter__soc enter__soc_vk"><span class="fa fa-vk"></span><span class="enter__soc-name">ВКонтакте</span></a>');
-                console.log('1111');
+               // console.log('1111');
+       // $('#vk_login').html('<a href="" class="enter__soc enter__soc_vk"><span class="fa fa-vk"></span><span class="enter__soc-name">ВКонтакте</span></a>');
+                //console.log('1111');
                 });
         
         
@@ -149,15 +172,14 @@
                     dataType: "json",
                     data: "name="+login+"&email="+email+"&pass="+pass+"&phone="+phone,
                     success: function(msg){
-                        
-                        if (msg['err'] == 'false') {
-                                alert(msg['msg']);
-                                window.location.href = '<?php echo HOST_URL; ?>';
+                        console.log(msg);
+                        if (msg['err'] == false) {
+                                window.location.href = '<?php echo HOST_URL; ?>/registration';
                         }else{
                                 alert(msg['msg']);
                         }
                         
-                        console.log(  msg['msg'] );
+                        //console.log(  msg['msg'] );
                     }
                 });
                         

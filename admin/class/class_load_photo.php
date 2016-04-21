@@ -73,7 +73,7 @@ class LoadPhoto {
 		$sql = "INSERT INTO tbl_tovar_pic SET pic_name = '".$firstname."', tovar_artkl = '".$name."' ON DUPLICATE KEY UPDATE pic_name = '".$firstname."'";;
 		$this->base->query($sql);
 	       
-		include_once 'init.class.upload_0.31.php';
+		include_once '../init.class.upload_0.31.php';
 		$ext = 'jpg';
 	     
 		//Обрещаем фотку и копируем ее в папку товара БОЛЬШОЙ РАЗМЕР

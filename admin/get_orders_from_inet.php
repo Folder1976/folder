@@ -11,12 +11,16 @@ header ("Refresh: ".$time."; url=get_orders_from_inet.php");
 session_start();
   if (isset($_REQUEST['lang'])){
     $_SESSION[BASE.'lang'] = $_REQUEST['lang'];
-  }else if (!$_SESSION[BASE.'lang']){
+  }else if (!isset($_SESSION[BASE.'lang'])){
     $_SESSION[BASE.'lang']=1;
   }
 $a = 2;
 $b = 4;
 $c = 15;
+  
+  if(!isset($_SESSION[BASE.'userid'])){
+	die('Нет пользователя');
+  }
   
 //
 $date_tmp = date("Y-m-d G:i:s",time()-$time);//-strtotime(60); 
@@ -57,11 +61,11 @@ $date_tmp = date("Y-m-d G:i:s",time()-$time);//-strtotime(60);
   $count++;
   }
 
-echo "<link rel='stylesheet' type='text/css' href='sturm.css'>";
+echo "<div class=\"oper_info\"><link rel='stylesheet' type='text/css' href='sturm.css'>";
  //echo "<a href='get_orders_from_inet.php'>Reload</a>";
     echo "<a href='log_list.php' target='_blank'>";
     echo "<b>pages view : ",mysql_result($log,0,"count")," / ".($time)."s.</a>";
- user_menu_lang(); 
+ //user_menu_lang(); 
  if ($count>0){
 
     echo "<br><a href='operation_list.php?iStatus=$a' target='_blank'>";
@@ -79,5 +83,10 @@ echo "<link rel='stylesheet' type='text/css' href='sturm.css'>";
     echo "<br><b><a href='edit_comment.php' target='_blank'
     >New comments (",$count_comm,")</a>";
    } 
-
+echo '</div>';
 ?>
+<style>
+  .oper_info{
+	font-size: 10px;
+  }
+</style>

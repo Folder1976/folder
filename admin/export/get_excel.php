@@ -4,21 +4,11 @@ include '../config/config.php';
 
 global $setup, $folder;
 
-//echo '<pre>'; print_r(var_dump($_GET));
+session_start();
 
-//Проверяем что прилетело
-$ProductsID = array();
-if(!isset($_GET['producs'])){
-    header ('Content-Type: text/html; charset=utf8');
-    echo '<h1>Нет товаров для экспорта</h1>';
-    die();
-}
-
-$ProductsID = explode(';', $_GET['producs']);
-
-if(count($ProductsID) == 0){
-    header ('Content-Type: text/html; charset=utf8');
-    echo '<h1>Чтото пришло но массива не получилось</h1>';
+if(!isset($_SESSION['export_products'])){
+	header ('Content-Type: text/html; charset=utf8');
+    echo '<h1>Не нашел списка продуктов</h1>';
     die();
 }
 
@@ -49,7 +39,7 @@ $sql = 'SELECT 	T.tovar_id,
                 LEFT JOIN tbl_brand B ON B.brand_id = T.brand_id
                 LEFT JOIN tbl_price_tovar P ON P.price_tovar_id = T.tovar_id
                 LEFT JOIN tbl_description D ON D.description_tovar_id = T.tovar_id
-                 WHERE T.tovar_id IN ('.implode(',', $ProductsID).')
+                 WHERE T.tovar_id IN ('.$_SESSION['export_products'].')
                  ORDER BY T.tovar_code ASC;';
 
 $Products = $folder->query($sql);
@@ -60,7 +50,7 @@ $sql = 'SELECT  tovar_id,
                 attribute_name
                 FROM tbl_attribute_to_tovar A2T
                 LEFT JOIN tbl_attribute A ON A.attribute_id = A2T.attribute_id
-                WHERE tovar_id IN ('.implode(',', $ProductsID).')
+                WHERE tovar_id IN ('.$_SESSION['export_products'].')
                 ORDER BY attribute_value ASC;';
 
 $AttributesSQL = $folder->query($sql);
@@ -107,7 +97,7 @@ $objPHPExcel->getActiveSheet()
 	->setCellValue('N1', "memo");
 
 //Шапка аттрибутов
-$col = 13;
+$col = 14;
 $AttributeOnCol = array(); //Тут индекс номер колонки а в значении ид_атрибута
 foreach($AttributesName as $index => $tmp){
     $objPHPExcel->getActiveSheet()
@@ -145,7 +135,7 @@ while($Product = $Products->fetch_assoc()){
 //echo '<pre>'; print_r(var_dump($AttributesName)); 
 //echo '<pre>'; print_r(var_dump($AttributeOnCol)); 
  
-    $col = 13;
+    $col = 14;
    foreach($AttributesName as $index => $tmp){
         
         $value = '';

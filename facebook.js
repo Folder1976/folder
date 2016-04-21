@@ -18,6 +18,7 @@
         //474370436076360  - http://armmatest.ru/
         
         //a51789032bd76697061c7ab66496d5dd
+        /*
         (function(d, s, id){
            var js, fjs = d.getElementsByTagName(s)[0];
            if (d.getElementById(id)) {return;}
@@ -42,7 +43,7 @@
       
         window.fbAsyncInit = function() {
           FB.init({
-            appId      : '474370436076360',
+            appId      : '474854576027946',
             xfbml      : true,
             version    : 'v2.5'
           });
@@ -56,8 +57,8 @@
         }
         
         function statusChangeCallback(response) {
-                console.log('statusChangeCallback');
-                console.log(response);
+                //console.log('statusChangeCallback');
+                //console.log(response);
                 // The response object is returned with a status field that lets the
                 // app know the current login status of the person.
                 // Full docs on the response object can be found in the documentation
@@ -80,37 +81,46 @@
          // Here we run a very simple test of the Graph API after login is
                 // successful.  See statusChangeCallback() for when this call is made.
         function testAPI() {
-                  console.log('Welcome!  Fetching your information.... ');
-                  FB.api('/me', function(response) {
-                        
+                  FB.api('/me?fields=name,email', function(response) {
+                        console.log(response);
+                        console.log(response.email);
                         $.ajax({
                                 type: "POST",
                                 url: "ajax/user_facebook.php",
                                 dataType: "json",
                                 data: "name="+response.name+"&id="+response.id,
                                 success: function(msg){
-                                        console.log(msg);
+                                        //console.log(msg);
                                         if (msg['err'] == 'false') {
                                                 alert(msg['msg']);
-                                                console.log(''+msg['url']);
-                                                window.location.href = ''+msg['url'];
+                                                //window.location.href = ''+msg['url'];
                                         }else{
                                                 alert(msg['msg']);
-                                                console.log(''+msg['url']);
-                                                window.location.href = ''+msg['url'];
+                                                //window.location.href = ''+msg['url'];
                                         }
                                         
-                                        console.log(  msg['msg'] );
+                                        //console.log(  msg['msg'] );
                                 }
                         });
                         
-                        console.log(response);
                         console.log('Successful login for: ' + response.name);
-                    /*document.getElementById('status').innerHTML =
-                      'Thanks for logging in, ' + response.name + '!';*/
                   });
         }
         
+         FB.login(function (response) {
+                if (response.session) {
+                    var url = '/me?fields=name,email';
+                    FB.api(url, function (response) {
+                        alert(response.name);
+                        alert(response.email);
+                    });
+                }
+                else {
+                    alert("User did not login successfully");
+                }
+            }, { scope: 'email' }); /* perms changed to scope */
+        */
+        /*
         FB.login(function(response) {
                 if (response.status === 'connected') {
                   // Logged into your app and Facebook.
@@ -125,4 +135,5 @@
         FB.login(function(response) {
                 // handle the response
         }, {scope: 'public_profile,email'});
+        */
         //==============END FACEBOOK =============================

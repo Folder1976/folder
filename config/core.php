@@ -10,7 +10,9 @@ include_once("admin/class/class_brand.php");
 include_once 'class/class_info.php';
 include_once 'class/class_order.php';  
 include_once 'class/class_user.php';
+include_once 'class/class_banner.php';
 
+$Banner = new Banner($folder);
 $User = new User($folder);
 $Order = new Order($folder);
 $Info = new Info($folder);

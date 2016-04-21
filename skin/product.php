@@ -43,6 +43,8 @@
                 unset($product['breadcrumb']);
                 //echo "<pre>";  print_r(var_dump( $product['size'] )); echo "</pre>";
         
+                $find = array(',', '/', ' ', '(', ')', '*');
+                $rep = array('-','','','','','');
         ?>
 </head>
 <body>
@@ -92,31 +94,36 @@
                 <h2 class="section__sub-title"><?php echo $product['name']; ?></h2>
             </div>
             <div class="medium-5 columns text-right small-only-text-left">
-                <img src="<?php echo HOST_URL;?>/resources/brends/<?php echo $product['brand_code']; ?>.jpg" alt="Картинка <?php echo $product['brand_name']; ?>">
+                <a href="/brend/<?php echo $product['brand_code']; ?>">
+                    <img src="<?php echo HOST_URL;?>/resources/brends/<?php echo $product['brand_code']; ?>.png" alt="Картинка <?php echo $product['brand_name']; ?>">
+                </a>
             </div>
         </header>
 
-        <div class="row gallery">
-            <div class="small-19 columns gallery__col">
-                <div class="gallery__stage gallery__stage_fix" id="gallery-stage">
-                        <?php $count=0; ?>
-                        <?php foreach($photos as $photo){ ?>
-                                <a href="<?php echo $photo;?>" class="gallery__stage-link gallery__stage-link_sale">
-                                    <img src="<?php echo str_replace('large','medium',$photo);?>" alt="Картинка <?php echo $product['name']; if($count > 0 ){ echo $count;}else{echo '';}?>">
-                                </a>
-                        <?php $count++; ?>
-                        <?php } ?>
-                </div>
-            </div>
-
-            <div class="small-5 columns gallery__col" id="gallery-thumbs">
+<!-- Галерея -->
+        <div class="gallery">
+            <div class="gallery__stage gallery__stage_fix" id="gallery-stage">
                 <?php $count=0; ?>
                 <?php foreach($photos as $photo){ ?>
-                        <a data-slide-index="<?php echo $count;?>" href="" class="gallery__thumb" style="background-image: url(<?php echo str_replace('large','small',$photo);?>);"></a>
-                 <?php $count++; ?>
+                        <a href="<?php echo $photo;?>" class="gallery__stage-link gallery__stage-link_sale">
+                            <img src="<?php echo str_replace('large','medium',$photo);?>" alt="Картинка <?php echo $product['name']; if($count > 0 ){ echo $count;}else{echo '';}?>">
+                        </a>
+                <?php $count++; ?>
                 <?php } ?>
             </div>
+
+            <div class="gallery__thumbs">
+                <ul class="gallery__thumbs-list" id="gallery-thumbs">
+                        <?php $count=0; ?>
+                        <?php foreach($photos as $photo){ ?>
+                                <li><a data-slide-index="<?php echo $count;?>" href="" class="gallery__thumb"
+                                    style="background-image: url(<?php echo str_replace('large','small',$photo);?>);"></a></li>
+                         <?php $count++; ?>
+                        <?php } ?>
+                </ul>
+            </div>
         </div>
+<!-- конец галереи -->
 
         <div class="likes">
             <div class="likes__inner">
@@ -126,8 +133,15 @@
                 <span class='like st_googleplus_hcount' displayText='Google +'></span>
             </div>
         </div>
-    </div>
-
+    
+        <!--div class="product__hint">
+            <h3 class="product__sub-title">Доставка товаров</h3>
+            <p>Заказывая доставку товара сторонними курьерскими службами (Новая Почта, Мист Экспресс ) - при получении
+                обязательно проверяйте наличие всего товара в заказе, а так же его внешний вид.</p>
+        </div-->
+    
+    </div>    
+    
     <div class="medium-12 columns section__col-content">
         <header class="row section__header hide-for-small-only">
             <div class="medium-19 columns">
@@ -135,9 +149,27 @@
             </div>
                 
             <div class="medium-5 columns text-right small-only-text-left">
-                <img src="<?php echo HOST_URL;?>/resources/brends/<?php echo $product['brand_code']; ?>.jpg" alt="Купить <?php echo $product['brand_name']; ?>">
+                <a href="/brend/<?php echo $product['brand_code']; ?>">
+                    <img src="<?php echo HOST_URL;?>/resources/brends/<?php echo $product['brand_code']; ?>.png" alt="Купить <?php echo $product['brand_name']; ?>">
+                </a>
             </div>
         </header>
+
+        <div class="product__row">
+                <?php if(isset($product['color_variants']) AND $product['color'] AND count($product['color_variants'])>1){ ?>
+                <?php $colors = $product['color_variants']; $limit = 150;?>
+                Доступны варианты цветов:
+                <div class="product__colors">
+                    <span class="product__color product__color_active" title="<?php echo $colors[$product['color']]['color_name'];?>" style="background-image: url(/resources/colors/<?php echo $colors[$product['color']]['color_id'];?>.png);"></span>
+                    <?php foreach($colors as $color => $color_val){ ?>
+                        <?php if($color != $product['color']){ ?>
+                            <?php if($limit-- < 1) continue; ?>
+                            <a href="/<?php echo $color_val['seo_alias'];?>.html"><span class="product__color" title="<?php echo $color;?>" style="background-image: url(/resources/colors/<?php echo $color_val['color_id'];?>.png);"></span></a>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+                <?php } ?>
+        </div>
 
         <!--form class="product__summary form"-->
                 <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
@@ -178,11 +210,11 @@
                 <?php } ?>
                 <!--span class="product__availability product__availability_true">в наличии</span-->
             </div>
-            
 
             <div class="product__row product__article">
                 Код товара: <?php echo $product['artkl'];?>
             </div>
+
 
         <?php if(isset($product['attributes'])){ ?>
             <?php foreach($product['attributes'] as $attributes){ ?>
@@ -231,27 +263,24 @@
           
                 
             <?php if(!isset($min_price['delive_days'])) $min_price['delive_days'] = 'НЕТ'; ?>
+            <?php if(!isset($min_price['price'])) $min_price['price'] = '0'; ?>
             <div class="row product__row product__row_footer">
-                <div class="small-11 columns">
+                <div class="product__old-price"><?php echo $old_price; ?></div>
+                <div class="product__price">Цена от <span id="min_price_price"><?php echo number_format($min_price['price'], 0, '.', ' '); ?></span> ₽ <span class="product__price-hint">(Доставка <span id="min_delive_days"><?php echo $min_price['delive_days']; ?></span> дней)</span></div>
+                <!--div class="small-11 columns">
                     <div class="product__old-price"><?php echo $old_price; ?></div>
                     <div class="product__price"><span id="min_price_price"><?php echo $min_price['price']; ?></span> ₽ </div>
                     <div class="columns">(Доставка <span id="min_delive_days"><?php echo $min_price['delive_days']; ?></span> дн.)
                     </div>
-                </div>
+                </div-->
 
-                <div class="small-4 columns">
-                        <?php if($min_price['delive_days'] == 'НЕТ'){ ?>
-                                <input type="text" class="form__input text-center" id="items" required value="0" disabled>
-                        <?php }else{ ?>
-                                <input type="text" class="form__input text-center" id="items" required value="1">
-                        <?php } ?>
-                </div>
 
-                <div class="small-9 columns">
+
+                <!--div class="small-9 columns">
                         <input type="hidden" id="product_id" value="<?php echo $product['id'];?>">
                         <input type="hidden" id="postav_id" value="<?php echo $min_price['postav_id'];?>">
                     <button class="form__submit form__submit_text-large to_cart">В корзину</button>
-                </div>
+                </div-->
             </div>
             
             <script>
@@ -260,7 +289,7 @@
                        $('.icheck_deliv').on('change', function(){     
                        var params = '';
                            $("input:radio:checked").each(function(){
-                                
+                                console.log('check'+$('#'+this.id).data('product'));
                                 params = params + this.id+'['+$(this).val()+']&';
                            
                                 $('#min_delive_days').html($('#'+this.id).data('deliv'));
@@ -275,12 +304,13 @@
                 });
                 
                 $(document).on('click', '.to_cart', function(){
+                        //console.log('111');
                         var price = $('#min_price_price').html();          
                         var delive_days = $('#min_delive_days').html();          
                         var items = $('#items').val();          
                         var prod_id = $('#product_id').val();          
                         var postav_id = $('#postav_id').val();          
-                        
+                        console.log('В корзину');
                         if(items != '' && items > 0){                                        
                                 $.ajax({
                                         type: "POST",
@@ -290,67 +320,203 @@
                                         success: function(msg){
                                                 
                                                 if (msg.err == 'true') {
-                                                    alert(msg.msg);
+                                                    funct_alert(msg.msg,"#420900");
                                                 }else{
+                                                    funct_alert(msg.msg, "#002D02");
                                                     $('.num-cart__total').html(msg.summ);
+                                                    $('.num-cart__items').html('('+msg.items+')');
                                                 }
-                                                //console.log( msg );
+                                               console.log( msg );
                                         }
                                 });
                         }
                 });
+                
+                
+                function funct_alert(msg, bg_color) {
+                    $('.top_msg').css('background-color', bg_color);
+                    $('.top_msg').html(msg);
+                    $('.top_msg').show(500);
+                    setTimeout(function(){$('.top_msg').hide(1000);}, 2000);
+                }
+                
             </script>
-            
-            
-            <div class="row product__row">
-                        <h4 class="filters__sub-title">Выбрать цену и срок доставки:</h4>
-                        <?php foreach($size as $size_name => $size_){ ?>
+
+<div class="top_msg">Товар добавлен в корзину...</div>
+
+<style>
+    .top_msg{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        height: 50px;
+        width: 100%;
+        text-align: center;
+        border: 0;
+        font-size: 20px;
+        color: white;
+        border-bottom: 1px solid white;
+        font-family: Roboto, Helvetica, Arial, sans-serif;
+        background-color: #002D02;
+        z-index:999;
+    }
+</style>
+<?php
+
+
+//echo "<pre>";  print_r(var_dump( $size )); echo "</pre>";
+
+?>
+            <div class="product__large-row product__sizes">
+                <?php $sizes = 0 ;?>
+                <?php foreach($size as $size_name => $size_){ ?>
+                        <?php if($size_name != 'none'){ ?>
+                            <?php if($size_['deliv']){ ?>
+                                <span class="product__size <?php if((isset($_SESSION['customer_size']) AND $_SESSION['customer_size'] ==  $size_name) OR $sizes++ == 0) echo 'product__size_active'; ?>"
+                                id="pp_table_hide<?php echo str_replace($find,$rep,$size_name); ?>"><?php echo $size_name; ?></span>
+                            <?php }else{ ?>
+                                <span class="product__size <?php if((isset($_SESSION['customer_size']) AND $_SESSION['customer_size'] ==  $size_name) OR $sizes++ == 0) echo 'product__size_active'; ?>"
+                                id="pp_table_hide<?php echo str_replace($find,$rep,$size_name); ?>" style="opacity: 0.2;"><?php echo $size_name; ?></span>
+                            <?php } ?>
+                        <?php } ?>   
+                <?php } ?>
+            </div>
+                <script>
+                        $(document).on('click', '.product__size', function(){
+                                var target = $(this).attr('id');
+                                //console.log(target);
+                                $('.pp-table').hide(200);
+                                $('.checked').removeClass('checked');
+                                $('.product__size_active').removeClass('product__size_active');
                                 
-                                <div class="filters form">
-                                  <?php if($size_name != 'none'){ ?>
-                                        <h3 class="filters__sub-title">Размер <?php echo $size_name; ?></h3>
-                                  <?php } ?>      
-                                <table style="width: 100%;">
+                                $(this).addClass('product__size_active');
+                                $('.' + target).show('slow');
+                                $('.icheck_deliv').checked = false; 
+                                $('.' + target+'_check').prop('checked', 'checked');
+                                $('.' + target+'_check').parent('div').addClass('checked');
+                                $('.icheck_deliv').trigger('change');
+                                
+                                //console.log(target);
+                                if($('.' + target).html().indexOf('radio') > -1){
+                                    $('.form__input_product').val('1');
+                                    $('.form__input_product').prop('disabled', 'false');
+                                }else{
+                                    $('.form__input_product').val('0');
+                                    $('.form__input_product').prop('disabled', 'true');
+                                }
+                        });
+                        
+                        $(document).ready(function(){
+                                $('.first_size').show('slow');
+                                var id = $('.product__size_active').attr('id');
+                                $('.' + id+'_check').prop('checked', 'checked');
+                                $('.icheck_deliv').trigger('change');
+                        });
+                </script>
+                
+                <style>
+                        .pp-table{
+                                display: none;
+                        }
+                        .table_show{
+                                display: block;
+                        }
+                </style>
+               
+
+
+            <div class="product__large-row">
+                
+                <!--Продублируем название размера-->
+                <?php if($size_name != 'none'){ ?>
+                        <!--h3 class="filters__sub-title">Размер <?php echo $size_name; ?></h3-->
+                <?php } ?> 
+                
+                <!--Создадим подблоки размеров-->
+                <?php $sizes = 0 ;?>
+                <?php $first = -1; ?>
+                <?php foreach($size as $size_name => $size_){ ?>
+                
+                        <table class="pp-table <?php echo 'pp_table_hide' . str_replace($find,$rep,$size_name);?> <?php if($sizes++ == 0) echo ' first_size ';?>">
+                            <thead>
+                            <tr>
+                                <th>Цена</th>
+                                <th>Доставка</th>
+                                <th>Выбрать</th>
+                            </tr>
+                            </thead>
+        
+                            <tbody>
+                                <?php if($first==-1){
+                                    if(isset($size_['deliv']) AND $size_['deliv']){
+                                        $first = 1;
+                                    }else{
+                                        $first=0;}
+                                }?>
+                               
+                                <?php if(isset($size_['deliv']) AND $size_['deliv']){ ?>
+                                
+                                <?php foreach($size_['deliv'] as $deliv){ ?>
                                         <tr>
-                                                <th style="width: 30%;text-align: left;">Цена</th>
-                                                <th style="text-align: left;">Cрок</th>
+                                            <td><span class="pp-table__value"><?php echo number_format($deliv['price_1'], 0, '.', ' '); ?></span></td>
+                                            <td><span class="pp-table__value">
+                                                <label
+                                                    for="product-<?php echo str_replace($find,$rep,$size_name);?>-<?php echo $deliv['postav_id'];?>-<?php echo $deliv['delivery_days'];?>"
+                                                    <!--class="form__check-label"--><?php echo $deliv['delivery_days']; ?></label> дней</span></td>
+                                            <td><span class="pp-table__radio">
+                                                <!--input type="radio" name="delivery-price" class="icheck" data-radioClass="form__radio" checked-->
+                                                <input type="radio" class="icheck icheck_deliv pp_table_hide<?php echo str_replace($find,$rep,$size_name);?>_check"
+                                                    name="product_size"
+                                                    id="product-<?php echo str_replace($find,$rep,$size_name); ?>-<?php echo $deliv['postav_id'];?>-<?php echo $deliv['delivery_days'];?>"
+                                                     data-radioClass="form__radio"
+                                                     data-postav="<?php echo $deliv['postav_id'];?>"
+                                                     data-deliv="<?php echo $deliv['delivery_days'];?>"
+                                                     data-price="<?php echo $deliv['price_1'];?>"
+                                                     data-product="<?php echo $size_['id'];?>"
+                                                     <?php if($min_price['delive_days'] == $deliv['delivery_days'] AND $deliv['price_1'] == $min_price['price']) echo ' checked '; ?>
+                                                     >
+                                            </span></td>
                                         </tr>
-                                        <?php if(isset($size_['deliv']) AND $size_['deliv']){ ?>
-                                        <?php foreach($size_['deliv'] as $deliv){ ?>
-                                                <tr>
-                                                        <td><?php echo $deliv['price_1']; ?> ₽</td>
-                                                        <td>
-                                                        <div class="filters__row">
-                                                                <input type="radio" class="icheck icheck_deliv"
-                                                                       name="product_size"
-                                                                       id="product-<?php echo $size_name?>-<?php echo $deliv['postav_id'];?>-<?php echo $deliv['delivery_days'];?>"
-                                                                        data-radioClass="form__radio"
-                                                                        data-postav="<?php echo $deliv['postav_id'];?>"
-                                                                        data-deliv="<?php echo $deliv['delivery_days'];?>"
-                                                                        data-price="<?php echo $deliv['price_1'];?>"
-                                                                        data-product="<?php echo $size_['id'];?>"
-                                                                        <?php if($min_price['delive_days'] == $deliv['delivery_days'] AND $deliv['price_1'] == $min_price['price']) echo ' checked '; ?>
-                                                                        
-                                                                        >
-                                                                        <div class="form__check-label-wrapper">
-                                                                    <label for="product-<?php echo $size_name?>-<?php echo $deliv['postav_id'];?>-<?php echo $deliv['delivery_days'];?>" class="form__check-label"><?php echo $deliv['delivery_days']; ?> дн.</label>
-                                                        </div>
-                                                      </td>
-                                                </tr>
-                                        <?php } ?>                                                                
-                                        <?php } ?>                
-                                </table>
-                                </div>
-                        <?php } ?>
+                                <?php } ?>                                                                
+                                <?php } ?> 
+        
+                            </tbody>
+                        </table>
+                <?php } ?>
             </div>
             
+            <div class="row product__row">
+                              
+               <div class="row product__row product__row_footer">
+                <div class="small-7 columns">
+                        <input type="hidden" id="product_id" value="<?php echo $product['id'];?>">
+                        <input type="hidden" id="postav_id" value="<?php echo $min_price['postav_id'];?>">
+                        <span class="no-wrap">
+                        <?php //if($min_price['delive_days'] == 'НЕТ'){ ?>
+                        <?php if($first == 0){ ?>
+                                <input type="text" class="form__input form__input_product text-center" id="items" required value="<?php echo $first;?>" disabled>
+                        <?php }else{ ?>
+                                <input type="text" class="form__input form__input_product text-center" id="items" required value="<?php echo $first;?>">
+                        <?php } ?>
+                        <span class="form__input-b-hint">шт.</span></span>
+                </div>
+
+                <div class="small-17 columns">
+                    <button class="form__submit form__submit_product to_cart">В корзину</button>
+                    <!--<button class="btn btn_text-large">В корзину</button>-->
+                </div>
+                </div>
+            </div>
+            <!--div class="small-9 columns">
+                        <input type="hidden" id="product_id" value="<?php echo $product['id'];?>">
+                        <input type="hidden" id="postav_id" value="<?php echo $min_price['postav_id'];?>">
+                    <button class="form__submit form__submit_text-large to_cart">В корзину</button>
+        </div-->
         <!--/form-->
 
-        <div class="product__hint">
-            <h3 class="product__sub-title">Доставка товаров</h3>
-            <p>Заказывая доставку товара сторонними курьерскими службами (Новая Почта, Мист Экспресс ) - при получении
-                обязательно проверяйте наличие всего товара в заказе, а так же его внешний вид.</p>
-        </div>
+
     </div>
 </div>
 
@@ -895,6 +1061,7 @@
 
     <!--?php include SKIN_PATH . 'body_brands.php'; ?-->
     <!--?php include SKIN_PATH . 'body_sections.php'; ?-->
+    
     <?php include SKIN_PATH . 'footer.php'; ?>
 </div>
 <?php include SKIN_PATH . 'footer_includes.php';?>

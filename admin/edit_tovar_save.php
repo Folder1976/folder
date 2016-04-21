@@ -27,15 +27,32 @@ $ver = mysql_query("SET NAMES utf8");
 
 if (isset($_REQUEST["_dell"]))
 {
+ 
+ 
+ 
     if(!isset($_REQUEST["_dell_yes"])){
-      ?>
-	<h2>УДАЛИТЬ?</h2>
+      
+
+	  $sql = 'SELECT operation_detail_operation FROM tbl_operation_detail WHERE operation_detail_tovar = "'.$id_value.'"';
+        $r = $folder->query($sql);
+      
+	    if($r->num_rows == 0){ ?>
+    
+            <h2>УДАЛИТЬ?</h2>
 	
-	<a href="edit_tovar_save.php?_id_value=<?php echo $id_value; ?>&_dell_yes=true&_dell&_page_to_return=<?php echo $page_to_return; ?><?php echo ((int)$id_value - 1); ?>">ДА</a>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a HREF="javascript:" onclick="history.back();">НЕТ</a>
+				<a href="edit_tovar_save.php?_id_value=<?php echo $id_value; ?>&_dell_yes=true&_dell&_page_to_return=<?php echo $page_to_return; ?><?php echo ((int)$id_value - 1); ?>">ДА</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a HREF="javascript:" onclick="history.back();">НЕТ</a>
 	
       <?php
+        }else{
+            echo '<h2><a HREF="javascript:" onclick="history.back();">Вернуться в редактор</a></h2>';
+            echo '<h2>Этот товар есть в следующих накладных:</h2>';
+            while($tmp = $r->fetch_assoc()){
+                echo '<br> = <h4>'.$tmp['operation_detail_operation'].'</h4>';
+            }
+        }
+
       die();
     }
 
@@ -47,9 +64,12 @@ if (isset($_REQUEST["_dell"]))
     $ver = mysql_query("DELETE FROM `tbl_tovar` WHERE `tovar_id` ='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_tovar` WHERE `tovar_id` ='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_price_tovar` WHERE `price_tovar_id`='".$id_value."'");
-    $ver = mysql_query("DELETE FROM `tbl_description` WHERE `descripton_tovar_id`='".$id_value."'");
+    $ver = mysql_query("DELETE FROM `tbl_description` WHERE `description_tovar_id`='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id`='".$id_value."'");
     $ver = mysql_query("DELETE FROM `tbl_seo_url` WHERE `seo_url`='tovar_id=".$id_value."'");
+	$sql = 'DELETE FROM `tbl_tovar_links` WHERE `product_id` ="'.$id_value.'"';
+	$folder->query($sql) or die('links dell ((');
+
     $result_string = "<br><br>Nom -> " . $id_value . " - DELETED OK";
     
     $Alias->dellAliasOnProductID($id_value);
@@ -77,11 +97,36 @@ $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
 			       `tovar_postav_artkl` ="'.$_REQUEST[$key].'",
 			       `postav_id` ="'.$_REQUEST['postav_'.$key].'"
 			      ';
-			$folder->query($sql) or die('alternative artikles Add ((');
+			$folder->query($sql) or die('alternative artikles SAVE ((');
 	
 		}
 	      }
 	  }
+   
+       
+	//Сохраняем Линки
+	$sql = 'DELETE FROM `tbl_tovar_links` WHERE `product_id` ="'.$id_value.'"';
+	$folder->query($sql) or die('links dell ((');
+
+    foreach($_REQUEST as $key => $value){
+	//Если найден  альтернативный артикл
+	  if(strpos($key,'postav_url*') !== false AND strpos($key,'postav_url*') == 0){
+		//И если он не пустой
+		if($_REQUEST[$key] != ''){
+			$key = str_replace('postav_url*', '', $key);
+			if($_REQUEST['url*'.$key] != '' AND $_REQUEST['postav_url*'.$key] != 0 ){
+				$sql = 'INSERT INTO `tbl_tovar_links` 
+				  SET `product_id` ="'.$id_value.'",
+				   `postav_id` ="'.$_REQUEST['postav_url*'.$key].'",
+				   `url` ="'.$_REQUEST['url*'.$key].'"
+				  ';
+			//echo $sql;
+				$folder->query($sql) or die('alternative Links SAVE ((');
+			}
+		}
+	  }
+    }
+   
    
   //Сохраняем детали по поставщику
 	  $sql = 'DELETE FROM `tbl_tovar_suppliers_items` WHERE `tovar_id` ="'.$id_value.'"';
@@ -142,8 +187,17 @@ $date = date("Y-m-d G:i:s");
 		";
     $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
 
+	//Установим дату и пользователя редактировавшего
+	$date = date("Y-m-d G:i:s");
+	$sql = 'UPDATE tbl_tovar SET
+			tovar_last_edit = \''.$date.'\',
+			tovar_last_edit_user = \''.$_SESSION[BASE.'userid'].'\'
+			WHERE tovar_id = \''.$id_value.'\';';
+	$folder->query($sql) or die('add product - ' . $sql);
+
 //Update price ================================================================
-     $sql_str = "UPDATE `tbl_price_tovar` SET ";
+    /*
+	 $sql_str = "UPDATE `tbl_price_tovar` SET ";
      $count=0;
      while($count++ < $_REQUEST['_price_count']){
 	    if(strpos($_SESSION[BASE.'usersetup'],"price_tovar_".$count)>0){
@@ -154,28 +208,33 @@ $date = date("Y-m-d G:i:s");
       }
      $sql_str = substr($sql_str,0,-1)." WHERE `price_tovar_id`='".$id_value."'";
      $ver = mysql_query($sql_str);
-
+*/
 //Update description ================================================================
     $sql = 'INSERT INTO `tbl_description` SET
-			`description_1`	 ="'.str_replace('"','\'', $_REQUEST['description_1']).'",
+			`description_1`	 ="'.str_replace('"',"'", $_REQUEST['description_1']).'",
 			`description_tovar_id`="'.$id_value.'"
 			ON DUPLICATE KEY UPDATE
-			`description_1`	 ="'.str_replace('"','\'', $_REQUEST['description_1']).'"
+			`description_1`	 ="'.str_replace('"',"'", $_REQUEST['description_1']).'"
 			
 			;';
     $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
      
   //Перезапись аттрибутов
+ 
+ /*
     $ver = mysql_query("DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id`='".$id_value."'");
     foreach($_POST as $index => $value){
+	  echo '<br>'.$index;
       if(strpos($index,'attr*') !== false){
-	if($value != ''){
-	  $attr_id = explode('*',$index);
-	  $folder->query("INSERT INTO tbl_attribute_to_tovar SET attribute_id = '".$attr_id[1]."', attribute_value = '$value', tovar_id = '$id_value';");	  
-	}
+		  if($value != ''){
+			$attr_id = explode('*',$index);
+			$sql = "INSERT INTO tbl_attribute_to_tovar SET attribute_id = '".$attr_id[1]."', attribute_value = '$value', tovar_id = '$id_value';";
+			$folder->query($sql);	  
+		  }
       }
     }
-    
+   */ 
+//die();
 }
 if (isset($_REQUEST["_add"]))
 {
@@ -241,11 +300,18 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 		'4',
 		'".$_REQUEST['tovar_video_url']."',
 		'".$_REQUEST['tovar_size_table']."',
-		'".$_REQUEST['brand_id']."'
-		)";
-    $ver = mysql_query($sql_str);
+		'".$_REQUEST['brand_id']."');";
+    $ver = mysql_query($sql_str) or die('Не удалось добавить товар! Проверьте - возможно вы не изменили артикл!<hr>'.$sql_str. '<br>' . mysqli_error($folder));
     $id_value=mysql_insert_id();
     
+	//Установим дату и пользователя редактировавшего
+	$date = date("Y-m-d G:i:s");
+	$sql = 'UPDATE tbl_tovar SET
+			tovar_last_edit = \''.$date.'\',
+			tovar_last_edit_user = \''.$_SESSION[BASE.'userid'].'\'
+			WHERE tovar_id = \''.$id_value.'\';';
+	$folder->query($sql) or die('add product - ' . $sql);
+
     //Обновляем Алиас
     $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
     
@@ -257,7 +323,8 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
     $ver = mysql_query("DELETE FROM `tbl_description` WHERE `descripton_tovar_id`='".$id_value."'");
   
 //Insert price ================================================================
-     $sql_str = "INSERT INTO `tbl_price_tovar` (";
+    /*
+	 $sql_str = "INSERT INTO `tbl_price_tovar` (";
      $count=0;
      while($count++ < $_REQUEST['_price_count']){
 	$sql_str .= "`price_tovar_".$count."`,`price_tovar_curr_".$count."`,`price_tovar_cof_".$count."`,";
@@ -271,13 +338,13 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
       $sql_str .= "'".$id_value."')";
      
      $ver = mysql_query($sql_str) or die($sql_str .'<br>'.mysql_error());
-
+*/
 //Insert description ================================================================
     $sql = 'INSERT INTO `tbl_description` SET
-			`description_1`	 ="'.str_replace('\'','"', $_REQUEST['description_1']).'",
+			`description_1`	 ="'.str_replace('"',"'", $_REQUEST['description_1']).'",
 			`description_tovar_id`="'.$id_value.'"
 			ON DUPLICATE KEY UPDATE
-			`description_1`	 ="'.str_replace('\'','"', $_REQUEST['description_1']).'"
+			`description_1`	 ="'.str_replace('"',"'", $_REQUEST['description_1']).'"
 			
 			;';
     $ver = mysql_query($sql) or die($sql.'<br>'.mysql_error());
@@ -288,6 +355,7 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
      $ver = mysql_query($sql_str);
       
 //Перезапись аттрибутов
+  /*
     $ver = mysql_query("DELETE FROM `tbl_attribute_to_tovar` WHERE `tovar_id`='".$id_value."'");
     foreach($_POST as $index => $value){
       if(strpos($index,'attr*') !== false){
@@ -297,22 +365,42 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 	}
       }
     }
-    
+    */
     //Сохраняем альтернативные артиклы
     foreach($_REQUEST as $key => $value){
 	//Если найден  альтернативный артикл
-	if(strpos($key,'alt_artkl*') !== false AND strpos($key,'alt_artkl*') == 0){
-	  //И если он не пустой
-	  if($_REQUEST[$key] != ''){
-	      $sql = 'INSERT INTO `tbl_tovar_postav_artikl` 
-			SET `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'",
-			 `tovar_postav_artkl` ="'.$_REQUEST[$key].'",
-			 `postav_id` ="'.$_REQUEST['postav_'.$key].'"
-			';
-	      $folder->query($sql) or die('alternative artikles Add ((');
-  
+	  if(strpos($key,'alt_artkl*') !== false AND strpos($key,'alt_artkl*') == 0){
+		//И если он не пустой
+		if($_REQUEST[$key] != ''){
+			$sql = 'INSERT INTO `tbl_tovar_postav_artikl` 
+			  SET `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'",
+			   `tovar_postav_artkl` ="'.$_REQUEST[$key].'",
+			   `postav_id` ="'.$_REQUEST['postav_'.$key].'"
+			  ';
+			$folder->query($sql) or die('alternative artikles Add ((');
+	
+		}
 	  }
-	}
+    }
+    
+	//Сохраняем Линки
+    foreach($_REQUEST as $key => $value){
+	//Если найден  альтернативный артикл
+	  if(strpos($key,'postav_url*') !== false AND strpos($key,'postav_url*') == 0){
+		//И если он не пустой
+		if($_REQUEST[$key] != '' AND $_REQUEST[$key] != '0'){
+			$key = str_replace('postav_url*', '', $key);
+			if($_REQUEST['url*'.$key] != '' AND $_REQUEST['postav_url*'.$key] != 0 ){
+			  $sql = 'INSERT INTO `tbl_tovar_links` 
+				SET `product_id` ="'.$id_value.'",
+				 `postav_id` ="'.$_REQUEST['postav_url*'.$key].'",
+				 `url` ="'.$_REQUEST['url*'.$key].'"
+				';
+			  //echo $sql;
+			  $folder->query($sql) or die('alternative Links Add ((');
+			}
+		}
+	  }
     }
     
     

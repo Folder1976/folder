@@ -1,9 +1,6 @@
 <?php
 include '../config/config.php';
-if(session_id()){
-}else{
-  session_start();
-}
+
 global $folder;
 
 $return = array();
@@ -59,14 +56,15 @@ $sql = "INSERT INTO `tbl_klienti`(
 
         $folder->query($sql);
         $id = $folder->insert_id;
-    
+
         //Нормальная регистрация
         if($id > 0){
+            
             $_SESSION[BASE.'login']     = $email;
             $_SESSION[BASE.'username']  = $name;
             $_SESSION[BASE.'userid']    = $id;
             $_SESSION[BASE.'usersetup'] = "";
-            
+        
             $html = '<h1>Регистрация на Armma.ru</h1>
                     <ul>Ваши данные для авторизации:
                         <li>Логин : <b>'.$email.'</b></li>
@@ -83,8 +81,9 @@ $sql = "INSERT INTO `tbl_klienti`(
             $m->text_html="text/html";
             $m->Subject('Регистрация на Armma.ru');
             $m->To($email);
-            $error = $m->Send();
+            $u = $error = $m->Send();
             
+            $return['user'] = $id;
             $return['msg'] = 'Регистрация прошла успешно!';
             $return['err'] = false;        
             echo json_encode($return);

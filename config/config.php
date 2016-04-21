@@ -1,4 +1,8 @@
 <?php
+if(session_id()){
+}else{
+  session_start();
+}
 
 date_default_timezone_set('Europe/moscow');
 /* Настройки подключения к БД */
