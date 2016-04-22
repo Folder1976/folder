@@ -169,6 +169,7 @@ $date = date("Y-m-d G:i:s");
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_name_1')>0) $sql_str .= "`tovar_name_1`='".$_REQUEST['tovar_name_1']."',";
 								    $sql_str .= "`time_to_kill`='".date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']))."',";
 								    $sql_str .= "`parsing`='".$_REQUEST['parsing']."',";
+								    $sql_str .= "`sort`='".$_REQUEST['sort']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'on_ware')>0) $sql_str .= "`on_ware`	='".$_REQUEST['on_ware']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'original_supplier_link')>0) $sql_str .= "`original_supplier_link`	='".$_REQUEST['original_supplier_link']."',";
 	if(strpos($_SESSION[BASE.'usersetup'],'tovar_memo')>0) $sql_str .= "`tovar_memo`	='".$_REQUEST['tovar_memo']."',";
@@ -254,6 +255,7 @@ $date = date("Y-m-d G:i:s");
 $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
     $sql_str = "INSERT INTO `tbl_tovar` (
 		`tovar_barcode`,
+		`sort`,
 		`on_ware`,
 		`tovar_parent`,
 		`tovar_artkl`,
@@ -279,6 +281,7 @@ $date_kill = date("Y-m-d G:i:s",strtotime($_REQUEST['time_to_kill']));
 		
 		)VALUES(
 		'".$_REQUEST['tovar_barcode']."',
+		'".$_REQUEST['sort']."',
 		'".$_REQUEST['on_ware']."',
 		'".$_REQUEST['tovar_parent']."',
 		'".$_REQUEST['tovar_artkl']."',

@@ -498,6 +498,13 @@ echo "<td></td>";
 echo "<td></td>";
 echo "</tr>";
 }
+
+echo "\n<tr><td>Сортировка на сайте:</td><td>"; # Group name 1
+echo "\n<input type='text'  style='width:400px'  name='sort' value='" . mysql_result($ver,0,"sort") . "'/></td>";
+echo "<td></td>";
+echo "<td></td>";
+echo "</tr>";
+
 $main_model = mysql_result($ver,0,"tovar_model");
 
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_artkl')>0){

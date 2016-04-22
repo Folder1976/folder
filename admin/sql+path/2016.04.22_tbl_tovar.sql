@@ -1,0 +1,1 @@
+ALTER TABLE `tbl_tovar` ADD `sort` INT NOT NULL AFTER `social_vk`;
