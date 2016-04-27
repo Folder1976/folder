@@ -1,0 +1,1 @@
+<?phpecho "<ol><li><a href=\"".$FSubUrl."&tvmact=categs\">Настройка базовых категорий</a></li><li><a href=\"".$FSubUrl."&tvmact=importtovars\">Создание YML</a></li></ol>";?>
