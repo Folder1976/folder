@@ -12,6 +12,22 @@ else {
 	echo '<a href="'.$MFSubUrl.'">Настройка базовых категорий</a> | ';
 }
 
+function readTree($parent,$folder){
+   $sql = "SELECT parent_inet_id AS product_type_id, parent_inet_parent AS product_parent_id, parent_inet_1 AS product_type_name
+			FROM  tbl_parent_inet  WHERE parent_inet_parent = '$parent' ORDER BY product_type_name ASC;";
+    $rs1 = $folder->query($sql) or die ("Get product type list".$sql);
+
+    $body = "";
+
+     while ($Type = mysqli_fetch_assoc($rs1)) {
+		$body .=  "\n<li><span id=\"span_".$Type['product_type_id']."\"><a class=\"tree\" href=\"#\" onclick=\"SaveCat(".$Type['product_type_id'].");return false;\" id=\"".$Type['product_type_id']."\">".$Type['product_type_name']."</a></span>".readTree($Type['product_type_id'],$folder);
+	    $body .= "</li>\n";
+    }
+    if($body != "") {$body = "<ul>".$body."</ul>\n\n";}
+    return $body;
+
+}
+
 switch ($MFSubAct) {
 	case "":
 		$CategSpis = array();
@@ -20,7 +36,7 @@ switch ($MFSubAct) {
 					parent_inet_parent AS parent,
 					parent_inet_1 AS name
 			FROM tbl_parent_inet
-			WHERE parent_inet_parent = '0';") or die ("GetMagID:(");
+			WHERE 1;") or die ("GetMagID:(");
                 
 		while ($tCatS = mysqli_fetch_assoc($r)) {
                    
@@ -94,7 +110,30 @@ switch ($MFSubAct) {
 		<tr><td bgcolor=silver><b>Показывать товары, которых нет в наличии</b></td><td><input type=checkbox name=\"viewdisable\" value=1></td></tr>
 		
 		<tr><td bgcolor=silver><b>Категория магазина</b></td><td>
-			<table border=1 cellspacing=0 cellpadding=3>\n";
+			<div id=\"container\" class = \"product-type-tree\">
+				<input type='hidden' id='categsv' name='catofshop' value=''>
+				<ul  id=\"celebTree\"><li><span id=\"span_0\"><a class = \"tree\" href=\"javascript:\"
+				id=\"0\">Категории</a></span><ul>";
+
+				$rs = mysqli_query( $folder, "SELECT parent_inet_id AS product_type_id,
+					parent_inet_parent AS product_parent_id, parent_inet_1 AS product_type_name
+					FROM  tbl_parent_inet  WHERE parent_inet_parent = '0' ORDER BY parent_inet_1 ASC;") or die ("GetMagID:(");
+					
+					while ($Type = mysqli_fetch_assoc($rs)) {
+						if($Type['product_parent_id'] == 0){
+							echo  "<li>
+							<span id=\"span_".$Type['product_type_id']."\"> <a class=\"tree\" href=\"#\" onclick=\"SaveCat(".$Type['product_type_id'].");return false;\" id=\"".$Type['product_type_id']."\">".$Type['product_type_name']."</a>
+							</span>".readTree($Type['product_type_id'],$folder)."</li>\n";
+						}
+					}
+					$body .= "</ul>
+						</li></ul></div>";
+				
+				
+//		echo "<span id=\"span_0\"> <a class = \"tree\" href=\"javascript:\" id=\"0\">Категории</a>
+//		</span>".readTree($Type['product_type_id'],$folder);
+		/*
+		echo "<table border=1 cellspacing=0 cellpadding=3>\n";
                
 		$r = mysqli_query( $folder, "SELECT parent_inet_id AS id,
 					parent_inet_parent AS parent,
@@ -106,9 +145,80 @@ switch ($MFSubAct) {
 			echo "<tr><td><input type=radio name=\"catofshop\" value=\"".$TpCat["id"]."\"></td>
 			<td>".$TpCat["name"]."</td></tr>\n";
 		}
-		echo "</table></td></tr>
+		echo "</table>";
+		*/
+		echo "</td></tr>
 		<tr><td colspan=2 align=center><input type=submit value=\"  Добавить  \"></td></tr>
-		</table></form>";
+		</table></form>
+		<style>
+			.tree{
+				margin-left: 15px;
+			}
+			.tree_ul{
+				margin-left: 0px;
+			}
+			.handle {
+				background: transparent url(images/tree-handle.png) no-repeat left top;
+				display:block;
+				float:left;
+				width:15px;
+				height:17px;
+				cursor:pointer;
+			}
+			#container ul {
+				margin-top: 15px;
+				margin-left: 20px; /* Отступ слева в браузере IE и Opera */
+				padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+			}
+			li {
+				padding-top: 3px;
+				padding-bottom: 4px;
+				list-style-type: none; 
+			}
+			#container  li {
+				list-style-type: none; 
+			}
+			.closed { background-position: left 2px; }
+			.opened { background-position: left -13px; }
+		</style>
+		<script>
+			$(document).ready(function(){
+				
+				//Скрипт дерева ========================
+
+				$('#celebTree ul')
+					.hide()
+					.prev('span')
+					.before('<span></span>')
+					.prev()
+					.addClass('handle closed')
+					.click(function() {
+					  // plus/minus handle click
+							 $(this).toggleClass('closed opened').nextAll('ul').toggle();
+					});
+
+				$('#celebTree ul')
+					.prev('span')
+					.children('a')
+					.toggleClass('tree tree_ul')
+					.click(function() {
+					  // plus/minus handle click
+							$(this).toggleClass('closed opened').nextAll('ul').toggle();
+					});
+					
+				  //Развернем первый уровень
+				$('#0').parent('span').parent('li').children('span').first().toggleClass('closed opened').nextAll('ul').toggle();
+
+			});
+			function SaveCat(CatID) {
+				console.log(CatID);
+				$('#categsv').val(CatID);
+				$('.tree').css('background', 'none');
+				$('.tree_ul').css('background', 'none');
+				$('#'+CatID).css('background', '#73ff73');
+				
+			}
+		</script>";
 	break;
 	
 	case "savenew":
