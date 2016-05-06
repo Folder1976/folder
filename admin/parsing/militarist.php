@@ -219,8 +219,9 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				$list['url'] = str_replace('//','/',$list['url']);
 				$list['url'] = str_replace('//','/',$list['url']);
 				$list['url'] = str_replace('http:/','http://',$list['url']);
-					
-				
+
+				//Get content via proxy
+				define("GETCONTENTVIAPROXY", 1);
 				$html = @file_get_html($list['url']);
 				
 				//Если это кривой линк - возможно удаленный товар
@@ -233,7 +234,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						<script>
 							$(document).ready(function(){
 								<?php if($error == 0 OR $name == 'category'){ 
-									echo 'setTimeout(reload, 10000);';
+									echo 'setTimeout(reload, 500);';
 								 } ?>
 							}
 							);
@@ -1011,7 +1012,7 @@ $(document).ready(function(){
 	//Тут прописать - если пролетели без ошибок - валим дальше
 	$(document).ready(function(){
 		<?php if(($error == 0 OR $name == 'category') AND !isset($_GET['url'])){ 
-			echo 'setTimeout(reload, '.($pausa * 1000).');';
+			echo 'setTimeout(reload, 500);'; //'.($pausa * 1000).'
 		 } ?>
 	}
 	);
