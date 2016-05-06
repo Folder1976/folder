@@ -2,7 +2,7 @@
 set_time_limit(0);
 include 'constants.php';
 $postav_id = 59; //MILITARIST
-$pausa = 7;
+$pausa = 10;
 $currency = 5;
 $kurs = 3;
 $skidka = 0.75;
@@ -219,6 +219,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				$list['url'] = str_replace('//','/',$list['url']);
 				$list['url'] = str_replace('//','/',$list['url']);
 				$list['url'] = str_replace('http:/','http://',$list['url']);
+				$list['url'] = str_replace('https:/','https://',$list['url']);
 
 				//Get content via proxy
 				define("GETCONTENTVIAPROXY", 1);
@@ -234,7 +235,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						<script>
 							$(document).ready(function(){
 								<?php if($error == 0 OR $name == 'category'){ 
-									echo 'setTimeout(reload, 500);';
+									echo 'setTimeout(reload, '.$pausa.'000);';
 								 } ?>
 							}
 							);
@@ -503,14 +504,21 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						strpos($href, '?SET_PAGE_COUNT') === false AND
 						strpos($href, '?action=ADD') === false
 						){
-						$href = str_replace('http://militarist.ua/catalog/', '', $href);
-						$href = str_replace('http://militarist.ua/', '', $href);
-						$href = str_replace('http://militarist.ua', '', $href);
-						$href = str_replace('https://militarist.ua/catalog/', '', $href);
-						$href = str_replace('https://militarist.ua/catalog', '', $href);
-						$href = str_replace('https://militarist.ua/', '', $href);
-						$href = str_replace('https://militarist.ua', '', $href);
-						$href = 'https://militarist.ua'. $href;
+						
+						
+						if(strpos($href,'http') === false){
+							$href = str_replace('http://militarist.ua/catalog/', '', $href);
+							$href = str_replace('http://militarist.ua/', '', $href);
+							$href = str_replace('http://militarist.ua', '', $href);
+							$href = str_replace('https://militarist.ua/catalog/', '', $href);
+							$href = str_replace('https://militarist.ua/catalog', '', $href);
+							$href = str_replace('https://militarist.ua/', '', $href);
+							$href = str_replace('https://militarist.ua', '', $href);
+							$href = 'https://militarist.ua'. $href;
+						}
+						
+						$href = str_replace('HTTP://https:/militarist.ua/catalog/', 'https://militarist.ua/catalog/', $href);
+						$href = str_replace('http://https:/militarist.ua/catalog/', 'https://militarist.ua/catalog/', $href);
 						
 						$sql = 'SELECT id FROM tbl_parsing_militarist WHERE url = \''.$href.'\';';
 						$t = $folder->query($sql) or die('==' . $sql);
@@ -729,7 +737,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					}
 					
 					$product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
-					
+			
 					if($product_id){
 							
 							echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>.
@@ -1012,7 +1020,7 @@ $(document).ready(function(){
 	//Тут прописать - если пролетели без ошибок - валим дальше
 	$(document).ready(function(){
 		<?php if(($error == 0 OR $name == 'category') AND !isset($_GET['url'])){ 
-			echo 'setTimeout(reload, 500);'; //'.($pausa * 1000).'
+			echo 'setTimeout(reload, '.$pausa.'000);'; //'.($pausa * 1000).'
 		 } ?>
 	}
 	);
