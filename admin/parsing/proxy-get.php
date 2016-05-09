@@ -8,6 +8,7 @@ class GetViaProxy {
 	protected $array_useragent      =   array();
 	protected $useragent = 0;
 	protected $CNX = 0;
+	protected $ProxyToCheck = array();
 
 	protected $curProxyInd = 0;
 	protected $curProxy = array();
@@ -24,34 +25,70 @@ class GetViaProxy {
 		$this->CNX = $SQ;
 	}
 
-	//Get next proxy from list
-	public function GetNextProxy() {
+	//Get list of proxy for get
+	public function GetListOfProxy() {
 		$r=mysqli_query($this->CNX, "SELECT `Host_ID`, `proxyhosts`, `proxytype`
-		FROM `tbl_parser_hosts` WHERE `proxytype` != 'disable' ORDER BY rand() LIMIT 0,1;") or die($this->add_debug_msg("Can't get proxy - no proxy in proxylist"));
+		FROM `tbl_parser_hosts` WHERE 1 ORDER BY proxy_deny_count ASC LIMIT 0,20;") or die($this->add_debug_msg("Can't get proxy - no proxy in proxylist"));
 		if(mysqli_num_rows($r) == 0) {
 			$this->add_debug_msg("Can't get proxy - SQL query return null");
+			return false;
 		}
-		$this->curProxy = mysqli_fetch_assoc($r);
+		$tmp = array();
+		while($tPr = mysqli_fetch_assoc($r)) {
+			$tmp[] = $tPr;
+		}
 
+		echo "<pre>";
+		//print_r($tmp);
+		//echo "<hr>Random";
+
+		for($i=0;$i<5;$i++) {
+			$rndPoz = mt_rand(0, count($tmp)-1);
+			//echo "<li>".$i." : ".$rndPoz."</li>";
+			if (isset($tmp[$rndPoz])) {
+				$this->ProxyToCheck[] = $tmp[$rndPoz];
+				unset($tmp[$rndPoz]);
+			}
+			else {
+				$i--;
+			}
+		}
+		//print_r($this->ProxyToCheck);
+		//die();
+		$this->GetNextProxy();
 		return true;
 	}
 
 	//Get next proxy from list
+	public function GetNextProxy() {
+		if(count($this->ProxyToCheck) == 0) {
+			echo "<li>No one from 5 proxy didn't work, tring again</li><script>location.reload();</script>";
+			//$this->add_debug_msg("Can't get proxy - list is null");
+			die();
+			return false;
+		}
+		$this->curProxy = array();
+		$this->curProxy = array_shift($this->ProxyToCheck);
+		print_r($this->curProxy);
+		return true;
+	}
+
+	//Get next useragent from list
 	public function GetUserAgent() {
 		$r=mysqli_query($this->CNX, "SELECT `UA_Value`
 		FROM `tbl_parser_useragents` WHERE 1 ORDER BY rand() LIMIT 0,1;") or die($this->add_debug_msg("Can't get useragent - table empty"));
 		$this->array_useragent = mysqli_fetch_assoc($r);
 	}
 
-	//function for Lock proxy
-	public function LockProxy() {
-		$r=mysqli_query($this->CNX, "UPDATE `tbl_parser_hosts` SET `proxytype`='disable' WHERE `Host_ID`='".$this->curProxy["Host_ID"]."';") or die($this->add_debug_msg("Can't lock proxy mysql error"));
+	//increase counter of bad requests
+	public function SetBadProxy() {
+		$r=mysqli_query($this->CNX, "UPDATE `tbl_parser_hosts` SET `proxy_deny_count`=`proxy_deny_count`+1 WHERE `Host_ID`='".$this->curProxy["Host_ID"]."';") or die($this->add_debug_msg("Can't increase proxy bad requests counter"));
 	}
 
 	
 	public function GetURL ($Url, $method = "GET", $post_data = null, $headers = null) {
 
-		$this->GetNextProxy();
+		$this->GetListOfProxy();
 		$this->GetUserAgent();
 
 		$options = $this->options;
@@ -85,8 +122,11 @@ class GetViaProxy {
 			$output = curl_exec($ch);
 			$info = curl_getinfo($ch);
 			if ($output == "") {
-				$this->LockProxy();
+				$this->SetBadProxy();
 				$this->GetNextProxy();
+				$this->GetUserAgent();
+				curl_close($ch);
+
 			}
 		}
 
