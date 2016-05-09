@@ -95,12 +95,12 @@
                                 </div>
                             </div>
 
-                            <div class="form__check-row">
+                            <!--div class="form__check-row">
                                 <input type="radio" name="delivery" class="icheck" id="delivery-pickup" value="delivery-pickup" data-radioClass="form__radio">
                                 <div class="form__check-label-wrapper">
                                     <label for="delivery-pickup" class="form__check-label">Самовывоз из авторизированной точки</label>
                                 </div>
-                            </div>
+                            </div-->
 
                             <div class="form__check-row">
                                 <input type="radio" name="delivery" class="icheck" id="delivery-post" value="delivery-post" data-radioClass="form__radio">
