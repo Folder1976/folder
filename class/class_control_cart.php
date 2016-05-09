@@ -24,7 +24,10 @@ class ControlCart {
 				FROM tbl_orders
 				LEFT JOIN tbl_seo_url ON seo_url = CONCAT(\'tovar_id=\', order_product_id)
 				LEFT JOIN tbl_tovar ON tovar_id = order_product_id
-				WHERE order_customer = \''.$user_key.'\';';
+				WHERE order_customer = \''.$user_key.'\'
+				GROUP BY order_product_id
+				ORDER BY tovar_name_1 ASC
+				;';
 		$r = $this->base->query($sql);
 		
 		if($r->num_rows > 0){

@@ -2,11 +2,14 @@
     //include_once ('../config/config.php');
     //$uploaddir = UPLOAD_DIR;
     global $folder, $setup;
-  
+    set_time_limit(0);
     //$tovar_id = $_GET['tovar_id'];
     
-    include ("../class/class_product.php");
-    $Product = new Product($folder);
+    if(!isset($Product)){
+      include ("../class/class_product.php");
+      $Product = new Product($folder);
+    }
+    
     include "../class/class_alias.php";
     $Alias = new Alias($folder);
     //include ("class/class_product_edit.php");
@@ -57,6 +60,7 @@
         
         if(isset($_GET['restore_tovar_all'])){
             $products_id = $Product->getAllProductsId();
+            $Alias->dellAllProductsAlias();
         }
         
         if(isset($_GET['restore_tovar_null'])){

@@ -34,6 +34,11 @@ class Alias {
 		
 	}
 
+	public function dellAllProductsAlias(){
+		$sql = "DELETE FROM `tbl_seo_url` WHERE `seo_url` LIKE 'tovar_id=%';";
+		$this->base->query($sql) or die ('dell alias<br>'.$sql.mysql_error());
+	}
+
 	public function dellAliasOnProductID($id){
 		$sql = "DELETE FROM `tbl_seo_url` WHERE `seo_url` = 'tovar_id=$id';";
 		$this->base->query($sql) or die ('dell alias<br>'.$sql.mysql_error());
@@ -69,8 +74,10 @@ class Alias {
 	
 	public function generateAlias($tovar_id){
 		
-		include_once ("class_product.php");
-		if(!isset($Product)) $Product = new Product($this->base);
+		if(!isset($Product)){
+			include_once ("class_product.php");
+			$Product = new Product($this->base);
+		}
 		include_once ("../admin/class/class_product_edit.php");
 		if(!isset($ProductEdit)) $ProductEdit = new ProductEdit($this->base);
 		include_once ("../admin/class/class_brand.php");

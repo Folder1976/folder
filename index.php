@@ -151,7 +151,9 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_cart'){
   $ControlCart = new ControlCart($folder);
   
   $cart = $ControlCart->getLoginedUserCart($User->getActiveUserKey(), $Product);
-  
+
+  //echo "<pre>";  print_r(var_dump( $cart )); echo "</pre>";
+
   include 'skin/account_cart.php';
   die();
 
