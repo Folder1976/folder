@@ -91,8 +91,34 @@ if($operation_id > 0){
     }
 }    
 
+$where_products = '';
+$products = array();
+header ('Content-Type: text/html; charset=utf8');
+
+
+if(isset($_POST['find'])){
+    
+    $sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl LIKE "%'.$_POST['find'].'%" OR tovar_name_1 LIKE "%'.$_POST['find'].'%" ';
+    $r = $folder->query($sql);
+    //echo $sql;
+    if($r->num_rows > 0){
+        while($tmp = $r->fetch_assoc()){
+            $products[$tmp['tovar_id']] = $tmp['tovar_id'];            
+        }
+    }
+    
+    if(count($products) > 0){
+        $where_products = ' AND operation_detail_tovar IN ('.implode(',', $products).') ';
+    }
+}
+
+
 $sql_count = mysql_query("SET NAMES utf8");
-$tQuery2 = "SELECT `operation_id` FROM `tbl_operation`,`tbl_klienti` WHERE `operation_klient`=`klienti_id` " . $tQuery . " and `operation_dell`='0'";
+$tQuery2 = "SELECT distinct `operation_id`
+                    FROM `tbl_operation`
+                    LEFT JOIN `tbl_klienti` ON `operation_klient`=`klienti_id`
+                    LEFT JOIN tbl_operation_detail ON operation_detail_operation = operation_id
+                    WHERE `operation_dell`='0' ". $tQuery ."  ".$where_products."  ";
 //echo $tQuery2;
 $sql_count = mysql_query($tQuery2);
 if (!$sql_count)
@@ -109,8 +135,9 @@ if($operation_sort != ""){
 }
 
 $ver = mysql_query("SET NAMES utf8");
-$tQuery1 = "SELECT `operation_data`,
-		    `operation_id`, 
+$tQuery1 = "SELECT
+            distinct `operation_id`,
+            `operation_data`,
 		    `operation_on_web`, 
 		    `operation_summ`,
 		    `operation_status`,
@@ -123,12 +150,13 @@ $tQuery1 = "SELECT `operation_data`,
 		    `operation_save`,
 		    `operation_beznal_nakl`,
 		    `operation_beznal_rah`
-		    FROM 
-		    `tbl_operation`,
-		    `tbl_klienti` 
+		    FROM `tbl_operation`
+		    LEFT JOIN `tbl_klienti` ON `operation_klient`=`klienti_id`
+            LEFT JOIN tbl_operation_detail ON operation_detail_operation = operation_id
 		    WHERE 
-		    `operation_klient`=`klienti_id` " . $tQuery . " and 
-		    `operation_dell`='0' ".$group." 
+		    `operation_dell`='0' " . $tQuery . " 
+                ".$group." 
+                ".$where_products." 
 		    ORDER BY $operation_sort `operation_id` DESC ".$limit;
 //echo $tQuery1;
 $ver = mysql_query($tQuery1);
@@ -161,7 +189,7 @@ if (!$stat)
   exit();
 }
 
-header ('Content-Type: text/html; charset=utf8');
+
 //header ('Content-Type: image/jpeg');
 echo "<header><link rel='stylesheet' type='text/css' href='sturm.css' media='all'>
 <title>", mysql_result($ver,0,'klienti_name_1'),"</title>
@@ -459,6 +487,15 @@ if($iKlientSelect > 0){
   echo "<a class='key' href='edit_klient.php?klienti_id=$iKlientSelect' target='_blank'>",$m_setup['menu klient']," ",$m_setup['menu edit'],"</a>
 	</td>";
 }
+?>
+    <td class='key'>
+        <form method="post" action="operation_list.php" target="operation_list">
+            Найти товары <input type="text" name="find" style="width:270px" placeholder="Название товара или артикул" value="<?php echo (isset($_POST['find'])) ? $_POST['find'] : ''; ?>">
+            <input type="submit" name="operation_id" style="width:70px" method="post" onenter="submit();" value="Найти">
+        </form>
+    </td>
+
+<?php
 echo "</tr></table>";
 
 echo "</td><td>";
