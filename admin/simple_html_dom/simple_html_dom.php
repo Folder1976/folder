@@ -62,7 +62,7 @@ define('HDOM_INFO_ENDSPACE',7);
 define('DEFAULT_TARGET_CHARSET', 'UTF-8');
 define('DEFAULT_BR_TEXT', "\r\n");
 define('DEFAULT_SPAN_TEXT', " ");
-define('MAX_FILE_SIZE', 600000);
+define('MAX_FILE_SIZE', 60000000);
 // helper functions
 
 // 2016.05 Modified by Lipsits Sergey
@@ -89,7 +89,6 @@ function file_get_html($url, $use_include_path = false, $context=null, $offset =
 			return false;
 		}
 	}
-
     // Paperg - use our own mechanism for getting the contents as we want to control the timeout.
     //$contents = retrieve_url_contents($url);
     if (empty($contents) || strlen($contents) > MAX_FILE_SIZE)
