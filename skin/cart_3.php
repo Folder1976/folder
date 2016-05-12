@@ -62,6 +62,78 @@
                 В ближайшее время наш менеджер свяжется с Вами для уточнения деталей.<br>
                 Спасибо за покупку!</p>
             <p>Сумма заказа <span style="font-size: 24px;"><?php echo $order['sum']; ?>  ₽</span>.</p>
+<?php
+if (isset($_GET["kredit"])) {
+	// Заказ клиента
+	$order = array(
+		// Состав заказа
+		'items' => $order['krprod'],
+		// Информация о покупателе
+		'details' => $order['kruser'],
+		'partnerId' => 'a06m00000018y7rAAA', // ID Партнера в системе Банка (выдается Банком)
+		'partnerOrderId' => 'test-'.$order['id'], // Уникальный номер заказа в системе Партнера
+	);
+
+	// JSON-представление заказа
+	$json = json_encode($order);
+
+	// Base64-кодирование JSON-представления заказа
+	$base64 = base64_encode($json);
+
+	// Секретная строка для формирования подписи (выдается Банком)
+	$secret = 'grid-secret-18y7r72a';
+
+	/**
+	 * Функция формирования подписи заказа
+	 * @param $message Base64-представление заказа
+	 * @param $secretPhrase Секретная строка
+	 * @return string
+	 */
+	function signMessage($message, $secretPhrase) {
+		$message = $message.$secretPhrase;
+		$result = md5($message).sha1($message);
+		for ($i = 0; $i < 1102; $i++) {
+			$result = md5($result);
+		}
+		return $result;
+	}
+
+	// Формирование подписи
+	$sign = signMessage($base64, $secret);
+?>
+	<script src="https://form-test.kupivkredit.ru/sdk/v1/sdk.js?onload=myOnLoadFunction" type="text/javascript" async></script>
+	<script type="text/javascript">
+		window.callbacks = [];
+
+		window.onload = function() {
+			for (var i = 0; i < this.callbacks.length; i++) {
+				this.callbacks[i].call();
+			}
+		};
+
+		window.myOnLoadFunction = function(KVK) {
+			var button, form;
+			form = KVK.ui("form", {
+				order:"<?php echo $base64; ?>",
+				sign: "<?php echo $sign; ?>",
+				type: "full"
+			});
+
+			window.callbacks.push(function() {
+				button = document.getElementById("open");
+				button.removeAttribute("disabled");
+				button.onclick = function() {
+					// Открытие формы по нажатию кнопки
+					form.open();
+				};
+			});
+		}
+
+	</script>
+	<button type="button" id="open" name="open" class="btn btn_text-large btn_img"></button>
+<?php
+}
+?>
             <div class="cart-final__footer"><a href="<?php echo HOST_URL;?>" class="btn btn_text-large">Вернуться в каталог</a></div>
         </div>
     </div>

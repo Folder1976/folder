@@ -120,7 +120,7 @@ class Order {
 		}
 		
 	}
-
+	
 	public function getOrderItems(){
 		$user_agent = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
 		$user_agent = md5($user_agent);
@@ -196,7 +196,13 @@ class Order {
 		$memo = 'Оплата: '.$pay[mysqli_real_escape_string($this->base, $post['payments'])];
 		$memo .= ', Доставка: '.$deliv[mysqli_real_escape_string($this->base, $post['delivery'])];
 		$memo .= ', Коментарий пользователя: '.mysqli_real_escape_string($this->base, $post['buyer-komment']);
-		
+
+
+		$user_kredit = array(
+			'firstname' => $post['buyer-name'],
+			'email' => $post['buyer-email']
+		);
+ 
 		$customer_memo = 'Получатель: ' . $post['buyer-name']. '*' .
 				'email: ' . $post['buyer-email'] . '*' .
 				'телефон: ' . $post['buyer-phone'] . '*' .
@@ -226,7 +232,8 @@ class Order {
 		if(!$cart) return false;
 		
 		$products_html = '';
-		
+		$products_credit = array();
+
 		foreach($cart as $val){
 			
 			$summ = $val['order_item'] * $val['product_price'];
@@ -261,6 +268,11 @@ class Order {
 							<td>'.$val['product_price'].'</td>
 							<td>'.$summ.'</td>
 						</tr>';
+				$products_credit[] = array(
+					'title' => $tovar['tovar_name_1'],
+					'qty' => $val['order_item'],
+					'price' => $val['product_price']
+				);
 			}
 		}
 		
@@ -271,7 +283,9 @@ class Order {
 
 		$return['id'] 	= $operation_id;
 		$return['sum'] 	= $total;
-		
+		$return['kruser'] 	= $user_kredit;
+		$return['krprod'] 	= $products_credit;
+
 		if(isset($email) AND $email != '' AND strpos($email, '@') !== false){
 			global $setup;
 			$html = '<style>

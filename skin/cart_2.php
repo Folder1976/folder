@@ -57,7 +57,7 @@
 
     <div class="row">
         <div class="large-16 medium-18 columns medium-centered">
-            <form action="<?php echo HOST_URL; ?>/order.html" METHOD="POST" class="form" data-abide="ajax">
+			<form action="<?php echo HOST_URL; ?>/order.html<?php echo (isset($_GET["kredit"]) ? "?kredit" : ""); ?>" METHOD="POST" class="form" data-abide="ajax">
                 <fieldset class="form__fieldset">
                     <div class="row form__row">
                         <label for="buyer-name" class="large-6 large-offset-4 medium-8 columns form__label"><span class="form__label-name">Ваше Фамилия Имя</span></label>

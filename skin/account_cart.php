@@ -143,6 +143,7 @@
                 <div class="medium-12 columns cart__footer-col text-right small-only-text-left">
                     <span class="cart__total-price"><span class="cart__total_all"><?php echo $summ;?></span> ₽</span>
                     <?php if(isset($cart) AND $cart){ ?>
+					<a href="<?php echo HOST_URL;?>/cart.html?kredit"><button type="button" class="btn btn_text-large btn_img">&nbsp;</button></a><br\>&nbsp;<br\>
                     <a href="<?php echo HOST_URL;?>/cart.html"><button type="button" class="btn btn_text-large">Оформить</button></a>
                     <?php } ?>
                 </div>
