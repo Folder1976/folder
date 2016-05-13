@@ -452,25 +452,18 @@ echo "function update_detail(id,set,nakl){
 echo "\n</script>";
 //==================END JAVA ============================================
     echo "\n<body>\n";
+?>
+<style>
+    .list_menu{
+       position: fixed;
+       margin-top: 20px;
+       top:-20px;
+       
+    }
+</style>
 
-
-
-//======================PAGE SET=======================================
-/*if ($page==0)$page=0;
-$page_count_www=1;
-while($page_count-$page_limit>0){
-  if($page==$page_count_www){
-  echo " [",$page_count_www,"] ";
-  }else{
-  echo "<a href='operation_list.php?iStatus=",$iStatusSelect,"&iKlient=",$iKlientSelect,"&iGroupSelected=",$iKlientGroupSelect,"&page=",$page_count_www,"'> ",$page_count_www, " </a>";
-  //echo "---",$page_count,"--";
-  }
-$page_count_www++;
-$page_count=$page_count-$page_limit;
-}*/
-//=================================================================
-//$function -> page_set($page,$page_count,$page_limit,$iStatusSelect,$iKlientGroupSelect,$iKlientSelect);
-echo "\n<table class='main'><tr><td>";
+<?php
+echo "\n<div class=\"list_menu\"><table class='main'><tr><td>";
 echo "\n<table  class='key'>
       <tr>";
 echo "<td class='key'>
@@ -500,10 +493,11 @@ echo "</tr></table>";
 
 echo "</td><td>";
 $function -> page_set($page,$page_count,$page_limit,$iStatusSelect,$iKlientGroupSelect,$iKlientSelect);
-echo "</td></tr></table>";
+echo "</td></tr></table>
+</div>";
 
 
-echo "\n<table>"; //",$m_setup['menu menu'],"
+echo "\n<table style='margin-top:50px;'>"; //",$m_setup['menu menu'],"
 echo "<tr>
       <th>",$m_setup['menu date-time'],"</th>
       <th>",$m_setup['menu order'],"</th>
