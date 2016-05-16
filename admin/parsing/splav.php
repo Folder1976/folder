@@ -341,6 +341,16 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								}
 								
 								if(isset($error)){
+									//Попробуем тогда наоборот
+									foreach($all_goods as $index => $value){
+										if(strpos($name, $index) !== false){
+											unset($error);
+											break;
+										}
+									}
+								}
+								
+								if(isset($error)){
 									echo '<br>Не совпали имена!<br>'.$name;
 									echo "<pre>";  print_r(var_dump( $all_goods )); echo "</pre>";
 									die();

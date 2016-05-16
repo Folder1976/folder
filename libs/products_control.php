@@ -163,7 +163,7 @@ $timer[] = timer('Всего товаров');
                and price_1 > 0
                and `tovar_inet_id` > 0 $brand_filter $attr_str
                GROUP BY tovar_name_1
-               ORDER BY T.sort ASC, CASE items WHEN 0 THEN 1 ELSE 0 END ASC, price_1 ASC, `tovar_name_1` ASC
+               ORDER BY CASE items WHEN 0 THEN 1 ELSE 0 END ASC, T.sort ASC, price_1 ASC, `tovar_name_1` ASC
                LIMIT $start, $step";
                
    }elseif($key == 'FIND'){
@@ -197,6 +197,7 @@ $timer[] = timer('Всего товаров');
                ORDER BY T.sort ASC, CASE items WHEN 0 THEN 1 ELSE 0 END ASC, price_1 ASC, `tovar_name_1` ASC
                LIMIT $start, $step";
    }else{
+    $key = 40;
       $sql = "SELECT 	`tovar_inet_id_parent`,
                `tovar_artkl`,
                `tovar_model`,
