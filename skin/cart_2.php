@@ -190,12 +190,12 @@
                                 </div>
                             </div>
 
-                            <div class="form__check-row">
+                            <!--div class="form__check-row">
                                 <input type="radio" name="payments" class="icheck" value="payment-pickup" id="payment-pickup" data-radioClass="form__radio">
                                 <div class="form__check-label-wrapper">
                                     <label for="payment-pickup" class="form__check-label">Наличными при самовывозе</label>
                                 </div>
-                            </div>
+                            </div-->
 
                             <div class="form__check-row">
                                 <input type="radio" name="payments" class="icheck" value="payment-post" id="payment-post" data-radioClass="form__radio">
