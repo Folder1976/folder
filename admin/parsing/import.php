@@ -1,9 +1,9 @@
-
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <h3>Выбрать поставщика</h3>
 Тут перепарсиваются цены и остатки(где есть)... Парс продолжатеся с прерванного места. Если нужно начать с начала - нажми Обнулить.
 <br>Пауза между запросами страницы - 10 сек. Парсится дооооолго.
 <br><br>
-<a href="main.php?func=add_products&supplier=setnull"><b>Обнулить</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+<!--a href="main.php?func=add_products&supplier=setnull"><b>Обнулить</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=prices"><b>Все Цены</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=prices&minus=5"><b>Все Цены (-5 руб)</b></a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=clear"><b>Почистить мусор</b></a> <= Удаляет записи по товарам которых нет.
@@ -17,11 +17,30 @@
 <a href="main.php?func=add_products&supplier=allmulticam">allmulticam.ru[нет]</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=militarist">militarist.ua</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=btcgroup">btcgroup.ru</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-<!--a href="main.php?func=add_products&supplier=garsing">garsing.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
-<a href="main.php?func=add_products&supplier=wht">wht.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;
-<a href="main.php?func=add_products&supplier=splav">splav.ru<font color="red">*</font></a>
+a href="main.php?func=add_products&supplier=garsing">garsing.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;
+a href="main.php?func=add_products&supplier=wht">wht.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp; -->
+<a href="?func=add_products&supplier=tiande">tiande.ru<font color="red">*</font></a>
 <hr>
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+
+
+include '../../configuration.php';
+$JConfig = new JConfig();
+
+/* Database Settings */
+$dbprefix = $JConfig->dbprefix;
+
+$host = $JConfig->host;
+$user = $JConfig->user;
+$password = $JConfig->password;
+$db = $JConfig->db;
+
+//Новое соединение с базой
+$mysqli = mysqli_connect($host,$user,$password,$db) or die("Error " . mysqli_error($mysqli)); 
+mysqli_set_charset($mysqli,"utf8");
 
 $supp = '';
 if(isset($_GET['supplier'])) $supp = $_GET['supplier'];
@@ -35,7 +54,7 @@ if($supp == 'militarist') include 'parsing/militarist.php';
 if($supp == 'btcgroup') include 'parsing/btcgroup.php';
 if($supp == 'garsing') include 'parsing/garsing.php';
 if($supp == 'wht') include 'parsing/wht.php';
-if($supp == 'splav') include 'parsing/splav.php';
+if($supp == 'tiande') include 'tiande.php';
 if($supp == 'prices') include 'parsing/prices.php';
 if($supp == 'clear') include 'parsing/clear.php';
 if($supp == 'clear_photo') include 'parsing/clear_photo.php';

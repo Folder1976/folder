@@ -1,8 +1,9 @@
 <?php
 set_time_limit(0);
 include 'constants.php';
+define("GETCONTENTVIAPROXY", 1);
 $postav_id = 59; //MILITARIST
-$pausa = 10;
+$pausa = 5;
 $currency = 5;
 $kurs = 3;
 $skidka = 0.75;
@@ -222,9 +223,8 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				$list['url'] = str_replace('https:/','https://',$list['url']);
 
 				//Get content via proxy
-				define("GETCONTENTVIAPROXY", 1);
 				$html = @file_get_html($list['url']);
-				
+			
 				//Если это кривой линк - возможно удаленный товар
 				if(!$html){
 					$sql = 'UPDATE tbl_parsing_militarist SET view = "1" WHERE `url` = \''.$list['url'].'\';';

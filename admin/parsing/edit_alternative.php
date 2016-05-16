@@ -1,6 +1,6 @@
 <?php
 include '../config/config.php';
-include '../simple_html_dom/simple_html_dom.php';
+//include '../simple_html_dom/simple_html_dom.php';
 
 
 if(!isset($_POST['key'])){
@@ -8,7 +8,6 @@ if(!isset($_POST['key'])){
 }else{
     $key = $_POST['key'];
 }
-
 
 if($key == 'add_brand'){
     
@@ -20,6 +19,7 @@ if($key == 'add_brand'){
             on duplicate key update
             brand_name = "'.$_POST['brand_name'].'"
             ;';
+           
     $folder->query($sql) or die('Ошибка - '.$sql);
 }
 
@@ -30,6 +30,7 @@ if($key == 'add_category'){
             category_id = "'.$_POST['category_id'].'",
             postav_id = "'.$_POST['postav_id'].'",
             breadcrumbs = "'.$_POST['breadcrumbs'].'";';
+    //echo $sql;
     $folder->query($sql) or die('Ошибка - '.$sql);
 }
 

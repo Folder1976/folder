@@ -128,6 +128,8 @@ class GetViaProxy {
 				curl_close($ch);
 
 			}
+			
+			echo '<br>-result- : '.$output.'<br>';
 		}
 
 		

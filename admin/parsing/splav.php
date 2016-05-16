@@ -5,25 +5,26 @@ ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
+include 'class/class_product_edit.php';
 include 'constants.php';
 
-
-
-$postav_id = 1; //Folder
-$pars_key = 'tiande';
-$pars_table = 'tbl_parsing_tiande';
+//define("GETCONTENTVIAPROXY", 1);
+$mysqli = $folder;
+$postav_id = 53; //СПЛАВ
+$pars_key = 'splav';
+$pars_table = 'tbl_parsing_splav';
 $add_row_key = 'catalog/';
-$http = 'http://tiande.ru/';
-$http2 = 'http://www.tiande.ru/';
-$pausa = 10;
+$http = 'http://splav.ru/';
+$http2 = 'http://www.splav.ru/';
+$pausa = 15;
 $currency = 1;
 $kurs = 1;
-$skidka = 0.58;
+$skidka = 0.7;
 $nacenka = 1; //Наценка на розницу! не на закуп!!!
-$brand_id = 1; //Гарсинг
+$brand_id = 2324; //Сплав
 //$category_id = 407;
 //define('UPLOAD_DIR', '/tiande-brovary.com/www/images/stories/virtuemart/product/');
-define('UPLOAD_DIR', '../../images/stories/virtuemart/product/');
+//define('UPLOAD_DIR', '../../images/stories/virtuemart/product/');
 
 //$nacenka110 = 1.10; //Наценка на розницу! не на закуп!!!
 //$nacenka135 = 1.35; //Наценка на розницу! не на закуп!!!
@@ -186,19 +187,19 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 	
 				//Для тестов
 //$list['url'] = 'http://tiande.ru/catalog/dlya_volos/sredstva_ne_trebuyuschie_smyvaniya/1252112/';
-//$list['url'] = 'http://wht.ru/shop/catalog/wear/ARXUS_CLOTHES/MICROCLIMATE/SWAETER_MICRO/21439.php';
+//$list['url'] = 'http://splav.ru/goodsdetail.aspx?gid=20071116192014953000';
 //echo 	$list['url']; die();
 
-				$html = @file_get_html($list['url']);
+				$html = file_get_html($list['url']);
+				
+				$html1 = file_get_contents($list['url']);
 				
 				$sql = 'UPDATE '.$pars_table.' SET view = "1" WHERE `url` = \''.$list['url'].'\';';
 				//echo $sql; die();
 				//$folder->query($sql) or die('==' . $sql);
-				
+		
 				//Если это кривой линк - возможно удаленный товар
 				if(!$html){
-					header("Content-Type: text/html; charset=UTF-8");
-					echo "<pre>";  print_r(var_dump( $list['url'] )); echo "</pre>";
 					?>
 					<h3>Ошибка 404</h3>
 						<script>
@@ -218,7 +219,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				}
 				
 				//Хлебная крошка
-				$tmp = $html->find('.breadcrumbs',0);
+				$tmp = $html->find('.breadcrumb',0);
 				if($tmp){
 					$breadcrumbs_html = $tmp->innertext();
 					$html_tmp = str_get_html($breadcrumbs_html);
@@ -243,94 +244,213 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 											//Это товар
  * =================================================================================================================================
  * =================================================================================================================================
- */ 
+ */
+
+ 
+			
+				$all_goods = array();
+				
 				//if($html->find('.product-text h1',0)){
-				if($html->find('.product-right',0)){
-					//============================================================================================
-					$name = $html->find('.product-text h1',0)->innertext();
-					echo '<br>Название ($name) -> <b><font color="red">'.$name.'</font></b>';
-					//============================================================================================
-					$artkl = $html->find('.code-p',0)->innertext();
-					$artkl = trim($artkl);
-					$artkl = str_replace('Код:', '', $artkl);
-					$artkl = trim($artkl);
-					echo '<br>Артикл ($artkl) -> <b><font color="green">'.$artkl.'</font></b>';
-					//============================================================================================
-					$size_original = $html->find('.obyom-p',0)->innertext();
-					$size = trim($size_original);
-					$size = preg_replace("/\D/","",$size);
-					$size = trim($size, ',');
-					echo '<br>Обьем/Вес ($size) -> <b><font color="orange">'.$size_original. ' => '.$size.'</font></b>';
-					//============================================================================================
-					$price = $html->find('.now-price',0)->innertext();
-					$price = trim($price);
-					$price = preg_replace("/\D/","",$price);
-					$price = $price / 100;
-					echo '<br>Цена ($price) -> <b><font color="blue">'.$price.'</font></b>';
-					//============================================================================================
-					$bonus_original = $html->find('.bonus',0)->innertext();
-					$bonus = trim($bonus_original);
-					$bonus = preg_replace("/\D/","",$bonus);
-					$bonus = $bonus / 100;
-					echo '<br>Бонус ($bonus) -> <b><font color="blue">'.$bonus_original. ' => '.$bonus.'</font></b>';
-					//============================================================================================
+				if(strpos($list['url'], 'goodsdetail') !== false){
+
+					//Разбираем метатеги					
+					
+					$html2 = file_get_contents($list['url']);
+					
+					$tmp = explode('xmlRs', $html2);
+					$gods_det = explode('good id', $tmp[1]);
+					$gods_a = explode('article id', $tmp[1]);
+					
+					//Артиклы и Названия
+					foreach($gods_a as $Text){
+						$tt = explode('>', $Text);
+						
+						if(strpos($tt[0], 'version="1.0"') === false){
+							$tt2 = explode('="', $tt[0]);
+							
+							$artkl = trim(trim(trim(trim($tt2[1]), 'name'), '"'));
+							$artkl = trim(trim($artkl, '"'));
+							$name = trim(trim(trim(trim($tt2[2]), 'img1number'), '"'));
+							$name = str_replace('\\\'','"', $name);
+							$name = trim(trim($name, '"'));
+							
+							$all_goods[$name]['name'] = $name;
+							$all_goods[$name]['artkl'] = 'SP_'.$artkl;
+							
+						
+						}
+					}
+					
+					//Детали по размерам цвету и цене
+					foreach($gods_det as $Text){
+						if(strpos($Text, 'version=') === false){
+							
+							$Text = str_replace('\\\'','@@@', $Text);
+							$Text = str_replace("'",'"', $Text);
+							//$Text = $good; //'"="20130318125953600129" name="Жилет Resolve Primaloft черный с капюшоном 40-42/158-164" price1="3200" price2="3200" f0="Y" sz="40-42/158-164" clr="черный"';
+							if (preg_match_all('#\s+([^=\s]+)\s*=\s*((?(?="|\') (?:"|\')([^"\']+)(?:"|\') | ([^\s]+)))#isx', $Text, $matches)) {
+								
+								
+								
+							  if($matches[0][0] != '' AND $matches[0][0] != 'name'){
+								
+								$name = trim(trim(str_replace('name=','',$matches[0][0]),'"'));
+								$name = str_replace('@@@', '"', $name);
+								$size = '';
+								
+								foreach($matches[0] as $tmp){
+									if(strpos($tmp,'sz=') !== false){
+										$size = trim(trim(str_replace('sz=','',$tmp),'"'));
+										$size = trim(trim($size,'"'));
+									break;
+									}
+								}
+								
+								$price = 0;
+								foreach($matches[0] as $tmp){
+									if(strpos($tmp,'price1=') !== false){
+									$price = trim(trim(str_replace('price1=','',$tmp),'"'));
+									$price = trim(trim($price, '"'));
+									break;
+									}
+								}
+								
+								$color = '';
+								foreach($matches[0] as $tmp){
+									if(strpos($tmp,'clr=') !== false){
+										$color = trim(trim(str_replace('clr=','',$tmp),'"'));
+										$color = trim(trim($color, '"'));
+										break;
+									}
+								}
+								
+								
+								$name = str_replace($size, '', $name);
+								$name = trim(trim(trim($name),'"'));
+								
+								//Если это Дебильное имя
+								if(!isset($all_goods[$name])){
+									$error = 1;	
+									foreach($all_goods as $index => $value){
+										if(strpos($index, $name) !== false){
+											$name = $index;
+											unset($error);
+											break;
+										}
+									}
+								}
+								
+								if(isset($error)){
+									echo '<br>Не совпали имена!<br>'.$name;
+									echo "<pre>";  print_r(var_dump( $all_goods )); echo "</pre>";
+									die();
+								}
+								
+								
+								$all_goods[$name]['color'] = $color; 
+								$all_goods[$name]['size'][$size]['size'] = $size;
+								$all_goods[$name]['size'][$size]['price'] = $price;
+								$all_goods[$name]['size'][$size]['yes'] = true;
+							  }
+							}
+						}
+					}
+					
+//die();					
+					echo '<br>Артикл -> <b><font color="green">';
+						foreach($all_goods as $good){
+							
+							//Если завтык с Артиклами - Останавливаем парс
+							if(isset($good['artkl'])){
+								echo $good['artkl'].', ';
+							}else{
+								?>
+								<h2>Несовпадение по Имя-Артикл. Паср остановлен!</h2>
+								<?php
+							}
+						}
+					echo '</font></b>';
 					//============================================================================================
 					
+					echo '<br>Название -> <b><font color="red">';
+						foreach($all_goods as $good){
+							echo '<br>'.$good['name'].'';
+						}
+					echo '</font></b>';
+					//============================================================================================
+					echo '<br>Цвета -> <b><font color="blue">';
+						foreach($all_goods as $good){
+							if(isset($good['color'])){
+								echo '<br>'.$good['color'].'';
+							}
+						}
+					echo '</font></b>';
+					
+					//============================================================================================
+					echo '<br>Размеров -> <b><font color="blue">';
+						foreach($all_goods as $good){
+							echo '<br>'.$good['artkl'].' => '.count($good['size']).'<br>';
+						}
+					echo '</font></b>';
+					//============================================================================================
+					
+					$tmps = $html->find('.productDescriptionTab');
+					$memo = '';
+					if($tmps){
+						foreach($tmps as $tmp){
+							$memo .= $tmp->innertext();
+						}
+						$memo = trim($memo);
+					}
+	
+					//echo '<br>Описание ($memo) -> '.$memo.'';
+					//============================================================================================
+				
+				
 					$image = array();
 					$image_small = array();
-					$t = $html->find('#single_image');
+					$image_title = array();
+					$image_main_load = array();
+					
+					$t = $html->find('.productViewPhoto');
+					
 					foreach($t as $tt){
 						
-						$tmp = ''.$tt->href;
+						$tmp = ''.$tt->src;
+						$title = ''.$tt->title;
+						$tmp_t = explode(' -', $title);
+						if(isset($tmp_t[0]) AND strlen($tmp_t[0]) > 1){
+							$title = $tmp_t[0];
+						}
 						
 						$tmp = $http.''.$tmp;$tmp = str_replace('//', '/', $tmp);
 								$tmp = str_replace('http:/', 'http://', $tmp);
 						$image[] = $tmp;
 						$image_small[] = $tmp;
-						/*
-						if(strpos($tmp, 'upload/resize_cache/') !== false){
-							if(strpos($tmp, $pars_key) === false){
-								$tmp = $http.''.$tmp;
-								$tmp = str_replace('//', '/', $tmp);
-								$tmp = str_replace('http:/', 'http://', $tmp);
-							}
-								$tmp = str_replace('400_400_1/','',$tmp);
-								$tmp = str_replace('resize_cache/','',$tmp);
-							$image[] = $tmp;
+						$image_title[] = $title;
+						$title = str_replace('tobacco','коричневый',$title);
 						
-							$image_small[] = $tmp;
-						}*/
+						$image_main_load[$title]  = strtolower($tmp);
 						
 					}
-						
+					
+					//============================================================================================
+					echo '<br>Основная картинка -> <b><font color="blue"><br>';
+						foreach($image_main_load as $index => $img){
+							echo ''.$index.' => <img width="150" src="'.$img.'">';
+						}
+					echo '</font></b>';
+					//============================================================================================
+					echo '<br>Общие картинки -> <b><font color="black"><br>';
 					echo '<br>';
 					foreach($image_small as $index => $img){
 						if(is_string($img)){
 							echo '<img width="150" src="'.$img.'">';	
+							//echo ''.$image_title[$index];	
 						}
 					}
+					echo '</font></b>';
 					//============================================================================================
-					//============================================================================================
-					$tmp = $html->find('.description',0);
-					$memo = '';
-					if($tmp){
-						$memo = $tmp->outertext();
-						$memo_s = $tmp->plaintext;
-						$memo_s = trim($memo_s);
-						$memo_s = str_replace('ОПИСАНИЕ:', '', $memo_s);
-						$memo_s = trim($memo_s);
-						
-						$tmp = $html->find('.instruction',0);
-					}
-					if($tmp){
-						$memo .= $tmp->outertext();
-					}
-					//$memo = htmlspecialchars($memo, ENT_QUOTES);
-					$memo = '<ul><li>Балы: '.$bonus_original.'</li><li>Вес/Обьем: '.trim(str_replace(',','', $size_original)).'</li></ul>'.$memo;
-					$memo = str_replace('"', "'", $memo);
-					
-					//$memo_s = str_replace('"', "'", $memo);
-					echo '<br>Описание ($memo) -> '.$memo.'';
 					//============================================================================================
 				
 					$view = '0'; //Тоже в ноль его пока полное добавление не пройдет
@@ -344,29 +464,24 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				foreach($str_tmp as $option){
 				
 					$href = str_get_html($option->href);
-					if(strpos($href, $http) === false AND strpos($href, $http2) === false AND strpos($href, $add_row_key) !== false){
+					if(strpos($href, $http) === false AND strpos($href, $http2) === false){
 						
 						$href = $http.$href;
 						$href = str_replace('//', '/', $href);
 						$href = str_replace('//', '/', $href);
 						$href = str_replace('https:/', 'https://', $href);
 						$href = str_replace('http:/', 'http://', $href);
+						
+					
 					}
 					
-					//Отсекаем мусор
-					if(strpos($href, "'") === false){
-						$sql = 'SELECT id FROM '.$pars_table.' WHERE url = \''.$href.'\';';
-						$t = $mysqli->query($sql) or die('==' . $sql);
-						
-						if($t->num_rows == 0){
-							if(strpos($href, $add_row_key) !== false){
-								if(strpos($href, '/cz/catalog/') === false
-										AND strpos($href, '/en/catalog/') === false
-											AND strpos($href, '/pl/catalog/') === false
-												AND strpos($href, 'change_country') === false
-													AND strpos($href, 'change_lang') === false
-														AND strpos($href, 'VIEW=') === false
-									){
+						//Отсекаем мусор
+						if(strpos($href, "'") === false){
+							$sql = 'SELECT id FROM '.$pars_table.' WHERE url = \''.$href.'\';';
+							$t = $mysqli->query($sql) or die('==' . $sql);
+							
+							if($t->num_rows == 0){
+								if(strpos($href, 'catalog')!==false OR strpos($href, 'goodsdetail')!==false){
 									$sql = 'INSERT INTO '.$pars_table.' SET
 												 `url` = \''.$href.'\',
 												 `key` = "'.$name.'",
@@ -384,49 +499,64 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					}
 					
 	 
-				}
+				//}
 				
 				
-				$sql = 'UPDATE '.$pars_table.' SET view = \'0\',
-												`breadcrumbs` = \''.$breadcrumbs_txt.'\',
-												`artkl` = \''.$artkl.'\',
-												`brand` = \''.$brand.'\',
-												`price` = \''.$price.'\',
-												`size` = \'\'
+				$sql = 'UPDATE '.$pars_table.' SET view = "0",
+												`breadcrumbs` = "'.str_replace('"',"'",$breadcrumbs_txt).'",
+												`artkl` = "'.var_dump($artkl).'",
+												`brand` = "'.$brand.'",
+												`price` = "'.$price.'",
+												`size` = ""
 												
 												WHERE url = \''.$list['url'].'\';';
+				
 				$mysqli->query($sql) or die('==' . $sql);
 				
 				//=============================================================
 				//Опеределяем данные
 				$error = 0;
 				
-				//Категория
-				//Если только категория не назначена для всего сайта	
-				if(!isset($category_id)){
-					$sql = 'SELECT category_id FROM tbl_category_alternative WHERE breadcrumbs = "'.$breadcrumbs_txt.'" AND postav_id = "'.$postav_id.'";';
-					$br = $mysqli->query($sql) or die('==' . $sql);
+				//Бренд
+				/*
+				$sql = 'SELECT brand_id FROM tbl_brand WHERE brand_name = "'.$brand.'" ORDER BY brand_name ASC;';
+				$br = $folder->query($sql) or die('==' . $sql);
+				if($br->num_rows > 0){
+					$tmp = $br->fetch_assoc();
+					$brand_id = $tmp['brand_id'];
+				}else{
+					$sql = 'SELECT brand_id FROM tbl_brand_alternative WHERE postav_id = "'.$postav_id.'" AND brand_name = "'.$brand.'" ';
+					$br = $folder->query($sql) or die('==' . $sql);
 					if($br->num_rows > 0){
 						$tmp = $br->fetch_assoc();
-						$category_id = $tmp['category_id'];
+						$brand_id = $tmp['brand_id'];
 					}else{
 						$error = 1;
 					}
-				}	
+				}*/
+				
+				//Категория
+				$sql = 'SELECT category_id FROM tbl_category_alternative WHERE breadcrumbs = "'.str_replace('"',"'",$breadcrumbs_txt).'" AND postav_id = "'.$postav_id.'";';
+				$br = $folder->query($sql) or die('==' . $sql);
+				if($br->num_rows > 0){
+					$tmp = $br->fetch_assoc();
+					$category_id = $tmp['category_id'];
+				}else{
+					$error = 1;
+				}
 
-	 
-	 
-		if($error AND $name != 'category'){
+				
+		if( $name != 'category' and $error == 1){
 			echo '<div class="error">';
 			if(!isset($brand_id)){
 				
 				include 'class/class_localisation.php';
 
-				$Localisation = new Localisation($mysqli);
+				$Localisation = new Localisation($folder);
 				$country = $Localisation->getCountry();
 				
 				include 'class/class_brand.php';
-				$Brand = new Brand($mysqli);
+				$Brand = new Brand($folder);
 				$brands = $Brand->getBrands();
 				?>
 				<br>Не удалось определить бренд ( <b> <?php echo $brand; ?> </b> ) -
@@ -449,24 +579,12 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						</header>
 						<hr>
 				<?php
-			}else{
-				?>
-					<header>
-						<title>Scan tiande.ru</title>
-					</header>
-				<?php
 			}
 			
 			if(!isset($category_id)){
-				  $sql = "SELECT
-							category_child_id AS product_type_id,
-							category_parent_id AS product_parent_id,
-							category_name AS product_type_name
-						FROM  jos_virtuemart_category_categories VCC
-						LEFT JOIN jos_virtuemart_categories_ru_ru VCRR ON VCRR.virtuemart_category_id = VCC.category_child_id
-							WHERE category_parent_id = '0'
-							ORDER BY category_name ASC;";
-					$rs = $mysqli->query($sql) or die ("Get product type list ".$sql);
+				  $sql = "SELECT parent_inet_id AS product_type_id, parent_inet_parent AS product_parent_id, parent_inet_1 AS product_type_name
+					FROM  tbl_parent_inet  WHERE parent_inet_parent = '0' ORDER BY parent_inet_1 ASC;";
+					$rs = $folder->query($sql) or die ("Get product type list ".$sql);
 					
 					$body = "
 							<div id=\"container\" class = \"product-type-tree\">
@@ -476,7 +594,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					while ($Type = mysqli_fetch_assoc($rs)) {
 						if($Type['product_parent_id'] == 0){
 							$body .=  "<li><span id=\"span_".$Type['product_type_id']."\"> <a class = \"tree\" href=\"javascript:\" id=\"".$Type['product_type_id']."\">".$Type['product_type_name']."</a>";
-							$body .= "</span>".readTree($Type['product_type_id'],$mysqli);
+							$body .= "</span>".readTree($Type['product_type_id'],$folder);
 							$body .= "</li>";
 						}
 					}
@@ -485,308 +603,224 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						
 				echo $body;
 				echo '<hr>Категория? <b>'.$breadcrumbs_txt.'</b> - <a href="javascript:" class="breadcrumbs">Назначить этим крошкам</a>
-							<!-- &nbsp;&nbsp;&nbsp;&nbsp;===>&nbsp;&nbsp;
-							<a href="edit_inet_parent_table.php" target="_blank"> редактор категорий тут</a-->';
+							&nbsp;&nbsp;&nbsp;&nbsp;===>&nbsp;&nbsp;<a href="edit_inet_parent_table.php" target="_blank"> редактор категорий тут</a>';
 				?>
 					<header>
 						<title>*** STOP!</title>
 					</header>
 				
 				<?php
-			}else{
-				?>
-					<header>
-						<title>Scan tiande.ru</title>
-					</header>
-				<?php
 			}
 		}
 		//============================================================================================================
-		
-		//header("Content-Type: text/html; charset=UTF-8");
-		//echo "<pre>";  print_r(var_dump( $size )); echo "</pre>";die();
-		
 		//============================================================================================================
 		//============================== З А П И С Ь =================================================================
 		//============================================================================================================
 		//============================================================================================================
+		
+		
 		if($name != 'category'){	
+		
 			if($error == 1 ){
 				echo '<h2>НЕ ХВАТАЕТ ДАННЫХ!</h2></div>';
 				$view = 0;
 			}else{
-				
-				$date = date('Y-m-d H:i:s');
-				
-				$sql = 'SELECT virtuemart_product_id FROM jos_virtuemart_products WHERE product_sku = "'.$artkl.'" LIMIT 0, 1;';
-				$r = $mysqli->query($sql);
-				
-				//Значит продукт есть - обновим цены
-				if($r->num_rows > 0){
 					
-					$tmp = $r->fetch_assoc();
+				foreach($all_goods as $good){
+		
+					if(!isset($good['artkl'])) continue;
+						if(!isset($good['name'])) continue;
 					
-					$product_id = $tmp['virtuemart_product_id'];
-					
-					//Продукта нет - добавим
-				}else{
-					
-					$sql = 'INSERT INTO	`jos_virtuemart_products` SET
-							`virtuemart_vendor_id`="1",
-							`product_parent_id`="0",
-							`product_sku`="'.$artkl.'",
-							`product_gtin`="",
-							`product_mpn`="",
-							`product_weight`="'.$size.'",
-							`product_weight_uom`="г.",
-							`product_length`=NULL,
-							`product_width`=NULL,
-							`product_height`=NULL,
-							`product_lwh_uom`="M",
-							`product_url`="",
-							`product_in_stock`="1",
-							`product_ordered`="0",
-							`low_stock_notification`="1",
-							`product_available_date`="'.$date.'",
-							`product_availability`="",
-							`product_special`="0",
-							`product_sales`="0",
-							`product_unit`="KG",
-							`product_packaging`=NULL,
-							`product_params`=\'min_order_level=""|max_order_level=""|step_order_level=""|product_box=""|\',
-							`hits`=NULL,
-							`intnotes`="",
-							`metarobot`="",
-							`metaauthor`="",
-							`layout`="0",
-							`published`="1",
-							`pordering`="0",
-							`created_on`="'.$date.'",
-							`created_by`="62",
-							`modified_on`="'.$date.'",
-							`modified_by`="62",
-							`locked_on`="0000-00-00 00:00:00",
-							`locked_by`=""
-							';
-							
-					$mysqli->query($sql) or die('Добавдение продукта '.$sql);
-					
-					$product_id = $mysqli->insert_id;
-					
-					$sql = 'INSERT INTO jos_virtuemart_products_ru_ru SET
-							`virtuemart_product_id`="'.$product_id.'",
-							`product_s_desc`="'.$memo_s.'",
-							`product_desc`="'.$memo.'",
-							`product_name`="'.$name.'",
-							`metadesc`="'.$name.'",
-							`metakey`="'.$name.'",
-							`customtitle`="'.$name.'",
-							`slug`="'.strtolower(translitArtkl($name.'-'.$artkl)).'"
-					';
-					$mysqli->query($sql) or die('Добавдение продукта '.$sql);
-					
-					
-					$sql = 'INSERT INTO jos_virtuemart_product_categories SET
-								virtuemart_product_id = "'.$product_id.'",
-								virtuemart_category_id = "'.$category_id.'",
-								ordering="0"
-							';
-					$mysqli->query($sql) or die('Добавдение продукта '.$sql);
-					
-					
-					$sql = 'INSERT INTO jos_virtuemart_product_prices SET
-							`virtuemart_product_id` = "'.$product_id.'",
-							`virtuemart_shoppergroup_id` = "0",
-							`product_price` = "'.$price.'",
-							`override` = "0",
-							`product_override_price` = "0", 
-							`product_tax_id` = "0",
-							`product_discount_id` = "0",
-							`product_currency` = "199",
-							`product_price_publish_up` = "0000-00-00 00:00:00",
-							`product_price_publish_down` = "0000-00-00 00:00:00",
-							`price_quantity_start` = "0",
-							`price_quantity_end` = "0",
-							`created_on` = "'.$date.'",
-							`created_by` = "62",
-							`modified_on` = "'.$date.'",
-							`modified_by` = "62",
-							`locked_on` = "0000-00-00 00:00:00",
-							`locked_by` = ""
-						';
-					$mysqli->query($sql) or die('Добавдение продукта '.$sql);
-					
-				}
+					$name = $good['name'];
+					$artkl = $good['artkl'];
+					if(isset($good['color']) AND $good['color'] != ''){
+						$color_name = $good['color'];
+						$color_id = getColodInOnColorName($good['color'], $folder);
+						if($color_id == '') unset($color_id);
+					}
+					$size = $good['size'];
 					
 				
-				//Обновляем другие поля
-				//Цена 131 = RUB, 199 = UAH;
-				
-				$sql = 'UPDATE jos_virtuemart_products_ru_ru SET
-						`product_s_desc`="'.$memo_s.'",
-						`product_desc`="'.$memo.'",
-						`product_name`="'.$name.'",
-						`metadesc`="'.$name.'",
-						`metakey`="'.$name.'",
-						`customtitle`="'.$name.'",
-						`slug`="'.strtolower(translitArtkl($name.'-'.$artkl)).'"
-						WHERE
-						`virtuemart_product_id`="'.$product_id.'"
-				';
-				$mysqli->query($sql) or die('Добавдение продукта '.$sql);
-				
-				
-				$sql = 'UPDATE jos_virtuemart_product_prices SET
-							`virtuemart_shoppergroup_id` = "0",
-							`product_price` = "'.$price.'",
-							`override` = "0",
-							`product_override_price` = "0", 
-							`product_tax_id` = "0",
-							`product_discount_id` = "0",
-							`product_price_publish_up` = "0000-00-00 00:00:00",
-							`product_price_publish_down` = "0000-00-00 00:00:00",
-							`price_quantity_start` = "0",
-							`price_quantity_end` = "0",
-							`modified_on` = "'.$date.'",
-							`modified_by` = "62",
-							`locked_on` = "0000-00-00 00:00:00",
-							`locked_by` = ""
-							WHERE
-							`virtuemart_product_id` = "'.$product_id.'" AND `product_currency` = "199"
-						';
-				$mysqli->query($sql) or die('Добавдение прайса '.$sql);
-			/*
-				$sql = 'UPDATE `jos_virtuemart_products` SET
-							`virtuemart_vendor_id`="'.$product_id.'"
-							WHERE
-							`virtuemart_product_id` = "'.$product_id.'"
-							;';
-				$mysqli->query($sql) or die('Добавдение вендора '.$sql);			
-			*/	
-				//Добавляем параметры. Обьем и Баллы			
-				
-				$mysqli->query('DELETE FROM jos_virtuemart_product_customfields WHERE `virtuemart_product_id` = "'.$product_id.'"') or die('Добавдение кустомфилдов '.$sql);	
-				
-				if($size > 0){
+					$ProductEdit = new ProductEdit($folder);
+					//Подчищаем модель
+					$model = trim($artkl);
+					$model = str_replace(' ', '-', $model);
+					$model = translitArtkl($model);
 					
-					$sql = 'UPDATE `jos_virtuemart_products` SET
-							`product_weight`="'.$size.'"
-							WHERE
-							`virtuemart_product_id` = "'.$product_id.'";';
-					$mysqli->query($sql) or die('Добавдение кустомфилдов 1 '.$sql);
+					$str_name = $name;
 					
-					$sql = 'INSERT INTO `jos_virtuemart_product_customfields` SET
-								`virtuemart_product_id` = "'.$product_id.'",
-								`virtuemart_custom_id` = 4,
-								`customfield_value` = "product_weight",
-								`customfield_price` = NULL,
-								`disabler` = 0,
-								`override` = 0 ,
-								`customfield_params` = \'round="1"|\',
-								`product_sku` = NULL,
-								`product_gtin` = NULL,
-								`product_mpn` = NULL,
-								`published` = 0,
-								`created_on` = "'.$date.'",
-								`created_by` = 63,
-								`modified_on` = "'.$date.'",
-								`modified_by` = 63,
-								`locked_on` = \'0000-00-00 00:00:00\',
-								`locked_by` = 0,
-								`ordering` = 0;
-							';
-					$mysqli->query($sql) or die('Добавдение кустомфилдов 1 '.$sql);
-				}
-				
-				$sql = 'INSERT INTO `jos_virtuemart_product_customfields` SET
-							`virtuemart_product_id` = "'.$product_id.'",
-							`virtuemart_custom_id` = 13,
-							`customfield_value` = "'.$bonus.'",
-							`customfield_price` = "'.$bonus.'",
-							`disabler` = 0,
-							`override` = 0 ,
-							`customfield_params` = "", 
-							`product_sku` = NULL,
-							`product_gtin` = NULL,
-							`product_mpn` = NULL,
-							`published` = 0,
-							`created_on` = "'.$date.'",
-							`created_by` = 63,
-							`modified_on` = "'.$date.'",
-							`modified_by` = 63,
-							`locked_on` = \'0000-00-00 00:00:00\',
-							`locked_by` = 0,
-							`ordering` = 0;
-						';
-				$mysqli->query($sql) or die('Добавдение кустомфилдов 2 '.$sql);
-
+					foreach($size as $siz){
 						
-					//Загрузим фото - только если у товара нет фото
-					include_once ('import/import_url_getfile.php');
-					$noload = true;
-					if(!file_exists(UPLOAD_DIR.$artkl.'.png')) {
-						if(isset($image)){
-							include_once 'init.class.upload_0.31.php';
-							foreach($image as $str_img){
-							
-							
-								$TdateCode = DownloadFile($str_img);
-								
-								$uploaddir = UPLOAD_DIR.$artkl.'.png';
-							
-								file_put_contents($uploaddir, $TdateCode);
-							
-							echo $str_img.'<br>';
-							echo $uploaddir.'<br>';
-								
-								touch($uploaddir);
-								
-								$sql = 'DELETE FROM `jos_virtuemart_medias` WHERE virtuemart_vendor_id = "'.$product_id.'";';
-								$mysqli->query($sql) or die('Чистка линка фотки '.$sql);
-								
-								$sql = 'DELETE FROM `jos_virtuemart_product_medias` WHERE virtuemart_product_id = "'.$product_id.'";';
-								$mysqli->query($sql) or die('Чистка линка фотки '.$sql);
-								
-								
-								$sql = 'INSERT INTO `jos_virtuemart_medias`
-									( `virtuemart_vendor_id`, `file_title`, `file_description`, `file_meta`, `file_class`, `file_mimetype`, `file_type`, `file_url`, `file_url_thumb`, `file_is_product_image`, `file_is_downloadable`, `file_is_forSale`, `file_params`, `file_lang`, `shared`, `published`, `created_on`, `created_by`, `modified_on`, `modified_by`, `locked_on`, `locked_by`)
-									VALUES
-									("'.$product_id.'", "'.$artkl.'.png", "", "", "", "image/png", "product", "images/stories/virtuemart/product/'.$artkl.'.png", "", 0, 0, 0, "", "", 0, 1, "'.$date.'", 62, "'.$date.'", 62, "0000-00-00 00:00:00", 0)';
-								$mysqli->query($sql) or die('Добавдение фотки '.$sql);
-								
-								$media_id = $mysqli->insert_id;
-								
-								$sql = 'INSERT INTO `jos_virtuemart_product_medias`
-									( `virtuemart_product_id`, `virtuemart_media_id`, `ordering`)
-									VALUES
-									("'.$product_id.'", "'.$media_id.'", 1)';
-								$mysqli->query($sql) or die('Прилинковка фотки '.$sql);
-								
-								
-							}
+						//Если массив с размерами - добавим его
+						if($siz['size'] != ''){
+							$str_artkl = $model.'#'.$siz['size'];
 						}else{
-							echo '<br>Нет фото';    
+							if(count($size) == 1){
+								$str_artkl = $model;
+							}else{
+								continue;
+							}
+						}
+						
+						//Наценка на розницу! не на закуп!!!
+						$_zakup = (int)($siz['price'] * $kurs) * $skidka ;
+						$_price = (int)($siz['price'] * $kurs) * $nacenka;
+						$_items = '0';
+						if($siz['yes'] == true){
+							$_items = '10';
+						}
+						
+						$product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
+				
+						if($product_id){
+								
+								echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>.
+										<br>Обновлю: Бренд, Наличие, Цену</font>';
+								
+								//Обновим некоторые параметры
+								if($brand_id > 0){
+									$sql = 'UPDATE tbl_tovar SET brand_id = \''.$brand_id.'\' WHERE tovar_id = \''.$product_id.'\';';
+									$folder->query($sql) or die('Не удалось обновить бренд' . $sql);
+								}
+				
+						}else{
+							echo '<br>'.$str_artkl . ' ' . $str_name .' = Такого продукта нет. <br><b><font color="green">Пробую добавить</font></b><br>';
+						
+							$data['tovar_artkl'] = $str_artkl;
+							$data['tovar_name_1'] = $str_name;
+							$data['tovar_inet_id'] = 10;
+							$data['tovar_inet_id_parent'] = $category_id;
+							$data['brand_id'] = $brand_id;
+							$data['tovar_model'] = $model;
+							$data['tovar_parent'] = 2;
+							$data['tovar_memo'] = $memo;
+							$data['tovar_purchase_currency'] = 1;
+							$data['tovar_sale_currency'] = 1;
+							$data['tovar_sale_currency'] = 1;
+							$data['tovar_dimension'] = 1;
+							
+							$product_id = $ProductEdit->addProduct($data);
+							//echo '==='.$product_id.'<br>';
+						}	
+					
+						//Обновим категорию =================================
+						$sql = 'UPDATE tbl_tovar SET
+								tovar_inet_id_parent = \''.$category_id.'\'
+								WHERE 
+								tovar_id = \''.$product_id.'\';';
+						//echo $sql;
+						$folder->query($sql) or die(' - '.$sql);
+						$alias = '';
+						//Получим алиас категории
+						$sql = 'SELECT seo_alias FROM tbl_seo_url WHERE seo_url = \'parent='.$category_id.'\';';
+						$tovar = $folder->query($sql);
+						if($tovar->num_rows > 0){
+							$tmp = $tovar->fetch_assoc();
+							$alias .= ''.$tmp['seo_alias'];
+						}
+						
+						//Получим код бренда
+						$sql = 'SELECT brand_code FROM tbl_brand WHERE brand_id = \''.$brand_id.'\';';
+						$tovar = $folder->query($sql) or die('add product - ' . $sql);
+						if($tovar->num_rows > 0){
+							$tmp = $tovar->fetch_assoc();
+							$alias .= '/'.$tmp['brand_code'];
+						}
+						
+						$alias .= '/'.$model;
+						
+						$sql = 'UPDATE tbl_seo_url SET seo_alias = \''.$alias.'\' WHERE seo_url = \'tovar_id='.$product_id.'\';';
+						$tovar = $folder->query($sql) or die('add product - ' . $sql);
+						//===========================================================		
+						
+						//Сохраним этот линк для этого поставщика на этот продукт.
+						$sql = 'INSERT INTO tbl_tovar_links SET
+								product_id = \''.$product_id.'\',
+								postav_id = \''.$postav_id.'\',
+								url = \''.$list['url'].'\'
+								ON DUPLICATE KEY UPDATE
+								url = \''.$list['url'].'\'
+								';
+						//echo $sql;
+						$folder->query($sql) or die(' - '.$sql);
+						
+						//Если определился цвет - И если он уже не указан! Могли исправить на правильны! ВАЖНО!
+						if(isset($color_name)){
+							$sql = 'SELECT * FROM tbl_attribute_to_tovar WHERE tovar_id  = \''.$product_id.'\' AND attribute_id  = \'2\';';
+							$r2 = $folder->query($sql);
+							if($r2->num_rows == 0){
+								$sql = 'INSERT INTO tbl_attribute_to_tovar SET
+										tovar_id = \''.$product_id.'\',
+										attribute_id  = \'2\',
+										attribute_value = \''.$color_name.'\';';
+								//echo $sql;
+								@$folder->query($sql) or die(' - '.$sql);
+							}
+						}
+						
+						//Запишем наличие и цены
+						$sql = 'INSERT INTO tbl_tovar_suppliers_items SET
+								`tovar_id` = \''.$product_id.'\',
+								`postav_id`=\''.$postav_id.'\',
+								`price_1`=\''.number_format($_price,0,'','').'\',
+								`zakup` = \''.$_zakup.'\',
+								`items`=\''.$_items.'\'
+									ON DUPLICATE KEY UPDATE 
+								`price_1`=\''.number_format($_price,0,'','').'\',
+								`zakup` = \''.$_zakup.'\',
+								`items`=\''.$_items.'\';';
+						$folder->query($sql) or die('Остатки - '.$sql);
+							
+						//Загрузим фото - только если у товара нет фото
+						include_once ('import/import_url_getfile.php');
+						$noload = true;
+						if(!file_exists(UPLOAD_DIR.$model.'/'.$model.'.0.small.jpg')) {
+							
+							$direct_load = true;
+							$str_artkl = $model;
+								
+							//Если это фотка по цвету - загрузим ее первой	
+							if(isset($color_name) AND isset($image_main_load[strtolower($color_name)])){
+								$IMGPath = $image_main_load[$color_name];
+								include 'import/import_url_photo.php';
+							}
+							if(isset($image)){
+						
+								foreach($image as $str_img){
+									$IMGPath = $str_img;
+									$str_artkl = $model;
+									//Пропустим фото которое залетело первым по цвету
+									//if(!isset($color_name) OR (isset($color_name) AND !isset($image_main_load[strtolower($color_name)]))){
+										include 'import/import_url_photo.php';	
+									//}
+
+								}
+							}else{
+								echo '<br>Нет фото';    
+							}
+						
+						}else{
+							   //include '../import/import_url_getfile.php';
 						}
 					
-					}else{
-						   //include '../import/import_url_getfile.php';
-					}
-				
-					//Вот теперь когда все сделали - поставим этому линку статус вью 1
-					$sql = 'UPDATE '.$pars_table.' SET `view` = \'1\' WHERE `url` = \''.$list['url'].'\';';
-					$mysqli->query($sql) or die('==' . $sql);
+						//Вот теперь когда все сделали - поставим этому линку статус вью 1
+						$sql = 'UPDATE '.$pars_table.' SET `view` = \'1\' WHERE `url` = \''.$list['url'].'\';';
+						$folder->query($sql) or die('==' . $sql);
+						
 					
+					}
+				}
+			
+			}	
+		
+			}else{
+				
+				//Если это была категория
+				//Вот теперь когда все сделали - поставим этому линку статус вью 1
+				$sql = 'UPDATE '.$pars_table.' SET `view` = \'1\' WHERE `url` = \''.$list['url'].'\';';
+				$folder->query($sql) or die('==' . $sql);
 				
 			}
-		}else{
-			
-			//Если это была категория
-			//Вот теперь когда все сделали - поставим этому линку статус вью 1
-			$sql = 'UPDATE '.$pars_table.' SET `view` = \'1\' WHERE `url` = \''.$list['url'].'\';';
-			$mysqli->query($sql) or die('==' . $sql);
-			
-		}
-		
 		//return false;
 	}
 	 
@@ -798,23 +832,16 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 }
 //echo $sql;die();
 //Рекурсия=================================================================
-function readTree($parent,$mysqli){
-   $sql = "SELECT
-					category_child_id AS product_type_id,
-					category_parent_id AS product_parent_id,
-					category_name AS product_type_name
-				FROM  jos_virtuemart_category_categories VCC
-				LEFT JOIN jos_virtuemart_categories_ru_ru VCRR ON VCRR.virtuemart_category_id = VCC.category_child_id
-				WHERE
-					category_parent_id = '$parent' ORDER BY category_name ASC;";
-					//echo $sql.'<br>';
-    $rs1 = $mysqli->query($sql) or die ("Get product type list".$sql);
+function readTree($parent,$folder){
+   $sql = "SELECT parent_inet_id AS product_type_id, parent_inet_parent AS product_parent_id, parent_inet_1 AS product_type_name
+			FROM  tbl_parent_inet  WHERE parent_inet_parent = '$parent' ORDER BY product_type_name ASC;";
+    $rs1 = $folder->query($sql) or die ("Get product type list".$sql);
 
     $body = "";
 
      while ($Type = mysqli_fetch_assoc($rs1)) {
 	    $body .=  "<li><span id=\"span_".$Type['product_type_id']."\"><a class = \"tree\" href=\"javascript:\" id=\"".$Type['product_type_id']."\">".$Type['product_type_name']."</a>";
-	    $body .= "</span>".readTree($Type['product_type_id'],$mysqli);
+	    $body .= "</span>".readTree($Type['product_type_id'],$folder);
 	    $body .= "</li>";
     }
     if($body != "") $body = "<ul>$body</ul>";
@@ -829,6 +856,7 @@ function translitArtkl($str) {
 ?>
 <script>
 	$(document).on('click', '.breadcrumbs', function(){
+		console.log('11111');
 		$('#container').css('display', 'block');
 		$('.msg_back').css('display', 'block');
 		
@@ -848,7 +876,7 @@ function translitArtkl($str) {
 		var brand_name = "<?php echo $brand; ?>";
 		$.ajax({
 			type: "POST",
-			url: "edit_alternative.php",
+			url: "parsing/edit_alternative.php",
 			dataType: "text",
 			data: "brand_id="+brand_id+"&postav_id="+postav_id+"&brand_name="+brand_name+"&key=add_brand",
 			beforeSend: function(){
@@ -880,13 +908,13 @@ function translitArtkl($str) {
 				default:                  
 					var category_id = id;
 					var postav_id = "<?php echo $postav_id; ?>";
-					var breadcrumbs = "<?php echo $breadcrumbs_txt; ?>";
+					var breadcrumbs = "<?php echo str_replace('"',"'",$breadcrumbs_txt); ?>";
 					
 					if(confirm('Назначить '+$('#'+id).html()+' ?')){
 
 						$.ajax({
 							type: "POST",
-							url: "edit_alternative.php",
+							url: "parsing/edit_alternative.php",
 							dataType: "text",
 							data: "category_id="+category_id+"&postav_id="+postav_id+"&breadcrumbs="+breadcrumbs+"&key=add_category",
 							beforeSend: function(){
@@ -941,7 +969,7 @@ $(document).ready(function(){
 	//Тут прописать - если пролетели без ошибок - валим дальше
 	$(document).ready(function(){
 		<?php if(($error == 0 OR $name == 'category') AND !isset($_GET['url'])){ 
-			echo 'setTimeout(reload, '.($pausa * 1000).');';
+			echo 'setTimeout(reload, '.$pausa.'000);'; //'.($pausa * 1000).'
 		 } ?>
 	}
 	);
@@ -997,7 +1025,7 @@ $(document).on('mouseleave', '.new_category', function(){
     }
 	
 });
-/*
+
 $(document).on('mouseenter', '#container span', function(e){
             if (this.id) {
                 if (this.id.indexOf('arent') > 0) {
@@ -1023,7 +1051,7 @@ $(document).on('mouseleave', '#container span', function(e){
                 }
             }
               
-});*/
+});
 //=========== Вставляем элемент
 	function insertItem(id){
 		
@@ -1081,3 +1109,34 @@ $(document).on('mouseleave', '#container span', function(e){
 
 	//});
 </script>
+<?php
+	function getColodInOnColorName($color_name, $folder){
+		
+			$sql = 'SELECT * FROM tbl_colors';
+			$br = $folder->query($sql) or die('==' . $sql);
+			while($tmp = $br->fetch_assoc()){
+				$colors[$tmp['color']] = $tmp['id'];
+				$colors_original[$tmp['id']] = $tmp['color'];
+			}
+			$sql = 'SELECT * FROM tbl_colors_alternative';
+			$br = $folder->query($sql) or die('==' . $sql);
+			while($tmp = $br->fetch_assoc()){
+				$colors[$tmp['color']] = $tmp['id'];
+			}
+			
+			uasort($colors,'sort_by_len');
+			$up_name = mb_strtoupper(addslashes($color_name),'UTF-8');
+			foreach($colors as $color => $id){
+				if(!empty($color)){
+					if(strpos($up_name, mb_strtoupper(addslashes($color),'UTF-8')) !== false){
+						
+						return $id;
+						break;
+					}
+				}
+			}
+			
+			return '';
+	}
+
+?>

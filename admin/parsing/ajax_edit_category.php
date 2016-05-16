@@ -1,6 +1,6 @@
 <?php
 include '../config/config.php';
-include '../simple_html_dom/simple_html_dom.php';
+//include '../simple_html_dom/simple_html_dom.php';
 
 
 if(!isset($_POST['key'])){

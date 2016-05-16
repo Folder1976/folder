@@ -67,9 +67,10 @@ define('MAX_FILE_SIZE', 60000000);
 
 // 2016.05 Modified by Lipsits Sergey
 // Change getting content (if needed) - via proxy
-include_once('parsing/proxy-get.php');
-$GetFrProxy = new GetViaProxy($folder);
-
+if(defined('GETCONTENTVIAPROXY')){
+	include_once('parsing/proxy-get.php');
+	$GetFrProxy = new GetViaProxy($folder);
+}
 
 // -----------------------------------------------------------------------------
 // get html dom from file
