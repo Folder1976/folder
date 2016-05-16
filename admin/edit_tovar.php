@@ -1137,6 +1137,10 @@ if(count($brothers) > 0){
 		  </td>
 		</tr>
        	<tr>
+		  <td>Сортировка</td>
+		  <td align="left"><input type="text" id="bro_sort" style="width: 250px;" value="<?php echo mysql_result($ver,0,"sort"); ?>"></td>
+		</tr>
+	 	<tr>
 		  <td>Показывать ( > 0)</td>
 		  <td align="left"><input type="text" id="show" style="width: 250px;" value="<?php echo mysql_result($ver,0,"tovar_inet_id"); ?>"></td>
 		</tr>
@@ -1169,6 +1173,7 @@ if(count($brothers) > 0){
 		  var old_art = $('#old_art').val();	
 		  var new_art = $('#bro_art').val();	
 		  var model = $('#bro_model').val();	
+		  var sort = $('#bro_sort').val();	
 		  var color = $('#bro_color').val();	
 		  var name 	= $('#bro_name').val();	
 		  var show 	= $('#show').val();	
@@ -1179,13 +1184,13 @@ if(count($brothers) > 0){
 			type: "POST",
 			url: "ajax/ajax_brother_rename.php",
 			dataType: "text",
-			data: "old_art="+old_art+"&show="+show+"&new_art="+new_art+"&color="+color+"&model="+model+"&brand="+brand+"&category="+category+"&name="+name+"&ids="+ids,
+			data: "old_art="+old_art+"&sort="+sort+"&show="+show+"&new_art="+new_art+"&color="+color+"&model="+model+"&brand="+brand+"&category="+category+"&name="+name+"&ids="+ids,
 			beforeSend: function(){
 				$('.change_name').html('[ Ждите! Страница будет перезагружена... ]');
 			},
 			success: function(msg){
 			  console.log( msg );
-			  //location.reload();
+			  location.reload();
 			}
 		  });
 		  

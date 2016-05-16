@@ -13,6 +13,9 @@
 	$model = '';
 	if(isset($_POST['model'])) $model= $_POST['model'];
 	
+	$sort = '';
+	if(isset($_POST['sort'])) $sort= $_POST['sort'];
+	
 	$color = '';
 	if(isset($_POST['color'])) $color= $_POST['color'];
 	
@@ -98,6 +101,13 @@ if($brand > 0){
 //Сменим модель
 	$sql = 'UPDATE tbl_tovar SET
 				tovar_model = \''.$model.'\'
+				WHERE tovar_id IN ('.$ids.');';
+	$folder->query($sql) or die($sql);
+	//echo $sql;
+	
+//Сменим сортировку
+	$sql = 'UPDATE tbl_tovar SET
+				sort = \''.$sort.'\'
 				WHERE tovar_id IN ('.$ids.');';
 	$folder->query($sql) or die($sql);
 	//echo $sql;
