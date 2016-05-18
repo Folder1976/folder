@@ -197,7 +197,7 @@ $timer[] = timer('Всего товаров');
                ORDER BY T.sort ASC, CASE items WHEN 0 THEN 1 ELSE 0 END ASC, price_1 ASC, `tovar_name_1` ASC
                LIMIT $start, $step";
    }else{
-    $key = 40;
+    //$key = 100;
       $sql = "SELECT 	`tovar_inet_id_parent`,
                `tovar_artkl`,
                `tovar_model`,

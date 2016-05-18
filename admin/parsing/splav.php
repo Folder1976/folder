@@ -187,7 +187,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 	
 				//Для тестов
 //$list['url'] = 'http://tiande.ru/catalog/dlya_volos/sredstva_ne_trebuyuschie_smyvaniya/1252112/';
-//$list['url'] = 'http://splav.ru/goodsdetail.aspx?gid=20071116192014953000';
+//$list['url'] = 'http://splav.ru/goodsdetail.aspx?gid=20120525154245054772';
 //echo 	$list['url']; die();
 
 				$html = file_get_html($list['url']);
@@ -273,35 +273,60 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 							$name = trim(trim(trim(trim($tt2[2]), 'img1number'), '"'));
 							$name = str_replace('\\\'','"', $name);
 							$name = trim(trim($name, '"'));
+							$name = ltrim(ltrim($name, '"'));
 							
-							$all_goods[$name]['name'] = $name;
-							$all_goods[$name]['artkl'] = 'SP_'.$artkl;
+							$all_goods[$artkl]['name'] = $name;
+							$all_goods[$artkl]['artkl'] = 'SP_'.$artkl;
 							
-						
+							$str_tmp1 = $html->find('#ac'.$artkl, 0);
+							
+							if($str_tmp1){
+								$str_tmp1 = $str_tmp1->outertext();
+								$str_tmp1 = str_get_html($str_tmp1);
+								$rows = $str_tmp1->find('.tvExpandLeaf');
+								foreach($rows as $row){
+									
+									$id = str_replace('gd','', trim($row->id));
+									if(isset($all_goods[$artkl]['id'])){
+										$all_goods[$artkl]['id'] .= '/*'.$id.'*/';
+									}else{
+										$all_goods[$artkl]['id'] = '/*'.$id.'*/';
+									}
+								}
+							}
 						}
 					}
-					
+
 					//Детали по размерам цвету и цене
 					foreach($gods_det as $Text){
 						if(strpos($Text, 'version=') === false){
-							
+						
 							$Text = str_replace('\\\'','@@@', $Text);
 							$Text = str_replace("'",'"', $Text);
+							
 							//$Text = $good; //'"="20130318125953600129" name="Жилет Resolve Primaloft черный с капюшоном 40-42/158-164" price1="3200" price2="3200" f0="Y" sz="40-42/158-164" clr="черный"';
 							if (preg_match_all('#\s+([^=\s]+)\s*=\s*((?(?="|\') (?:"|\')([^"\']+)(?:"|\') | ([^\s]+)))#isx', $Text, $matches)) {
 								
-								
-								
+						
 							  if($matches[0][0] != '' AND $matches[0][0] != 'name'){
+							
+								$tmp = explode('"', $Text);
+								$id = $tmp[1];
 								
 								$name = trim(trim(str_replace('name=','',$matches[0][0]),'"'));
 								$name = str_replace('@@@', '"', $name);
+								$name = ltrim(ltrim($name, '"'));
+							
 								$size = '';
-								
+							
 								foreach($matches[0] as $tmp){
 									if(strpos($tmp,'sz=') !== false){
 										$size = trim(trim(str_replace('sz=','',$tmp),'"'));
 										$size = trim(trim($size,'"'));
+										$name = trim($name);
+										$name = trim($name, $size);
+										$name = trim($name);
+										
 									break;
 									}
 								}
@@ -325,25 +350,25 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								}
 								
 								
-								$name = str_replace($size, '', $name);
-								$name = trim(trim(trim($name),'"'));
-								
+								//$name = str_replace($size, '', $name);
+								//$name = trim(trim(trim($name),'"'));
+																
 								//Если это Дебильное имя
-								if(!isset($all_goods[$name])){
-									$error = 1;	
-									foreach($all_goods as $index => $value){
-										if(strpos($index, $name) !== false){
-											$name = $index;
-											unset($error);
-											break;
-										}
+								/*
+								$error = 1;
+								foreach($all_goods as $index => $value){
+									if(strpos($value['name'], $name) !== false){
+										$artkl = $index;
+										unset($error);
+										break;
 									}
 								}
 								
 								if(isset($error)){
 									//Попробуем тогда наоборот
 									foreach($all_goods as $index => $value){
-										if(strpos($name, $index) !== false){
+										if(strpos($name.' '.$color, trim($value['name'],'.')) !== false){
+											$artkl = $index;
 											unset($error);
 											break;
 										}
@@ -353,20 +378,82 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								if(isset($error)){
 									echo '<br>Не совпали имена!<br>'.$name;
 									echo "<pre>";  print_r(var_dump( $all_goods )); echo "</pre>";
-									die();
+									//die();
+								}*/
+								
+								//Найдем товар
+								foreach($all_goods as $index => $value){
+									if(isset($value['id']) AND strpos($value['id'],$id) !== false){
+										$artkl = $index;
+										if(strlen($value['name']) < strlen($name)){
+											$all_goods[$index]['name'] = $name;
+										}
+										break;
+									}
 								}
 								
+								//Получим наличие
+								$item_tmp = $html->find('#gd'.$id.' .tbtOnStore');
+								$item_tovar = 0;
+								foreach($item_tmp as $item){
+									$tmp = $item->innertext();
+									if((int)$tmp > 0){
+										$item_tovar += $tmp;
+									}
+									//echo '<br>+++'.$item->innertext().'--'.$item_tovar;
+								}
+								//echo '<br>==='.$item_tovar;
+						
+								$all_goods[$artkl]['color'] = $color; 
+								$all_goods[$artkl]['size'][$size]['size'] = $size;
+								$all_goods[$artkl]['size'][$size]['price'] = $price;
+								$all_goods[$artkl]['size'][$size]['yes'] = true;
+								$all_goods[$artkl]['size'][$size]['items'] = $item_tovar;
 								
-								$all_goods[$name]['color'] = $color; 
-								$all_goods[$name]['size'][$size]['size'] = $size;
-								$all_goods[$name]['size'][$size]['price'] = $price;
-								$all_goods[$name]['size'][$size]['yes'] = true;
+								if(isset($all_goods[$artkl]['size'])){
+									$size_a = $all_goods[$artkl]['size'];
+								}
 							  }
+							}else{
+								$all_goods[$artkl]['color'] = $color; 
+								$all_goods[$artkl]['size'][$size]['size'] = $size;
+								$all_goods[$artkl]['size'][$size]['price'] = $price;
+								$all_goods[$artkl]['size'][$size]['yes'] = true;
+								$all_goods[$artkl]['size'][$size]['items'] = $item_tovar;
 							}
 						}
 					}
+
+				//еще одна проверка product_d_price
+				if(!isset($size_a)){
+					//Получим наличие
+					$item_tmp = $html->find('.tbtOnStore');
+					$item_tovar = 0;
+					foreach($item_tmp as $item){
+						$tmp = $item->innertext();
+						if((int)$tmp > 0){
+							$item_tovar += $tmp;
+						}
+						//echo '<br>+++'.$item->innertext().'--'.$item_tovar;
+					}
 					
+					$price = $html->find('.product_d_price',0)->innertext();
+					//echo $price; die();
+					$size_a['size'] = '';
+					$size_a['price'] = $price;
+					$size_a['yes'] = true;
+					$size_a['items'] = $item_tovar;
+				}
+				
+				foreach($all_goods as $index => $value){
+					if(!isset($value['size'])){
+						$all_goods[$index]['size'][''] = $size_a;
+					}
+				}
+
+//echo "<pre>";  print_r(var_dump( $all_goods )); echo "</pre>";
 //die();					
+
 					echo '<br>Артикл -> <b><font color="green">';
 						foreach($all_goods as $good){
 							
@@ -520,7 +607,8 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 												`size` = ""
 												
 												WHERE url = \''.$list['url'].'\';';
-				
+				//echo $sql;
+				//die();
 				$mysqli->query($sql) or die('==' . $sql);
 				
 				//=============================================================
@@ -625,10 +713,11 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 		//============================================================================================================
 		//============================================================================================================
 		//============================== З А П И С Ь =================================================================
+//echo "<pre>";  print_r(var_dump( $all_goods )); echo "</pre>";		
 		//============================================================================================================
 		//============================================================================================================
 		
-		
+	
 		if($name != 'category'){	
 		
 			if($error == 1 ){
@@ -679,6 +768,11 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						if($siz['yes'] == true){
 							$_items = '10';
 						}
+						if(isset($siz['items'])){
+							$_items = $siz['items'];
+						}
+						
+						
 						
 						$product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
 				
@@ -779,6 +873,8 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								`price_1`=\''.number_format($_price,0,'','').'\',
 								`zakup` = \''.$_zakup.'\',
 								`items`=\''.$_items.'\';';
+						//echo $sql;
+						//die();
 						$folder->query($sql) or die('Остатки - '.$sql);
 							
 						//Загрузим фото - только если у товара нет фото
