@@ -97,8 +97,11 @@ header ('Content-Type: text/html; charset=utf8');
 
 
 if(isset($_POST['find'])){
-    
-    $sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl LIKE "%'.$_POST['find'].'%" OR tovar_name_1 LIKE "%'.$_POST['find'].'%" ';
+    $searchq = $_POST['find'];
+    $sql = 'SELECT tovar_id FROM tbl_tovar
+                WHERE
+                upper(`tovar_artkl`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" or
+                upper(`tovar_name_1`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%"';
     $r = $folder->query($sql);
     //echo $sql;
     if($r->num_rows > 0){
