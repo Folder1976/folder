@@ -2,8 +2,9 @@
 set_time_limit(0);
 include 'constants.php';
 define("GETCONTENTVIAPROXY", 1);
+//define("GETCONTENTVIANAON", 1);
 $postav_id = 59; //MILITARIST
-$pausa = 5;
+$pausa = 30;
 $currency = 5;
 $kurs = 3;
 $skidka = 0.75;
@@ -222,14 +223,18 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				$list['url'] = str_replace('http:/','http://',$list['url']);
 				$list['url'] = str_replace('https:/','https://',$list['url']);
 
+				
 				//Get content via proxy
 				$html = @file_get_html($list['url']);
-			
+				
+				
 				//Если это кривой линк - возможно удаленный товар
 				if(!$html){
 					$sql = 'UPDATE tbl_parsing_militarist SET view = "1" WHERE `url` = \''.$list['url'].'\';';
 					$folder->query($sql) or die('==' . $sql);
+	
 		
+	
 					?>
 					<h3>Ошибка 404</h3>
 						<script>
@@ -264,7 +269,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					$breadcrumbs_txt = '';
 				}
 			
-				
+			
 				//Массив ссылок
 				$str_tmp = $html->find('a');
 				
@@ -272,6 +277,8 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				$artkl = '';
 				//Это товар
 				if($html->find('.item-brands',0)){
+					
+					//echo '11111111';die();
 					//Если это товар - то его уже не сканим
 					//$view = '1';
 					//============================================================================================
@@ -315,6 +322,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								$memo	.= str_replace('tab-pane', 'new-tab-pane', $tttt);
 							}
 					}
+					$memo = str_replace('С уважением Хог','', $memo);
 					echo '<br>Описание ($memo) -> <b><font color="red">Скрыто</font></b>';
 					//============================================================================================
 					$brand = $html->find('.item-brands a img',0)->alt;

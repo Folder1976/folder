@@ -27,35 +27,42 @@ class GetViaProxy {
 
 	//Get list of proxy for get
 	public function GetListOfProxy() {
+		
 		$r=mysqli_query($this->CNX, "SELECT `Host_ID`, `proxyhosts`, `proxytype`
 		FROM `tbl_parser_hosts` WHERE 1 ORDER BY proxy_deny_count ASC LIMIT 0,20;") or die($this->add_debug_msg("Can't get proxy - no proxy in proxylist"));
+	
 		if(mysqli_num_rows($r) == 0) {
 			$this->add_debug_msg("Can't get proxy - SQL query return null");
 			return false;
 		}
+	
 		$tmp = array();
 		while($tPr = mysqli_fetch_assoc($r)) {
-			$tmp[] = $tPr;
+			$this->ProxyToCheck[] = $tPr;
 		}
 
 		echo "<pre>";
 		//print_r($tmp);
 		//echo "<hr>Random";
-
-		for($i=0;$i<5;$i++) {
+/*
+		$this->ProxyToCheck[] = $tmp[$rndPoz];
+		
+		for($i=0;$i<4;$i++) {
 			$rndPoz = mt_rand(0, count($tmp)-1);
 			//echo "<li>".$i." : ".$rndPoz."</li>";
 			if (isset($tmp[$rndPoz])) {
 				$this->ProxyToCheck[] = $tmp[$rndPoz];
 				unset($tmp[$rndPoz]);
-			}
-			else {
+			}else {
 				$i--;
 			}
 		}
+		*/
+		
 		//print_r($this->ProxyToCheck);
 		//die();
 		$this->GetNextProxy();
+	
 		return true;
 	}
 

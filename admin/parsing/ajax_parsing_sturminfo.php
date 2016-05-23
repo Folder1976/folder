@@ -166,6 +166,13 @@ if(isset($_GET['brand'])) $brand_id = $_GET['brand'];
                 $str_artkl = $_POST['artkl'];
             }
             
+            if($_POST['artkl'] != ''){
+                
+                echo '<br><font color = "yellow">Артикл назначен принудительно!</font>';
+                //die();
+                $str_artkl = $_POST['artkl'];
+            }
+            
             //Поищем в базе - может есть
             if(count($size) > 1) unset($size[0]);
             

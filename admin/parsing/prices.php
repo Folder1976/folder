@@ -1,7 +1,9 @@
 <?php
 
 set_time_limit(20);
-define("GETCONTENTVIAPROXY", 1);
+//define("GETCONTENTVIAPROXY", 1);
+
+define("GETCONTENTVIANAON", 1);
 include 'constants.php';
 include 'simple_html_dom/simple_html_dom.php';
 

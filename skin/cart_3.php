@@ -70,8 +70,8 @@ if (isset($_GET["kredit"])) {
 		'items' => $order['krprod'],
 		// Информация о покупателе
 		'details' => $order['kruser'],
-		'partnerId' => 'a06m00000018y7rAAA', // ID Партнера в системе Банка (выдается Банком)
-		'partnerOrderId' => 'test-'.$order['id'], // Уникальный номер заказа в системе Партнера
+		'partnerId' => 'a06b0000023kIQTAA2', // ID Партнера в системе Банка (выдается Банком)
+		'partnerOrderId' => 'armma-'.$order['id'], // Уникальный номер заказа в системе Партнера
 	);
 
 	// JSON-представление заказа
@@ -81,7 +81,7 @@ if (isset($_GET["kredit"])) {
 	$base64 = base64_encode($json);
 
 	// Секретная строка для формирования подписи (выдается Банком)
-	$secret = 'grid-secret-18y7r72a';
+	$secret = 'armma-secret-3kIQT93e';
 
 	/**
 	 * Функция формирования подписи заказа
@@ -119,6 +119,8 @@ if (isset($_GET["kredit"])) {
 				type: "full"
 			});
 
+			
+			/*
 			window.callbacks.push(function() {
 				button = document.getElementById("open");
 				button.removeAttribute("disabled");
@@ -126,7 +128,7 @@ if (isset($_GET["kredit"])) {
 					// Открытие формы по нажатию кнопки
 					form.open();
 				};
-			});
+			});*/
 		}
 
 	</script>
