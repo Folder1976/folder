@@ -12,7 +12,7 @@
                                 <ul class="h-menu">
                                     
                                     <li class="h-menu__item">
-                                        <a href="<?php echo HOST_URL;?>/news.html" class="h-menu__link">Новости</a> / <a href="<?php echo HOST_URL;?>/press.html" class="h-menu__link">Обзоры</a></li>
+                                        <a href="<?php echo HOST_URL;?>/zakaz.html" class="h-menu__link">Как заказать</a> / <a href="<?php echo HOST_URL;?>/kredit.html" class="h-menu__link">Кредит</a></li>
                                     
                                     <li class="h-menu__item">
                                         <a href="<?php echo HOST_URL;?>/help.html" class="h-menu__link">Как выбрать размер</a></li>

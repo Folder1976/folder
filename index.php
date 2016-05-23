@@ -353,6 +353,8 @@ if(isset($_GET['_route_']) AND ($_GET['_route_'] == 'news' OR $_GET['_route_'] =
 //Если информация
 if(isset($_GET['_route_']) AND ($_GET['_route_'] == 'dostavka' OR
 								$_GET['_route_'] == 'contact' OR
+								$_GET['_route_'] == 'zakaz' OR
+								$_GET['_route_'] == 'kredit' OR
 								$_GET['_route_'] == 'size'
 							   )	
 									){
