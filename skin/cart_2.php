@@ -282,7 +282,11 @@
                     </div>
 
                     <div class="medium-12 columns form__row text-right small-only-text-left">
+					<?php if (isset($_GET["kredit"])) { ?>
+						<button type="button" onClick="submit();" class="btn btn_text-large btn_img">&nbsp;</button>
+					<?php } else { ?>
                         <button class="btn btn_text-large" id="but1" onClick="submit();" style="display:none;">Оформить</button>
+					<?php } ?>
                          <button class="btn btn_text-large" id="but2">Заполните одно поле для связи</button>
                     </div>
                 </div>

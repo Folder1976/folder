@@ -226,7 +226,12 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'order'){
   $order = $Order->createUserOrder($_POST, $user, $cart);
 
   if($order){
-	include 'skin/cart_3.php';
+	if (isset($_GET["kredit"])) {
+		include 'skin/cart_3_kredit.php';
+	}
+	else {
+		include 'skin/cart_3.php';
+	}
 	die();
   }
 
