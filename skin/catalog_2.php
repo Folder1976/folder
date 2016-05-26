@@ -451,70 +451,27 @@
         <?php foreach($data['timer'] as $time){ ?>
             console.log("<?php echo $time; ?>");
         <?php } ?>
+
+		function RebuildFilters() {
+			var params = '';
+				$("input:checkbox:checked").each(function(){
+					//Для брендов и стран отдельный фильтр нах!
+					if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
+						params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
+					}else{
+							params = params + $(this).data('name')+'['+$(this).val()+']&';
+					}
+				});
+
+			var url = window.location.href    
+				
+			window.location.replace(window.location.pathname + "?"+params);
+		}
         
-        $(document).on('change', '.icheck_filter', function(){     
-        var params = '';
-            $("input:checkbox:checked").each(function(){
-                //Для брендов и стран отдельный фильтр нах!
-                if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
-                    params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
-                }else{
-                        params = params + $(this).data('name')+'['+$(this).val()+']&';
-                }
-            });
-
-        var url = window.location.href    
-            
-        window.location.replace(window.location.pathname + "?"+params);
-        });
-      
-        $(document).on('change', '.icheck_brand', function(){     
-        var params = '';
-            $("input:checkbox:checked").each(function(){
-                 //Для брендов и стран отдельный фильтр нах!
-                if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
-                    params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
-                }else{
-                        params = params + $(this).data('name')+'['+$(this).val()+']&';
-                }
-            });
-
-        var url = window.location.href    
-            
-        window.location.replace(window.location.pathname + "?"+params);
-        });
-      
-        $('.icheck_user').on('change', function(){     
-        var params = '';
-            $("input:checkbox:checked").each(function(){
-                 //Для брендов и стран отдельный фильтр нах!
-                if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
-                    params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
-                }else{
-                        params = params + $(this).data('name')+'['+$(this).val()+']&';
-                }
-            });
-
-        var url = window.location.href    
-            
-        window.location.replace(window.location.pathname + "?"+params);
-        });
-      
-        $(document).on('change', '.icheck_country', function(){     
-        var params = '';
-            $("input:checkbox:checked").each(function(){
-                 //Для брендов и стран отдельный фильтр нах!
-                if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
-                    params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
-                }else{
-                        params = params + $(this).data('name')+'['+$(this).val()+']&';
-                }
-            });
-
-        var url = window.location.href    
-            
-        window.location.replace(window.location.pathname + "?"+params);
-        });
+        $(document).on('change', '.icheck_filter', RebuildFilters);
+        $(document).on('change', '.icheck_brand', RebuildFilters);
+        $('.icheck_user').on('change', RebuildFilters);
+		$(document).on('change', '.icheck_country', RebuildFilters);
         
         //Начинаем подгрузки всего всего
         //Категории
@@ -649,6 +606,7 @@
                 $(this).addClass('checked');
                 $(this).children('input').attr('checked', true);
             }
+			RebuildFilters();
         }); 
 
         //Бренды и страны
