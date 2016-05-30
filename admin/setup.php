@@ -96,6 +96,7 @@ echo "</ul></div>";
 	<li><a href="main.php?func=relink_photo">Починить линки товар-фото</a></li>
 	<li><a href="main.php?func=import_photo">Импорт Фотографий файлы</a></li>
 	<li><a href="main.php?func=import_url_photo_excel">Импорт Фотографий Excel</a></li>
+	<li><a href="watermark/">Установка водяных знаков на большие изображения</a></li>
 </ul>
   <ul class="setup_menu"><h2>Города и доставки</h2>
 	<li><a href="main.php?func=city">Города</a></li>
@@ -104,6 +105,10 @@ echo "</ul></div>";
  <ul class="setup_menu"><h2>Инструменты</h2>
 	<li><a href="main.php?func=find_on_sturm">Поиск товаров на Штурме (Excel)</a></li>
 	<li><a href="main.php?func=add_products">Автомат добавления продуктов</a></li>
+	
+  </ul>
+ <ul class="setup_menu"><h2>Аналитика и отчеты</h2>
+	<li><a href="main.php?func=analitik_sale">Аналитика продаж</a></li>
 	
   </ul>
 </div>
