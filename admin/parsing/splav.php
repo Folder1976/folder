@@ -187,7 +187,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 	
 				//Для тестов
 //$list['url'] = 'http://tiande.ru/catalog/dlya_volos/sredstva_ne_trebuyuschie_smyvaniya/1252112/';
-//$list['url'] = 'http://splav.ru/goodsdetail.aspx?gid=20140214100945378306';
+//$list['url'] = 'http://splav.ru/goodsdetail.aspx?gid=20150618152916331092';
 //echo 	$list['url']; die();
 
 				$html = file_get_html($list['url']);
@@ -235,6 +235,10 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				}else{
 					$breadcrumbs_txt = '';
 				}
+				
+				$breadcrumbs_txt = htmlentities($breadcrumbs_txt);
+				$breadcrumbs_txt = str_replace('&','',$breadcrumbs_txt);
+				$breadcrumbs_txt = str_replace(';','',$breadcrumbs_txt);
 				
 				//Массив ссылок
 				$str_tmp = $html->find('a');
@@ -629,6 +633,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 				
 				//Категория
 				$sql = 'SELECT category_id FROM tbl_category_alternative WHERE breadcrumbs = "'.str_replace('"',"'",$breadcrumbs_txt).'" AND postav_id = "'.$postav_id.'";';
+//echo $sql;
 				$br = $folder->query($sql) or die('==' . $sql);
 				if($br->num_rows > 0){
 					$tmp = $br->fetch_assoc();
@@ -637,6 +642,9 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					$error = 1;
 				}
 
+		
+//echo "<pre>".$br->num_rows;  print_r(var_dump( $tmp )); echo "</pre>";
+//echo $category_id; die();
 				
 		if( $name != 'category' and $error == 1){
 			echo '<div class="error">';
@@ -1021,6 +1029,7 @@ function translitArtkl($str) {
 							beforeSend: function(){
 							},
 							success: function(msg){
+								console.log( msg );
 								$('.breadcrumbs').html('<b>'+$('#'+id).html()+'</b>');
 								console.log($('#'+id).html());
 								console.log( msg );

@@ -592,6 +592,8 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					$error = 1;
 				}
 		
+
+		
 		
 				//Цвет
 				$colors_original = array();
@@ -848,22 +850,27 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					//Загрузим фото - только если у товара нет фото
 					include_once ('import/import_url_getfile.php');
 					$noload = true;
-					if(!file_exists(UPLOAD_DIR.$model.'/'.$model.'.0.small.jpg')) {
+					//if(!file_exists(UPLOAD_DIR.$model.'/'.$model.'.0.small.jpg')) {
 						if(isset($image)){
 							foreach($image as $str_img){
 							
 								$direct_load = true;
 								$IMGPath = $str_img;
 								$str_artkl = $model;
-								include 'import/import_url_photo.php';
+								$sql = 'INSERT INTO parsing_militarist_photo SET
+											model = "'.$model.'",
+											img = "'.$str_img.'"
+											';
+								
+								//include 'import/import_url_photo.php';
 							}
 						}else{
 							echo '<br>Нет фото';    
 						}
 					
-					}else{
+					//}else{
 						   //include '../import/import_url_getfile.php';
-					}
+					//}
 				
 					//Вот теперь когда все сделали - поставим этому линку статус вью 1
 					$sql = 'UPDATE tbl_parsing_militarist SET `view` = \'1\' WHERE `url` = \''.$list['url'].'\';';

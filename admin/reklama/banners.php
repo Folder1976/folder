@@ -13,6 +13,7 @@ if(isset($_GET['type'])){
 
 <br><a href="main.php?func=banner&type=large">Большие банеры</a>
 <br><a href="main.php?func=banner&type=medium">Средние банеры</a>
+<br><font color="red">!Загружайте картинки только *.png! И не используйте в названиях файлов спецсимволы и пробелы.</font>
 <?php
 if($type == 'large'){
   echo '<h1>Большие банеры = 1920 x 1200 px</h1>';
