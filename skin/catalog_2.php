@@ -398,6 +398,7 @@
         <div class="pager">
                 <?php $page = 1;
                         $end = round($data['products_count'] / $step);
+                        
                         //echo $data['products_count'] . ' / ' . $step . ' = ' . $end;
                         if(isset($_GET['page'])) $page = $_GET['page'];?>
                         
@@ -405,13 +406,26 @@
                         <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item pager__item_prev"><span class="fa fa-angle-left"></span></a>
                 <?php } ?>
                 
-                <?php for($x = 1;$x <= $end; $x++){ ?>
+                <?php if($page > 3) echo ' . . . '?>
+                
+                
+                
+                <?php
+                        $xx = $page - 2;
+                        if($xx < 1) $xx = 1;
+                        
+                        $end_m = $page + 2;
+                        if($end_m > $end) $end_m = $end;
+                                       
+                        for($x = $xx;$x <= $end_m; $x++){ ?>
                         <?php if($x == $page){ ?>
                                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$x;?>" class="pager__item pager__item_current"><?php echo $x; ?></a>
                         <?php }else{ ?>
                                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$x;?>" class="pager__item"><?php echo $x; ?></a>
                         <?php } ?>
                 <?php } ?>
+        
+                <?php if($page < ($end - 2)) echo ' . . . '?>
         
                 <?php if($page < $end) {?>
                     <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$end;?>" class="pager__item pager__item_next"><span class="fa fa-angle-right"></span></a>
