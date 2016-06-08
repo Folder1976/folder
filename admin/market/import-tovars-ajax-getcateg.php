@@ -15,6 +15,7 @@ $r = mysqli_query( $folder, "SELECT tovar_id
 
 if (mysqli_num_rows($r) == 0) {
 	echo "<li>В категории ID ".$Categ." нет товаров (ни в ней, ни в потомках)</li>";
+	echo "<script>delete TovLst; TovLst = []; ResetTovarsCateg(0); SucssCategFunct();</script>";
 	die();
 }
 $tovArr = array();

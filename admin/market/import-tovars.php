@@ -4,9 +4,9 @@ $MFSubUrl = $FSubUrl."&tvmact=importtovars";
 $SCat = "";
 
 $Catgs = array();
-$r = mysqli_query( $folder, "SELECT MarketCategID FROM ".$ppt."yandex_market_setup;") or die ("Count categ table :(");
+$r = mysqli_query( $folder, "SELECT ShopCategoryID FROM ".$ppt."yandex_market_setup;") or die ("Count categ table :(");
 while($CtLst = mysqli_fetch_assoc($r)) {
-	$Catgs[] = $CtLst["MarketCategID"];
+	$Catgs[] = $CtLst["ShopCategoryID"];
 }
 $CtK = mysqli_num_rows($r);
 
@@ -134,6 +134,7 @@ echo '<h3>Обработка товаров в категории (было вс
 		catbar = catbar + ((1/'.$CtK.')*100);
 		categtoobr = categtoobr - 1;
 		cati = cati + 1;
+		$("#ymcatparse").html(categtoobr);
 
 		UpdateYMLCategory(catbar);
 		if (categtoobr > 0 && cati <= categtot) {
