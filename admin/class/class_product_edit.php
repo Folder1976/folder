@@ -193,6 +193,29 @@ class ProductEdit {
 	 */
 	public function getProductPicOnArtkl($artkl){
 	
+		$dir = __DIR__.'/../../resources/products/'.$artkl.'/';
+		$dir_img = '/resources/products/'.$artkl.'/';
+		$return = '';
+		$dh  = opendir($dir);
+		
+		while (false !== ($filename = readdir($dh))) {
+			$files[] = $filename;
+			if(strpos($filename, 'small') !== false){
+				$return .= '<a href="javascript:" class="glav_photo_links" data-img="'.$artkl.'/'.$filename.'" >
+						<img src="'.$dir_img.$filename.'" data-img="'.$artkl.'/'.$filename.'" width="100px" class="glav_photo_th"></a>';
+			}
+		}
+		
+		return $return;
+	}
+	
+	/*
+	 *Вернет главную картинку продутка
+	 */
+	public function getProductPicsOnArtkl($artkl){
+	
+	
+	
 		$sql = $this->base->query("SELECT pic_name FROM tbl_tovar_pic WHERE tovar_artkl = '".$artkl."'");
 		if($sql->num_rows == 0){
 			return HOST_URL.'/resources/img/no_photo.png';

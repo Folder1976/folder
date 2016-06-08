@@ -735,7 +735,6 @@ echo "\n</body>";
     $(document).on('click', '#export', function(){  
       location.href = 'export/get_excel.php?producs=yes';
     });
-
 </script>
 
 

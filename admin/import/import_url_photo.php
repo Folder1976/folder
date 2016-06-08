@@ -16,7 +16,8 @@
     if(!isset($IMGPath)){
 		$IMGPath = $_GET['url'];
 	}
-	
+//echo '<br><b>'.$IMGPath.'</b>';
+
 	$Tdate = DownloadFileNoCode($IMGPath);
     $TdateCode = DownloadFile($IMGPath);
 	

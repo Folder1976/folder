@@ -23,6 +23,26 @@
  
         </div>
     </div>
+
+<?php
+        $iphone = strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");
+        $android = strpos($_SERVER['HTTP_USER_AGENT'],"Android");
+        $palmpre = strpos($_SERVER['HTTP_USER_AGENT'],"webOS");
+        $berry = strpos($_SERVER['HTTP_USER_AGENT'],"BlackBerry");
+        $ipod = strpos($_SERVER['HTTP_USER_AGENT'],"iPod");
+        $ipad = strpos($_SERVER['HTTP_USER_AGENT'],"iPad");
+        $mobile = strpos($_SERVER['HTTP_USER_AGENT'],"Mobile");
+        $symb = strpos($_SERVER['HTTP_USER_AGENT'],"Symbian");
+        $operam = strpos($_SERVER['HTTP_USER_AGENT'],"Opera M");
+        $htc = strpos($_SERVER['HTTP_USER_AGENT'],"HTC_");
+        $fennec = strpos($_SERVER['HTTP_USER_AGENT'],"Fennec/");
+        $winphone = strpos($_SERVER['HTTP_USER_AGENT'],"WindowsPhone");
+        $wp7 = strpos($_SERVER['HTTP_USER_AGENT'],"WP7");
+        $wp8 = strpos($_SERVER['HTTP_USER_AGENT'],"WP8");
+        if ($ipad ||$ipod || $iphone || $android || $palmpre || $berry || $mobile || $symb || $operam || $htc || $fennec || $winphone || $wp7 || $wp8 === true) {
+           // echo '111111111111';// <!--header('Location: http://m.site.ru');--> 
+        }else{
+?>
     <div class="h-slider js-slider-bg-small">
     <div class="row">
         <div class="medium-23 small-24 columns medium-centered">
@@ -58,6 +78,8 @@
         </div>
     </div>
 </div>
+    <?php } ?>
+
 </header>
 
     <?php include SKIN_PATH . 'body_home_homecat.php'; ?>

@@ -324,7 +324,8 @@
                                 <?php if($count++ > 1) echo '-->'; ?><div class="c-product">
                                     <a href="<?php echo $product['url']; ?>.html" class="c-product__img">
                                         <img src="<?php echo str_replace('small', 'medium', $product['img']); ?>"
-                                        IMPLIED=    title="Картинка <?php echo $product['name']; ?>"
+                                        id="image_<?php echo $artkl; ?>"
+                                        alt =  title="Картинка <?php echo str_replace('"',"'",$product['name']); ?>"
                                         <?php if($product['total'] == 0){ ?>
                                             class="no_product"   
                                         <?php } ?>
@@ -363,6 +364,7 @@
                                                                 <?php if(strpos($product['social'], 'vkontakte') !== false){echo '<img src="'.HOST_URL.'/resources/img/vkontakte.png" style="height:15px">';} ?>
                                                                 <!-- edit key -->
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
+                                                                <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
                                                         </span>
                                                 <?php }?>
                                     </div>
@@ -437,9 +439,9 @@
             <?php foreach($banners as $banner){ ?>
                 <div class="medium-12 columns catalog-banner">
                         <?php if($banner['url'] == ''){ ?>
-                                <img src="<?php echo $banner['img']; ?>" alt="<?php echo $banner['title']; ?>" title="Картинка <?php echo $banner['title']; ?>">
+                                <img src="<?php echo $banner['img']; ?>" alt="<?php echo $banner['title']; ?>" title="Картинка <?php echo str_replace('"',"'",$banner['title']); ?>">
                         <?php }else{ ?>
-                                <a href="<?php echo $banner['url']; ?>"><img src="<?php echo $banner['img']; ?>" alt="<?php echo $banner['title']; ?>" title="Картинка <?php echo $banner['title']; ?>"></a>
+                                <a href="<?php echo $banner['url']; ?>"><img src="<?php echo $banner['img']; ?>" alt="<?php echo str_replace('"',"'",$banner['title']); ?>" title="Картинка <?php echo str_replace('"',"'",$banner['title']); ?>"></a>
                         <?php } ?>
                 </div>
             <?php } ?>

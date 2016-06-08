@@ -329,7 +329,8 @@
                                 <?php if($count++ > 1) echo '-->'; ?><div class="c-product">
                                     <a href="<?php echo $product['url']; ?>.html" class="c-product__img">
                                         <img src="<?php echo str_replace('small', 'medium', $product['img']); ?>"
-                                        title="Картинка <?php echo $product['name']; ?>"
+                                        id="image_<?php echo $artkl; ?>"
+                                        title="Картинка <?php echo str_replace('"',"'",$product['name']); ?>"
                                         <?php if($product['total'] == 0){ ?>
                                             class="no_product"   
                                         <?php } ?>
@@ -366,6 +367,7 @@
                                                 <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
                                                         <span class="c-product__availability">
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
+                                                                <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
                                                         </span>
                                                 <?php }?>
                                     </div>
