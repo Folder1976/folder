@@ -313,7 +313,7 @@
                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=15';?>"><span class="sort-by__link <?php if($step == 15) echo 'sort-by__link_active';?>">15</span></a>
                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=30';?>"><span class="sort-by__link <?php if($step == 30) echo 'sort-by__link_active';?>">30</span></a>
                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=45';?>"><span class="sort-by__link <?php if($step == 45) echo 'sort-by__link_active';?>">45</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=1000';?>"><span class="sort-by__link <?php if($step == 1000) echo 'sort-by__link_active';?>">Все</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=1000';?>"><span class="sort-by__link <?php if($step == 100) echo 'sort-by__link_active';?>">100</span></a>
             </div>
         </div>
 
@@ -396,7 +396,8 @@
         <!--div class="c-products-footer">
             <button class="btn btn_light">Показать еще</button>
         </div-->
-
+        
+<!-- Пагинация pagination -->
         <div class="pager">
                 <?php $page = 1;
                         $end = round($data['products_count'] / $step);

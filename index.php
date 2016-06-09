@@ -300,7 +300,7 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'lates_products'){
 	$banners = $Banner->getMediumBanners('news');
 	
 	include_once("libs/products_control.php");
-	$data = user_item_list_view(0,$setup, 100);
+	$data = user_item_list_view(0,$setup, 1000);
 	include 'skin/lates_products.php';
 	die();
 

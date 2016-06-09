@@ -23,6 +23,7 @@ $timer[] = timer('Категории');
   
     $step = 15;
     if(isset($_GET['step'])) $step = mysqli_escape_string($folder, $_GET['step']);
+    if($step > 100) $step = 100;
     
     $page = 1;
     if(isset($_GET['page'])) $page = mysqli_escape_string($folder, $_GET['page']);
@@ -217,7 +218,8 @@ $timer[] = timer('Всего товаров');
                /*AND atribute_value = 'Черный'*/
                 GROUP BY tovar_name_1
                ORDER BY T.tovar_id DESC
-               LIMIT 0, $key
+               LIMIT $start, $step
+               /*LIMIT 0, $key*/
              ";
    }
 //echo $sql;

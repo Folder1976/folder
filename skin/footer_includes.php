@@ -24,3 +24,94 @@
 include_once(".assets/analyticstracking.php");
 include_once(".assets/analytics_yandex.php");
 ?>
+
+
+<?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
+<div class="msg_back"></div>
+<input type="hidden" id="edited_product" value="">
+<div class="msg">загрузка...</div>
+
+<style>
+    .msg_back{width: 100%;height: 100%;opacity: 0.7;display: none;position: fixed;background-color: gray;top:0;left:0;z-index: 998;}
+    .msg{
+        display: none;
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        margin-left: -150px;
+        padding: 50px;
+        width: 600px;
+        height: 500px;
+        text-align: center;
+        border: 2px solid gray;
+        background-color: #FFC87C;
+        z-index: 999;
+        overflow-x: auto;
+    }
+    .glav_photo_links{
+        float: left;
+        margin: 10px;
+    }
+    </style>
+    
+
+<script>
+    
+    $(document).on('click', '.glav_photo_links', function(){
+        var image = $(this).data('img');
+         var id = $('#edited_product').val();
+        
+        $.ajax({
+            type: "POST",
+            url: "/ajax/get_photos.php",
+            dataType: "json",
+            data: "id="+id+'&image='+image+'&key=set',
+            beforeSend: function(){
+            },
+            success: function(msg){
+                console.log( msg );
+
+                var image = '#image_'+msg.target;
+                console.log(image);
+                $(image).attr('src','/resources/products/'+msg.image.replace('small','medium'));
+                
+                $('.msg_back').hide();
+                $('.msg').hide();
+                
+                $('.msg').html('загрузка...');
+            }
+        });
+        
+        
+        
+    });
+    
+    $(document).on('click', '.glav_photo', function(){
+        var id = $(this).data('id');
+        $('#edited_product').val(id);
+        
+        $('.msg_back').show();
+        $('.msg').show();
+        
+        $.ajax({
+            type: "POST",
+            url: "/ajax/get_photos.php",
+            dataType: "text",
+            data: "id="+id+'&key=get',
+            beforeSend: function(){
+            },
+            success: function(msg){
+                //console.log( msg );
+                $('.msg').html(msg);
+            }
+        });
+        
+        
+        
+    });
+    $(document).on('click', '.msg_back', function(){
+        $('.msg_back').hide();
+        $('.msg').hide();
+    });
+</script>
+<?php } ?>
