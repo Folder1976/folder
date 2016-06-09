@@ -28,8 +28,8 @@ else {
 
 function MarketTextRepl($txtRep) {
 	return str_replace(
-		array('&quot;', '&', '"', '>', '<', "'"),
-		array('"', '&amp;', '&quot;', '&gt;', '<', "&lt;"),
+		array('&quot;', '&nbsp;', '&', '"', '>', '<', "'"),
+		array('"', ' ', '&amp;', '&quot;', '&gt;', '&lt;', '&#39;'),
 		$txtRep
 	);
 
@@ -57,7 +57,24 @@ foreach($TovArr as $TovID) {
 	$Store = $Prod->getProductOnWare($TovID);
 	$BrDT = $Brand->getBrandOnProductId($TovID);
 
-	if ($BrDT["brand_name"] == "Оригинал" || $Prod->getProductPrice($TovID) == 0) {continue;}
+	if ($BrDT["brand_name"] == "Оригинал" || $Prod->getProductPrice($TovID) == 0 || $BrDT["CountryName"] == "Белоруссия"  || $BrDT["CountryName"] == "Англия") {continue;}
+
+	$Img = $Prod->getProductPicOnArtkl($tovData["tovar_artkl"]);
+	if (substr_count($Img, " ") > 0) {continue;}
+
+	$Descr = $Prod->getProductMemo($TovID);
+
+	$Descr = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $Descr);
+	$Descr = preg_replace('#<!--(.*?)>(.*?)-->#is', '', $Descr);
+	$Descr = str_replace(array("&laquo;","&raquo;", "  ", ""), array('"','"', " ", ""), $Descr);
+	$Descr = str_replace(array("\r\n", "\t"), array("", ""), $Descr);
+	$Descr = strip_tags($Descr);
+
+	if (strlen($Descr) > 600) {
+		$Descr = mb_substr($Descr, 0, 500, "UTF-8");
+	}
+	$Descr = MarketTextRepl($Descr);
+
 	$Off = '
 	<offer id="'.$TovID.'" available="'.((isset($Store) && $Store > 0) ? 'true' : 'false').'" bid="'.$MCateg["CategClickPrice"].'">
 		<url>'.HOST_URL.'/'.MarketTextRepl($Alias->getProductAlias($TovID)).'</url>
@@ -65,14 +82,14 @@ foreach($TovArr as $TovID) {
 		<currencyId>RUR</currencyId>
 		<categoryId>'.$MCateg["MarketCategID"].'</categoryId>
 		<market_category>'.$MCateg["MarketPath"].'</market_category>
-		<picture>'.$Prod->getProductPicOnArtkl($tovData["tovar_artkl"]).'</picture>
+		<picture>'.$Img.'</picture>
 		<store>false</store>
 		<pickup>false</pickup>
 		<delivery>true</delivery>
 		<name>'.MarketTextRepl($tovData["tovar_name_1"]).'</name>
 		<vendor>'.MarketTextRepl($BrDT["brand_name"]).'</vendor>
 		<vendorCode>'.MarketTextRepl($tovData["tovar_artkl"]).'</vendorCode>
-		<description>'.MarketTextRepl(strip_tags(str_replace("\r\n", "", $Prod->getProductMemo($TovID)))).'</description>
+		<description>'.$Descr.'</description>
 		<country_of_origin>'.$BrDT["CountryName"].'</country_of_origin>
 	</offer>
 ';
