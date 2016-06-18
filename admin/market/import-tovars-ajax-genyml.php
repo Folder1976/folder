@@ -28,8 +28,8 @@ else {
 
 function MarketTextRepl($txtRep) {
 	return str_replace(
-		array('&quot;', '&', '"', '>', '<', "'"),
-		array('"', '&amp;', '&quot;', '&gt;', '<', "&lt;"),
+		array('&quot;', '&nbsp;', '&', '"', '>', '<', "'"),
+		array('"', ' ', '&amp;', '&quot;', '&gt;', '&lt;', '&#39;'),
 		$txtRep
 	);
 
@@ -38,13 +38,13 @@ function MarketTextRepl($txtRep) {
 $YmlFile = "../../armma.yml";
 $FH = fopen($YmlFile, 'a');
 
-$r = mysqli_query( $folder, "SELECT MarketPath, CategViewTovDisabled, CategClickPrice
+$r = mysqli_query( $folder, "SELECT MarketCategID, MarketPath, CategViewTovDisabled, CategClickPrice
 FROM tbl_yandex_market_setup
-WHERE MarketCategID='".$Categ."';") or die (mysqli_error($folder)."MarketSetup :(");
+WHERE ShopCategoryID='".$Categ."';") or die (mysqli_error($folder)."MarketSetup :(");
 $MCateg = mysqli_fetch_assoc($r);
 
 foreach($TovArr as $TovID) {
-
+	
 	$r = mysqli_query( $folder, "SELECT tovar_artkl, tovar_name_1
 	FROM tbl_tovar WHERE tovar_id = '".$TovID."';") or die (mysqli_error($folder)."Get tovar :(");
 
@@ -57,21 +57,39 @@ foreach($TovArr as $TovID) {
 	$Store = $Prod->getProductOnWare($TovID);
 	$BrDT = $Brand->getBrandOnProductId($TovID);
 
+	if ($BrDT["brand_name"] == "Оригинал" || $Prod->getProductPrice($TovID) == 0 || $BrDT["CountryName"] == "Белоруссия"  || $BrDT["CountryName"] == "Англия") {continue;}
+
+	$Img = $Prod->getProductPicOnArtkl($tovData["tovar_artkl"]);
+	if (substr_count($Img, " ") > 0) {continue;}
+
+	$Descr = $Prod->getProductMemo($TovID);
+
+	$Descr = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $Descr);
+	$Descr = preg_replace('#<!--(.*?)>(.*?)-->#is', '', $Descr);
+	$Descr = str_replace(array("&laquo;","&raquo;", "  ", ""), array('"','"', " ", ""), $Descr);
+	$Descr = str_replace(array("\r\n", "\t"), array("", ""), $Descr);
+	$Descr = strip_tags($Descr);
+
+	if (strlen($Descr) > 600) {
+		$Descr = mb_substr($Descr, 0, 500, "UTF-8");
+	}
+	$Descr = MarketTextRepl($Descr);
+
 	$Off = '
 	<offer id="'.$TovID.'" available="'.((isset($Store) && $Store > 0) ? 'true' : 'false').'" bid="'.$MCateg["CategClickPrice"].'">
-		<url>'.HOST_URL.'/'.$Alias->getProductAlias($TovID).'</url>
+		<url>'.HOST_URL.'/'.MarketTextRepl($Alias->getProductAlias($TovID)).'</url>
 		<price>'.number_format($Prod->getProductPrice($TovID), 2, '.', '').'</price>
 		<currencyId>RUR</currencyId>
-		<categoryId>'.$Categ.'</categoryId>
+		<categoryId>'.$MCateg["MarketCategID"].'</categoryId>
 		<market_category>'.$MCateg["MarketPath"].'</market_category>
-		<picture>'.$Prod->getProductPicOnArtkl($tovData["tovar_artkl"]).'</picture>
+		<picture>'.$Img.'</picture>
 		<store>false</store>
 		<pickup>false</pickup>
 		<delivery>true</delivery>
 		<name>'.MarketTextRepl($tovData["tovar_name_1"]).'</name>
-		<vendor>'.$BrDT["brand_name"].'</vendor>
+		<vendor>'.MarketTextRepl($BrDT["brand_name"]).'</vendor>
 		<vendorCode>'.MarketTextRepl($tovData["tovar_artkl"]).'</vendorCode>
-		<description>'.MarketTextRepl(strip_tags($Prod->getProductMemo($TovID))).'</description>
+		<description>'.$Descr.'</description>
 		<country_of_origin>'.$BrDT["CountryName"].'</country_of_origin>
 	</offer>
 ';

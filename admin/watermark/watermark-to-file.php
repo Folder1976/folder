@@ -26,14 +26,15 @@ if (!file_exists("tovwater.png")) {
 	die("<h2>Системная ошибка! Не найден файл tovwater.png ! Пожалуйста, загрузите его через панель администратора</h2>");
 }
 
-$watermark = imagecreatefrompng('tovwater.png');
+$watermark = imagecreatefrompng(__DIR__ . '/tovwater.png');
 $ww = imagesx($watermark);
 $wh = imagesy($watermark);
 
-$im = 0;
+$imgs = 0;
 $r = mysqli_query( $folder, "SELECT `image_large` FROM `tbl_tovar_pic_watermark`
-WHERE `IsWater`='0' AND `image_large` != '' LIMIT 0,200;") or die ("Get unmarked images :(");
+WHERE `IsWater`='0' AND `image_large` != '' LIMIT 0,50;") or die ("Get unmarked images :(");
 while($tIsh = mysqli_fetch_assoc($r)) {
+	$imgs+= 1;
 	$FileLarge = '/home/armma/armma.ru/docs/resources/products/'. $tIsh["image_large"];
 
 	$OrigtFile = str_replace('.large', '.orig',  $tIsh["image_large"]);
@@ -49,7 +50,7 @@ while($tIsh = mysqli_fetch_assoc($r)) {
 		//$im +=1;
 		//continue;
 
-		//copy($FileLarge, $OrigFile);
+		copy($FileLarge, $OrigFile);
 		if (!file_exists($OrigFile)) {
 			// Error when copy
 			SetFlag($tIsh["image_large"]);
@@ -71,8 +72,7 @@ while($tIsh = mysqli_fetch_assoc($r)) {
 	chmod($FileLarge, 0644);
 
 	SetFlag($tIsh["image_large"]);
-	$im += 1;
 }
 
-echo "<script>SucssFunct(".$im.");</script>";
+echo "<script>SucssFunct(".$imgs.");</script>";
 ?>
