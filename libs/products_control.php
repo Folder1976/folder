@@ -63,7 +63,7 @@ $timer[] = timer('Категории');
     $attr_str = '';
     $join_str = '';
     if(isset($_GET['filter-2'])){
-        $join_str .= ' LEFT JOIN tbl_attribute_to_tovar AT2 ON AT2.tovar_id = T.tovar_id AND attribute_id = 2 ';
+        $join_str .= ' LEFT JOIN tbl_attribute_to_tovar AT2 ON AT2.tovar_id = T.tovar_id AND AT2.attribute_id = 2 ';
         $attr_str .= ' AND (';
         foreach($_GET['filter-2'] as $value){
             $attr_str .= 'AT2.attribute_value = "'.$value.'" OR ';
@@ -102,7 +102,6 @@ $timer[] = timer('Категории');
                 $products_id[] = $tmp['tovar_id'];
             }
         }
-
     }elseif($key == 'FIND'){
         $searchq = $id;
         $sql = "SELECT T.tovar_id
@@ -119,7 +118,7 @@ $timer[] = timer('Категории');
                 upper(`tovar_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%')
 			   and `tovar_inet_id` > 0 $brand_filter $attr_str
                GROUP BY `tovar_name_1`";
-        $getCount = $folder->query($sql);
+        $getCount = $folder->query($sql) or die('sql error = ijhafp8rwydfgh');
         $count = $getCount->num_rows;
         if($getCount->num_rows > 0){
             while($tmp = $getCount->fetch_assoc()){
@@ -128,8 +127,27 @@ $timer[] = timer('Категории');
         }
         
     }else{
-      $count = $key;
-      $products_id[] = 0;
+         $sql = "SELECT T.tovar_id
+               FROM 
+               `tbl_tovar` T
+               /*LEFT JOIN tbl_price_tovar ON price_tovar_id = T.tovar_id*/
+               $join_str
+               WHERE 
+               `tovar_inet_id` > 0 $brand_filter $attr_str
+               GROUP BY tovar_name_1
+               ORDER BY T.tovar_id DESC
+               LIMIT 0, 1000;
+               ";
+        //echo $sql;
+        $getCount = $folder->query($sql);
+        $count = $getCount->num_rows;
+        if($getCount->num_rows > 0){
+            while($tmp = $getCount->fetch_assoc()){
+                $products_id[] = $tmp['tovar_id'];
+            }
+        }
+        //$count = $key;
+        $products_id[] = 0;
     }
   
 
@@ -138,6 +156,7 @@ $_SESSION['product_count'] = $count;
 //Если прилетели фильтры - сессию товаров не обновляем!!! Она нужна для списка фильтров без изменений
 if($brand_filter == '' AND $attr_str == ''){
     $_SESSION['all_products_id'] = implode(',', $products_id);
+//    echo "<pre>";  print_r(var_dump( $_SESSION['all_products_id'] )); echo "</pre>";
 }
 
 $timer[] = timer('Всего товаров');

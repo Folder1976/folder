@@ -106,7 +106,7 @@
                     </div>
                 </div>
         </div-->
-         <ul class="l-menu">
+        <ul class="l-menu">
                 <li class="l-menu__item">
                         <a href="#" class="l-menu__link l-menu__link_current">Категории</a>
                         <ul class="l-menu__sub sub_categories">
@@ -476,7 +476,7 @@
 					if($(this).data('name') == 'user' || $(this).data('name') == 'brand' || $(this).data('name') == 'country') {
 						params = params + $(this).data('name')+'['+$(this).data('id')+']='+$(this).val()+'&';                               
 					}else{
-							params = params + $(this).data('name')+'['+$(this).val()+']&';
+						params = params + $(this).data('name')+'['+$(this).val()+']='+$(this).val()+'&';
 					}
 				});
 
@@ -522,18 +522,18 @@
         
         
         <!--
-                <?php if(isset($product['color_variants']) AND $product['color']/* AND count($product['color_variants'])>1*/){ ?>
-                                        <?php $colors = $product['color_variants']; $limit = 4;?> 
-                                        <div class="product__colors">
-                                            <a href="<?php echo $product['url']; ?>.html"><span class="product__color product__color_active" title="<?php echo $colors[$product['color']]['color_name'];?>" style="margin-right: 0px;background-image: url(/resources/colors/<?php echo $colors[$product['color']]['color_id'];?>.png);"></span></a>
-                                            <?php foreach($colors as $color => $color_val){ ?>
-                                                <?php if($color != $product['color']){ ?>
-                                                    <?php if($limit-- < 1) continue; ?>
-                                                    <a href="/<?php echo $color_val['seo_alias'];?>.html"><span class="product__color" title="<?php echo $color;?>" style="margin-right: 0px;background-image: url(/resources/colors/<?php echo $color_val['color_id'];?>.png);"></span></a>
-                                                <?php } ?>
-                                            <?php } ?>
-                                        </div>
-                                        <?php } ?>
+         <?php if(isset($product['color_variants']) AND $product['color']/* AND count($product['color_variants'])>1*/){ ?>
+                <?php $colors = $product['color_variants']; $limit = 4;?> 
+                <div class="product__colors">
+                    <a href="<?php echo $product['url']; ?>.html"><span class="product__color product__color_active" title="<?php echo $colors[$product['color']]['color_name'];?>" style="margin-right: 0px;background-image: url(/resources/colors/<?php echo $colors[$product['color']]['color_id'];?>.png);"></span></a>
+                    <?php foreach($colors as $color => $color_val){ ?>
+                        <?php if($color != $product['color']){ ?>
+                            <?php if($limit-- < 1) continue; ?>
+                            <a href="/<?php echo $color_val['seo_alias'];?>.html"><span class="product__color" title="<?php echo $color;?>" style="margin-right: 0px;background-image: url(/resources/colors/<?php echo $color_val['color_id'];?>.png);"></span></a>
+                        <?php } ?>
+                    <?php } ?>
+                </div>
+                <?php } ?>
             -->               
         
         //Цвета у продуктов
@@ -598,7 +598,7 @@
                      
                         html = html + '<div class="filters__row">';
                         html = html + '<div class="form__checkbox icheck-item'+check+'">';
-                        html = html + '<input type="checkbox" '+check+' class="icheck icheck_filter" name="filter-2[]" id="filter-2" data-name="brand" data-id="2" data-checkboxClass="form__checkbox" value="'+value+'"';
+                        html = html + '<input type="checkbox" '+check+' class="icheck icheck_filter" name="filter-2[]" id="filter-2" data-name="filter-2" data-id="2" data-checkboxClass="form__checkbox" value="'+value+'"';
                         //<?php if(isset($_GET['brand'][$index])) echo ' checked '; ?> 
                         html = html + '>';
                         html = html + '</div>';
