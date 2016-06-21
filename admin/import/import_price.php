@@ -159,20 +159,21 @@ while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
         $price = ($zakup * $currency_a[$zakup_curr]) * $koef;
     }
     
-    $id = $ProductEdit->getProductIdOnArtiklAndSupplier($code, $supplier);
+    $ids = $ProductEdit->getProductIdOnArtiklAndSupplier($code, $supplier);
     
     
-    if(isset($id) AND $id){
+    if($ids AND count($ids) > 0){
         
-        $data['id']         = $id;
-        $data['postav_id']  = $supplier;
-        $data['zakup']      = $zakup;
-        $data['zakup_curr'] = $zakup_curr;
-        $data['price_1']    = $price;
-        $data['items']      = $items;
-        
-        $ProductEdit->addNewSupplierItem($data);    
-        
+        foreach($ids as $id){
+            $data['id']         = $id;
+            $data['postav_id']  = $supplier;
+            $data['zakup']      = $zakup;
+            $data['zakup_curr'] = $zakup_curr;
+            $data['price_1']    = $price;
+            $data['items']      = $items;
+            
+            $ProductEdit->addNewSupplierItem($data);    
+        }
     }else{
         echo '<br>('.$count.')Не нашел - ' . $code;
     }

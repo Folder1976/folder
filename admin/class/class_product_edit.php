@@ -145,8 +145,11 @@ class ProductEdit {
 		
 		//Если нашли чтото
 		if($tovar->num_rows > 0){
-			$tmp = $tovar->fetch_assoc();
-			return $tmp['tovar_id'];
+			$return = array();
+			while($tmp = $tovar->fetch_assoc()){
+				$return[] = $tmp['tovar_id'];
+			}
+			return $return;
 		}else{
 			return false;
 		}

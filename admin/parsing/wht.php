@@ -696,10 +696,10 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 					//	$_items = '10';
 					//}
 					
-					$product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
+					$product_ids = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
 					
-					if($product_id){
-							
+					if($product_ids AND count($product_ids) > 0){
+						foreach($product_ids as $product_id){
 							echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>.
 									<br>Обновлю: Бренд, Наличие, Цену</font>';
 							
@@ -708,7 +708,7 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 								$sql = 'UPDATE tbl_tovar SET brand_id = \''.$brand_id.'\' WHERE tovar_id = \''.$product_id.'\';';
 								$folder->query($sql) or die('Не удалось обновить бренд' . $sql);
 							}
-			
+						}
 					}else{
 						echo '<br>'.$str_artkl . ' ' . $str_name .' = Такого продукта нет. <br><b><font color="green">Пробую добавить</font></b><br>';
 					

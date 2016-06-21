@@ -409,7 +409,7 @@ $return = array();
                         $str_artkl = str_replace(' ', '', $str_artkl);
                         $str_artkl = str_replace(' ', '', $str_artkl);
                         
-                        $product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
+                        $product_ids = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
                             //Проверям есть ли у на свсе данные
                           
                             if($parent == 0){
@@ -426,26 +426,26 @@ $return = array();
                                 }
                             }
                             //==========================================
-                        if($product_id){
-                            
-                            //echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>. Если у него есть пустые поля которые я нашел - я их обновлю</font>';
-                            
-                            //Обновим некоторые параметры
-                            if($brand_id > 0){
-                                $sql = 'UPDATE tbl_tovar SET brand_id = \''.$brand_id.'\' WHERE tovar_id = \''.$product_id.'\';';
-                                $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
+                        if($product_ids AND count($product_ids) > 0){
+                            foreach($product_ids as $product_id){
+                                //echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>. Если у него есть пустые поля которые я нашел - я их обновлю</font>';
+                                
+                                //Обновим некоторые параметры
+                                if($brand_id > 0){
+                                    $sql = 'UPDATE tbl_tovar SET brand_id = \''.$brand_id.'\' WHERE tovar_id = \''.$product_id.'\';';
+                                    $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
+                                }
+                                
+                                if($parent > 0){
+                                    $sql = 'UPDATE tbl_tovar SET tovar_parent = \''.$parent.'\' WHERE tovar_id = \''.$product_id.'\';';
+                                    $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
+                                }
+                                
+                                if($category_id > 0){
+                                    $sql = 'UPDATE tbl_tovar SET tovar_inet_id_parent = \''.$category_id.'\' WHERE tovar_id = \''.$product_id.'\';';
+                                    $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
+                                }
                             }
-                            
-                            if($parent > 0){
-                                $sql = 'UPDATE tbl_tovar SET tovar_parent = \''.$parent.'\' WHERE tovar_id = \''.$product_id.'\';';
-                                $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
-                            }
-                            
-                            if($category_id > 0){
-                                $sql = 'UPDATE tbl_tovar SET tovar_inet_id_parent = \''.$category_id.'\' WHERE tovar_id = \''.$product_id.'\';';
-                                $folder->query($sql) or die('Не удалось обновить бренд' . $sql);
-                            }
-                            
                         }else{
                         
                             //echo '<br>'.$str_artkl . ' ' . $str_name .' = Такого продукта нет, Пробую добавить';

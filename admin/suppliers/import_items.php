@@ -87,10 +87,10 @@ while($count <= $rows){
 
  
     //Найдем товар
-    $product_id = $ProductEdit->getProductIdOnArtiklAndSupplier($row['tovar_artkl'], $postavID);
+    $product_ids = $ProductEdit->getProductIdOnArtiklAndSupplier($row['tovar_artkl'], $postavID);
  
  
- echo '<br>'.$product_id.' '.$row['tovar_artkl'];
+ echo '<br>'.$product_ids[0].' '.$row['tovar_artkl'];
  
  
  /* 
