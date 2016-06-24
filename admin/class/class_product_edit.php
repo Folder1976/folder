@@ -13,8 +13,29 @@ class ProductEdit {
 	}
 	
 	public function addNewSupplierItem($data){
+	
+		//echo "<pre>";  print_r(var_dump( $data )); echo "</pre>";
+		$sql = "SELECT tovar_id FROM tbl_tovar_suppliers_items WHERE tovar_id = '".$data['id']."' AND postav_id = '".$data['postav_id']."' LIMIT 0, 1";
+		$r = $this->base->query($sql);
+		if($r->num_rows > 0){
+			
+			$fild = array();
+			$fild[] = "zakup = '".$data['zakup']."'";
+			$fild[] = "zakup_curr = '".$data['zakup_curr']."'";
+			if($data['import_price'] == 1) $fild[] = "price_1 = '".$data['price_1']."'";
+			if($data['import_item'] == 1) $fild[] = "items = '".$data['items']."'";
+			
+			$sql = "UPDATE tbl_tovar_suppliers_items SET ".implode(', ', $fild)."
+					WHERE
+					tovar_id = '".$data['id']."' AND postav_id = '".$data['postav_id']."';";
+			
+			
+			$this->base->query($sql);
+			
+			return true;	
 		
-		$sql = "INSERT INTO tbl_tovar_suppliers_items SET
+		}else{
+			$sql = "INSERT INTO tbl_tovar_suppliers_items SET
 				tovar_id = '".$data['id']."',
 				postav_id = '".$data['postav_id']."',
 				zakup = '".$data['zakup']."',
@@ -22,10 +43,12 @@ class ProductEdit {
 				price_1 = '".(int)$data['price_1']."',
 				items = '".$data['items']."';";
 		
+			$this->base->query($sql);
+			
+			return $this->base->insert_id;
+		}
 		
-		$this->base->query($sql);
 		
-		return $this->base->insert_id;
 	}
 		
 	public function addProduct($data){
@@ -107,6 +130,7 @@ class ProductEdit {
 	public function getProductIdOnArtiklAndSupplier($tovar_artkl, $postavID = 0){
 		
 		//Если поставщик ( 0 ) - ищем сначала в основной базе. А если указан - начинем с альтернативных артикулов
+		$products_id = array();
 		if($postavID == 0){
 
 			$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tovar_artkl.'";';
@@ -118,10 +142,16 @@ class ProductEdit {
 			
 				//если чтото нашли
 				if($tovar->num_rows > 0){
-					$tmp = $tovar->fetch_assoc();
-					$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
-					$tovar = $this->base->query($sql);
-					
+				
+					while($tmp = $tovar->fetch_assoc()){
+						$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
+						$tovar1 = $this->base->query($sql);
+						if($tovar1->num_rows > 0){
+							while($tmp1 = $tovar1->fetch_assoc()){
+								$products_id[] = $tmp1['tovar_id'];
+							}
+						}
+					}
 				}	
 			}
 
@@ -132,27 +162,34 @@ class ProductEdit {
 			
 			//если чтото нашли
 			if($tovar->num_rows > 0){
-				$tmp = $tovar->fetch_assoc();
-				$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
-				$tovar = $this->base->query($sql);
-				
+				while($tmp = $tovar->fetch_assoc()){
+					$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tmp['tovar_artkl'].'";';
+					$tovar1 = $this->base->query($sql);
+			
+					if($tovar1->num_rows > 0){
+						while($tmp1 = $tovar1->fetch_assoc()){
+							$products_id[] = $tmp1['tovar_id'];
+						}
+					}
+				}
 			}else{
 				$sql = 'SELECT tovar_id FROM tbl_tovar WHERE tovar_artkl = "'.$tovar_artkl.'";';
 				$tovar = $this->base->query($sql);
+				if($tovar->num_rows > 0){
+					while($tmp1 = $tovar->fetch_assoc()){
+						$products_id[] = $tmp1['tovar_id'];
+					}
+				}
 			}
 			
 		}
 		
 		//Если нашли чтото
-		if($tovar->num_rows > 0){
-			$return = array();
-			while($tmp = $tovar->fetch_assoc()){
-				$return[] = $tmp['tovar_id'];
-			}
-			return $return;
-		}else{
-			return false;
+		if(count($products_id) > 0){
+			return $products_id;
 		}
+		return false;
+		
 		
 	}
 	

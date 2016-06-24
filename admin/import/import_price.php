@@ -46,6 +46,18 @@ while($tmp = $r->fetch_assoc()){
                     <td><input type="file" name="excel_kottem" style="width:300px;"></td>
                 </tr>
                 <tr>
+                    <td><b>Импортить цены :</b></td>
+                    <td><input type="checkbox" name="import_price" checked></td>
+                </tr>
+                <tr>
+                    <td><b>Импортить остатки :</b></td>
+                    <td><input type="checkbox" name="import_item" checked></td>
+                </tr>
+                <tr>
+                    <td><b>Обнулить поставщика перед импортом :</b></td>
+                    <td><input type="checkbox" name="import_update" ></td>
+                </tr>
+                <tr>
                     <td colspan="2" align="center">
                         <input type="submit" value="Загрузить" style="width:300px;">
                     </td>
@@ -124,7 +136,9 @@ while($tmp = $r->fetch_assoc()){
     $currency_a[$tmp['currency_id']] = $tmp['currency_ex'];
 }
 
-$ProductEdit->dellAllSupplierItems($supplier);
+if(isset($_POST['import_update'])){
+    $ProductEdit->dellAllSupplierItems($supplier);
+}
 
 while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
     $row_count++;  
@@ -160,17 +174,27 @@ while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
     }
     
     $ids = $ProductEdit->getProductIdOnArtiklAndSupplier($code, $supplier);
-    
-    
+   
+     
     if($ids AND count($ids) > 0){
         
         foreach($ids as $id){
+             
             $data['id']         = $id;
             $data['postav_id']  = $supplier;
             $data['zakup']      = $zakup;
             $data['zakup_curr'] = $zakup_curr;
             $data['price_1']    = $price;
             $data['items']      = $items;
+            $data['import_price'] = 0;
+            $data['import_item']  = 0;
+            if(isset($_POST['import_price'])){
+                $data['import_price'] = 1;
+            }
+            if(isset($_POST['import_item'])){
+                $data['import_item'] = 1;
+            }
+            
             
             $ProductEdit->addNewSupplierItem($data);    
         }
