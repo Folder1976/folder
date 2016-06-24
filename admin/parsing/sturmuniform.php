@@ -8,13 +8,11 @@ $categs = $Category->getAllCategoryIdAndUrl();
 
 include 'class/class_brand.php';
 $Brand = new Brand($folder);
-
+$mysqli = $folder;
 //$categs = $Category->getAllCategoryIdAndUrl();
 $parents = $Category->getParents();
 $brands = $Brand->getBrands();
 
-    //header("Content-Type: text/html; charset=UTF-8");
-    //echo "<pre>";  print_r(var_dump( $categs )); echo "</pre>";	
 	?>
 	<!--script src='js/jquery/jquery-1.8.3.js' type='text/javascript'></script-->
 	<div class="wrapper">
@@ -49,9 +47,172 @@ $brands = $Brand->getBrands();
 			float: left;
 		}
 	</style>
+<?php
+$pars_table = 'tbl_parsing_sturmuniform';
+$postav_id = 3; //STURMUNIFORM
+$pausa = 5;
+?>
+<a href="/admin/main.php?func=add_products&supplier=sturmuniform&scan" class="key_a">Сканировать на новые товары</a>
+<a href="/admin/main.php?func=add_products&supplier=sturmuniform&parsing" class="key_a">Парсить новые товары</a>
+<a href="/admin/main.php?func=add_products&supplier=sturmuniform" class="key_a">Остановить</a>
+	<style>
+		.key_a{
+			padding: 10px;
+			margin: 10px;
+			background-color: #E0CECE;
+			border: 1px solid gray;
+			margin-bottom: 30px;
+		}
+	</style>
+<?php
+//========АВТОПАРС===================================================================================================================
+if(isset($_GET['parsing'])){
 	
+		//тупо посчитаем все запись
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.' WHERE artkl = \'yes\' AND breadcrumbs = "product";';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$products = $tmp['id'];
+		
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.' WHERE breadcrumbs = "product";';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$products_all = $tmp['id'];
+		echo '<br><b>Всего продуктов - '.$products_all.'. Новых - '.($products_all - $products).'</b><br>';
+	
+		if($products_all - $products == 0){
+			echo '<br>Сканирование завершено';
+			return false;
+		}
+	
+	
+	
+		$sql = 'SELECT url FROM '.$pars_table.' WHERE breadcrumbs = "product" AND view <= "1" AND artkl = "" LIMIT 0,1;';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$list = $tmp->fetch_assoc();
+	
+	
+		$sql = 'UPDATE '.$pars_table.' SET
+					`view` = "2",
+					`artkl` = "yes"
+					WHERE url = \''.$list['url'].'\';';			
+		$mysqli->query($sql) or die('==' . $sql);
+		?>
+		<script>
+			$(document).ready(function(){
+				setTimeout(parce, <?php echo $pausa; ?>000);
+				 });
+		</script>
+		<?php
+	
+}
+//========SCAN===================================================================================================================
+if(isset($_GET['scan'])){
+		
+		include 'simple_html_dom/simple_html_dom.php';
+
+		//тупо посчитаем все запись
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.';';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$all = $tmp['id'];
+
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.' WHERE view = \'0\';';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$none = $tmp['id'];
+	
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.' WHERE artkl = \'yes\' AND breadcrumbs = "product";';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$products = $tmp['id'];
+		
+		$sql = 'SELECT count(id) AS id FROM '.$pars_table.' WHERE breadcrumbs = "product";';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		$tmp = $tmp->fetch_assoc();
+		$products_all = $tmp['id'];
+		echo '<br><br><br><b>Всего ликов - '.$all.'. Пропарсено - '.($all - $none).'. Осталось - '.$none.'.</b><br>';
+		echo '<br><b>Всего продуктов - '.$products_all.'. Новых - '.($products_all - $products).'</b><br>';
+	
+		if($none == 0){
+			echo '<br>Сканирование завершено';
+			return false;
+		}
+	
+		$sql = 'SELECT * FROM '.$pars_table.' WHERE view = \'0\' LIMIT 1;';
+		$url = $mysqli->query($sql) or die('==' . $sql);
+		
+		
+		$list = $url->fetch_assoc();
+		
+		$html = @file_get_html($list['url']);
+		$catalog = 'catalog';
+		$artkl = '';
+		
+		if($html){
+				$t = $html->find('.ProductInfoLeft');
+				if($t){
+					$catalog = 'product';
+				}
+		
+				$t = $html->find('a');
+				foreach($t as $option){
+					$href = $option->href;
+					$name = $option->innertext();
+					
+					if(strpos($href, 'sturm') !== false AND strpos($href, '@') === false AND strpos($href, 'javas') === false){
+						$sql = 'SELECT id FROM '.$pars_table.' WHERE url = \''.$href.'\';';
+						$t = $mysqli->query($sql) or die('==' . $sql);
+						
+						if($t->num_rows == 0){
+								$sql = 'INSERT INTO '.$pars_table.' SET
+											 `url` = \''.$href.'\',
+											 `key` = "'.strip_tags(str_replace('"', "",$name)).'",
+											 `view` = \'0\',
+											 `date` = \''.date('Y-m-d H:i:s').'\',
+											 `breadcrumbs` = \'\';';
+								$mysqli->query($sql) or die('==' . $sql);
+								echo '<br>'.$href.'';
+						}							
+						
+					}
+				}
+				
+				$sql = 'SELECT * FROM tbl_tovar_links WHERE url = \''.$list['url'].'\' AND postav_id="'.$postav_id.'" LIMIT 1;';
+				$r = $mysqli->query($sql) or die('==' . $sql);
+			
+				if($r->num_rows > 0){
+					$artkl = 'yes';
+				}
+		}
+		
+		$sql = 'UPDATE '.$pars_table.' SET
+					`breadcrumbs` = "'.$catalog.'",
+					`view` = "1",
+					`artkl` = "'.$artkl.'"
+					WHERE url = \''.$list['url'].'\';';			
+		$mysqli->query($sql) or die('==' . $sql);
+		
+		?>
+		<script>
+			$(document).ready(function(){
+				setTimeout(reload, <?php echo $pausa; ?>000);
+				 });
+			
+			function reload() {
+				location.reload();
+			}
+		</script>
+		
+	<?php
+	return true;
+}
+//===========================================================================================================================
+
+?>
 <div class="form">
-<table>
+<br><br>		
+<table style="">
 	<tr>
 		<td width="400">
 			Сюда URL <b>на список товаров</b> со STURMINFORM<br>(!!! Правильно делай выборку! Весь товар из этого списка попадет в одну категорию под один бренд)			
@@ -71,7 +232,7 @@ $brands = $Brand->getBrands();
 			Сюда URL <b>на товар</b> со STURMINFORM			
 		</td>
 		<td>
-			<input type="text" class="sturminform" maxlength="100" size="20" />
+			<input type="text" class="sturminform" maxlength="100" size="20" <?php if(isset($list['url'])) echo 'value="'.$list['url'].'"';?>/>
 		</td>
 		<td>
 			<a href="javascript:" class="sturminformreload">перечитать</a>
@@ -87,7 +248,11 @@ $brands = $Brand->getBrands();
 					<option value="0">Выбрать категорию для добавления</option>
 			<?php foreach($categs as $value){ ?>
 				<?php if($value['parent_inet_id'] > 0){ ?>
-					<option value="<?php echo $value['parent_inet_id']; ?>"><?php echo $value['name']. ' -> '.$value['seo_alias']; ?></option>
+					<?php if(isset($list['url']) AND $value['parent_inet_id'] = 457) {?>
+                        <option value="<?php echo $value['parent_inet_id']; ?>" selected><?php echo $value['name']. ' -> '.$value['seo_alias']; ?></option>
+                    <?php }else{ ?>
+						<option value="<?php echo $value['parent_inet_id']; ?>"><?php echo $value['name']. ' -> '.$value['seo_alias']; ?></option>
+					<?php } ?>
 				<?php } ?>
 			<?php } ?>
 		</select>
@@ -99,7 +264,7 @@ $brands = $Brand->getBrands();
 		<td colspan="3"><select class="parent">
 					<option value="0">Внутренняя папка</option>
 			<?php foreach($parents as $value){ ?>
-					<option value="<?php echo $value['tovar_parent_id']; ?>"><?php echo $value['tovar_parent_name']; ?></option>
+					<option value="<?php echo $value['tovar_parent_id']; ?>" <?php if($value['tovar_parent_id'] == 2) echo 'selected'; ?>><?php echo $value['tovar_parent_name']; ?></option>
 			<?php } ?>
 		</select>
 		</td>
@@ -173,7 +338,7 @@ $brands = $Brand->getBrands();
 	$(document).on('change','.sturminform', function(){
 	});
 	
-	function parce(key) {
+	function parce() {
         
 		var list = $('.sturminform_list').val();
 		var url = $('.sturminform').val();
@@ -199,6 +364,9 @@ $brands = $Brand->getBrands();
 				$('.sturminforinfo').html('Прочитано');
 				$('.result').html(json);
 				console.log(json);
+				<?php if(isset($_GET['parsing'])){ ?>
+					location.reload;
+				<?php } ?>
 			}
 		});
 		

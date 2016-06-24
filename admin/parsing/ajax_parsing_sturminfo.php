@@ -121,6 +121,13 @@ if(isset($_GET['brand'])) $brand_id = $_GET['brand'];
                 
             }
           
+          
+          if($str_artkl == ''){
+            $tmp = date('Y-m-d H:i:s');
+            $str_artkl = substr(md5($tmp),0,25);
+          }
+          
+          
             //Поищем описани - у него див со стилем
             $memo = '';
             foreach($html->find('div') as $div){

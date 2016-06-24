@@ -54,6 +54,7 @@ if($supp == 'militarist') include 'parsing/militarist.php';
 if($supp == 'btcgroup') include 'parsing/btcgroup.php';
 if($supp == 'garsing') include 'parsing/garsing.php';
 if($supp == 'wht') include 'parsing/wht.php';
+if($supp == 'sturmuniform_new') include 'parsing/sturmuniform_new.php';
 if($supp == 'tiande') include 'tiande.php';
 if($supp == 'prices') include 'parsing/prices.php';
 if($supp == 'clear') include 'parsing/clear.php';

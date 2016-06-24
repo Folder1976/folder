@@ -20,6 +20,7 @@
 <!--a href="main.php?func=add_products&supplier=garsing">garsing.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;-->
 <a href="main.php?func=add_products&supplier=wht">wht.ru<font color="red">*</font></a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="main.php?func=add_products&supplier=splav">splav.ru<font color="red">*</font></a>
+<a href="main.php?func=add_products&supplier=sturmuniform_new">sturmuniform.ru_new<font color="red">*</font></a>
 <hr>
 <?php
 
