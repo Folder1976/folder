@@ -8,10 +8,11 @@ if (!isset($_POST["categ"]) || !is_numeric($_POST["categ"])) {
 }
 $Categ = $_POST["categ"];
 
-$r = mysqli_query( $folder, "SELECT tovar_id
-   FROM tbl_tovar
-   LEFT JOIN tbl_parent_inet_path ON path_id = '".$Categ."'
-   WHERE tovar_inet_id_parent = category_id;") or die (mysqli_error($folder)."Get tovars :(");
+$r = mysqli_query( $folder, "SELECT TTOV.tovar_id
+   FROM tbl_tovar TTOV
+   LEFT JOIN tbl_parent_inet_path INPTH ON INPTH.path_id = '".$Categ."'
+   INNER JOIN tbl_tovar_suppliers_items SUPIT ON SUPIT.tovar_id=TTOV.tovar_id
+   WHERE TTOV.tovar_inet_id_parent = INPTH.category_id AND SUPIT.postav_id IN (3,45) AND TTOV.use_in_market=1 AND SUPIT.items > 0;") or die (mysqli_error($folder)."Get tovars :(");
 
 if (mysqli_num_rows($r) == 0) {
 	echo "<li>В категории ID ".$Categ." нет товаров (ни в ней, ни в потомках)</li>";
