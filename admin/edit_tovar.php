@@ -486,9 +486,12 @@ echo "</tr>";
 
 
 echo "\n<tr><td>Alias:</td><td>"; # Group name 1
-echo "\n<input type='text'  style='width:400px' class='tovar_alias' name='tovar_alias' value='" . $Alias->getProductAlias($_GET['tovar_id']) . "'/></td>";
-echo "<td><a href='javascript:' class='alias_gen'>генерить</a></td>";
-echo "<td></td>";
+echo "\n<input type='text'  style='width:400px' class='tovar_alias' name='tovar_alias' value='" . $Alias->getProductAlias($_GET['tovar_id']) . "'/>
+		</td>";
+echo "<td colspan='2' style='min-width:140px;'><a href='javascript:' class='alias_gen'><b>[генерить]</b></a>
+				<br><a href='javascript:' class='alias_to_all'><b>[всем родственникам]</b></a>
+			</td>";
+echo "";
 echo "</tr>";
 
 if(strpos($_SESSION[BASE.'usersetup'],'tovar_model')>0){
@@ -1469,20 +1472,40 @@ tinymce.init({selector:'textarea'});
    
     $(document).on('click','.alias_gen', function(){
      
-   	$.ajax({
-              type: "GET",
-              dataType: "text",
-              url: "alias/get_tovar_alias.php",
-              data: "tovar_id=<?php echo $iKlient_id;?>",
-	      beforeSend: function(msg){
-		    //$('.url_photo_info').html('<font color="red">Загрузка...</font>');
-              },
-              success: function(msg){
-		    console.log(msg);
-		    $('.tovar_alias').val(msg);
-              }
-	});
+		$.ajax({
+				  type: "GET",
+				  dataType: "text",
+				  url: "alias/get_tovar_alias.php",
+				  data: "tovar_id=<?php echo $iKlient_id;?>",
+			  beforeSend: function(msg){
+				//$('.url_photo_info').html('<font color="red">Загрузка...</font>');
+				  },
+				  success: function(msg){
+				console.log(msg);
+				$('.tovar_alias').val(msg);
+				  }
+		});
       
+    });
+    
+	$(document).on('click','.alias_to_all', function(){
+     
+		var alias = $('.tovar_alias').val();
+		
+		$.ajax({
+				  type: "GET",
+				  dataType: "text",
+				  url: "edit_tovar_save.php",
+				  data: "tovar_alias="+alias+"&_id_value=<?php echo $iKlient_id;?>&key=alias_to_all",
+			  beforeSend: function(msg){
+				//$('.url_photo_info').html('<font color="red">Загрузка...</font>');
+				  },
+				  success: function(msg){
+				console.log(msg);
+					alirt('Сохранил!');
+			  }
+		});
+		  
     });
     
     $(document).on('click','.translate', function(){

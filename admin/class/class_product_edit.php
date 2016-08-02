@@ -7,9 +7,23 @@ class ProductEdit {
 		$this->base = $sql_connect;
 	}
 	
-	public function dellAllSupplierItems($supplier_id){
-		$sql = 'DELETE FROM tbl_tovar_suppliers_items WHERE postav_id = \''.$supplier_id.'\';';
-		$this->base->query($sql);
+	public function dellAllSupplierItems($supplier_id, $data = array()){
+		
+		if(isset($data['import_price']) AND $data['import_price'] == 1){
+			$sql = 'UPDATE tbl_tovar_suppliers_items SET  price_1 = "0" WHERE postav_id = \''.$supplier_id.'\';';
+			//echo '<br>'.$sql;
+			$this->base->query($sql);	
+		}
+
+		if(isset($data['import_item']) AND $data['import_item'] == 1){
+			$sql = 'UPDATE tbl_tovar_suppliers_items SET  items = "0" WHERE postav_id = \''.$supplier_id.'\';';
+			//echo '<br>'.$sql;
+			$this->base->query($sql);	
+		}
+
+		//$sql = 'DELETE FROM tbl_tovar_suppliers_items WHERE postav_id = \''.$supplier_id.'\';';
+		//$this->base->query($sql);	
+	
 	}
 	
 	public function addNewSupplierItem($data){
@@ -126,6 +140,21 @@ class ProductEdit {
 	
 	}	
 	
+	public function getProductIdOnURL($url){
+		$sql = 'SELECT product_id FROM tbl_tovar_links WHERE url = "'.$tovar_artkl.'";';
+		$tovar = $this->base->query($sql);
+	
+		//если чтото нашли
+		if($tovar->num_rows > 0){
+			$products_id = array();
+			while($tmp = $tovar->fetch_assoc()){
+				$products_id[] = $tmp['product_id'];
+			}
+			return $products_id;
+		}
+		
+		return false;
+	}
 	
 	public function getProductIdOnArtiklAndSupplier($tovar_artkl, $postavID = 0){
 		

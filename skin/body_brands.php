@@ -5,11 +5,12 @@
         </div>
 
         <div class="medium-6 columns text-right small-only-text-left">
-            <a href="javascript:" class="btn btn_light brands_key">Все бренды</a>
+            <a href="/brands" class="btn btn_light brands_key">Все бренды</a>
         </div>
     </header>
     <?php
-        $brands = $Brand->getBrands();
+        if(!isset($brand_limit)) $brand_limit = 8;
+        $brands = $Brand->getBrands($brand_limit);
     ?>
     <div class="row">
         <div class="small-24 columns">
@@ -27,14 +28,14 @@
         </div>
     </div>
 </article>
-<style>
+<!--style>
     .brends{
         height: 220px;
         overflow: hidden;
     }
-</style>
-<script>
+</style-->
+<!--script>
     $(document).on('click', '.brands_key', function(){
         $('.brends').css('height','auto');   
     });
-</script>
+</script-->

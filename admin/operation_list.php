@@ -199,6 +199,35 @@ echo "<header><link rel='stylesheet' type='text/css' href='sturm.css' media='all
 </header>";
 //==================JAVA===========================================
 echo "\n<script src='JsHttpRequest.js'></script>";
+?>
+<script>
+	function set_new_status(value,value2){
+	    if(confirm('<?php echo $m_setup['menu change'];?>?')){
+			info('Wait...');
+	
+			var div_mas =  document.getElementById('div_view_'+value);
+			div_mas.innerHTML='wait...';
+			var req=new JsHttpRequest();
+			
+			req.onreadystatechange=function(){
+				if(req.readyState==4){
+					var responce=req.responseText;
+					div_mas.innerHTML=responce;
+					info('');
+					if (value2 == 17 || value2 == 18 || value2 == 19 || value2 == 1112 || value2 == 1116 || value2 == 1117) {
+                        alert('Данный статус обнулит сально.\n\r Сумма накладной станет НОЛЬ!\n\nДля обображения - обновите страницу.');
+                    }
+				}
+			}
+		req.open(null,'set_status.php',true);
+	    req.send({nakl:value,stat:value2});
+		}
+    }
+</script>
+<?php
+
+
+
 echo "\n<script type='text/javascript'>";
 echo "function info(msg){
 	  document.getElementById('info').innerHTML = msg;
@@ -263,23 +292,6 @@ echo "\nfunction viewNakl(value,flag,sort){
     echo "req.send({nakl:value,restore:res_key,sort:sort});";
     echo "}}";
 //===================STATUS================================
-    echo "\nfunction set_new_status(value,value2){
-	    if(confirm('",$m_setup['menu change'],"?')){
-	      info('Wait...');";
-    echo "\nvar div_mas =  document.getElementById('div_view_'+value);";    
-    echo "\ndiv_mas.innerHTML='wait...';";
-      echo "\nvar req=new JsHttpRequest();";
-      echo "\nreq.onreadystatechange=function(){";
-      echo "\nif(req.readyState==4){";
-	echo "\n var responce=req.responseText;";
-	echo "\ndiv_mas.innerHTML=responce;
-		info('');";
-    echo "\n}}";
-    echo "\nreq.open(null,'set_status.php',true);";
-    echo "\nreq.send({nakl:value,stat:value2});";
-    echo "\n
-	}
-    }";
     echo "function close_find_window(){
 	document.getElementById('find-result').style.display = 'none';
     }

@@ -200,6 +200,9 @@ if(isset($_GET['brand'])) $brand_id = $_GET['brand'];
                 $str_artkl = str_replace(' ', '', $str_artkl);
                 
                 $product_ids = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
+                if(!$product_ids){
+                    $product_ids = $ProductEdit->getProductIdOnURL($url);
+                }
                 //echo $product_id.'<br>';
                     if($parent == 0){
                         echo '<br><font color = "red">Не указана внутренняя папка!</font>';

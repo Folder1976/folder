@@ -279,7 +279,7 @@
                 <!--div class="small-9 columns">
                         <input type="hidden" id="product_id" value="<?php echo $product['id'];?>">
                         <input type="hidden" id="postav_id" value="<?php echo $min_price['postav_id'];?>">
-                    <button class="form__submit form__submit_text-large to_cart">В корзину</button>
+                    <button class="form__submit form__submit_text-large to_cart">В корзину1</button>
                 </div-->
             </div>
             
@@ -390,6 +390,8 @@
                                 $('.pp-table').hide(200);
                                 $('.checked').removeClass('checked');
                                 $('.product__size_active').removeClass('product__size_active');
+                             
+                                $('#reviewer-size').val($(this).html());
                                 
                                 $(this).addClass('product__size_active');
                                 $('.' + target).show('slow');
@@ -401,10 +403,20 @@
                                 //console.log(target);
                                 if($('.' + target).html().indexOf('radio') > -1){
                                     $('.form__input_product').val('1');
+                                    $('.form_items').show();
+                                    //$('.pp-table').show();
                                     $('.form__input_product').prop('disabled', 'false');
+                                    html = '<button class="form__submit form__submit_product to_cart">В корзину</button>';
+                                    $('.form_button_wrapper').html(html);
                                 }else{
+                                    $('.form_items').hide();
+                                    $('.pp-table').hide();
                                     $('.form__input_product').val('0');
                                     $('.form__input_product').prop('disabled', 'true');
+                                    html = '<h4 class="f-menu__title">Введите емыил для оповещения</h4><div class="f-menu"><div class="row collapse"><div class="small-14 columns">';
+                                    html = html + '<input type="email" class="form__input" id="items_email" <?php if(isset($_SESSION[BASE.'login'])){ ?> value="<?php echo $_SESSION[BASE.'login']; ?>" <?php }else{ ?> placeholder="Ваш email" <?php } ?>>';
+                                    html = html +  '</div><div class="small-10 columns"><button class="form__submit form__submit_large report_items" style="height: 50px;">Сообщить о наличии</button></div></div></div>';
+                                    $('.form_button_wrapper').html(html);
                                 }
                         });
                         
@@ -414,7 +426,30 @@
                                 $('.' + id+'_check').prop('checked', 'checked');
                                 $('.icheck_deliv').trigger('change');
                         });
-                </script>
+
+                        $(document).on('click', '.report_items', function(){
+                            
+                            var product_artkl = $('#reviewer-product').val();
+                            var size = $('#reviewer-size').val();
+                            
+                            if (size != '') {
+                                product_artkl = product_artkl + '***' + size;
+                            }
+                          
+                            $.ajax({
+                                type: "POST",
+                                url: "<?php echo HOST_URL; ?>/ajax/podpiska.php?key=tovar&product_artkl="+product_artkl+"&email=" + $('#items_email').val(),
+                                dataType: "json",
+                                success: function(msg){
+                                    
+                                    console.log(msg);
+                                    alert(msg['msg']);
+                                    
+                                }
+                            });
+                        });
+     
+    </script>
                 
                 <style>
                         .pp-table{
@@ -422,6 +457,10 @@
                         }
                         .table_show{
                                 display: block;
+                        }
+                        #items_email{
+                                height: 50px;
+                                font-size: 20px;
                         }
                 </style>
                
@@ -490,21 +529,36 @@
             <div class="row product__row">
                               
                <div class="row product__row product__row_footer">
-                <div class="small-7 columns">
+                <div class="small-7 columns form_items">
                         <input type="hidden" id="product_id" value="<?php echo $product['id'];?>">
                         <input type="hidden" id="postav_id" value="<?php echo $min_price['postav_id'];?>">
-                        <span class="no-wrap">
-                        <?php //if($min_price['delive_days'] == 'НЕТ'){ ?>
                         <?php if($first == 0){ ?>
-                                <input type="text" class="form__input form__input_product text-center" id="items" required value="<?php echo $first;?>" disabled>
+                            <span class="no-wrap" style="display: none;">
                         <?php }else{ ?>
-                                <input type="text" class="form__input form__input_product text-center" id="items" required value="<?php echo $first;?>">
+                            <span class="no-wrap">
                         <?php } ?>
-                        <span class="form__input-b-hint">шт.</span></span>
+                            <input type="text" class="form__input form__input_product text-center" id="items" required value="<?php echo $first;?>">
+                            <span class="form__input-b-hint">шт.</span>
+                        </span>
                 </div>
 
-                <div class="small-17 columns">
-                    <button class="form__submit form__submit_product to_cart">В корзину</button>
+                <div class="small-17 columns form_button_wrapper">
+                    <?php if($first == 0){ ?>    
+                        <div class="f-menu">
+                            <h4 class="f-menu__title">Введите емаил для оповещения</h4>
+                            <div class="row collapse">
+                                <div class="small-14 columns">
+                                    <input type="email" class="form__input" id="items_email" <?php if(isset($_SESSION[BASE.'login'])){ ?> value="<?php echo $_SESSION[BASE.'login']; ?>" <?php }else{ ?> placeholder="Ваш email" <?php } ?>>
+                                </div>
+        
+                                <div class="small-10 columns">
+                                    <button class="form__submit form__submit_small report_items" style="height: 50px;">Сообщить о наличии</button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php }else{ ?>     
+                        <button class="form__submit form__submit_product to_cart">В корзину</button>
+                    <?php } ?>
                     <!--<button class="btn btn_text-large">В корзину</button>-->
                 </div>
                 </div>
@@ -597,6 +651,7 @@
 
                             <div class="large-6 medium-8 columns end">
                                 <input type="text" class="form__input" id="reviewer-name" name="reviewer-name">
+                                <input type="text" class="form__input" id="reviewer-size" name="reviewer-size">
                                 <input type="hidden"  id="reviewer-product" name="reviewer-product" value="<?php echo $product['artkl']; ?>">
                             </div>
                         </div>

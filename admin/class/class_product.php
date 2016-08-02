@@ -182,7 +182,7 @@ class Product {
 		}else{
 			$return = array();
 			while($tmp = $res->fetch_assoc()){
-				$return[] = $tmp;	
+				$return[$tmp['tovar_id']] = $tmp;	
 			}
 			
 			return $return;

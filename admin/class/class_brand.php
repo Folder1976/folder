@@ -7,8 +7,8 @@ class Brand {
 		$this->base = $sql_connect;
 	}
 	
-	public function getBrands(){
-		$sql = "SELECT * FROM tbl_brand ORDER BY brand_code ASC";
+	public function getBrands($limit = 10000){
+		$sql = "SELECT * FROM tbl_brand ORDER BY brand_code ASC LIMIT 0, $limit";
 		
 		$r = $this->base->query($sql);
 		

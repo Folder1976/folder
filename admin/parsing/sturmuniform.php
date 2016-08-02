@@ -50,7 +50,7 @@ $brands = $Brand->getBrands();
 <?php
 $pars_table = 'tbl_parsing_sturmuniform';
 $postav_id = 3; //STURMUNIFORM
-$pausa = 5;
+$pausa = 2;
 ?>
 <a href="/admin/main.php?func=add_products&supplier=sturmuniform&scan" class="key_a">Сканировать на новые товары</a>
 <a href="/admin/main.php?func=add_products&supplier=sturmuniform&parsing" class="key_a">Парсить новые товары</a>
@@ -78,7 +78,7 @@ if(isset($_GET['parsing'])){
 		$tmp = $mysqli->query($sql) or die('==' . $sql);
 		$tmp = $tmp->fetch_assoc();
 		$products_all = $tmp['id'];
-		echo '<br><b>Всего продуктов - '.$products_all.'. Новых - '.($products_all - $products).'</b><br>';
+		echo '<br><br><br><b>Всего продуктов - '.$products_all.'. Новых - '.($products_all - $products).'</b><br>';
 	
 		if($products_all - $products == 0){
 			echo '<br>Сканирование завершено';
@@ -100,7 +100,7 @@ if(isset($_GET['parsing'])){
 		?>
 		<script>
 			$(document).ready(function(){
-				setTimeout(parce, <?php echo $pausa; ?>000);
+				setTimeout(parce, 5000);
 				 });
 		</script>
 		<?php
@@ -133,7 +133,13 @@ if(isset($_GET['scan'])){
 		$products_all = $tmp['id'];
 		echo '<br><br><br><b>Всего ликов - '.$all.'. Пропарсено - '.($all - $none).'. Осталось - '.$none.'.</b><br>';
 		echo '<br><b>Всего продуктов - '.$products_all.'. Новых - '.($products_all - $products).'</b><br>';
-	
+		
+		$sql = 'SELECT url FROM '.$pars_table.' WHERE artkl <> \'yes\' AND breadcrumbs = "product";';
+		$tmp = $mysqli->query($sql) or die('==' . $sql);
+		while($tmp1 = $tmp->fetch_assoc()){
+			echo '<br>'.$tmp1['url'];
+		}
+		
 		if($none == 0){
 			echo '<br>Сканирование завершено';
 			return false;
@@ -160,7 +166,13 @@ if(isset($_GET['scan'])){
 					$href = $option->href;
 					$name = $option->innertext();
 					
-					if(strpos($href, 'sturm') !== false AND strpos($href, '@') === false AND strpos($href, 'javas') === false){
+					if(strpos($href, 'sturm') !== false
+						AND strpos($href, '@') === false
+						AND strpos($href, 'javas') === false
+						AND strpos($href, 'action') === false
+						AND strpos($href, 'images') === false
+					  	AND strpos($href, 'sort=') === false
+					   ){
 						$sql = 'SELECT id FROM '.$pars_table.' WHERE url = \''.$href.'\';';
 						$t = $mysqli->query($sql) or die('==' . $sql);
 						
@@ -178,12 +190,14 @@ if(isset($_GET['scan'])){
 					}
 				}
 				
-				$sql = 'SELECT * FROM tbl_tovar_links WHERE url = \''.$list['url'].'\' AND postav_id="'.$postav_id.'" LIMIT 1;';
+				$sql = 'SELECT * FROM tbl_tovar_links WHERE url = \''.$list['url'].'\'  LIMIT 1;';
+				echo '<br>'.$sql;
 				$r = $mysqli->query($sql) or die('==' . $sql);
 			
 				if($r->num_rows > 0){
 					$artkl = 'yes';
 				}
+				echo '<br>'.$artkl.'<br>';
 		}
 		
 		$sql = 'UPDATE '.$pars_table.' SET
@@ -365,7 +379,9 @@ if(isset($_GET['scan'])){
 				$('.result').html(json);
 				console.log(json);
 				<?php if(isset($_GET['parsing'])){ ?>
-					location.reload;
+					//location.href = '/admin/main.php?func=add_products&supplier=sturmuniform&parsing';
+					setTimeout(function(){location.reload();}, 10000);
+					
 				<?php } ?>
 			}
 		});

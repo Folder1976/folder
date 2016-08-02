@@ -37,7 +37,7 @@ $value2 = $_REQUEST["nakl"];
 //echo $value,"=",$value2;
 
 
-header ('Content-Type: text/html; charset=utf8');
+//header ('Content-Type: text/html; charset=utf8');
 
 
 if ($value>=0){ //if not dell
@@ -50,6 +50,22 @@ if (!$ver)
 {
   echo "\nQuery error Status ".$tQuery;
   exit();
+}
+
+if ($value == 17 OR
+		$value == 18 OR
+			$value == 19 OR
+				$value == 1112 OR
+					$value == 1116 OR
+						$value == 1117) {
+	
+	$mysqli = $folder;
+	$sql = 'UPDATE tbl_operation_detail SET operation_detail_summ = 0 WHERE `operation_detail_operation`="'.$value2.'"';
+	$mysqli->query($sql);
+	
+	$sql = 'UPDATE tbl_operation SET operation_summ = 0 WHERE `operation_id`="'.$value2.'"';
+	$mysqli->query($sql);
+	
 }
 
 

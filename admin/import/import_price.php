@@ -137,7 +137,16 @@ while($tmp = $r->fetch_assoc()){
 }
 
 if(isset($_POST['import_update'])){
-    $ProductEdit->dellAllSupplierItems($supplier);
+    
+    $data['import_price'] = 0;
+    $data['import_item']  = 0;
+    if(isset($_POST['import_price'])){
+        $data['import_price'] = 1;
+    }
+    if(isset($_POST['import_item'])){
+        $data['import_item'] = 1;
+    }
+    $ProductEdit->dellAllSupplierItems($supplier, $data);
 }
 
 while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
@@ -152,8 +161,11 @@ while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
     }
  
     $code = $row['code'];
-    $items = $row['items'];
-    $zakup = $row['zakup'];
+    $items = 0;
+    if(isset($row['items'])) $items = $row['items'];
+    
+    $zakup = 0;
+    if(isset($row['zakup'])) $items = $row['zakup'];
 
     if(isset($row['zakup_curr']) AND $row['zakup_curr'] > 0){
         $zakup_curr = $row['zakup_curr'];

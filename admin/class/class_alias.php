@@ -29,8 +29,14 @@ class Alias {
 	}
 	
 	public function saveProductAlias($alias,$id){
-		$sql = $this->base->query("INSERT INTO tbl_seo_url SET seo_url = 'tovar_id=$id', seo_alias='$alias'
-					  ON DUPLICATE KEY UPDATE seo_alias='$alias';") or die (mysql_error());
+		
+		$this->dellAliasOnProductID($id);
+		
+		$sql = "INSERT INTO tbl_seo_url SET seo_url = 'tovar_id=$id', seo_alias='$alias'
+					  ON DUPLICATE KEY UPDATE seo_alias='$alias';";
+		//echo $sql;			  
+		$sql = $this->base->query($sql) or die (mysql_error());
+		//die();
 		
 	}
 

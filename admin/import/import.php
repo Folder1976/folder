@@ -277,7 +277,7 @@ while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
             $sql .= 'tovar_name_1 = \''.$row['name'].'\',';
         }
         
-        if(isset($row['brand'])){    
+        if(isset($row['brand']) AND $row['brand'] != ''){    
             $row['brand'] = str_replace('\'','"', $row['brand']);
             $sql .= 'brand_id = \''.$Brands[$row['brand']].'\',';
         }

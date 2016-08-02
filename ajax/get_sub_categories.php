@@ -20,7 +20,8 @@ if(!isset($_SESSION[BASE.'userlevel'])) $_SESSION[BASE.'userlevel']	 = 10;
 $return = array();
 
 if(isset($_POST['brand']) AND $_POST['brand'] > 0){
-    $sql = "SELECT distinct tovar_inet_id_parent AS categ_id FROM `tbl_tovar` WHERE `brand_id` = ".(int)$_POST['brand'] .";";
+    $sql = "SELECT distinct tovar_inet_id_parent AS categ_id
+          FROM `tbl_tovar` WHERE `brand_id` = ".(int)$_POST['brand'] .";";
     $r = $folder->query($sql);
     
     if($r->num_rows > 0){

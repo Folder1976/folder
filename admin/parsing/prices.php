@@ -2,16 +2,15 @@
 
 set_time_limit(20);
 //define("GETCONTENTVIAPROXY", 1);
-
-define("GETCONTENTVIANAON", 1);
+//define("GETCONTENTVIANAON", 1);
 include 'constants.php';
 include 'simple_html_dom/simple_html_dom.php';
 
 $find = array('Код товара:', 'Цена:', 'руб.', 'qty:', '+', ' ');
 $rep = array('','','','','','');
 
-$AND = ' AND ( url like "%magellanrus.ru%" OR url like "%allmulticam.ru%" OR url like "%sturmuniform.ru%" )';
-$UND = ' AND url not like "%magellanrus.ru%" AND url not like "%allmulticam.ru%" AND url not like "%sturmuniform.ru%" ';
+$AND = ' AND ( url like "%magellanrus.ru%" OR url like "%allmulticam.ru%" OR url like "%sturmuniform.ru%" /*OR url like "%splav.ru%" */)';
+$UND = ' AND url not like "%magellanrus.ru%" AND url not like "%allmulticam.ru%" AND url not like "%sturmuniform.ru%" /*AND url not like "%splav.ru%" */';
 
 $sql = 'SELECT count(product_id) AS count FROM tbl_tovar_links WHERE updated="0" '.$AND.' ORDER BY links_id ASC';
 $r = $folder->query($sql);
@@ -26,7 +25,7 @@ echo '<h3>Проверено - '.$tmp['count'].'</h3>';
 
 $sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE updated="0" '.$AND.' GROUP BY url ORDER BY links_id ASC LIMIT 3';
 //$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url like "%allmulticam.ru%" updated="0" '.$AND.' GROUP BY url ORDER BY links_id ASC LIMIT 3';
-//$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url="http://allmulticam.ru/collection/Benchmade/product/%D0%A2%D0%B0%D0%BA%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D1%81%D0%BA%D0%BB%D0%B0%D0%B4%D0%BD%D0%BE%D0%B9-%D0%BD%D0%BE%D0%B6-909-BK-Mini-Stryker-Benchmade"';
+//$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url="http://sturmuniform.ru/phutbolka-mother-russia-morskoj-phlot-zelenaja-novaja.html"';
 
 
 $r = $folder->query($sql);
@@ -49,6 +48,7 @@ $minus = 0;
 if(isset($_GET['minus'])) $minus = $_GET['minus'];
 
 $magelan = 0;
+$splav = 0;
 $sturmuniform = 0;
 $allmulticam = 0;
 $old_url = '';
@@ -100,15 +100,20 @@ foreach($products as $links_id => $value){
 		//Получаем новые цены и количество
 		
 		//=======================
-		
 		if(strpos($url, 'sturmuniform.ru') !== false){
 			$sturmuniform++;
 			
-			//continue;
+			$html = file_get_html($url_tmp);
+			if(!$html){
+				define("GETCONTENTVIANAON", 1);
+				$html = file_get_html($url_tmp);
+			}
 			
-			if($html = file_get_html($url_tmp)){
+			if($html){
+	
 				foreach($html->find('.ProductInfoRight p') as $p){
 					$str_tmp = $p->innertext();
+			
 					if(strpos($str_tmp, 'Цена') !== false){
 						$tmp_html = str_get_html($str_tmp);
 						$str_tmp = $tmp_html->find('span', 0)->innertext();
@@ -117,6 +122,7 @@ foreach($products as $links_id => $value){
 						$zakup = ($price * 0.75);
 					}elseif(strpos($str_tmp, 'qty')){
 						$qty = str_replace($find, $rep, $str_tmp);
+						echo ' - '.$qty;
 					}
 				}
 			}
@@ -141,6 +147,54 @@ foreach($products as $links_id => $value){
 				}
 			}
 		
+		}
+		
+			//=======================
+			if(strpos($url, 'splav.ru') !== false){
+				$splav++;
+				
+				if($html2 = file_get_html($url)){
+					
+					$tmp = explode('xmlRs', $html2);
+					$gods_det = explode('good id', $tmp[1]);
+			
+					$count = 0;
+					foreach($gods_det as $Text){
+						if(strpos($Text, 'version=') === false){
+							
+							$Text = str_replace('\\\'','@@@', $Text);
+							$Text = str_replace("'",'"', $Text);
+							
+							if (preg_match_all('#\s+([^=\s]+)\s*=\s*((?(?="|\') (?:"|\')([^"\']+)(?:"|\') | ([^\s]+)))#isx', $Text, $matches)) {
+								
+								if($matches[0][0] != '' AND $matches[0][0] != 'name'){
+									
+									$price = 0;
+									foreach($matches[0] as $tmp){
+										if(strpos($tmp,'price1=') !== false){
+										$price = trim(trim(str_replace('price1=','',$tmp),'"'));
+										$price = (int)trim(trim($price, '"'));
+										
+										$zakup = $price * 0.95;
+										$price = $price * 1.15;
+										$qty = 1; 
+										break;
+										}
+									}
+									
+								}
+							}
+						}
+					}
+				}	
+			}else{
+				$price = 0;
+				$qty = 0;
+				$zakup = 0;
+				echo '<br>Нет цены - '.$url;
+			}
+			
+			
 		}
 		
 		//=======================
@@ -214,6 +268,7 @@ foreach($products as $links_id => $value){
 	
 }
 echo '<hr>';
+echo '<br>splav.ru - <b>'.$splav.'</b>';
 echo '<br>sturmuniform.ru - <b>'.$sturmuniform.'</b>';
 echo '<br>magellanrus.ru - <b>'.$magelan.'</b>';
 echo '<br>allmulticam.ru - <b>'.$allmulticam.'</b>';

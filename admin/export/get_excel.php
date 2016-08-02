@@ -110,14 +110,24 @@ foreach($AttributesName as $index => $tmp){
 }
 $objPHPExcel->getActiveSheet()->getStyle('A1:AA1')->getFont()->setBold(true);
 
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+$objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(5);
+$objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(30);
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(40);
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25);
+
+
 // Пишем основные данные
 $L = 2;
 while($Product = $Products->fetch_assoc()){
-    
+   
+	$objPHPExcel->getActiveSheet()->setCellValueExplicit('A'.$L, $Product['code'], PHPExcel_Cell_DataType::TYPE_STRING);
+	$objPHPExcel->getActiveSheet()->setCellValueExplicit('B'.$L, $Product['model'], PHPExcel_Cell_DataType::TYPE_STRING);
+	
     $objPHPExcel->getActiveSheet()
-		->setCellValue('A'.$L, $Product['code'])
-                ->setCellValue('B'.$L, $Product["model"])
-                ->setCellValue('C'.$L, $Product["on_ware"])
+	            ->setCellValue('C'.$L, $Product["on_ware"])
                 ->setCellValue('D'.$L, $Product["parent"])
                 ->setCellValue('E'.$L, $Product["tovar_group"])
                 ->setCellValue('F'.$L, $Product["name"])

@@ -366,14 +366,18 @@
                                         <?php }else{ ?>
                                                 <span class="c-product__availability c-product__availability_true">в наличии</span>
                                         <?php } ?>
-                                                
-                                                <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
+                                                 <?php if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){ ?>
                                                         <span class="c-product__availability">
+                                                                <!-- is_social -->  
+                                                                <?php if(strpos($product['social'], 'facebook') !== false){echo '<img src="'.HOST_URL.'/resources/img/facebook.png" style="height:15px">';} ?>
+                                                                <?php if(strpos($product['social'], 'vkontakte') !== false){echo '<img src="'.HOST_URL.'/resources/img/vkontakte.png" style="height:15px">';} ?>
+                                                                <!-- edit key -->
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
                                                                 <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
-                                                        </span>
+                                                           </span>
                                                 <?php }?>
-                                    </div>
+                                                
+                                         </div>
                     
                                     <div class="c-product__row c-product__row_title">
                                         <a href="<?php echo $product['url']; ?>.html" class="c-product__title"><?php echo $artkl . ' - ' . $product['name'];?></a>
@@ -387,9 +391,15 @@
                                             </div>
                     
                                             <div class="small-16 columns text-right">
-                                                <a href="<?php echo $product['url']; ?>.html">
+                                                <?php if($product['total'] == 0){ ?>
+                                                    <a href="<?php echo $product['url']; ?>.html?report">
+                                                        <button class="btn" type="button" style="background-color: rgb(89, 96, 113); border-color: rgb(167, 177, 198); font-size:12px;">Следить за наличием</button>
+                                                    </a>
+                                                <?php }else{ ?>
+                                                    <a href="<?php echo $product['url']; ?>.html">
                                                         <button class="btn" type="button">В корзину</button>
-                                                </a>
+                                                    </a>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
@@ -411,21 +421,26 @@
                         //echo $data['products_count'] . ' / ' . $step . ' = ' . $end;
                         if(isset($_GET['page'])) $page = $_GET['page'];?>
                         
-                <?php if($page > 1) {?>
+                  <?php if($page > 1) {?>
                         <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item pager__item_prev"><span class="fa fa-angle-left"></span></a>
                 <?php } ?>
-                
-                <?php if($page > 3) echo ' . . . '?>
-                
+                <?php if($page == 1){ ?>
+                        <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item pager__item_current">1</a>
+                <?php }else{ ?>
+                        <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item">1</a>
+                <?php } ?>
+                        
+                <?php if($page > 4) echo ' . . . '?>
+                  
                 
                 
                 <?php
                         $xx = $page - 2;
-                        if($xx < 1) $xx = 1;
+                        if($xx < 2) $xx = 2;
                         
                         $end_m = $page + 2;
                         if($end_m > $end) $end_m = $end;
-                                       
+                                         
                         for($x = $xx;$x <= $end_m; $x++){ ?>
                         <?php if($x == $page){ ?>
                                 <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$x;?>" class="pager__item pager__item_current"><?php echo $x; ?></a>
@@ -434,8 +449,12 @@
                         <?php } ?>
                 <?php } ?>
         
-                <?php if($page < ($end - 2)) echo ' . . . '?>
-        
+                <?php if($page < ($end - 3)) echo ' . . . '?>
+
+                <?php if($page < $end - 2) {?>
+                    <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$end;?>" class="pager__item"><?php echo $end; ?></a>
+                <?php } ?>
+         
                 <?php if($page < $end) {?>
                     <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$end;?>" class="pager__item pager__item_next"><span class="fa fa-angle-right"></span></a>
                 <?php } ?>

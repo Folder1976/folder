@@ -66,7 +66,7 @@ $r = $folder->query($sql);
 
   echo '
 	<table class="table">';
-  echo '<tr></td></tr>';
+  //echo '<tr></td></tr>';
 
   echo '
       <tr>
@@ -92,7 +92,7 @@ $r = $folder->query($sql);
       <td><input type="checkbox" name="is_view" class="brand" data-id="0"></td>
       <td>
 		<br>-</b> : <input type="text" name="name" class="brand" data-id="0" style="width:400px;" value="" placeholder="Имя - для памятки">
-		<br>url</b> : <input type="text" id="url" class="brand" data-id="0" style="width:400px;" value="" placeholder="URL">
+		<br>url</b> : <input type="text" name="url" id="url" class="brand" data-id="0" style="width:400px;" value="" placeholder="URL">
 		<br>1</b> : <input type="text" name="header" class="brand" data-id="0" style="width:400px;" value="" placeholder="Заголовок банера">
 		<br>2</b> : <input type="text" name="title" class="brand" data-id="0" style="width:400px;" value="" placeholder="Текст">
 		<br>3</b> : <input type="text" name="price" class="brand" data-id="0" style="width:400px;" value="" placeholder="Прайс">

@@ -111,7 +111,7 @@ if(isset($_GET['search'])){
 	
 	$banners = $Banner->getMediumBanners('find');
 	
-	if(strlen($search) >= 3){
+	if(mb_strlen($search) >= 3){
 	  include_once("libs/products_control.php");
 	  $data = user_item_list_view($search,$setup, 'FIND');
 	  include 'skin/search_result.php';
@@ -194,7 +194,13 @@ if(isset($_GET['_route_']) AND $_GET['_route_'] == 'account_password'){
 	include 'skin/index.php';
     die();
   }
+}
 
+//Бренды
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'brands'){
+  $brand_limit = 10000;
+		include 'skin/brands.php';
+		die();
 }
 
 //Формирование заказа - Адрес доставки

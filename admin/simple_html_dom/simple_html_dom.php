@@ -86,7 +86,7 @@ function file_get_html($url, $use_include_path = false, $context=null, $offset =
 		$contents = $FrServer["output"];
 	}
 	else {
-		if(!$contents = file_get_contents($url, $use_include_path, $context, $offset)){
+		if(!$contents = @file_get_contents($url, $use_include_path, $context, $offset)){
 			return false;
 		}
 	}

@@ -2,11 +2,14 @@
 
 include 'init.lib.php';
 connect_to_mysql();
-include "../class/class_alias.php";
+include "class/class_alias.php";
 $Alias = new Alias($folder);
 
 include "class/class_product_edit.php";
 $ProductEdit = new ProductEdit($folder);
+
+include "class/class_product.php";
+$Product = new Product($folder);
 
 header ('Content-Type: text/html; charset=utf-8');
 session_start();
@@ -15,14 +18,29 @@ if (!session_verify($_SERVER["PHP_SELF"],"none")){
 }
 
 
+
+
 $count = 0;
 //$iKey_add = $_REQUEST["_add"];
 //$iKey_save = $_REQUEST["_save"];
 //$iKey_dell = $_REQUEST["_dell"];
 $id_value = $_REQUEST["_id_value"];
+
+
+if(isset($_GET['key']) AND $_GET['key'] == 'alias_to_all'){
+
+  $artikl = $ProductEdit->getProductArtkl($id_value);
+  $product_ids = $Product->getProductBrotherOnArtikl($artikl);
+  
+  if($product_ids){
+	foreach($product_ids as $id => $value){
+	  $Alias->saveProductAlias($_GET['tovar_alias'],$id);
+	}
+  }
+  return true;
+}
+
 $page_to_return = $_REQUEST["_page_to_return"];
-
-
 $ver = mysql_query("SET NAMES utf8");
 
 if (isset($_REQUEST["_dell"]))
@@ -82,6 +100,8 @@ if (isset($_REQUEST["_save"]))
 
 //Обновляем Алиас
 $Alias->saveProductAlias($_REQUEST['tovar_alias'],$id_value);
+
+//echo $_REQUEST['tovar_alias'].' '.$id_value; die();
 
 	  //Сохраняем альтернативные артиклы
 	  $sql = 'DELETE FROM `tbl_tovar_postav_artikl` WHERE `tovar_artkl` ="'.$_REQUEST['tovar_artkl'].'"';

@@ -82,6 +82,19 @@ echo "<div class=\"oper_info\"><link rel='stylesheet' type='text/css' href='stur
  if ($count_comm>0){
     echo "<br><b><a href='edit_comment.php' target='_blank'
     >New comments (",$count_comm,")</a>";
+   }else{
+	echo "<br><b><a href='edit_comment.php' target='_blank'
+    >Коментарии</a>";
+   }
+   
+   $sql = 'SELECT count(id) AS count FROM tbl_tovar_wait;';
+   $r = $folder->query($sql);
+   $tmp = $r->fetch_assoc();
+   $wait_comm = $tmp['count'];
+   
+ if ($wait_comm>0){
+    echo "<br><b><a href='edit_wait_list.php' target='_blank'
+    >Ожидают товаров (",$wait_comm,")</a>";
    } 
 echo '</div>';
 ?>

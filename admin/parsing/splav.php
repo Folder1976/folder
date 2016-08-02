@@ -778,7 +778,10 @@ echo ' <b>Урл ID - '.$list['id'].'. </b>';
 						
 						
 						$product_ids = $ProductEdit->getProductIdOnArtiklAndSupplier($str_artkl);
-				
+						if(!$product_ids){
+							//$product_ids = $ProductEdit->getProductIdOnURL($url);
+						}
+                
 						if($product_ids AND count($product_ids) > 0){
 							foreach($product_ids as $product_id){	
 								echo '<br><font color="green">Нашел продукт <b>'.$product_id.'</b>.
