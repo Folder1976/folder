@@ -1,16 +1,21 @@
 <!doctype html>
 <?php
         //Строка ГЕТ 
-        $_get = '?step=15';
-        if(isset($_GET['step'])) $_get = '?step='.$_GET['step'];
-        
-        if(strpos($_SERVER['REQUEST_URI'],'?')){
-                $t = explode('?',$_SERVER['REQUEST_URI']);
-                $find = array('page=', 'step=15', 'step=30', 'step=45', 'step=1000', '&&', '&&');
-                $rep = array('','','','','','&','&');
-                $t = str_replace($find,$rep,$t[1]);
-                $_get .= '&'.trim($t,'&');
+         //Строка ГЕТ
+        $step = 15;
+        if(isset($_GET['step'])) $step = $_GET['step'];
+               
+               
+        $_get = '';
+        $no_step = array();
+        foreach($_GET as $index => $value){
+                if($index != 'step' AND $index != '_route_'){
+                        $no_step[$index] = $index.'='.$value;
+                }else{
+                        unset($_GET[$index]);
+                }
         }
+        $_get = implode('&', $no_step);
        
  ?>
         
@@ -303,19 +308,15 @@
                 <span class="sort-by__link">Скидка</span-->
             </div>
 
-                <?php
-                $step = 15;
-                if(isset($_GET['step'])) $step = $_GET['step'];
-                ?>
-                
-            <div class="medium-10 columns sort-by__col text-right">
+           <div class="medium-10 columns sort-by__col text-right">
                 <span class="sort-by__title">Отображать по:</span>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=15';?>"><span class="sort-by__link <?php if($step == 15) echo 'sort-by__link_active';?>">15</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=30';?>"><span class="sort-by__link <?php if($step == 30) echo 'sort-by__link_active';?>">30</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=45';?>"><span class="sort-by__link <?php if($step == 45) echo 'sort-by__link_active';?>">45</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=1000';?>"><span class="sort-by__link <?php if($step == 100) echo 'sort-by__link_active';?>">100</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=15';?>"><span class="sort-by__link <?php if($step == 15) echo 'sort-by__link_active';?>">15</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=30';?>"><span class="sort-by__link <?php if($step == 30) echo 'sort-by__link_active';?>">30</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=45';?>"><span class="sort-by__link <?php if($step == 45) echo 'sort-by__link_active';?>">45</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=100';?>"><span class="sort-by__link <?php if($step == 100) echo 'sort-by__link_active';?>">100</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=20000';?>"><span class="sort-by__link <?php if($step == 20000) echo 'sort-by__link_active';?>">Все</span></a>
             </div>
-        </div>
+       </div>
 
         <div class="c-products">
                 <?php if(isset($data['products'])) { $count=1;?>
@@ -363,6 +364,9 @@
                                                                 <?php if(strpos($product['social'], 'facebook') !== false){echo '<img src="'.HOST_URL.'/resources/img/facebook.png" style="height:15px">';} ?>
                                                                 <?php if(strpos($product['social'], 'vkontakte') !== false){echo '<img src="'.HOST_URL.'/resources/img/vkontakte.png" style="height:15px">';} ?>
                                                                 <!-- edit key -->
+																YM: <input type="checkbox" class="addtotm" tovid="<?php echo $product['id'];?>" <?php echo ((isset($product['ymark']) && $product['ymark'] == 1) ? "checked" : "");?>><br />
+																<?/*<a href="#" onclick="javascript<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=" target="_blank"><font color=red>редактировать</font></a>*/?>
+
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
                                                                 <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
                                                        </span>
@@ -705,7 +709,21 @@
         });
         
     });
-    
+<?php
+if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){
+?>
+$(document).on('click', '.addtotm', function(){
+	var tvid = $(this).attr('tovid');
+	var tvclck = $(this).is(':checked');
+	console.log('tvid: '+tvid+' tvclck: '+tvclck);
+	$.ajax({
+		type: "POST",
+		url: "<?php echo HOST_URL;?>/admin/market/ajax_save_flag.php",
+		dataType: "json",
+		data: "tovid="+tvid+"&tvclck="+tvclck,
+	});
+}); 
+<?php } ?>
 </script>
 <style>
     .filters__row{
