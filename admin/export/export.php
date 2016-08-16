@@ -259,7 +259,7 @@ if ($find_str=="" or $find_str==$setup['menu find-str']){
 $find_str_sql .= " (tovar_parent='" . $find_parent . "')";
 } 
 //==================================================================================================
-$Fields .= "T.tovar_id,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`, `social_fb`, `social_vk`, `tovar_last_edit` "; //Tovar
+$Fields .= "T.tovar_id,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`, `social_fb`, `social_vk`, `tovar_last_edit`, `use_in_market`"; //Tovar
 $ver = mysql_query("SET NAMES utf8");
 
 $sort = "";
@@ -338,7 +338,7 @@ if($find_flag==1 and $find_str_sql != "")
     
     if (!$ver)
       {
-	echo "\nQuery error List";
+	echo "\nQuery error List " . $tQuery;
 	exit();
       }
   }
@@ -577,7 +577,65 @@ $tmp = 0;
 
 echo "\n</form>";
 //=====================================================================================================
+?>
+<script>
+  //Социальная кнопка для всех
+  $(document).on('change', '#use_in_market', function(){
+      var check = 0;
+      if ($(this).prop('checked') == true) {
+        check = 1;
+      }
+      
+      $.each($('.use_in_market'), function( index, value ) {
+        $(this).prop('checked', true);
+        if (check == 1) {
+          $(this).prop('checked', true);
+        }else{
+          $(this).prop('checked', false);
+        }
+        $(this).trigger('change');
+      });
+  });
+  
+  //Социальная кнопка для всех
+  $(document).on('change', '#social_fb', function(){
+      var check = 0;
+      if ($(this).prop('checked') == true) {
+        check = 1;
+      }
+      
+      $.each($('.social_fb'), function( index, value ) {
+        $(this).prop('checked', true);
+        if (check == 1) {
+          $(this).prop('checked', true);
+        }else{
+          $(this).prop('checked', false);
+        }
+        $(this).trigger('change');
+      });
+  });
+  
+  //Социальная кнопка для всех
+  $(document).on('change', '#social_vk', function(){
+      var check = 0;
+      if ($(this).prop('checked') == true) {
+        check = 1;
+      }
+      
+      $.each($('.social_vk'), function( index, value ) {
+        $(this).prop('checked', true);
+        if (check == 1) {
+          $(this).prop('checked', true);
+        }else{
+          $(this).prop('checked', false);
+        }
+        $(this).trigger('change');
+      });
+  });
+  
+</script>
 
+<?php
 
   if($find_flag==1)
   {
@@ -596,7 +654,12 @@ echo "<tr class=\"nak_header_find\">
       <th width=20px  height=\"50px\"><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_id\">id >></a></th>
       <th width=100px><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_artkl\">".$setup['menu artkl']."</a>
 		      </th>
-              <th>Социал</th>
+              <th>Социал<br> ";
+              
+      echo "FB<input type='checkbox' id='social_fb' class='is_social '>&nbsp;
+            VK<input type='checkbox' id='social_vk' class='is_social '>&nbsp;
+            YM<input type='checkbox' id='use_in_market' class='is_social '>
+            </th>
       <th><a href=\"main.php?func=export_universal&operation_id=$iKlient_id&$for_link&sort=tovar_name_1\">".$setup['menu name1']."</a><br>
 		      </th>
                          <th>Дата</th>
@@ -636,14 +699,17 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
   </td>";
  
   echo "<td width=150px><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>&nbsp;", mysql_result($ver,$count,'tovar_artkl'), "</a>&nbsp;</b></td>";
-  echo '<td width=90px>';
+  echo '<td width=130px>';
       //facebook
-      echo "FB<input type='checkbox' id='social_fb*".$product_id."' class='is_social'";
+      echo "FB<input type='checkbox' id='social_fb*".$product_id."' class='is_social social_fb'";
         if(mysql_result($ver,$count,'social_fb') == 1) echo ' checked ';
       echo '>&nbsp;';
       //vk
-      echo "VK<input type='checkbox' id='social_vk*".$product_id."' class='is_social'";
+      echo "VK<input type='checkbox' id='social_vk*".$product_id."' class='is_social social_vk'";
         if(mysql_result($ver,$count,'social_vk') == 1) echo ' checked ';
+      echo '>&nbsp;';
+      echo "YM<input type='checkbox' id='use_in_market*".$product_id."' class='is_social use_in_market'";
+        if(mysql_result($ver,$count,'use_in_market') == 1) echo ' checked ';
       echo '>';
   echo "</td>";
   
@@ -735,6 +801,7 @@ echo "\n</body>";
     $(document).on('click', '#export', function(){  
       location.href = 'export/get_excel.php?producs=yes';
     });
+
 </script>
 
 
