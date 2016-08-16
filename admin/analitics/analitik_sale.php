@@ -1,9 +1,23 @@
 
 <h2>Аналитика продаж.</h2>
-<h3>За период. . . . (пока без периода, от самого начала)</h3>
+<h3>За период </h3>
+<form method="GET" action="/admin/main.php">
+    <input type="hidden" name="func" value="analitik_sale">
+    <br><input type="text" name="from" value="<?php if(isset($_GET['from'])) echo $_GET['from']; ?>" placeholder="2014-01-01">&nbsp;&nbsp;<!--
+    -->-&nbsp;&nbsp;<input type="text" name="to" value="<?php if(isset($_GET['to'])){echo $_GET['to'];}?>" placeholder="<?php echo date('Y-m-d');?>">&nbsp;&nbsp;<!--
+    -->&nbsp;&nbsp;<input type="submit" name="Сорт" value="Сорт">
+</form>
+
 
 <?php
-$operation_status = array(1,2,3,4,1113);
+
+$date_from = date("Y-m-d", strtotime("2014-01-01"));
+if(isset($_GET['from'])) $date_from = date("Y-m-d", strtotime($_GET['from']));
+
+$date_to = date("Y-m-d");
+if(isset($_GET['to'])) $date_to = date("Y-m-d", strtotime($_GET['to']));
+
+$operation_status = array(1,3,4,14,1113, 1115);
 
 $sql = 'SELECT
         operation_id,
@@ -30,6 +44,7 @@ $sql = 'SELECT
         LEFT JOIN tbl_operation_status OS ON O.operation_status = OS.operation_status_id
         
         WHERE operation_dell = 0 AND operation_status IN ('.implode(',', $operation_status).')
+                AND operation_data >= "'.$date_from.'" AND operation_data <= "'.$date_to.'"
         ORDER BY operation_id DESC
         ';
 //echo $sql;
@@ -55,11 +70,15 @@ while($operation = $r->fetch_assoc()){
     $item = $operation['operation_detail_item'];
     $items += $item;
 
-    $summ += $item * $operation['operation_detail_price'];
-    $zakup += $item * $operation['operation_detail_zakup'];
-    $summ_s = $item * $operation['operation_detail_price'];
-    $zakup_s = $item * $operation['operation_detail_zakup'];
-   
+    
+    if($operation['operation_status'] == 10){
+        
+    }else{
+        $summ += $item * $operation['operation_detail_price'];
+        $zakup += $item * $operation['operation_detail_zakup'];
+        $summ_s = $item * $operation['operation_detail_price'];
+        $zakup_s = $item * $operation['operation_detail_zakup'];
+    }
    
     $html .= '
             <tr>
@@ -83,7 +102,7 @@ while($operation = $r->fetch_assoc()){
  echo '<br>Всего продано : <b><font color="blue">'.number_format((($summ)),'2', '.', ' ') . ' руб.</font></b>';
  echo '<br>Всего продано шт : <b><font color="blue">'.$items . '</font></b>';
  echo '<br>Всего доход : <b><font color="orange">'.number_format((($summ - $zakup)),'2', '.', ' ') . ' руб.</font></b>';
- echo '<br>Всего 25% : <b><font color="green">'.number_format((($summ - $zakup) * 0.25),'2', '.', ' ') . ' руб.</font></b>';
+ echo '<br>Всего 40% : <b><font color="green">'.number_format((($summ - $zakup) * 0.40),'2', '.', ' ') . ' руб.</font></b>';
  echo '<hr>'.$html;
  
  //echo "<pre>";  print_r(var_dump( $html )); echo "</pre>";

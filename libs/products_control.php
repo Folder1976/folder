@@ -10,6 +10,8 @@ function timer($msg){
 }
 function user_item_list_view($id,$setup, $key = 'All'){
     global $folder;
+    $mysqli = $folder;
+    
 $time = microtime(true);  
 
     $Category = new Category($folder);
@@ -23,7 +25,7 @@ $timer[] = timer('Категории');
   
     $step = 15;
     if(isset($_GET['step'])) $step = mysqli_escape_string($folder, $_GET['step']);
-    if($step > 100) $step = 100;
+    //if($step > 100) $step = 100;
     
     $page = 1;
     if(isset($_GET['page'])) $page = mysqli_escape_string($folder, $_GET['page']);
@@ -104,6 +106,61 @@ $timer[] = timer('Категории');
         }
     }elseif($key == 'FIND'){
         $searchq = $id;
+        
+        
+        //Проверим может такие бренды есть =========================
+        $brands = array();
+        $sql = 'SELECT distinct brand_id FROM tbl_brand WHERE
+                    upper(`brand_code`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" OR
+                    upper(`brand_name`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" ';
+        
+        $r = $mysqli->query($sql) or die('sql error = ijhafp2328rwydfgh '.$sql);
+        if($r->num_rows){
+            while($row = $r->fetch_assoc()){
+                $brands[$row['brand_id']] = $row['brand_id'];
+            }
+        }
+        
+        $sql = 'SELECT distinct brand_id FROM tbl_brand_alternative WHERE
+                    upper(`brand_name`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" ';
+        
+        $r = $mysqli->query($sql) or die('sql error = ijha444fp8rwydfgh');
+        if($r->num_rows){
+            while($row = $r->fetch_assoc()){
+                $brands[$row['brand_id']] = $row['brand_id'];
+            }
+        }
+        $where_brands = '';
+        if(count($brands) > 0){
+            $where_brands = ' OR T.brand_id IN ('.implode(',',$brands).') ';
+        }
+        //end Проверим может такие бренды есть =========================
+        
+          //Проверим может такие поставщики есть =========================
+        $postav = array();
+        $sql = 'SELECT distinct klienti_id FROM tbl_klienti WHERE klienti_group = "5" AND 
+                    upper(`klienti_name_1`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" OR
+                    upper(`klienti_name_2`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" OR
+                    upper(`klienti_name_3`) LIKE "%'.mb_strtoupper(addslashes($searchq),'UTF-8').'%" ';
+        
+        $r = $mysqli->query($sql) or die('sql error = ijhafp8rw4324cydfgh '.$sql);
+        if($r->num_rows){
+            while($row = $r->fetch_assoc()){
+                $postav[$row['klienti_id']] = $row['klienti_id'];
+            }
+        }
+        
+        $where_postav = '';
+        if(count($postav) > 0){
+            
+            //$sql = 'SELECT tovar_id FROM tbl_tovar_suppliers_items WHERE postav_id IN ('.implode(',',$postav).') ';
+            
+            $where_postav = ' OR T.tovar_id IN (SELECT tovar_id FROM tbl_tovar_suppliers_items WHERE postav_id IN ('.implode(',',$postav).')) ';
+  
+        }
+        //end Проверим может такие поставщики есть =========================
+        
+        
         $sql = "SELECT T.tovar_id
                FROM 
                `tbl_tovar` T
@@ -111,14 +168,14 @@ $timer[] = timer('Категории');
                LEFT JOIN tbl_klienti ON klienti_id = tovar_supplier
                $join_str
                WHERE 
-                (upper(`tovar_artkl`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
+                ((upper(`tovar_artkl`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
                 upper(`tovar_name_1`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
                 upper(`klienti_name_1`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
                 upper(`klienti_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
-                upper(`tovar_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%')
-			   and `tovar_inet_id` > 0 $brand_filter $attr_str
+                upper(`tovar_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%') $where_brands $where_postav)
+			   and `tovar_inet_id` > 0 $brand_filter $attr_str 
                GROUP BY `tovar_name_1`";
-        $getCount = $folder->query($sql) or die('sql error = ijhafp8rwydfgh');
+        $getCount = $folder->query($sql) or die('sql error = ijhafp8rwydfgh ');
         $count = $getCount->num_rows;
         if($getCount->num_rows > 0){
             while($tmp = $getCount->fetch_assoc()){
@@ -136,7 +193,7 @@ $timer[] = timer('Категории');
                `tovar_inet_id` > 0 $brand_filter $attr_str
                GROUP BY tovar_name_1
                ORDER BY T.tovar_id DESC
-               LIMIT 0, 1000;
+               LIMIT 0, 10000;
                ";
         //echo $sql;
         $getCount = $folder->query($sql);
@@ -207,15 +264,14 @@ $timer[] = timer('Всего товаров');
                LEFT JOIN tbl_attribute_to_tovar AT ON AT.tovar_id = T.tovar_id
                $join_str
                WHERE 
-                (upper(`tovar_artkl`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
+                ((upper(`tovar_artkl`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
                 upper(`tovar_name_1`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
-                upper(`klienti_name_1`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
-                upper(`klienti_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%' or
-                upper(`tovar_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%')
-			   and `tovar_inet_id` > 0 $brand_filter $attr_str
+                upper(`tovar_name_2`) LIKE '%".mb_strtoupper(addslashes($searchq),'UTF-8')."%') $where_brands $where_postav)
+			   and `tovar_inet_id` > 0 $brand_filter $attr_str 
                GROUP BY tovar_name_1
-               ORDER BY T.sort ASC, CASE items WHEN 0 THEN 1 ELSE 0 END ASC, price_1 ASC, `tovar_name_1` ASC
+               ORDER BY  /*CASE items WHEN 0 THEN 1 ELSE 0 END ASC,*/ T.sort ASC, items DESC, price_1 ASC, `tovar_name_1` ASC
                LIMIT $start, $step";
+               //echo $sql;
    }else{
       $sql = "SELECT 	`tovar_inet_id_parent`,
                `tovar_artkl`,

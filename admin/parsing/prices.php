@@ -10,6 +10,7 @@ $find = array('Код товара:', 'Цена:', 'руб.', 'qty:', '+', ' ');
 $rep = array('','','','','','');
 
 $AND = ' AND ( url like "%magellanrus.ru%" OR url like "%allmulticam.ru%" OR url like "%sturmuniform.ru%" /*OR url like "%splav.ru%" */)';
+//$AND = ' AND ( url like "%sturmuniform.ru%")';
 $UND = ' AND url not like "%magellanrus.ru%" AND url not like "%allmulticam.ru%" AND url not like "%sturmuniform.ru%" /*AND url not like "%splav.ru%" */';
 
 $sql = 'SELECT count(product_id) AS count FROM tbl_tovar_links WHERE updated="0" '.$AND.' ORDER BY links_id ASC';
@@ -24,7 +25,7 @@ echo '<h3>Проверено - '.$tmp['count'].'</h3>';
 
 
 $sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE updated="0" '.$AND.' GROUP BY url ORDER BY links_id ASC LIMIT 3';
-//$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url like "%allmulticam.ru%" updated="0" '.$AND.' GROUP BY url ORDER BY links_id ASC LIMIT 3';
+//$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url like "%http://allmulticam.ru/collection/Benchmade/product/Тактический-складной-нож-909-BK-Mini-Stryker-Benchmade%" LIMIT 1';
 //$sql = 'SELECT product_id, url, postav_id, links_id FROM tbl_tovar_links WHERE url="http://sturmuniform.ru/phutbolka-mother-russia-morskoj-phlot-zelenaja-novaja.html"';
 
 
@@ -67,7 +68,8 @@ foreach($products as $links_id => $value){
 	
 	//$url_tmp = "http://allmulticam.ru/collection/Benchmade/product/Тактический-складной-нож-909-BK-Mini-Stryker-Benchmade";
 	//$url_tmp = urldecode($url_tmp);
-	$url_tmp = my_url_decode($url);
+	
+	//$url_tmp = my_url_decode($url);
 	
 	//$url_tmp=iconv("Windows-1251","UTF-8", $s);
 	
@@ -104,8 +106,7 @@ foreach($products as $links_id => $value){
 			$sturmuniform++;
 			
 			$html = file_get_html($url_tmp);
-			if(!$html){
-				define("GETCONTENTVIANAON", 1);
+			if(!$html AND !defined("GETCONTENTVIANAON")){
 				$html = file_get_html($url_tmp);
 			}
 			
@@ -122,10 +123,13 @@ foreach($products as $links_id => $value){
 						$zakup = ($price * 0.75);
 					}elseif(strpos($str_tmp, 'qty')){
 						$qty = str_replace($find, $rep, $str_tmp);
-						echo ' - '.$qty;
+						//echo ' - '.$qty;
 					}
+					
 				}
 			}
+			echo "<br>
+							<b>Товар: , Цена: $price, Количество: $qty</b>";
 		}
 		
 		//=======================
@@ -143,7 +147,7 @@ foreach($products as $links_id => $value){
 				}else{
 					$price = 0;
 					$qty = 0;
-					echo '<br>Нет цены - '.$url;
+					echo '<br>1 Нет цены - '.$url;
 				}
 			}
 		
@@ -186,14 +190,13 @@ foreach($products as $links_id => $value){
 							}
 						}
 					}
-				}	
-			}else{
-				$price = 0;
-				$qty = 0;
-				$zakup = 0;
-				echo '<br>Нет цены - '.$url;
+				}else{
+					$price = 0;
+					$qty = 0;
+					$zakup = 0;
+					echo '<br>2 Нет цены - '.$url;
+				}
 			}
-			
 			
 		}
 		
@@ -213,7 +216,7 @@ foreach($products as $links_id => $value){
 		
 				
 		$old_url = $url;
-	}
+	
 	
 	
 	if(strpos($url, 'magellanrus.ru') !== false OR
@@ -252,21 +255,21 @@ foreach($products as $links_id => $value){
 						zakup = '$zakup',
 						zakup_curr = '$zakup_kur';";
 			}
-//echo $sql.'<br>';					
-			$folder->query($sql);
+//echo '<br><br>'./*$sql.*/'<br>';					
+			$folder->query($sql) or die('<br>Ошибка запроса: '.$sql);
 		}
 		$sql = "UPDATE tbl_tovar_links SET updated = '1'
 					WHERE
 					url = '$url';";
 //echo $sql.'<br>';					
-		$folder->query($sql);
+		$folder->query($sql) or die('<br>'.$sql);
 	
 	
 	}
 	
-	
-	
 }
+	
+//}
 echo '<hr>';
 echo '<br>splav.ru - <b>'.$splav.'</b>';
 echo '<br>sturmuniform.ru - <b>'.$sturmuniform.'</b>';

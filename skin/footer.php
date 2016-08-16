@@ -51,9 +51,9 @@
                 <div class="medium-8 columns f-menu hide-for-small-only">
                     <h4 class="f-menu__title">Личная информация</h4>
                     <ul class="f-menu__list">
-                        <li class="f-menu__item"><a href="#" class="f-menu__link">Вход на сайт</a></li>
-                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/myaccount.html" class="f-menu__link">Личный кабинет</a></li>
-                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/user_order_view.html" class="f-menu__link">Корзина</a></li>
+                        <!--li class="f-menu__item"><a href="#" class="f-menu__link">Вход на сайт</a></li-->
+                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/account_personal.html" class="f-menu__link">Личный кабинет</a></li>
+                        <li class="f-menu__item"><a href="<?php echo HOST_URL;?>/account_cart.html" class="f-menu__link">Корзина</a></li>
                     </ul>
                     <br><br>
                 <div class="f-menu">
@@ -119,3 +119,4 @@
     });
      
     </script>
+   <div id="divBottom" style="width: 100%; text-align: center; font-size:14px;"><A href="http://armma.ru/contact.html" target=_blank>&copy; 2016 armma.ru</A></div>

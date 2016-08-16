@@ -125,6 +125,13 @@ if(isset($_GET['search'])){
 }
 
 
+//Если на главную
+if(isset($_GET['_route_']) AND $_GET['_route_'] == 'index'){
+		header('HTTP/1.1 301 Moved Permanently');
+		header("Location: /", true, 301);
+		return true;
+}
+
 //Если пользователь вылогинился
 if(isset($_GET['_route_']) AND $_GET['_route_'] == 'logout'){
   $User->logoutUser();

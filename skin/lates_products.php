@@ -4,16 +4,21 @@
 //echo "<pre>";  print_r(var_dump( $_SESSION['all_products_id'] )); echo "</pre>";
 
         //Строка ГЕТ 
-        $_get = '?step=15';
-        if(isset($_GET['step'])) $_get = '?step='.$_GET['step'];
-        
-        if(strpos($_SERVER['REQUEST_URI'],'?')){
-                $t = explode('?',$_SERVER['REQUEST_URI']);
-                $find = array('page=', 'step=15', 'step=30', 'step=45', 'step=1000', '&&', '&&');
-                $rep = array('','','','','','&','&');
-                $t = str_replace($find,$rep,$t[1]);
-                $_get .= '&'.trim($t,'&');
+        //Строка ГЕТ
+        $step = 15;
+        if(isset($_GET['step'])) $step = $_GET['step'];
+               
+               
+        $_get = '';
+        $no_step = array();
+        foreach($_GET as $index => $value){
+                if($index != 'step' AND $index != '_route_'){
+                        $no_step[$index] = $index.'='.$value;
+                }else{
+                        unset($_GET[$index]);
+                }
         }
+        $_get = implode('&', $no_step);
  ?>
 
 <html class="no-js" lang="">
@@ -311,19 +316,15 @@
                 <span class="sort-by__link">Скидка</span>
             </div>
 
-                <?php
-                $step = 15;
-                if(isset($_GET['step'])) $step = $_GET['step'];
-                ?>
-                
-            <div class="medium-10 columns sort-by__col text-right">
+           <div class="medium-10 columns sort-by__col text-right">
                 <span class="sort-by__title">Отображать по:</span>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=15';?>"><span class="sort-by__link <?php if($step == 15) echo 'sort-by__link_active';?>">15</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=30';?>"><span class="sort-by__link <?php if($step == 30) echo 'sort-by__link_active';?>">30</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=45';?>"><span class="sort-by__link <?php if($step == 45) echo 'sort-by__link_active';?>">45</span></a>
-                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&step=100';?>"><span class="sort-by__link <?php if($step == 1000) echo 'sort-by__link_active';?>">100</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=15';?>"><span class="sort-by__link <?php if($step == 15) echo 'sort-by__link_active';?>">15</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=30';?>"><span class="sort-by__link <?php if($step == 30) echo 'sort-by__link_active';?>">30</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=45';?>"><span class="sort-by__link <?php if($step == 45) echo 'sort-by__link_active';?>">45</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=100';?>"><span class="sort-by__link <?php if($step == 100) echo 'sort-by__link_active';?>">100</span></a>
+                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&step=20000';?>"><span class="sort-by__link <?php if($step == 20000) echo 'sort-by__link_active';?>">Все</span></a>
             </div>
-        </div>
+           </div>
 
         <div class="c-products">
                 <?php if(isset($data['products'])) {  $count=1;?>
@@ -422,12 +423,12 @@
                         if(isset($_GET['page'])) $page = $_GET['page'];?>
                         
                   <?php if($page > 1) {?>
-                        <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item pager__item_prev"><span class="fa fa-angle-left"></span></a>
+                        <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page=1';?>" class="pager__item pager__item_prev"><span class="fa fa-angle-left"></span></a>
                 <?php } ?>
                 <?php if($page == 1){ ?>
-                        <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item pager__item_current">1</a>
+                        <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page=1';?>" class="pager__item pager__item_current">1</a>
                 <?php }else{ ?>
-                        <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page=1';?>" class="pager__item">1</a>
+                        <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page=1';?>" class="pager__item">1</a>
                 <?php } ?>
                         
                 <?php if($page > 4) echo ' . . . '?>
@@ -443,20 +444,20 @@
                                          
                         for($x = $xx;$x <= $end_m; $x++){ ?>
                         <?php if($x == $page){ ?>
-                                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$x;?>" class="pager__item pager__item_current"><?php echo $x; ?></a>
+                                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page='.$x;?>" class="pager__item pager__item_current"><?php echo $x; ?></a>
                         <?php }else{ ?>
-                                <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$x;?>" class="pager__item"><?php echo $x; ?></a>
+                                <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page='.$x;?>" class="pager__item"><?php echo $x; ?></a>
                         <?php } ?>
                 <?php } ?>
         
                 <?php if($page < ($end - 3)) echo ' . . . '?>
 
                 <?php if($page < $end - 2) {?>
-                    <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$end;?>" class="pager__item"><?php echo $end; ?></a>
+                    <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page='.$end;?>" class="pager__item"><?php echo $end; ?></a>
                 <?php } ?>
          
                 <?php if($page < $end) {?>
-                    <a href="<?php echo $_SERVER['REDIRECT_URL'].$_get.'&page='.$end;?>" class="pager__item pager__item_next"><span class="fa fa-angle-right"></span></a>
+                    <a href="<?php echo $_SERVER['REDIRECT_URL'].'?'.$_get.'&page='.$end;?>" class="pager__item pager__item_next"><span class="fa fa-angle-right"></span></a>
                 <?php } ?>
         </div>
 

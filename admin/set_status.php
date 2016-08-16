@@ -2,7 +2,7 @@
 include 'init.lib.php';
 include 'nakl.lib.php';
 include 'init.lib.user.tovar.php';
-
+$mysqli = $folder;
 connect_to_mysql();
 session_start();
 
@@ -59,7 +59,7 @@ if ($value == 17 OR
 					$value == 1116 OR
 						$value == 1117) {
 	
-	$mysqli = $folder;
+	
 	$sql = 'UPDATE tbl_operation_detail SET operation_detail_summ = 0 WHERE `operation_detail_operation`="'.$value2.'"';
 	$mysqli->query($sql);
 	
@@ -84,6 +84,9 @@ $update_old = mysql_query($tQuery);
 
 $update = mysql_query("SET NAMES utf8");
 $tQuery = "UPDATE `tbl_operation_detail` SET ".$Fields." WHERE `operation_detail_operation`='".$value2."' and `operation_detail_dell`='0'";
+
+//echo '  '.$tQuery;
+
 $update = mysql_query($tQuery);
 $http .= "warehouse reset! ";
 reset_warehouse_on_operation($value2,0);
@@ -99,9 +102,12 @@ $summ_all = mysql_result($select,0,'summ_all');
 
 if (mysql_result($ver,0,'operation_status_debet') == '1') $summ_all=$summ_all-$summ_all*2;
 if ($summ_all != 0){
-$update = mysql_query("SET NAMES utf8");
-$tQuery = "UPDATE `tbl_operation` SET `operation_status`='".$value."', `operation_data_edit`='".date("Y-m-d G:i:s")."', `operation_summ`='".$summ_all."' WHERE `operation_id`='".$value2."'";
-$update = mysql_query($tQuery);
+	$update = mysql_query("SET NAMES utf8");
+	$tQuery = "UPDATE `tbl_operation` SET `operation_status`='".$value."', `operation_data_edit`='".date("Y-m-d G:i:s")."', `operation_summ`='".$summ_all."' WHERE `operation_id`='".$value2."'";
+	$update = mysql_query($tQuery);
+}else{
+	$tQuery = "UPDATE `tbl_operation` SET `operation_status`='".$value."', `operation_data_edit`='".date("Y-m-d G:i:s")."' WHERE `operation_id`='".$value2."'";
+	$update = mysql_query($tQuery);
 }
 
 

@@ -259,7 +259,7 @@ if ($find_str=="" or $find_str==$setup['menu find-str']){
 $find_str_sql .= " (tovar_parent='" . $find_parent . "')";
 } 
 //==================================================================================================
-$Fields .= "T.tovar_id,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`, `social_fb`, `social_vk`, `tovar_last_edit`, `use_in_market`"; //Tovar
+$Fields .= "T.tovar_id,`tovar_artkl`,`tovar_name_1`,`tovar_memo`,`tovar_inet_id`, `social_fb`, `social_vk`, `tovar_last_edit` "; //Tovar
 $ver = mysql_query("SET NAMES utf8");
 
 $sort = "";
@@ -636,7 +636,7 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
   </td>";
  
   echo "<td width=150px><b><a class=\"small_name\" href='edit_tovar.php?tovar_id=", $id_tmp," ' target='_blank'>&nbsp;", mysql_result($ver,$count,'tovar_artkl'), "</a>&nbsp;</b></td>";
-  echo '<td width=130px>';
+  echo '<td width=90px>';
       //facebook
       echo "FB<input type='checkbox' id='social_fb*".$product_id."' class='is_social'";
         if(mysql_result($ver,$count,'social_fb') == 1) echo ' checked ';
@@ -644,9 +644,6 @@ $id_tmp=mysql_result($ver,$count,"tovar_id");
       //vk
       echo "VK<input type='checkbox' id='social_vk*".$product_id."' class='is_social'";
         if(mysql_result($ver,$count,'social_vk') == 1) echo ' checked ';
-      echo '>&nbsp;';
-      echo "YM<input type='checkbox' id='use_in_market*".$product_id."' class='is_social'";
-        if(mysql_result($ver,$count,'use_in_market') == 1) echo ' checked ';
       echo '>';
   echo "</td>";
   
@@ -738,7 +735,6 @@ echo "\n</body>";
     $(document).on('click', '#export', function(){  
       location.href = 'export/get_excel.php?producs=yes';
     });
-
 </script>
 
 
