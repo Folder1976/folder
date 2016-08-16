@@ -365,8 +365,6 @@
                                                                 <?php if(strpos($product['social'], 'vkontakte') !== false){echo '<img src="'.HOST_URL.'/resources/img/vkontakte.png" style="height:15px">';} ?>
                                                                 <!-- edit key -->
 																YM: <input type="checkbox" class="addtotm" tovid="<?php echo $product['id'];?>" <?php echo ((isset($product['ymark']) && $product['ymark'] == 1) ? "checked" : "");?>><br />
-																<?/*<a href="#" onclick="javascript<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=" target="_blank"><font color=red>редактировать</font></a>*/?>
-
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
                                                                 <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
                                                        </span>
