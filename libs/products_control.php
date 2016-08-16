@@ -229,7 +229,8 @@ $timer[] = timer('Всего товаров');
                `price_tovar_curr_".$setup['web default price']."` as curr1,
                `price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2,
                TSI.price_1,
-               sum(TSI.items) AS items
+               sum(TSI.items) AS items,
+			    T.use_in_market
                FROM 
                `tbl_tovar` T
                 LEFT JOIN tbl_tovar_suppliers_items TSI ON TSI.tovar_id = T.tovar_id
@@ -255,7 +256,8 @@ $timer[] = timer('Всего товаров');
                `price_tovar_curr_".$setup['web default price']."` as curr1,
                `price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2,
                 TSI.price_1,
-               sum(TSI.items) AS items
+               sum(TSI.items) AS items,
+			    T.use_in_market
                FROM 
                `tbl_tovar` T
                LEFT JOIN tbl_tovar_suppliers_items TSI ON TSI.tovar_id = T.tovar_id
@@ -281,7 +283,8 @@ $timer[] = timer('Всего товаров');
                `tovar_inet_id`,
 			   `tovar_last_edit_user`,
 			   `price_tovar_curr_".$setup['web default price']."` as curr1,
-               `price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2
+               `price_tovar_curr_".$_SESSION[BASE.'userprice']."` as curr2,
+			   T.use_in_market
                
                FROM 
                `tbl_tovar` T
@@ -466,6 +469,7 @@ $timer[] = timer('Получили продукты');
              $products[$artkl]['size'][$size]['size'] = $size;
              $products[$artkl]['size'][$size]['price'] = $Product->getProductPrice($tmp['tovar_id']);
              $products[$artkl]['size'][$size]['curr'] = $tmp['curr2'];
+             $products[$artkl]['ymark'] = $tmp['use_in_market'];
              $products[$artkl]['size'][$size]['items'] = $Product->getProductOnWare($tmp['tovar_id']);
              
              //Будем брать описание если оно не пустое.

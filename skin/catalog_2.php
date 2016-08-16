@@ -364,6 +364,9 @@
                                                                 <?php if(strpos($product['social'], 'facebook') !== false){echo '<img src="'.HOST_URL.'/resources/img/facebook.png" style="height:15px">';} ?>
                                                                 <?php if(strpos($product['social'], 'vkontakte') !== false){echo '<img src="'.HOST_URL.'/resources/img/vkontakte.png" style="height:15px">';} ?>
                                                                 <!-- edit key -->
+																YM: <input type="checkbox" class="addtotm" tovid="<?php echo $product['id'];?>" <?php echo ((isset($product['ymark']) && $product['ymark'] == 1) ? "checked" : "");?>><br />
+																<?/*<a href="#" onclick="javascript<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=" target="_blank"><font color=red>редактировать</font></a>*/?>
+
                                                                 <a href="<?php echo HOST_URL;?>/admin/edit_tovar.php?tovar_id=<?php echo $product['id'];?>" target="_blank"><font color=red>редактировать</font></a>
                                                                 <a href="javascript:" class="glav_photo" data-id="<?php echo $product['id'];?>" target="_blank"><font color=red>главфото</font></a>
                                                        </span>
@@ -706,7 +709,21 @@
         });
         
     });
-    
+<?php
+if(isset($_SESSION[BASE.'usersetup']) AND strpos($_SESSION[BASE.'usersetup'],$_SESSION[BASE.'base'])>0){
+?>
+$(document).on('click', '.addtotm', function(){
+	var tvid = $(this).attr('tovid');
+	var tvclck = $(this).is(':checked');
+	console.log('tvid: '+tvid+' tvclck: '+tvclck);
+	$.ajax({
+		type: "POST",
+		url: "<?php echo HOST_URL;?>/admin/market/ajax_save_flag.php",
+		dataType: "json",
+		data: "tovid="+tvid+"&tvclck="+tvclck,
+	});
+}); 
+<?php } ?>
 </script>
 <style>
     .filters__row{
