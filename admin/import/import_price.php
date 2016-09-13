@@ -54,8 +54,20 @@ while($tmp = $r->fetch_assoc()){
                     <td><input type="checkbox" name="import_item" checked></td>
                 </tr>
                 <tr>
-                    <td><b>Обнулить поставщика перед импортом :</b></td>
-                    <td><input type="checkbox" name="import_update" ></td>
+                    <td><b>Обнулить поставщика перед импортом (Цены) :</b></td>
+                    <td><input type="checkbox" name="import_update_price1" ></td>
+                </tr>
+                <tr>
+                    <td><b>Обнулить поставщика перед импортом (Закупы) :</b></td>
+                    <td><input type="checkbox" name="import_update_zakup" ></td>
+                </tr>
+                <tr>
+                    <td><b>Обнулить поставщика перед импортом (Остатки) :</b></td>
+                    <td><input type="checkbox" name="import_update_ostatki" ></td>
+                </tr>
+                <tr>
+                    <td><b>Обнулить поставщика перед импортом (Все):</b></td>
+                    <td><input type="checkbox" name="import_update_all" ></td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
@@ -136,7 +148,7 @@ while($tmp = $r->fetch_assoc()){
     $currency_a[$tmp['currency_id']] = $tmp['currency_ex'];
 }
 
-if(isset($_POST['import_update'])){
+if(isset($_POST['import_update_all'])){
     
     $data['import_price'] = 0;
     $data['import_item']  = 0;
@@ -146,7 +158,19 @@ if(isset($_POST['import_update'])){
     if(isset($_POST['import_item'])){
         $data['import_item'] = 1;
     }
-    $ProductEdit->dellAllSupplierItems($supplier, $data);
+    //$ProductEdit->dellAllSupplierItems($supplier, $data);
+}
+
+if(isset($_POST['import_update_zakup'])){
+   $r = $folder->query('UPDATE tbl_tovar_suppliers_items SET zakup = 0 WHERE postav_id = "'.$supplier.'";');
+}
+
+if(isset($_POST['import_update_price1'])){
+   $r = $folder->query('UPDATE tbl_tovar_suppliers_items SET price_1 = 0 WHERE postav_id = "'.$supplier.'";');
+}
+
+if(isset($_POST['import_update_ostatki'])){
+   $r = $folder->query('UPDATE tbl_tovar_suppliers_items SET items = 0 WHERE postav_id = "'.$supplier.'";');
 }
 
 while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
@@ -165,7 +189,7 @@ while('' != $worksheet->getCellByColumnAndRow(0,$count)->getValue()){
     if(isset($row['items'])) $items = $row['items'];
     
     $zakup = 0;
-    if(isset($row['zakup'])) $items = $row['zakup'];
+    if(isset($row['zakup'])) $zakup = $row['zakup'];
 
     if(isset($row['zakup_curr']) AND $row['zakup_curr'] > 0){
         $zakup_curr = $row['zakup_curr'];
